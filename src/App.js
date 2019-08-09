@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
+import logo from "./logo.svg";
+import "./App.css";
+import NavBar from "./components/navbar";
+import CoinsList from "./components/coinsList";
+import CoinDetail from "./components/coinDetail";
+import NotFound from "./components/notFound";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <NavBar />
+      <div className="container">
+        <Switch>
+          <Route path="/coin-detail/:coin" component={CoinDetail} />
+          <Route path="/not-found" component={NotFound} />
+          <Route path="/" exact component={CoinsList} />
+          <Redirect to="/not-found" />
+        </Switch>
+      </div>
+    </React.Fragment>
   );
 }
 
