@@ -6,24 +6,39 @@ import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
 
-const apiEndpoint =
-  "http://localhost/projects/bittrain_exchange/coinmarketcap.com/api.php?coins_list=all";
+// const apiEndpoint = "http://localhost/projects/bittrain_exchange/coinmarketcap.com/api.php?coins_list=all";
+const apiEndpoint = "?coins_list=all";
 
 class CoinsList extends Component {
   columns = [
     {
-      path: "name",
+      path: "pair",
       label: "Coin Name",
-      content: coin => <Link to={`/coin-detail/${coin.name}`}>{coin.name}</Link>
+      content: coin => (
+        <Link to={`/coin-detail/${this.decorateColumnName(coin.pair)}`}>
+          {this.decorateColumnName(coin.pair)}
+        </Link>
+      )
+    },
+    { path: "last_price", label: "Price" },
+    { path: "volume", label: "Volume" },
+    {
+      path: "price_change_percent",
+      label: "Price Change (%)",
+      content: coin => parseFloat(coin.price_change_percent).toFixed(2)
     }
   ];
 
   state = {
     coins: [],
     currentPage: 1,
-    pageSize: 4,
-    sortColumn: { path: "name", order: "asc" }
+    pageSize: 10,
+    sortColumn: { path: "", order: "asc" }
   };
+
+  decorateColumnName(column) {
+    return column.substring(0, column.indexOf("USDT"));
+  }
 
   async componentDidMount() {
     const { data } = await http.get(apiEndpoint);
@@ -43,7 +58,6 @@ class CoinsList extends Component {
 
     const sorted = _.orderBy(allCoins, [sortColumn.path], [sortColumn.order]);
     const coins = paginate(sorted, currentPage, pageSize);
-    // return { coins: sorted };
     return { totalCount: allCoins.length, coins };
   };
 

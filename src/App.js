@@ -16,7 +16,7 @@ function App() {
           <Route path="/coin-detail/:coin" component={CoinDetail} />
           <Route path="/not-found" component={NotFound} />
           <Route path="/" exact component={CoinsList} />
-          <Redirect to="/not-found" />
+          <Redirect to="/" />
         </Switch>
       </div>
     </React.Fragment>

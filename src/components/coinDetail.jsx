@@ -7,15 +7,14 @@ import { paginate } from "../utils/paginate";
 import _ from "lodash";
 import moment from "moment";
 
-const apiEndpoint =
-  "http://localhost/projects/bittrain_exchange/coinmarketcap.com/api.php?coin=";
+// const apiEndpoint = "http://localhost/projects/bittrain_exchange/coinmarketcap.com/api.php?coin=";
+const apiEndpoint = "?coin=";
 
 class CoinDetail extends Component {
   columns = [
     {
       path: "open_time",
       label: "Date",
-      // content: history => history.open_time
       content: history =>
         moment.unix(history.open_time / 1000).format("MMM D, YYYY")
     },
@@ -49,7 +48,6 @@ class CoinDetail extends Component {
   };
 
   getPagedData = () => {
-    // const { sortColumn, coinHistory: allHistory } = this.state;
     const {
       pageSize,
       currentPage,
@@ -59,7 +57,6 @@ class CoinDetail extends Component {
 
     const sorted = _.orderBy(allHistory, [sortColumn.path], [sortColumn.order]);
     const coinHistory = paginate(sorted, currentPage, pageSize);
-    // return { coinHistory: sorted };
     return { totalCount: allHistory.length, coinHistory };
   };
 
