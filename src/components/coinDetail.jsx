@@ -81,11 +81,9 @@ class CoinDetail extends Component {
       <React.Fragment>
         <h1>
           {this.props.match.params.coin}{" "}
-          <small>
-            <i>
-              <Link to="/">Back to coins list</Link>
-            </i>
-          </small>
+          <Link to="/" className="btn btn-primary pull-right">
+            Back to coins list
+          </Link>
         </h1>
         <Table
           columns={this.columns}
