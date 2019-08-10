@@ -22,7 +22,7 @@ class NavBar extends Component {
               <span className="icon-bar" />
             </button>
             <Link className="navbar-brand" to="/">
-              Pricing Platform
+              Crypto Prices
             </Link>
           </div>
           <div id="navbar" className="navbar-collapse collapse">
