@@ -7,7 +7,8 @@ import { paginate } from "../utils/paginate";
 import _ from "lodash";
 
 // const apiEndpoint = "http://localhost/projects/bittrain_exchange/coinmarketcap.com/api.php?coins_list=all";
-const apiEndpoint = "?coins_list=all";
+// const apiEndpoint = "?coins_list=all";
+const apiEndpoint = "/currencies";
 
 class CoinsList extends Component {
   columns = [

@@ -8,7 +8,8 @@ import _ from "lodash";
 import moment from "moment";
 
 // const apiEndpoint = "http://localhost/projects/bittrain_exchange/coinmarketcap.com/api.php?coin=";
-const apiEndpoint = "?coin=";
+// const apiEndpoint = "?coin=";
+const apiEndpoint = "/currencies/";
 
 class CoinDetail extends Component {
   columns = [
