@@ -9,5 +9,5 @@ const options = {
   wsHost: window.location.hostname,
   wsPort: 6001
 };
-
+console.log("host inside service file", window.location.hostname);
 export default new Echo(options);
