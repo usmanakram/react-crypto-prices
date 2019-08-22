@@ -5,6 +5,7 @@ import Table from "./common/table";
 import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
+import ws from "./../services/webSocketService";
 
 // const apiEndpoint = "http://localhost/projects/bittrain_exchange/coinmarketcap.com/api.php?coins_list=all";
 // const apiEndpoint = "?coins_list=all";
@@ -44,6 +45,14 @@ class CoinsList extends Component {
   async componentDidMount() {
     const { data } = await http.get(apiEndpoint);
     this.setState({ coins: data });
+
+    /* ws.channel("home").listen("NewMessage", e => {
+      console.log(e.message);
+    }); */
+    ws.channel("live").listen("LiveRates", e => {
+      // console.log(e.rates);
+      this.setState({ coins: e.rates });
+    });
   }
 
   handlePageChange = page => {
