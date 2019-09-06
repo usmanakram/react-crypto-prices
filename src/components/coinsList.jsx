@@ -12,6 +12,8 @@ import ws from "./../services/webSocketService";
 const apiEndpoint = "/currencies";
 
 class CoinsList extends Component {
+  _isMounted = false;
+
   columns = [
     {
       path: "pair",
@@ -38,11 +40,48 @@ class CoinsList extends Component {
     sortColumn: { path: "", order: "asc" }
   };
 
+  sendRequest() {
+    // let url = 'https://bittrain.org/API/Welcome/check_web_login';
+    // let url = "http://localhost/projects/bittrain_exchange/bittrain_exchange_api/public/api/react-login";
+    let url = "/react-login";
+    // let url = "http://localhost/test/curl/test.php";
+    let data;
+
+    /* data = {
+      bit_uname: "tabassumali21",
+      bit_password: "!Scitilop!1"
+    }; */
+    // data = JSON.stringify(data);
+
+    const formData = new FormData();
+    formData.append("bit_uname", "tabassumali21");
+    formData.append("bit_password", "!Scitilop!1");
+    data = formData;
+
+    let headers = {
+      // "Content-Type": "application/json"
+      "Content-Type": "application/x-www-form-urlencoded"
+      // "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+      // "Content-Type": "multipart/form-data"
+      // "Content-Type": "text/plain"
+    };
+
+    http
+      .post(url, data)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   decorateColumnName(column) {
     return column.substring(0, column.indexOf("USDT"));
   }
 
   async componentDidMount() {
+    this._isMounted = true;
     const { data } = await http.get(apiEndpoint);
     this.setState({ coins: data });
 
@@ -53,6 +92,10 @@ class CoinsList extends Component {
       // console.log(e.rates);
       this.setState({ coins: e.rates });
     });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   handlePageChange = page => {
@@ -81,6 +124,7 @@ class CoinsList extends Component {
 
     return (
       <React.Fragment>
+        <button onClick={this.sendRequest}>Send Request</button>
         <h1>Coins Listing</h1>
         <Table
           columns={this.columns}

@@ -20,6 +20,11 @@ axios.interceptors.response.use(null, error => {
   return Promise.reject(error);
 });
 
+axios.interceptors.request.use(config => {
+  // console.log("Logging the request config of axios", config);
+  return config;
+});
+
 export default {
   get: axios.get,
   post: axios.post,

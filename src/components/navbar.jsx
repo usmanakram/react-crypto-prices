@@ -68,19 +68,11 @@ class NavBar extends Component {
                 </ul>
               </li>
             </ul> */}
-            {/* <ul className="nav navbar-nav navbar-right">
+            <ul className="nav navbar-nav navbar-right">
               <li>
-                <a href="../navbar/">Default</a>
+                <Link to="/login">Login</Link>
               </li>
-              <li>
-                <a href="../navbar-static-top/">Static top</a>
-              </li>
-              <li className="active">
-                <a href="./">
-                  Fixed top <span className="sr-only">(current)</span>
-                </a>
-              </li>
-            </ul> */}
+            </ul>
           </div>
         </div>
       </nav>
