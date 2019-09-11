@@ -16,6 +16,12 @@ axios.interceptors.response.use(null, error => {
     // alert("An unexpected error occurred");
   }
 
+  // START
+  if (error.response.status === 401) {
+    console.log("access denied");
+  }
+  // END
+
   // To pass control back to the catch block, we need to return a "rejected promise"
   return Promise.reject(error);
 });
