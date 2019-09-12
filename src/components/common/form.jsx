@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./input";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 class Form extends Component {
   state = {
@@ -17,7 +17,7 @@ class Form extends Component {
     const errors = {};
     for (let item of error.details) {
       errors[item.path[0]] = item.message;
-      toast.error(item.message);
+      // toast.error(item.message);
     }
     return errors;
   };

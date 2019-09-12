@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 // const apiEndpoint = "/auth";
 // const apiEndpoint = "/react-login";
 const apiEndpoint = "/auth/login";
-const tokenKey = "access_token";
+const tokenKey = "token";
 
 async function login(username, password) {
   // const data = JSON.stringify({ bit_uname: username, bit_password: password });
@@ -27,9 +27,10 @@ async function login(username, password) {
   const { data } = await http.post(apiEndpoint, formData);
   console.log(data);
 
-  if (data[tokenKey]) localStorage.setItem(tokenKey, data[tokenKey]);
-  else toast.error(data.message);
+  // if (data[tokenKey]) localStorage.setItem(tokenKey, data[tokenKey]);
+  // else toast.error(data.message);
   // localStorage.setItem(tokenKey, jwt.token);
+  localStorage.setItem(tokenKey, data.access_token);
 }
 
 function logout() {

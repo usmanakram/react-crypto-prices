@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import Form from "./common/form";
 import Joi from "joi-browser";
 import auth from "../services/authService";
+import { toast } from "react-toastify";
 
 class Login extends Form {
   state = {
@@ -22,11 +23,21 @@ class Login extends Form {
   doSubmit = async () => {
     console.log("form validated");
 
-    const { data } = this.state;
-    await auth.login(data.username, data.password);
+    try {
+      const { data } = this.state;
+      await auth.login(data.username, data.password);
 
-    const { state } = this.props.location;
-    // window.location = state ? state.from.pathname : "/";
+      const { state } = this.props.location;
+      window.location = state ? state.from.pathname : "/";
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        const errors = { ...this.state.errors };
+        errors.username = ex.response.data;
+        this.setState({ errors });
+
+        toast.error(ex.response.data);
+      }
+    }
   };
 
   render() {
