@@ -1,12 +1,14 @@
 import http from "./httpService";
 import jwtDecode from "jwt-decode";
 // import { apiUrl } from "../config.json";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 // const apiEndpoint = "/auth";
 // const apiEndpoint = "/react-login";
 const apiEndpoint = "/auth/login";
 const tokenKey = "token";
+
+http.setJwt(getJwt());
 
 async function login(username, password) {
   // const data = JSON.stringify({ bit_uname: username, bit_password: password });
@@ -25,20 +27,11 @@ async function login(username, password) {
     }); */
 
   const { data } = await http.post(apiEndpoint, formData);
-  console.log(data);
-
-  // if (data[tokenKey]) localStorage.setItem(tokenKey, data[tokenKey]);
-  // else toast.error(data.message);
-  // localStorage.setItem(tokenKey, jwt.token);
   localStorage.setItem(tokenKey, data.access_token);
 }
 
 function logout() {
   localStorage.removeItem(tokenKey);
-}
-
-function getJwt() {
-  return localStorage.getItem(tokenKey);
 }
 
 function getCurrentUser() {
@@ -49,6 +42,10 @@ function getCurrentUser() {
   } catch (ex) {
     return null;
   }
+}
+
+function getJwt() {
+  return localStorage.getItem(tokenKey);
 }
 
 export default {
