@@ -55,6 +55,20 @@ class CoinsList extends Component {
       .catch(error => {
         console.log(error);
       });
+
+    /* try {
+      const user = await http.get(uri, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: "Bearer " + localStorage.getItem("token")
+        }
+      });
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        console.log(ex.response);
+      }
+      console.log(ex);
+    } */
   }
 
   sendRequest() {
@@ -75,13 +89,13 @@ class CoinsList extends Component {
     formData.append("bit_password", "!Scitilop!1");
     data = formData;
 
-    let headers = {
+    /* let headers = {
       // "Content-Type": "application/json"
       "Content-Type": "application/x-www-form-urlencoded"
       // "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
       // "Content-Type": "multipart/form-data"
       // "Content-Type": "text/plain"
-    };
+    }; */
 
     http
       .post(url, data)
