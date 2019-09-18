@@ -8,7 +8,8 @@ class Logout extends Component {
     await auth.logout();
 
     // window.location = state ? state.from.pathname : "/";
-    window.location = "/";
+    // window.location = "/";
+    window.location = process.env.REACT_APP_BASENAME + "/";
   }
 
   render() {

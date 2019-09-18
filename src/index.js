@@ -9,7 +9,7 @@ import "bootstrap/dist/js/bootstrap.min.js";
 import "font-awesome/css/font-awesome.min.css";
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename={process.env.REACT_APP_BASENAME}>
     <App />
   </BrowserRouter>,
   document.getElementById("root")
