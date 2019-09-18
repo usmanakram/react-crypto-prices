@@ -60,7 +60,7 @@ class Deposits extends Component {
       <React.Fragment>
         <div style={{ backgroundColor: "#ffffff" }}>
           <div className="row ">
-            <div className="col-md-10 col-md-offset-1 mt-15">
+            <div className="col-md-10 col-md-offset-1 mt-20">
               <select
                 className="form-control"
                 onChange={this.handleCurrencyChange}
@@ -75,7 +75,7 @@ class Deposits extends Component {
           </div>
           {Object.keys(selectedCurrency).length > 0 && (
             <React.Fragment>
-              <div className="row mt-15">
+              <div className="row mt-20">
                 <div className="col-md-10 col-md-offset-1  ">
                   <div className="col-lg-3 col-md-3 col-sm-3">
                     <p>Total balance</p>
@@ -94,21 +94,21 @@ class Deposits extends Component {
                 </div>
               </div>
 
-              <div className="row mt-15 ">
+              <div className="row mt-20 ">
                 <div className="col-md-10 col-md-offset-1  ">
                   <div
-                    className="border mb-15"
+                    className="border mb-20"
                     style={{ backgroundColor: "#f8f8f8" }}
                   >
-                    <h5>
+                    <h5 className="ml-15 text-warning">
                       <strong>Important</strong>
                     </h5>
-                    <p>
+                    <p className="ml-15 text-warning">
                       Send only <strong>{symbol}</strong> to this deposit
                       address. Sending any other coin or token to this address
                       may result in the loss of your deposit.
                     </p>
-                    <h5>
+                    <h5 className="ml-15 text-warning">
                       <strong>{symbol} Deposit Address</strong>
                     </h5>
                     <div className="col-md-12  ">
@@ -119,16 +119,16 @@ class Deposits extends Component {
                       </div>
                     </div>
                     <Link
-                      className="btn btn-primary mt-15"
+                      className="btn btn-primary mt-20 ml-15"
                       style={{ marginBottom: 20 }}
-                      to="/pathLink#yourAnchorTag"
+                      to="#"
                     >
                       Show QR Code
                     </Link>
                     <Link
-                      className="btn btn-primary mt-15"
+                      className="btn btn-primary mt-20 ml-15"
                       style={{ marginBottom: 20 }}
-                      to="/pathLink#yourAnchorTag"
+                      to="#"
                     >
                       Copy Address
                     </Link>

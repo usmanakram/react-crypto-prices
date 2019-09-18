@@ -11,17 +11,26 @@ body {
 body {
   background-color: #f7f7f7 !important;
 }
-.col-centered {
-  float: none;
-  margin: 0 auto;
+.mt-20 {
+  margin-top: 20px;
 }
-.mt-15 {
-  margin-top: 15px;
+.mb-20 {
+  margin-bottom: 20px;
 }
 .border {
   border: 1px solid #e6e6e6;
 }
-.mb-15 {
-  margin-bottom: 15px;
+
+.ml-15 {
+  margin-left: 15px;
+}
+.theadColor {
+  background-color: #fafafa;
+}
+.tbodyColor {
+  background-color: #ffffff;
+}
+.center {
+  text-align: center;
 }
 /* END: Mudassir */

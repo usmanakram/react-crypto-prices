@@ -154,8 +154,8 @@ class CoinsList extends Component {
 
     return (
       <React.Fragment>
-        <button onClick={this.sendRequest}>Send Request</button>
-        <button onClick={this.getUserDetail}>Get User Detail</button>
+        {/* <button onClick={this.sendRequest}>Send Request</button>
+        <button onClick={this.getUserDetail}>Get User Detail</button> */}
         <h1>Coins Listing</h1>
         <Table
           columns={this.columns}

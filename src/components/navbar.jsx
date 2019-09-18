@@ -81,23 +81,23 @@ const NavBar = ({ user }) => {
                     Funds <span className="caret" />
                   </Link>
                   <ul className="dropdown-menu">
-                    <li>
+                    {/* <li>
                       <Link to="#">Balances</Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link to="/deposits">Deposits</Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link to="#">Withdrawals</Link>
-                    </li>
+                    </li> */}
                     <li role="separator" className="divider" />
                     <li className="dropdown-header">Nav header</li>
                     <li>
-                      <Link to="#">Transaction History</Link>
+                      <Link to="/transactions">Transaction History</Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link to="#">One more separated link</Link>
-                    </li>
+                    </li> */}
                   </ul>
                 </li>
                 <li>
