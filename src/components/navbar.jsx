@@ -81,9 +81,9 @@ const NavBar = ({ user }) => {
                     Funds <span className="caret" />
                   </Link>
                   <ul className="dropdown-menu">
-                    {/* <li>
-                      <Link to="#">Balances</Link>
-                    </li> */}
+                    <li>
+                      <Link to="/balances">Balances</Link>
+                    </li>
                     <li>
                       <Link to="/deposits">Deposits</Link>
                     </li>

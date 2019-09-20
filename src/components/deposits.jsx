@@ -83,9 +83,17 @@ class Deposits extends Component {
                     <p>Available balance</p>
                   </div>
                   <div className="col-lg-3 col-md-3 col-sm-3">
-                    <p>0.00000000 {symbol}</p>
-                    <p>0.00000000 {symbol}</p>
-                    <p>0.00000000 {symbol}</p>
+                    <p>
+                      {selectedCurrency.total_balance} {symbol}
+                    </p>
+                    <p>
+                      {selectedCurrency.in_order_balance} {symbol}
+                    </p>
+                    <p>
+                      {selectedCurrency.total_balance -
+                        selectedCurrency.in_order_balance}{" "}
+                      {symbol}
+                    </p>
                   </div>
 
                   <div className="col-lg-4 col-md-3 col-sm-3">

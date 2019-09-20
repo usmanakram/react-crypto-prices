@@ -10,6 +10,7 @@ import Logout from "./components/logout";
 import CoinDetail from "./components/coinDetail";
 import Deposits from "./components/deposits";
 import Transactions from "./components/transactions";
+import Balances from "./components/balances";
 import NotFound from "./components/notFound";
 import auth from "./services/authService";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -36,6 +37,7 @@ class App extends Component {
             <Route path="/logout" component={Logout} />
             <Route path="/deposits" component={Deposits} />
             <Route path="/transactions" component={Transactions} />
+            <Route path="/balances" component={Balances} />
             <Route path="/not-found" component={NotFound} />
             <Route path="/" exact component={CoinsList} />
             <Redirect to="/" />
