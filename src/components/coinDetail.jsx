@@ -37,7 +37,7 @@ class CoinDetail extends Component {
     // console.log(moment(1565222400000).format("MMMM Do YYYY, h:mm:ss a"));
     const coin = this.props.match.params.coin;
     const { data } = await http.get(apiEndpoint + coin);
-    this.setState({ coinHistory: data });
+    this.setState({ coinHistory: data.historical_prices });
   }
 
   handlePageChange = page => {

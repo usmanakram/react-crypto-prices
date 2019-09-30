@@ -16,20 +16,21 @@ class CoinsList extends Component {
 
   columns = [
     {
-      path: "pair",
+      path: "symbol",
       label: "Coin Name",
       content: coin => (
-        <Link to={`/coin-detail/${this.decorateColumnName(coin.pair)}`}>
-          {this.decorateColumnName(coin.pair)}
+        <Link to={`/coin-detail/${this.decorateColumnName(coin.symbol)}`}>
+          {this.decorateColumnName(coin.symbol)}
         </Link>
       )
     },
-    { path: "last_price", label: "Price" },
-    { path: "volume", label: "Volume" },
+    { path: "latest_price.last_price", label: "Price" },
+    { path: "latest_price.volume", label: "Volume" },
     {
-      path: "price_change_percent",
+      path: "latest_price.price_change_percent",
       label: "Price Change (%)",
-      content: coin => parseFloat(coin.price_change_percent).toFixed(2)
+      content: coin =>
+        parseFloat(coin.latest_price.price_change_percent).toFixed(2)
     }
   ];
 

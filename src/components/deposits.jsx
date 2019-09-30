@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import http from "../services/httpService";
+import { toast } from "react-toastify";
 
 class Deposits extends Component {
   state = {
@@ -13,7 +14,7 @@ class Deposits extends Component {
     try {
       const { data } = await http.get("/get-all-currencies");
       console.log(data);
-
+      // const currencies = data.filter(c => c.symbol !== "BC");
       this.setState({ currencies: data });
 
       // Populate first currency address and relevant data
@@ -36,6 +37,11 @@ class Deposits extends Component {
       this.setState({ selectedCurrency: data });
     } catch (ex) {
       console.log(ex);
+      toast.error(
+        "Deposit of " +
+          this.value +
+          " is not functional right now. Please, try again later"
+      );
     }
   };
 
