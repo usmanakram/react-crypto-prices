@@ -67,6 +67,9 @@ const NavBar = ({ user }) => {
               </li>
             </ul> */}
           <ul className="nav navbar-nav navbar-right">
+            <li>
+              <Link to="/exchange">Exchange</Link>
+            </li>
             {user && (
               <React.Fragment>
                 <li className="dropdown">

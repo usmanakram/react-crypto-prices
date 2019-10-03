@@ -29,6 +29,17 @@ class Form extends Component {
     return error ? error.details[0].message : null;
   };
 
+  /**
+   * Called when data is validated and ready for submit
+   *
+   * @abstract
+   * @param
+   * @void
+   */
+  doSubmit = async () => {
+    throw "Abstract method doSubmit not implemented";
+  };
+
   handleSubmit = e => {
     e.preventDefault();
 
@@ -51,8 +62,9 @@ class Form extends Component {
     this.setState({ data, errors });
   };
 
-  renderButton(label) {
-    return <button className="btn btn-primary">{label}</button>;
+  renderButton(label, extraClasses = "") {
+    const classes = `btn btn-primary ${extraClasses}`;
+    return <button className={classes}>{label}</button>;
   }
 
   renderInput(name, label, type = "text") {

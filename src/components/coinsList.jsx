@@ -127,6 +127,8 @@ class CoinsList extends Component {
 
   componentWillUnmount() {
     this._isMounted = false;
+    // ws.leaveChannel("live");
+    // ws.leave("live");
   }
 
   handlePageChange = page => {

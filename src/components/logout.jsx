@@ -3,7 +3,7 @@ import auth from "../services/authService";
 
 class Logout extends Component {
   async componentDidMount() {
-    const { state } = this.props.location;
+    // const { state } = this.props.location;
 
     await auth.logout();
 
