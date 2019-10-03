@@ -11,14 +11,37 @@ class OrderBook extends Component {
     { path: "tradable_quantity", label: "Quantity" }
   ];
 
-  componentDidMount() {
+  orderBookPairId = 0;
+
+  // Channel didn't invoked inside componentDidMount() because, it is executed before assigning value to "selectedPair"
+  /* componentDidMount() {
     ws.channel("live2").listen("OrderBookUpdated", e => {
       this.props.onOrderBookUpdate(e.orderBookData);
     });
-  }
+  } */
+
+  handleStream = () => {
+    const { selectedPair } = this.props;
+
+    if (
+      Object.keys(selectedPair).length &&
+      this.orderBookPairId !== selectedPair.id
+    ) {
+      this.orderBookPairId = selectedPair.id;
+
+      ws.channel("OrderBook." + this.orderBookPairId).listen(
+        "OrderBookUpdated",
+        e => {
+          this.props.onOrderBookUpdate(e.orderBookData);
+        }
+      );
+    }
+  };
 
   render() {
-    const { selectedPair, orderBookData } = this.props;
+    const { orderBookData } = this.props;
+
+    this.handleStream();
 
     return (
       <React.Fragment>
