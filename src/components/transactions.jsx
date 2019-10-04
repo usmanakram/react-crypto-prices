@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import http from "../services/httpService";
+import auth from "../services/authService";
 
 class Transactions extends Component {
   state = {
@@ -19,6 +20,8 @@ class Transactions extends Component {
   }
 
   render() {
+    if (!auth.getCurrentUser()) return <Redirect to="/login" />;
+
     const { transactions } = this.state;
 
     return (

@@ -2,6 +2,8 @@ import React from "react";
 import TradingForm from "./tradingForm";
 import trade from "../services/tradeService";
 import { toast } from "react-toastify";
+import auth from "../services/authService";
+import { Link } from "react-router-dom";
 
 class SellOrderForm extends TradingForm {
   doSubmit = async () => {
@@ -37,6 +39,7 @@ class SellOrderForm extends TradingForm {
 
   render() {
     const { selectedPair } = this.props;
+    const user = auth.getCurrentUser();
 
     return (
       <div className="col-md-6">
@@ -51,9 +54,15 @@ class SellOrderForm extends TradingForm {
             {this.renderHorizontalFormInput("price", "Price", "number")}
             {this.renderHorizontalFormInput("quantity", "Quantity", "number")}
             {this.renderHorizontalFormInput("total", "Total", "number", true)}
-            {this.renderButton(
-              `Sell ${selectedPair.base_currency_symbol}`,
-              "btn-block btn-danger"
+            {user &&
+              this.renderButton(
+                `Sell ${selectedPair.base_currency_symbol}`,
+                "btn-block btn-danger"
+              )}
+            {!user && (
+              <Link to="/login" className="btn btn-primary btn-block">
+                Login
+              </Link>
             )}
           </form>
         )}

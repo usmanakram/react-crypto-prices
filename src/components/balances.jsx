@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import http from "../services/httpService";
+import auth from "../services/authService";
 
 class Balances extends Component {
   state = {
@@ -19,6 +21,8 @@ class Balances extends Component {
   }
 
   render() {
+    if (!auth.getCurrentUser()) return <Redirect to="/login" />;
+
     return (
       <div className="row">
         <div className="col-md-12">

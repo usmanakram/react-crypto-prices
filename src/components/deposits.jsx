@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import http from "../services/httpService";
 import { toast } from "react-toastify";
+import auth from "../services/authService";
 
 class Deposits extends Component {
   state = {
@@ -46,6 +47,8 @@ class Deposits extends Component {
   };
 
   render() {
+    if (!auth.getCurrentUser()) return <Redirect to="/login" />;
+
     const { selectedCurrency } = this.state;
     let address, name, symbol;
 
