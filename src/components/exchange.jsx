@@ -105,6 +105,7 @@ class Exchange extends Component {
                 selectedPair={selectedPair}
                 orderBookData={orderBookData}
                 onOrderBookUpdate={this.handleOrderBook}
+                onTrade={this.setBalances}
               />
             </div>
             <div className="col-md-6">

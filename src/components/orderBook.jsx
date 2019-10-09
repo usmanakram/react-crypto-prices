@@ -27,6 +27,11 @@ class OrderBook extends Component {
 
     if (auth.getCurrentUser()) {
       ws.channel("User." + user.sub).listen("TradeOrderFilled", e => {
+        /**
+         * It's temporary solution. Balances will be received over websocket connection at OrderFiled event.
+         */
+        this.props.onTrade();
+
         toast.success(e.message);
       });
     }
