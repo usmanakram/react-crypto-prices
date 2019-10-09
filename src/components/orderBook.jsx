@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Table from "./common/table";
 import ws from "../services/webSocketService";
+import { toast } from "react-toastify";
+import auth from "../services/authService";
 
 class OrderBook extends Component {
   columns = [
@@ -19,6 +21,16 @@ class OrderBook extends Component {
       this.props.onOrderBookUpdate(e.orderBookData);
     });
   } */
+
+  componentDidMount() {
+    const user = auth.getCurrentUser();
+
+    if (auth.getCurrentUser()) {
+      ws.channel("User." + user.sub).listen("TradeOrderFilled", e => {
+        toast.success(e.message);
+      });
+    }
+  }
 
   handleStream = () => {
     const { selectedPair } = this.props;
