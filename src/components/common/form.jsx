@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./input";
+import LoginFormInput from "./loginFormInput";
 // import { toast } from "react-toastify";
 
 class Form extends Component {
@@ -76,6 +77,21 @@ class Form extends Component {
         name={name}
         value={data[name]}
         label={label}
+        onChange={this.handleChange}
+        error={errors[name]}
+      />
+    );
+  }
+
+  renderLoginFormInput(name, placeholder, type = "text") {
+    const { data, errors } = this.state;
+
+    return (
+      <LoginFormInput
+        type={type}
+        name={name}
+        value={data[name]}
+        placeholder={placeholder}
         onChange={this.handleChange}
         error={errors[name]}
       />

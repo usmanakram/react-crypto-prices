@@ -4,6 +4,7 @@ import Form from "./common/form";
 import Joi from "joi-browser";
 import auth from "../services/authService";
 import { toast } from "react-toastify";
+import Header from "./header";
 
 class Login extends Form {
   state = {
@@ -47,13 +48,48 @@ class Login extends Form {
     if (auth.getCurrentUser()) return <Redirect to="/" />;
 
     return (
-      <div className="col-md-4 col-md-offset-4">
-        <h1>Login</h1>
-        <form onSubmit={this.handleSubmit}>
-          {this.renderInput("username", "Username")}
-          {this.renderInput("password", "Password", "password")}
-          {this.renderButton("Login")}
-        </form>
+      <div className="user-login-signup-section modal-container">
+        <Header />
+        <div className="container">
+          <div className="user-login-signup-form-wrap">
+            <div className="modal-content">
+              <h3>User Login</h3>
+              <div className="modal-body">
+                <div className="modal-info-block">
+                  <p>Always ensure you're on the correct website</p>
+                  <div className="block-inner">
+                    <p>
+                      <span>
+                        <i className="fas fa-lock"></i>
+                        https://
+                      </span>
+                      www.excoin.com
+                    </p>
+                  </div>
+                </div>
+                <div className="user-connected-form-block">
+                  <form
+                    onSubmit={this.handleSubmit}
+                    className="user-connected-from user-login-form"
+                  >
+                    {this.renderLoginFormInput("username", "Username")}
+
+                    {this.renderLoginFormInput(
+                      "password",
+                      "Password",
+                      "password"
+                    )}
+
+                    {this.renderButton("Login", "btn-default")}
+                  </form>
+                  <p>
+                    Don't have an account? <a href="#e"> Register</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
