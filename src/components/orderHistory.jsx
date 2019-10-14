@@ -34,6 +34,11 @@ class OrderHistory extends Component {
     { path: "rate", label: "Price" },
     { path: "quantity", label: "Quantity" },
     {
+      path: "tradable_quantity",
+      label: "Filled",
+      content: o => o.quantity - o.tradable_quantity
+    },
+    {
       path: "status",
       label: "Status",
       content: o =>
