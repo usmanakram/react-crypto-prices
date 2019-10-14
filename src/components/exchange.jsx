@@ -7,6 +7,8 @@ import CurrencyRate from "./currencyRate";
 import ThemeTable from "./themeTable";
 import GettingStarted from "./gettingStarted";
 import auth from "../services/authService";
+import ws from "../services/webSocketService";
+import { toast } from "react-toastify";
 
 class Exchange extends Component {
   state = {
@@ -38,7 +40,25 @@ class Exchange extends Component {
     } catch (ex) {
       console.log(ex);
     }
+
+    this.handleUserStream();
   }
+
+  handleUserStream = () => {
+    const user = auth.getCurrentUser();
+
+    if (auth.getCurrentUser()) {
+      ws.channel("User." + user.sub).listen("TradeOrderFilled", e => {
+        /**
+         * It's temporary solution. Balances will be received over websocket connection at OrderFiled event.
+         */
+        // this.props.onTrade();
+        this.setBalances();
+
+        toast.success(e.message);
+      });
+    }
+  };
 
   setBalances = async () => {
     const { selectedPair } = this.state;
