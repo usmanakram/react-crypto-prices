@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from "moment";
 import { exchangeRightBottomValues } from "../services/fakeExchange";
 import Spinner from "./spinner";
 
@@ -46,7 +47,7 @@ class ExchangeRightBottomTable extends Component {
                       </span>
                     </td>
                     <td>{value.quantity}</td>
-                    <td>{value.created_at}</td>
+                    <td>{moment(value.created_at).format("HH:mm:ss")}</td>
                   </tr>
                 ))}
               </tbody>
