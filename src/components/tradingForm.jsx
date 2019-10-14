@@ -2,7 +2,9 @@ import React from "react";
 import Joi from "joi-browser";
 import Form from "./common/form";
 import HorizontalFormInput from "./common/horizontalFormInput";
+import InpuTradeForm from "./common/inputTradeForm";
 import { toast } from "react-toastify";
+import auth from "../services/authService";
 
 class TradingForm extends Form {
   state = {
@@ -20,7 +22,15 @@ class TradingForm extends Form {
     total: Joi.number()
       .required()
       .label("Total")
+    // commission: Joi.number()
+    //   .required()
+    //   .label("Commission"),
+    // balance: Joi.number()
+    //   .required()
+    //   .label("Balance")
   };
+
+  user = auth.getCurrentUser();
 
   validate = () => {
     const options = { abortEarly: false };
@@ -85,6 +95,28 @@ class TradingForm extends Form {
     const data = { price: "", quantity: "", total: "" };
     this.setState({ data });
   };
+
+  renderInputTradeForm(name, label, symbol, type = "text", readOnly = false) {
+    const { data, errors } = this.state;
+
+    return (
+      <InpuTradeForm
+        type={type}
+        name={name}
+        value={data[name]}
+        label={label}
+        onChange={this.handleChange}
+        error={errors[name]}
+        symbol={symbol}
+        readOnly={readOnly}
+      />
+    );
+  }
+
+  renderTradeButton(label, extraClasses = "") {
+    const classes = `btn ${extraClasses}`;
+    return <button className={classes}>{label}</button>;
+  }
 }
 
 export default TradingForm;
