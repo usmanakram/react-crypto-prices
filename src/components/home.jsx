@@ -14,6 +14,7 @@ import WalletCategories from "./walletCategories";
 import ActivitySection from "./activitySection";
 import LeatestPrize from "./leatestPrize";
 import Banner from "./banner";
+import HighLightWedget from "./highLightWidget";
 
 class Home extends Component {
   state = {
@@ -30,7 +31,7 @@ class Home extends Component {
           <Header />
 
           <Banner />
-          {/* <HighLightWedget highlights={this.state.highlights} /> */}
+          <HighLightWedget highlights={this.state.highlights} />
         </div>
         <LeatestPrize />
         <ActivitySection activities={this.state.activities} />

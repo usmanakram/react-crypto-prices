@@ -21,6 +21,7 @@ class ExchangeRightBottomTable extends Component {
         </div>
         <div className="order-history-block-inner dashboard-ticker-block-four">
           <div className="history-table-wrap">
+            {tradeHistory == 0 && <Spinner />}
             <table className="table coin-list table-hover history-table">
               <thead>
                 <tr>
@@ -29,7 +30,6 @@ class ExchangeRightBottomTable extends Component {
                   <th scope="col">Time</th>
                 </tr>
               </thead>
-              {/* {console.log(tradeHistory == 0 ? "ok" : "notOk")} */}
 
               <tbody>
                 {tradeHistory.map((value, i) => (

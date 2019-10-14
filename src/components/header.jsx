@@ -82,6 +82,11 @@ class Header extends Component {
                           Withdrawal
                         </Link>
                       </li>
+                      <li className="nav-item">
+                        <Link className="nav-link" to="transactionHistory">
+                          Transaction History
+                        </Link>
+                      </li>
                     </ul>
                   </li>
                 )}

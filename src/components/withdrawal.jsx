@@ -17,10 +17,7 @@ class Withdrawal extends Component {
           <Header />
         </div>
 
-        <ThemeTable
-          themeTableHeadings={this.state.themeTableHeadings}
-          themeTableValue={this.state.themeTableValue}
-        />
+        {/* <ThemeTable /> */}
       </React.Fragment>
     );
   }

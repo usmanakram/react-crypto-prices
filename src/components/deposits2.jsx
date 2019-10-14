@@ -7,8 +7,6 @@ import Spinner from "./spinner";
 
 import copy from "copy-to-clipboard";
 import Header from "./header";
-import ThemeTable from "./themeTable";
-import { themeTableHeadings, themeTableValue } from "../services/fakeExchange";
 
 var QRCode = require("qrcode.react");
 
@@ -125,6 +123,7 @@ class Deposits2 extends Component {
             </select>
           </div>
         </div>
+
         {Object.keys(selectedCurrency).length > 0 && (
           <React.Fragment>
             <div
@@ -185,6 +184,7 @@ class Deposits2 extends Component {
                     className="form-control disabled text-center"
                     value={address}
                   />
+                  {this.state.isLoadSpinner ? <Spinner /> : null}
                 </div>
 
                 <button
@@ -210,8 +210,6 @@ class Deposits2 extends Component {
                 </button>
               </div>
             </div>
-
-            {this.state.isLoadSpinner ? <Spinner /> : null}
 
             <div className="modal fade" id="myModal" role="dialog">
               <div className="modal-dialog modal-sm">
