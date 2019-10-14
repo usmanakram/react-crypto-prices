@@ -27,6 +27,8 @@ class OrderBook2 extends Component {
 
   render() {
     const { orderBookData } = this.props;
+    this.handleStream();
+
     return (
       <div className="dahboard-order-block">
         <ul className="nav das-oreder-nav">

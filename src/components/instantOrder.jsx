@@ -2,7 +2,7 @@ import React from "react";
 import SellInstantOrderForm from "./sellInstantOrderForm";
 import BuyInstantOrderForm from "./buyInstantOrderForm";
 
-const InstantOrder = ({ selectedPair }) => {
+const InstantOrder = ({ selectedPair, onTrade }) => {
   return (
     <div role="tabpanel" className="tab-pane fade" id="instant_order">
       <div className="tab-content">
@@ -20,8 +20,14 @@ const InstantOrder = ({ selectedPair }) => {
             </thead>
             <tbody>
               <tr>
-                <BuyInstantOrderForm selectedPair={selectedPair} />
-                <SellInstantOrderForm selectedPair={selectedPair} />
+                <BuyInstantOrderForm
+                  selectedPair={selectedPair}
+                  onTrade={onTrade}
+                />
+                <SellInstantOrderForm
+                  selectedPair={selectedPair}
+                  onTrade={onTrade}
+                />
               </tr>
             </tbody>
           </table>

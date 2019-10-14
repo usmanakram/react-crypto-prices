@@ -29,7 +29,10 @@ const ExchangeOneBody = ({
                 <TradingViewWidget />
                 {/* <DepthChartWidget /> */}
               </div>
-              <ExchangeOrderArea selectedPair={selectedPair} />
+              <ExchangeOrderArea
+                selectedPair={selectedPair}
+                onTrade={onTrade}
+              />
             </div>
 
             <div className="col-lg-3">

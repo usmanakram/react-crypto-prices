@@ -21,7 +21,6 @@ class SellLimitOrderForm extends TradingForm {
       this.resetFormData();
       this.props.onTrade();
 
-      // console.log(response);
       toast.success(response);
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {

@@ -2,7 +2,7 @@ import React from "react";
 import BuyLimitOrderForm from "./buyLimitOrderForm";
 import SellLimitOrderForm from "./sellLimitOrderForm";
 
-const LimitOrder = ({ selectedPair }) => {
+const LimitOrder = ({ selectedPair, onTrade }) => {
   return (
     <div
       role="tabpanel"
@@ -20,8 +20,8 @@ const LimitOrder = ({ selectedPair }) => {
         </thead>
         <tbody>
           <tr>
-            <BuyLimitOrderForm selectedPair={selectedPair} />
-            <SellLimitOrderForm selectedPair={selectedPair} />
+            <BuyLimitOrderForm selectedPair={selectedPair} onTrade={onTrade} />
+            <SellLimitOrderForm selectedPair={selectedPair} onTrade={onTrade} />
           </tr>
         </tbody>
       </table>
