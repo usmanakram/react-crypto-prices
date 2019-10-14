@@ -21,6 +21,7 @@ import Footer from "./components/footer";
 import Home from "./components/home";
 import TradeHistory from "./components/tradeHistory";
 import OpenOrder from "./components/openOrder";
+import TransactionHistory from "./components/transactionHistory";
 
 const App = () => {
   return (
@@ -39,6 +40,8 @@ const App = () => {
         <Route path="/openOrder" component={OpenOrder} />
         <Route path="/transactions" component={Transactions} />
         <Route path="/balances" component={Balances} />
+        <Route path="/transactionHistory" component={TransactionHistory} />
+
         <Route path="/exchange" component={Exchange} />
         <Route path="/not-found" component={NotFound} />
         <Route path="/" exact component={Home} />

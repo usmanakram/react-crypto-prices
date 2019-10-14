@@ -173,12 +173,14 @@ class MarketsTable extends Component {
           onSort={this.handleSort}
           classes="coin-list table-hover"
         />
-        <Pagination
-          itemsCount={totalCount}
-          pageSize={pageSize}
-          currentPage={currentPage}
-          onPageChange={this.handlePageChange}
-        />
+        <div className="my-3">
+          <Pagination
+            itemsCount={totalCount}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={this.handlePageChange}
+          />
+        </div>
       </div>
     );
   }

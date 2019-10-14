@@ -380,3 +380,45 @@ export const themeTableValue = [
     classes2: "ex-color-buy"
   }
 ];
+
+export const tHTableHeadings = [
+  {
+    themeTableHeading: "Size"
+  },
+  {
+    themeTableHeading: "Filled(ETH)"
+  },
+  {
+    themeTableHeading: "Price(BTC)"
+  },
+  {
+    themeTableHeading: "Time"
+  },
+  {
+    themeTableHeading: "Status"
+  }
+];
+export const tHTableValue = [
+  {
+    status: "0.056370",
+    coin: "8084.99",
+    amount: "0.00008639",
+    date: "17:54:59",
+    information: "Open",
+  },
+  {
+    status: "0.056740",
+    coin: "8084.99",
+    amount: "0.00008639",
+    date: "17:54:59",
+    information: "Open",
+  },
+
+  {
+    status: "0.093740",
+    coin: "8084.99",
+    amount: "0.00008639",
+    date: "17:54:59",
+    information: "Open",
+  },
+];
