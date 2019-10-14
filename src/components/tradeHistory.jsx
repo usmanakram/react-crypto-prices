@@ -25,6 +25,11 @@ class TradeHistory extends Component {
     },
     { path: "rate", label: "Price" },
     { path: "quantity", label: "Quantity" }
+    /* {
+      path: "fee",
+      label: "Fee",
+      content: o => o.fee + " " + o.base_currency_symbol
+    } */
   ];
 
   async componentDidMount() {
