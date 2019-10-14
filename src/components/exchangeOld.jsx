@@ -5,12 +5,6 @@ import SellOrderForm from "./sellOrderForm";
 import Select from "./common/select";
 import http from "../services/httpService";
 import trade from "../services/tradeService";
-import Header from "./header";
-import ExchangeOneBody from "./exchangeOneBody";
-import { themeTableHeadings, themeTableValue } from "../services/fakeExchange";
-import CurrencyRate from "./currencyRate";
-import ThemeTable from "./themeTable";
-import GettingStarted from "./gettingStarted";
 
 class Exchange extends Component {
   state = {
@@ -95,61 +89,42 @@ class Exchange extends Component {
     } = this.state;
 
     return (
-      <React.Fragment>
-        <div className="navigation-two">
-          <Header />
-        </div>
-        <CurrencyRate />
-        <ExchangeOneBody
-          selectedPair={selectedPair}
-          orderBookData={orderBookData}
-          onOrderBookUpdate={this.handleOrderBook}
-          onTrade={this.setBalances}
-        />
-
-        <ThemeTable
-          themeTableHeadings={themeTableHeadings}
-          themeTableValue={themeTableValue}
-        />
-        <GettingStarted />
-
-        <div className="row">
-          <div className="col-md-12">
-            <h1>Exchange Page</h1>
-            <div className="row">
-              <div className="col-md-3">
-                <Select
-                  name="pairs"
-                  label="Trading Pairs"
-                  options={currencyPairs}
-                />
-              </div>
-              <div className="col-md-3">
-                <OrderBook
+      <div className="row">
+        <div className="col-md-12">
+          <h1>Exchange Page</h1>
+          <div className="row">
+            <div className="col-md-3">
+              <Select
+                name="pairs"
+                label="Trading Pairs"
+                options={currencyPairs}
+              />
+            </div>
+            <div className="col-md-3">
+              <OrderBook
+                selectedPair={selectedPair}
+                orderBookData={orderBookData}
+                onOrderBookUpdate={this.handleOrderBook}
+                onTrade={this.setBalances}
+              />
+            </div>
+            <div className="col-md-6">
+              <div className="row">
+                <BuyOrderForm
                   selectedPair={selectedPair}
-                  orderBookData={orderBookData}
-                  onOrderBookUpdate={this.handleOrderBook}
+                  balance={quoteCurrencyBalance}
                   onTrade={this.setBalances}
                 />
-              </div>
-              <div className="col-md-6">
-                <div className="row">
-                  <BuyOrderForm
-                    selectedPair={selectedPair}
-                    balance={quoteCurrencyBalance}
-                    onTrade={this.setBalances}
-                  />
-                  <SellOrderForm
-                    selectedPair={selectedPair}
-                    balance={baseCurrencyBalance}
-                    onTrade={this.setBalances}
-                  />
-                </div>
+                <SellOrderForm
+                  selectedPair={selectedPair}
+                  balance={baseCurrencyBalance}
+                  onTrade={this.setBalances}
+                />
               </div>
             </div>
           </div>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }

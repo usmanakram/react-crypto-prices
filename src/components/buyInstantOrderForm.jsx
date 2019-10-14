@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import TradingForm from "./tradingForm";
 import { Link } from "react-router-dom";
 import trade from "../services/tradeService";

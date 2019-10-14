@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { exchangeRightBottomValues } from "../services/fakeExchange";
+import Spinner from "./spinner";
 
 class ExchangeRightBottomTable extends Component {
   state = {};
@@ -10,10 +11,12 @@ class ExchangeRightBottomTable extends Component {
     });
   }
   render() {
+    const { tradeHistory } = this.props;
+
     return (
       <div className="order-history-block">
         <div className="panel-heading-block">
-          <h5>Order History</h5>
+          <h5>Trade History</h5>
         </div>
         <div className="order-history-block-inner dashboard-ticker-block-four">
           <div className="history-table-wrap">
@@ -25,14 +28,25 @@ class ExchangeRightBottomTable extends Component {
                   <th scope="col">Time</th>
                 </tr>
               </thead>
+              {/* {console.log(tradeHistory == 0 ? "ok" : "notOk")} */}
+
               <tbody>
-                {exchangeRightBottomValues.map(value => (
-                  <tr key={value.price_BTC}>
+                {tradeHistory.map((value, i) => (
+                  <tr key={value.id}>
                     <td>
-                      <span className={value.classes}>{value.price_BTC}</span>
+                      <span
+                        className={
+                          tradeHistory[i - 1] &&
+                          tradeHistory[i - 1].rate > value.rate
+                            ? "color-sell"
+                            : "color-buy"
+                        }
+                      >
+                        {value.rate}
+                      </span>
                     </td>
-                    <td>{value.amt_ETH}</td>
-                    <td>{value.time}</td>
+                    <td>{value.quantity}</td>
+                    <td>{value.created_at}</td>
                   </tr>
                 ))}
               </tbody>

@@ -1,12 +1,11 @@
 import React from "react";
 import ExchangeRightBottomTable from "./exchangeRightBottomTable";
-import ExchangeRightTopTable from "./exchangeRightTopTable";
 
-const ExchangeRightSideBar = () => {
+const ExchangeRightSideBar = ({ tradeHistory }) => {
   return (
     <React.Fragment>
       {/* <ExchangeRightTopTable /> */}
-      <ExchangeRightBottomTable />
+      <ExchangeRightBottomTable tradeHistory={tradeHistory} />
     </React.Fragment>
   );
 };

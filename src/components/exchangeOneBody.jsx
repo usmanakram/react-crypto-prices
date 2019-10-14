@@ -7,6 +7,7 @@ import ExchangeOrderArea from "./exchangeOrderArea";
 const ExchangeOneBody = ({
   selectedPair,
   orderBookData,
+  tradeHistory,
   onOrderBookUpdate,
   onTrade
 }) => {
@@ -32,7 +33,7 @@ const ExchangeOneBody = ({
             </div>
 
             <div className="col-lg-3">
-              <ExchangeRightSideBar />
+              <ExchangeRightSideBar tradeHistory={tradeHistory} />
             </div>
           </div>
         </div>

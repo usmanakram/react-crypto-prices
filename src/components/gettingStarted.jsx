@@ -15,8 +15,8 @@ const GettingStarted = () => {
             </div>
             <div className="colto-btn-group">
               <button className="btn callto-btn">Log In</button>
-              <span>or</span>
-              <button className="btn callto-btn">Create Account</button>
+              {/* <span>or</span>
+              <button className="btn callto-btn">Create Account</button> */}
             </div>
           </div>
         </div>

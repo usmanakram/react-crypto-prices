@@ -40,10 +40,34 @@ async function getOrderBook(pair_id) {
   return data;
 }
 
+async function getTradeHistory(pair_id) {
+  const { data } = await http.get("/trade-history/" + pair_id);
+  return data;
+}
+
+async function getUserTradeHistory() {
+  const { data } = await http.post("/auth/user-trades");
+  return data;
+}
+
+async function getUserOrderHistory() {
+  const { data } = await http.post("/auth/user-orders");
+  return data;
+}
+
+async function getUserOpenOrders() {
+  const { data } = await http.post("/auth/user-open-orders");
+  return data;
+}
+
 export default {
   buy,
   sell,
   getBalances,
   getBalance,
-  getOrderBook
+  getOrderBook,
+  getTradeHistory,
+  getUserTradeHistory,
+  getUserOrderHistory,
+  getUserOpenOrders
 };

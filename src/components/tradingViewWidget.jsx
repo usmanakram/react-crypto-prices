@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import TradingViewGraph from "./tradingView";
 import { candleChartdData } from "../services/custom";
 import { createChart, CrosshairMode } from "lightweight-charts";
 

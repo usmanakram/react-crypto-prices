@@ -1,16 +1,12 @@
 import React, { Component } from "react";
-import OrderBook from "./orderBook";
-import BuyOrderForm from "./buyOrderForm";
-import SellOrderForm from "./sellOrderForm";
-import Select from "./common/select";
 import http from "../services/httpService";
 import trade from "../services/tradeService";
 import Header from "./header";
 import ExchangeOneBody from "./exchangeOneBody";
-import { themeTableHeadings, themeTableValue } from "../services/fakeExchange";
 import CurrencyRate from "./currencyRate";
 import ThemeTable from "./themeTable";
 import GettingStarted from "./gettingStarted";
+import auth from "../services/authService";
 
 class Exchange extends Component {
   state = {
@@ -18,10 +14,12 @@ class Exchange extends Component {
     selectedPair: {},
     baseCurrencyBalance: {},
     quoteCurrencyBalance: {},
+    openOrders: [],
     orderBookData: {
       buyOrders: [],
       sellOrders: []
-    }
+    },
+    tradeHistory: []
   };
 
   async componentDidMount() {
@@ -34,8 +32,9 @@ class Exchange extends Component {
       this.setState({ currencyPairs, selectedPair: currencyPairs[0] });
 
       this.setBalances();
+      this.setOpenOrders();
 
-      this.setOrderBook();
+      this.setOrderBookAndTradeHistory();
     } catch (ex) {
       console.log(ex);
     }
@@ -65,18 +64,43 @@ class Exchange extends Component {
     }
   };
 
+  setOpenOrders = async () => {
+    const { selectedPair } = this.state;
+
+    if (Object.keys(selectedPair).length) {
+      try {
+        const orders = await trade.getUserOpenOrders();
+        const openOrders = orders.filter(
+          o => o.currency_pair_id === selectedPair.id
+        );
+
+        this.setState({ openOrders });
+      } catch (ex) {
+        if (ex.response && ex.response.status === 400) {
+          console.log(ex.response.data);
+          // toast.error(ex.response.data);
+        }
+      }
+    }
+  };
+
   handleOrderBook = orderBookData => {
     this.setState({ orderBookData });
   };
+  handleTradeHistory = tradeHistory => {
+    this.setState({ tradeHistory });
+  };
 
-  setOrderBook = async () => {
+  setOrderBookAndTradeHistory = async () => {
     const { selectedPair } = this.state;
 
     if (Object.keys(selectedPair).length) {
       try {
         const data = await trade.getOrderBook(selectedPair.id);
+        const tradeHistory = await trade.getTradeHistory(selectedPair.id);
 
         this.handleOrderBook(data);
+        this.handleTradeHistory(tradeHistory);
       } catch (ex) {
         if (ex.response && ex.response.status === 400) {
           console.log(ex.response.data);
@@ -86,12 +110,13 @@ class Exchange extends Component {
   };
 
   render() {
+    const user = auth.getCurrentUser();
+
     const {
-      currencyPairs,
       selectedPair,
-      baseCurrencyBalance,
-      quoteCurrencyBalance,
-      orderBookData
+      orderBookData,
+      tradeHistory,
+      openOrders
     } = this.state;
 
     return (
@@ -105,50 +130,11 @@ class Exchange extends Component {
           orderBookData={orderBookData}
           onOrderBookUpdate={this.handleOrderBook}
           onTrade={this.setBalances}
+          tradeHistory={tradeHistory}
         />
 
-        <ThemeTable
-          themeTableHeadings={themeTableHeadings}
-          themeTableValue={themeTableValue}
-        />
-        <GettingStarted />
-
-        <div className="row">
-          <div className="col-md-12">
-            <h1>Exchange Page</h1>
-            <div className="row">
-              <div className="col-md-3">
-                <Select
-                  name="pairs"
-                  label="Trading Pairs"
-                  options={currencyPairs}
-                />
-              </div>
-              <div className="col-md-3">
-                <OrderBook
-                  selectedPair={selectedPair}
-                  orderBookData={orderBookData}
-                  onOrderBookUpdate={this.handleOrderBook}
-                  onTrade={this.setBalances}
-                />
-              </div>
-              <div className="col-md-6">
-                <div className="row">
-                  <BuyOrderForm
-                    selectedPair={selectedPair}
-                    balance={quoteCurrencyBalance}
-                    onTrade={this.setBalances}
-                  />
-                  <SellOrderForm
-                    selectedPair={selectedPair}
-                    balance={baseCurrencyBalance}
-                    onTrade={this.setBalances}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ThemeTable openOrders={openOrders} />
+        {!user && <GettingStarted />}
       </React.Fragment>
     );
   }

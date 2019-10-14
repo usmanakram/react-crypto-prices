@@ -53,6 +53,11 @@ class Header extends Component {
                     </Link>
                     <ul className="dropdown-menu">
                       <li className="nav-item">
+                        <Link className="nav-link" to="openOrder">
+                          Open Order
+                        </Link>
+                      </li>
+                      <li className="nav-item">
                         <Link className="nav-link" to="orderHistory">
                           Order History
                         </Link>
@@ -68,7 +73,7 @@ class Header extends Component {
                         </Link>
                       </li>
                       <li className="nav-item">
-                        <Link className="nav-link" to="deposits">
+                        <Link className="nav-link" to="deposits2">
                           Deposits
                         </Link>
                       </li>
@@ -158,18 +163,28 @@ class Header extends Component {
                     </li>
                   </ul>
                 </li>
-                {!user && (
+                {user && (
                   <li className="nav-item button">
-                    <Link className="btn nav-link" to="login">
-                      Login
+                    <Link className="btn nav-link" to="/logout">
+                      Logout
                     </Link>
                   </li>
                 )}
-                <li className="nav-item button active">
-                  <Link className="btn nav-link" to="signup.html">
-                    Sign Up
-                  </Link>
-                </li>
+                {!user && (
+                  <React.Fragment>
+                    <li className="nav-item button">
+                      <Link className="btn nav-link" to="login">
+                        Login
+                      </Link>
+                    </li>
+
+                    <li className="nav-item button active">
+                      <Link className="btn nav-link" to="signup.html">
+                        Sign Up
+                      </Link>
+                    </li>
+                  </React.Fragment>
+                )}
               </ul>
             </div>
           </div>
