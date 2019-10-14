@@ -79,7 +79,7 @@ class Deposits2 extends Component {
       }); //
       toast.error(
         "Deposit of " +
-          this.value +
+          select.value +
           " is not functional right now. Please, try again later"
       );
     }

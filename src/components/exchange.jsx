@@ -9,6 +9,7 @@ import GettingStarted from "./gettingStarted";
 import auth from "../services/authService";
 import ws from "../services/webSocketService";
 import { toast } from "react-toastify";
+import _ from "lodash";
 
 class Exchange extends Component {
   state = {
@@ -107,6 +108,14 @@ class Exchange extends Component {
   handleOrderBook = orderBookData => {
     // Update sellOrders as "decending order rates"
     orderBookData.sellOrders.sort((a, b) => b.rate - a.rate);
+
+    orderBookData.sellOrders = _(orderBookData.sellOrders)
+      .take(5)
+      .value();
+    orderBookData.buyOrders = _(orderBookData.buyOrders)
+      .take(5)
+      .value();
+
     this.setState({ orderBookData });
   };
   handleTradeHistory = tradeHistory => {
