@@ -8,8 +8,8 @@ class Spinner extends Component {
       <div className="spinner_processing">
         <div className="spinner_center">
           <i
-            className="fa fa-spinner fa-spin "
-            style={{ fontSize: 48, color: "#0275d8" }}
+            className="fa fa-spinner fa-spin  "
+            style={{ fontSize: 45, color: "#797979" }}
           ></i>
         </div>
       </div>

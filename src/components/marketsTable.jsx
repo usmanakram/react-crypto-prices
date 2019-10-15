@@ -154,7 +154,8 @@ class MarketsTable extends Component {
     const { length: count } = this.state.coins;
     const { pageSize, currentPage, sortColumn } = this.state;
 
-    if (count === 0) return <p>There are no coins in the database.</p>;
+    if (count === 0)
+      return <p className="my-3 ml-3">There is no coin. Wait...</p>;
 
     const { totalCount, coins } = this.getPagedData();
 

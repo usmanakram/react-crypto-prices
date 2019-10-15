@@ -5,6 +5,7 @@ import HorizontalFormInput from "./common/horizontalFormInput";
 import InpuTradeForm from "./common/inputTradeForm";
 import { toast } from "react-toastify";
 import auth from "../services/authService";
+import InputHidden from "./common/inputHidden";
 
 class TradingForm extends Form {
   state = {
@@ -88,7 +89,8 @@ class TradingForm extends Form {
         100000000
       );
 
-    return null;
+    // return null;
+    return "";
   };
 
   resetFormData = () => {
@@ -109,6 +111,18 @@ class TradingForm extends Form {
         error={errors[name]}
         symbol={symbol}
         readOnly={readOnly}
+      />
+    );
+  }
+  renderInputHidden(name) {
+    const { data, errors } = this.state;
+
+    return (
+      <InputHidden
+        name={name}
+        value={data[name]}
+        onChange={this.handleChange}
+        error={errors[name]}
       />
     );
   }

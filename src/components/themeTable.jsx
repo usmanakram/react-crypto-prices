@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Table from "./common/table";
+import Spinner from "./spinner";
 
 class ThemeTable extends Component {
   state = {};
@@ -44,6 +45,8 @@ class ThemeTable extends Component {
               <div className="panel-heading-block">
                 <h5>Open Orders</h5>
               </div>
+              {openOrders == 0 && <Spinner />}
+
               <Table
                 columns={this.columns}
                 data={openOrders}

@@ -4,6 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Header from "./header";
 import Table from "./common/table";
 import trade from "../services/tradeService";
+import Spinner from "./spinner";
 
 class TradeHistory extends Component {
   state = {
@@ -126,7 +127,8 @@ class TradeHistory extends Component {
                 </div>
               </form>
 
-              <div className="latest-tranjections-block-inner">
+              <div className="latest-tranjections-block-inner ">
+                {tradeHistory == 0 && <Spinner />}
                 <Table
                   columns={this.columns}
                   data={tradeHistory}

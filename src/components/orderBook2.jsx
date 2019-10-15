@@ -38,7 +38,7 @@ class OrderBook2 extends Component {
             </Link>
           </li>
           <li className="nav-item">
-            <div className="dropdown order-count-dropdown">
+            {/* <div className="dropdown order-count-dropdown">
               <button
                 className="btn dropdown-toggle"
                 type="button"
@@ -60,39 +60,40 @@ class OrderBook2 extends Component {
                   18
                 </button>
               </div>
-            </div>
+            </div> */}
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="#">
+            {/* <Link className="nav-link" to="#">
               <img
                 src="./images/exchange/1.png"
                 alt="img"
                 className="img-responsive"
               />
-            </Link>
+            </Link> */}
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="#">
+            {/* <Link className="nav-link" to="#">
               <img
                 src="./images/exchange/2.png"
                 alt="img"
                 className="img-responsive"
               />
-            </Link>
+            </Link> */}
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="#">
+            {/* <Link className="nav-link" to="#">
               <img
                 src="./images/exchange/3.png"
                 alt="img"
                 className="img-responsive"
               />
-            </Link>
+            </Link> */}
           </li>
         </ul>
 
         <div className="das-oreder-table-block ">
           <SellOrderBookTable orderBookData={orderBookData} />
+
           <BuyOrderBookTable orderBookData={orderBookData} />
         </div>
       </div>
