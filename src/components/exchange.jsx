@@ -106,15 +106,15 @@ class Exchange extends Component {
   };
 
   handleOrderBook = orderBookData => {
-    // Update sellOrders as "decending order rates"
-    orderBookData.sellOrders.sort((a, b) => b.rate - a.rate);
-
     orderBookData.sellOrders = _(orderBookData.sellOrders)
       .take(5)
       .value();
     orderBookData.buyOrders = _(orderBookData.buyOrders)
       .take(5)
       .value();
+
+    // Update sellOrders as "decending order rates"
+    orderBookData.sellOrders.sort((a, b) => b.rate - a.rate);
 
     this.setState({ orderBookData });
   };
