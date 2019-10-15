@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { orderHeadings, orderValues } from "../services/fakeOrderHistory";
+import { orderHeadings } from "../services/fakeOrderHistory";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Header from "./header";
 import Table from "./common/table";
 import trade from "../services/tradeService";
+import Spinner from "./spinner";
 
 class OrderHistory extends Component {
   state = {
@@ -147,6 +148,8 @@ class OrderHistory extends Component {
               </form>
 
               <div className="latest-tranjections-block-inner">
+                {orderHistory == 0 && <Spinner />}
+
                 <Table
                   columns={this.columns}
                   data={orderHistory}

@@ -1,14 +1,37 @@
 import React, { Component } from "react";
-
 import Header from "./header";
-import ThemeTable from "./themeTable";
-import { themeTableHeadings, themeTableValue } from "../services/fakeExchange";
+import Table from "./common/table";
+import { tHTableHeadings, tHTableValue } from "../services/fakeExchange";
 
 class Withdrawal extends Component {
   state = {
-    themeTableHeadings: themeTableHeadings,
-    themeTableValue: themeTableValue
+    themeTableHeadings: tHTableHeadings,
+    themeTableValue: tHTableValue
   };
+
+  columns = [
+    {
+      path: "status",
+      label: "Status"
+    },
+    {
+      path: "coin",
+      label: "Coin"
+    },
+    {
+      path: "amount",
+      label: "Amount"
+    },
+    {
+      path: "date",
+      label: "Date"
+    },
+    {
+      path: "information",
+
+      label: "Information"
+    }
+  ];
 
   render() {
     return (
@@ -17,7 +40,26 @@ class Withdrawal extends Component {
           <Header />
         </div>
 
-        {/* <ThemeTable /> */}
+        <div className="container my-5">
+          <div className="row">
+            <div className="col-12">
+              <h4>Withdrawal</h4>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-12">
+              <div className="latest-tranjections-block-inner">
+                <Table
+                  columns={this.columns}
+                  data={tHTableValue}
+                  classes="coin-list latest-tranjections-table"
+                  sortColumn=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </React.Fragment>
     );
   }

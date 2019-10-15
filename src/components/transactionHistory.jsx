@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-
-import { tableItems } from "../services/fakeActivity";
 import Header from "./header";
 import Table from "./common/table";
 import { tHTableHeadings, tHTableValue } from "../services/fakeExchange";
@@ -52,18 +50,18 @@ class TransactionHistory extends Component {
           <div className="ticker-head">
             <ul className="nav nav-tabs ticker-nav" role="tablist">
               <li className="nav-item">
-                <a className="nav-link" href="" role="tab" data-toggle="tab">
-                  <h5>Deposits History</h5>
-                  <i className="fa fa-stroopwafel"></i>
-                </a>
-              </li>
-              <li className="nav-item">
                 <a
                   className="nav-link active"
                   href=""
                   role="tab"
                   data-toggle="tab"
                 >
+                  <h5>Deposits History</h5>
+                  <i className="fa fa-stroopwafel"></i>
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="" role="tab" data-toggle="tab">
                   <h5>Withd rawal History</h5>
                   <i className="fa fa-stroopwafel"></i>
                 </a>

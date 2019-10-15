@@ -2,7 +2,12 @@ import React from "react";
 import SellInstantOrderForm from "./sellInstantOrderForm";
 import BuyInstantOrderForm from "./buyInstantOrderForm";
 
-const InstantOrder = ({ selectedPair, onTrade }) => {
+const InstantOrder = ({
+  selectedPair,
+  onTrade,
+  quoteCurrencyBalance,
+  baseCurrencyBalance
+}) => {
   return (
     <div role="tabpanel" className="tab-pane fade" id="instant_order">
       <div className="tab-content">
@@ -23,10 +28,12 @@ const InstantOrder = ({ selectedPair, onTrade }) => {
                 <BuyInstantOrderForm
                   selectedPair={selectedPair}
                   onTrade={onTrade}
+                  balance={quoteCurrencyBalance}
                 />
                 <SellInstantOrderForm
                   selectedPair={selectedPair}
                   onTrade={onTrade}
+                  balance={baseCurrencyBalance}
                 />
               </tr>
             </tbody>

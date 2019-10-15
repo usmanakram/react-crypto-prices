@@ -61,6 +61,26 @@ class SellLimitOrderForm extends TradingForm {
                 "number",
                 true
               )}
+              <div className="form-group row">
+                <label
+                  htmlFor="tv_a_balance_two"
+                  className="col-3 col-form-label"
+                >
+                  Available balance
+                </label>
+                <div className="col-9 form-input-block readonly">
+                  <input
+                    className="form-control"
+                    type="text"
+                    value={this.getAvailableBalance()}
+                    id="tv_a_balance_two"
+                    readOnly
+                  />
+                  <span className="tv-btc-tag">
+                    {selectedPair.quote_currency_symbol}
+                  </span>
+                </div>
+              </div>
               {/* {this.renderInputTradeForm(
                 "commission",
                 "Commission",
