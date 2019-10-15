@@ -118,6 +118,7 @@ class Exchange extends Component {
 
     this.setState({ orderBookData });
   };
+
   handleTradeHistory = tradeHistory => {
     this.setState({ tradeHistory });
   };

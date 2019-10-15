@@ -5,15 +5,18 @@ import auth from "../services/authService";
 
 class Transactions extends Component {
   state = {
-    transactions: []
+    deposits: [],
+    withdrawals: []
   };
 
   async componentDidMount() {
     try {
       const { data } = await http.get("auth/get-transactions-history");
-      console.log(data);
 
-      this.setState({ transactions: data });
+      this.setState({
+        deposits: data.deposits,
+        withdrawals: data.withdrawals
+      });
     } catch (ex) {
       console.log(ex);
     }
@@ -22,7 +25,7 @@ class Transactions extends Component {
   render() {
     if (!auth.getCurrentUser()) return <Redirect to="/login" />;
 
-    const { transactions } = this.state;
+    const { deposits } = this.state;
 
     return (
       <div className="row">
@@ -42,7 +45,7 @@ class Transactions extends Component {
           >
             Withdrawal
           </Link>
-          {transactions.length > 0 && (
+          {deposits.length > 0 && (
             <table className="table table-bordered">
               <thead className="theadColor">
                 <tr>
@@ -55,7 +58,7 @@ class Transactions extends Component {
                 </tr>
               </thead>
               <tbody className="tbodyColor">
-                {transactions.map(t => (
+                {deposits.map(t => (
                   <tr key={t.id}>
                     <td>{t.status_text}</td>
                     <td>{t.currency.symbol}</td>
@@ -73,7 +76,7 @@ class Transactions extends Component {
             </table>
           )}
 
-          {transactions.length === 0 && (
+          {deposits.length === 0 && (
             <div
               className="row border"
               style={{ backgroundColor: "#ffffff", margin: 0 }}

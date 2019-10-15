@@ -13,9 +13,6 @@ class Balances extends Component {
   async componentDidMount() {
     try {
       const { data: balances } = await http.get("/auth/get-balances");
-
-      console.log(balances);
-
       this.setState({ balances });
     } catch (ex) {
       console.log(ex);
