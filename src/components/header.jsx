@@ -47,48 +47,57 @@ class Header extends Component {
                   </Link>
                 </li>
                 {user && (
-                  <li className="nav-item dropdown">
-                    <Link className="nav-link" to="">
-                      Order
-                    </Link>
-                    <ul className="dropdown-menu">
-                      <li className="nav-item">
-                        <Link className="nav-link" to="openOrder">
-                          Open Order
-                        </Link>
-                      </li>
-                      <li className="nav-item">
-                        <Link className="nav-link" to="orderHistory">
-                          Order History
-                        </Link>
-                      </li>
-                      <li className="nav-item">
-                        <Link className="nav-link" to="tradeHistory">
-                          Trade History
-                        </Link>
-                      </li>
-                      <li className="nav-item">
-                        <Link className="nav-link" to="balances">
-                          Balances
-                        </Link>
-                      </li>
-                      <li className="nav-item">
-                        <Link className="nav-link" to="deposits2">
-                          Deposits
-                        </Link>
-                      </li>
-                      <li className="nav-item">
-                        <Link className="nav-link" to="withdrawal">
-                          Withdrawal
-                        </Link>
-                      </li>
-                      <li className="nav-item">
-                        <Link className="nav-link" to="transactionHistory">
-                          Transaction History
-                        </Link>
-                      </li>
-                    </ul>
-                  </li>
+                  <React.Fragment>
+                    <li className="nav-item dropdown">
+                      <Link className="nav-link" to="">
+                        Fund
+                      </Link>
+                      <ul className="dropdown-menu">
+                        <li className="nav-item">
+                          <Link className="nav-link" to="balances">
+                            Balances
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link className="nav-link" to="deposits2">
+                            Deposits
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link className="nav-link" to="withdrawal">
+                            Withdrawal
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link className="nav-link" to="transactionHistory">
+                            Transaction History
+                          </Link>
+                        </li>
+                      </ul>
+                    </li>
+                    <li className="nav-item dropdown">
+                      <Link className="nav-link" to="">
+                        Order
+                      </Link>
+                      <ul className="dropdown-menu">
+                        <li className="nav-item">
+                          <Link className="nav-link" to="openOrder">
+                            Open Order
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link className="nav-link" to="orderHistory">
+                            Order History
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link className="nav-link" to="tradeHistory">
+                            Trade History
+                          </Link>
+                        </li>
+                      </ul>
+                    </li>
+                  </React.Fragment>
                 )}
                 <li className="nav-item">
                   <Link className="nav-link" to="features.html">

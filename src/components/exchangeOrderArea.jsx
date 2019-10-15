@@ -2,7 +2,12 @@ import React from "react";
 import LimitOrder from "./limitOrder";
 import InstantOrder from "./instantOrder";
 
-const ExchangeOrderArea = ({ selectedPair, onTrade }) => {
+const ExchangeOrderArea = ({
+  selectedPair,
+  onTrade,
+  quoteCurrencyBalance,
+  baseCurrencyBalance
+}) => {
   return (
     <div className="order-form-area-block">
       <ul className="nav nav-tabs ticker-nav parent-order-tab" role="tablist">
@@ -30,8 +35,18 @@ const ExchangeOrderArea = ({ selectedPair, onTrade }) => {
       <div className="market-ticker-block">
         {/* <!-- Tab panes --> */}
         <div className="tab-content">
-          <LimitOrder selectedPair={selectedPair} onTrade={onTrade} />
-          <InstantOrder selectedPair={selectedPair} onTrade={onTrade} />
+          <LimitOrder
+            selectedPair={selectedPair}
+            onTrade={onTrade}
+            quoteCurrencyBalance={quoteCurrencyBalance}
+            baseCurrencyBalance={quoteCurrencyBalance}
+          />
+          <InstantOrder
+            selectedPair={selectedPair}
+            onTrade={onTrade}
+            quoteCurrencyBalance={quoteCurrencyBalance}
+            baseCurrencyBalance={quoteCurrencyBalance}
+          />
         </div>
       </div>
     </div>

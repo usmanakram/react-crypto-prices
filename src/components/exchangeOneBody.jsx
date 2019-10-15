@@ -9,7 +9,9 @@ const ExchangeOneBody = ({
   orderBookData,
   tradeHistory,
   onOrderBookUpdate,
-  onTrade
+  onTrade,
+  quoteCurrencyBalance,
+  baseCurrencyBalance
 }) => {
   return (
     <div className="dashboard-block dashboard-white">
@@ -27,11 +29,14 @@ const ExchangeOneBody = ({
             <div className="col-lg-6">
               <div className="exchange-chart-block">
                 <TradingViewWidget />
+
                 {/* <DepthChartWidget /> */}
               </div>
               <ExchangeOrderArea
                 selectedPair={selectedPair}
                 onTrade={onTrade}
+                baseCurrencyBalance={baseCurrencyBalance}
+                quoteCurrencyBalance={quoteCurrencyBalance}
               />
             </div>
 

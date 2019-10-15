@@ -147,7 +147,9 @@ class Exchange extends Component {
       selectedPair,
       orderBookData,
       tradeHistory,
-      openOrders
+      openOrders,
+      baseCurrencyBalance,
+      quoteCurrencyBalance
     } = this.state;
 
     return (
@@ -162,6 +164,8 @@ class Exchange extends Component {
           onOrderBookUpdate={this.handleOrderBook}
           onTrade={this.setBalances}
           tradeHistory={tradeHistory}
+          quoteCurrencyBalance={quoteCurrencyBalance}
+          baseCurrencyBalance={baseCurrencyBalance}
         />
 
         <ThemeTable openOrders={openOrders} />

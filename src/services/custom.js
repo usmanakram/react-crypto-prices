@@ -4,7 +4,7 @@
 // am4core.useTheme(am4themes_animated);
 
 export function newsHeadlinesSlider() {
-  window.$("#news_headlines_slider").slick({
+  window.$('#news_headlines_slider').slick({
     dots: false,
     infinite: true,
     speed: 300,
@@ -12,17 +12,16 @@ export function newsHeadlinesSlider() {
     autoplay: true,
     slidesToShow: 3,
     adaptiveHeight: true,
-    responsive: [
-      {
-        breakpoint: 770,
-        settings: {
-          slidesToShow: 2
+    responsive:[{
+            breakpoint: 770,
+            settings: {
+                slidesToShow: 2
+            }
         }
-      }
     ]
-  });
-}
 
+});
+}
 export function highlights(){var updatingChartOne = window.$(".updating-chart-one").peity("line", {
   width: 60,
   height: 70,

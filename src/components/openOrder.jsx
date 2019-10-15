@@ -1,16 +1,15 @@
 import React, { Component } from "react";
-import { orderHeadings, orderValues } from "../services/fakeOrderHistory";
-import DatePicker from "react-datepicker";
+import { orderHeadings } from "../services/fakeOrderHistory";
 import "react-datepicker/dist/react-datepicker.css";
 import Header from "./header";
 import Table from "./common/table";
 import trade from "../services/tradeService";
+import Spinner from "./spinner";
 
 class OpenOrder extends Component {
   state = {
     openOrders: [],
-    orderHeadings: orderHeadings,
-    startDate: new Date()
+    orderHeadings: orderHeadings
   };
 
   columns = [
@@ -53,12 +52,6 @@ class OpenOrder extends Component {
     }
   }
 
-  handleChange = date => {
-    this.setState({
-      startDate: date
-    });
-  };
-
   render() {
     const { openOrders } = this.state;
 
@@ -76,6 +69,8 @@ class OpenOrder extends Component {
           <div className="row">
             <div className="col-12">
               <div className="latest-tranjections-block-inner">
+                {openOrders == 0 && <Spinner />}
+
                 <Table
                   columns={this.columns}
                   data={openOrders}
