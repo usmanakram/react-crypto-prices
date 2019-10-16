@@ -37,7 +37,9 @@ class BuyInstantOrderForm extends TradingForm {
   };
 
   render() {
-    const { selectedPair } = this.props;
+    const { selectedPair, selectedPairStats } = this.props;
+
+    this.state.data.price = selectedPairStats.last_price;
 
     return (
       <td>

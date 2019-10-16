@@ -6,6 +6,7 @@ import ExchangeRightSideBar from "./exchangeRightSideBar";
 import ExchangeOrderArea from "./exchangeOrderArea";
 const ExchangeOneBody = ({
   selectedPair,
+  selectedPairStats,
   orderBookData,
   tradeHistory,
   onOrderBookUpdate,
@@ -35,6 +36,7 @@ const ExchangeOneBody = ({
               </div>
               <ExchangeOrderArea
                 selectedPair={selectedPair}
+                selectedPairStats={selectedPairStats}
                 onTrade={onTrade}
                 baseCurrencyBalance={baseCurrencyBalance}
                 quoteCurrencyBalance={quoteCurrencyBalance}

@@ -15,6 +15,10 @@ class Exchange extends Component {
   state = {
     currencyPairs: [],
     selectedPair: {},
+    selectedPairStats: {
+      last_price: "",
+      volume: ""
+    },
     baseCurrencyBalance: {},
     quoteCurrencyBalance: {},
     openOrders: [],
@@ -31,19 +35,34 @@ class Exchange extends Component {
 
       // Temporarily block all pairs except Bittrain Coin vs Bitcoin
       const currencyPairs = data.filter(p => p.symbol === "BCBTC");
+      const selectedPair = currencyPairs[0];
 
-      this.setState({ currencyPairs, selectedPair: currencyPairs[0] });
+      this.setState({ currencyPairs, selectedPair });
 
       this.setBalances();
       this.setOpenOrders();
 
       this.setOrderBookAndTradeHistory();
+
+      ws.channel("live").listen("LiveRates", e => {
+        const pair = e.rates.find(p => p.id === selectedPair.id);
+        this.handleSelectedPairStats(pair.latest_price);
+      });
     } catch (ex) {
       console.log(ex);
     }
 
     this.handleUserStream();
   }
+
+  handleSelectedPairStats = latest_price => {
+    this.setState({
+      selectedPairStats: {
+        last_price: latest_price.last_price,
+        volume: latest_price.volume
+      }
+    });
+  };
 
   handleUserStream = () => {
     const user = auth.getCurrentUser();
@@ -60,8 +79,6 @@ class Exchange extends Component {
           toast.success(e.message);
         })
         .listen("OpenOrdersUpdated", e => {
-          console.log("OpenOrdersUpdated triggered");
-          console.log(e);
           this.handleOpenOrders(e.openOrders);
         });
     }
@@ -143,9 +160,11 @@ class Exchange extends Component {
       try {
         const data = await trade.getOrderBook(selectedPair.id);
         const tradeHistory = await trade.getTradeHistory(selectedPair.id);
+        const pair = await trade.getLatestPrice(selectedPair.id);
 
         this.handleOrderBook(data);
         this.handleTradeHistory(tradeHistory);
+        this.handleSelectedPairStats(pair.latest_price);
       } catch (ex) {
         if (ex.response && ex.response.status === 400) {
           console.log(ex.response.data);
@@ -159,6 +178,7 @@ class Exchange extends Component {
 
     const {
       selectedPair,
+      selectedPairStats,
       orderBookData,
       tradeHistory,
       openOrders,
@@ -171,9 +191,10 @@ class Exchange extends Component {
         <div className="navigation-two">
           <Header />
         </div>
-        <CurrencyRate />
+        <CurrencyRate selectedPairStats={selectedPairStats} />
         <ExchangeOneBody
           selectedPair={selectedPair}
+          selectedPairStats={selectedPairStats}
           orderBookData={orderBookData}
           onOrderBookUpdate={this.handleOrderBook}
           onTrade={this.setBalances}
