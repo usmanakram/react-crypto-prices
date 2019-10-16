@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-const CurrencyRate = () => {
+
+const CurrencyRate = ({ selectedPairStats }) => {
   return (
     <div className="section-padding-50">
       <div className="container">
@@ -39,7 +40,10 @@ const CurrencyRate = () => {
                 <div className="currency-info last-price">
                   <span>Last Price</span>
                   <h6>
-                    <span className="color-sell">0.058505</span>
+                    <span className="color-sell">
+                      {Object.keys(selectedPairStats).length > 0 &&
+                        selectedPairStats.last_price}
+                    </span>
                     <span className="currency-info-base">$390.68</span>
                   </h6>
                 </div>
@@ -59,7 +63,11 @@ const CurrencyRate = () => {
                 </div>
                 <div className="currency-info volume-value">
                   <span>24h Volume</span>
-                  <h6 className="currency-info-base">8,532.12 BTC</h6>
+                  <h6 className="currency-info-base">
+                    {Object.keys(selectedPairStats).length > 0 &&
+                      selectedPairStats.volume}{" "}
+                    BTC
+                  </h6>
                 </div>
               </div>
             </div>
