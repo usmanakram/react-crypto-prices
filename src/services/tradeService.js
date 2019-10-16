@@ -45,6 +45,11 @@ async function getTradeHistory(pair_id) {
   return data;
 }
 
+async function getChartTradeHistory(pair_id) {
+  const { data } = await http.get("/chart-trade-history/" + pair_id);
+  return data;
+}
+
 async function getUserTradeHistory() {
   const { data } = await http.post("/auth/user-trades");
   return data;
@@ -67,6 +72,7 @@ export default {
   getBalance,
   getOrderBook,
   getTradeHistory,
+  getChartTradeHistory,
   getUserTradeHistory,
   getUserOrderHistory,
   getUserOpenOrders

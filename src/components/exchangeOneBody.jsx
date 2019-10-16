@@ -11,7 +11,8 @@ const ExchangeOneBody = ({
   onOrderBookUpdate,
   onTrade,
   quoteCurrencyBalance,
-  baseCurrencyBalance
+  baseCurrencyBalance,
+  onTradeHistoryUpdate
 }) => {
   return (
     <div className="dashboard-block dashboard-white">
@@ -28,7 +29,7 @@ const ExchangeOneBody = ({
 
             <div className="col-lg-6">
               <div className="exchange-chart-block">
-                <TradingViewWidget />
+                <TradingViewWidget selectedPair={selectedPair} />
 
                 {/* <DepthChartWidget /> */}
               </div>
@@ -41,7 +42,11 @@ const ExchangeOneBody = ({
             </div>
 
             <div className="col-lg-3">
-              <ExchangeRightSideBar tradeHistory={tradeHistory} />
+              <ExchangeRightSideBar
+                selectedPair={selectedPair}
+                tradeHistory={tradeHistory}
+                onTradeHistoryUpdate={onTradeHistoryUpdate}
+              />
             </div>
           </div>
         </div>

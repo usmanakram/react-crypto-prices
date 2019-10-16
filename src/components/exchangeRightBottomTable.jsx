@@ -2,17 +2,41 @@ import React, { Component } from "react";
 import moment from "moment";
 import { exchangeRightBottomValues } from "../services/fakeExchange";
 import Spinner from "./spinner";
+import ws from "../services/webSocketService";
 
 class ExchangeRightBottomTable extends Component {
   state = {};
+
+  tradeHistoryPairId = 0;
 
   componentDidMount() {
     window.$(".dashboard-ticker-block-four").slimScroll({
       height: "570px"
     });
   }
+
+  handleTradeHistoryStream = () => {
+    const { selectedPair } = this.props;
+
+    if (
+      Object.keys(selectedPair).length &&
+      this.tradeHistoryPairId !== selectedPair.id
+    ) {
+      this.tradeHistoryPairId = selectedPair.id;
+
+      ws.channel("TradeHistory." + this.tradeHistoryPairId).listen(
+        "TradeHistoryUpdated",
+        e => {
+          this.props.onTradeHistoryUpdate(e.tradeHistory);
+        }
+      );
+    }
+  };
+
   render() {
     const { tradeHistory } = this.props;
+
+    this.handleTradeHistoryStream();
 
     return (
       <div className="order-history-block">

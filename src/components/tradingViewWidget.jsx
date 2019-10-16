@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import { candleChartdData } from "../services/custom";
 import { createChart, CrosshairMode } from "lightweight-charts";
+import trade from "../services/tradeService";
+import ws from "../services/webSocketService";
 
 class TradingViewWidget extends Component {
   state = {};
+
+  selectedPairId = 0;
+
   _id = React.createRef();
   chart = {};
 
@@ -47,15 +52,20 @@ class TradingViewWidget extends Component {
         borderColor: "rgba(197, 203, 206, 0.8)"
       }
     });
-    var candleSeries = this.chart.addCandlestickSeries({
-      upColor: "rgba(255, 144, 0, 1)",
-      downColor: "#000",
-      borderDownColor: "rgba(255, 144, 0, 1)",
-      borderUpColor: "rgba(255, 144, 0, 1)",
-      wickDownColor: "rgba(255, 144, 0, 1)",
-      wickUpColor: "rgba(255, 144, 0, 1)"
+    this.candleSeries = this.chart.addCandlestickSeries({
+      upColor: "green",
+      downColor: "red",
+      borderDownColor: "red",
+      borderUpColor: "green",
+      wickDownColor: "red",
+      wickUpColor: "green",
+      priceFormat: {
+        type: "price",
+        precision: 8,
+        minMove: 0.0000001
+      }
     });
-    candleSeries.setData(candleChartdData);
+    this.candleSeries.setData(candleChartdData);
 
     this.updateDimensions();
     window.addEventListener("resize", this.updateDimensions);
@@ -70,7 +80,40 @@ class TradingViewWidget extends Component {
     );
   };
 
+  handleGraph = async () => {
+    const { selectedPair } = this.props;
+
+    if (
+      Object.keys(selectedPair).length &&
+      this.selectedPairId !== selectedPair.id
+    ) {
+      this.selectedPairId = selectedPair.id;
+
+      try {
+        const candleChartData = await trade.getChartTradeHistory(
+          selectedPair.id
+        );
+
+        this.candleSeries.setData(candleChartData);
+      } catch (ex) {
+        if (ex.response && ex.response.status === 400) {
+          console.log(ex.response.data);
+          // toast.error(ex.response.data);
+        }
+      }
+
+      ws.channel("CandleStickGraph." + this.selectedPairId).listen(
+        "CandleStickGraphUpdated",
+        e => {
+          this.candleSeries.setData(e.candleStickData);
+        }
+      );
+    }
+  };
+
   render() {
+    this.handleGraph();
+
     return (
       <div className="tradingview-widget-container">
         <div id="tradingview_57f17" ref={this._id}>

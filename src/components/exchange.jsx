@@ -49,15 +49,21 @@ class Exchange extends Component {
     const user = auth.getCurrentUser();
 
     if (auth.getCurrentUser()) {
-      ws.channel("User." + user.sub).listen("TradeOrderFilled", e => {
-        /**
-         * It's temporary solution. Balances will be received over websocket connection at OrderFiled event.
-         */
-        // this.props.onTrade();
-        this.setBalances();
+      ws.channel("User." + user.sub)
+        .listen("TradeOrderFilled", e => {
+          /**
+           * It's temporary solution. Balances will be received over websocket connection at OrderFiled event.
+           */
+          // this.props.onTrade();
+          this.setBalances();
 
-        toast.success(e.message);
-      });
+          toast.success(e.message);
+        })
+        .listen("OpenOrdersUpdated", e => {
+          console.log("OpenOrdersUpdated triggered");
+          console.log(e);
+          this.handleOpenOrders(e.openOrders);
+        });
     }
   };
 
@@ -85,17 +91,24 @@ class Exchange extends Component {
     }
   };
 
+  handleOpenOrders = orders => {
+    const { selectedPair } = this.state;
+
+    const openOrders = orders.filter(
+      o => o.currency_pair_id === selectedPair.id
+    );
+
+    this.setState({ openOrders });
+  };
+
   setOpenOrders = async () => {
     const { selectedPair } = this.state;
 
     if (Object.keys(selectedPair).length) {
       try {
         const orders = await trade.getUserOpenOrders();
-        const openOrders = orders.filter(
-          o => o.currency_pair_id === selectedPair.id
-        );
 
-        this.setState({ openOrders });
+        this.handleOpenOrders(orders);
       } catch (ex) {
         if (ex.response && ex.response.status === 400) {
           console.log(ex.response.data);
@@ -167,9 +180,10 @@ class Exchange extends Component {
           tradeHistory={tradeHistory}
           quoteCurrencyBalance={quoteCurrencyBalance}
           baseCurrencyBalance={baseCurrencyBalance}
+          onTradeHistoryUpdate={this.handleTradeHistory}
         />
 
-        <ThemeTable openOrders={openOrders} />
+        <ThemeTable selectedPair={selectedPair} openOrders={openOrders} />
         {!user && <GettingStarted />}
       </React.Fragment>
     );
