@@ -61,7 +61,9 @@ class TradeHistory extends Component {
         <div className="container my-5">
           <div className="row">
             <div className="col-12">
-              <h4>Trade History</h4>
+              <div className="latest-tranjections-block-inner panel-heading-block mb-2">
+                <h5>Trade History</h5>
+              </div>
             </div>
           </div>
           <div className="row">

@@ -1,39 +1,40 @@
 import React, { Component } from "react";
 import Header from "./header";
 import Table from "./common/table";
+import http from "../services/httpService";
 import { tHTableHeadings, tHTableValue } from "../services/fakeExchange";
 
 class TransactionHistory extends Component {
   state = {
     themeTableHeadings: tHTableHeadings,
-    themeTableValue: tHTableValue
+    themeTableValue: tHTableValue,
+    deposits: [],
+    withdrawals: []
   };
 
   columns = [
-    {
-      path: "status",
-      label: "Status"
-    },
-    {
-      path: "coin",
-      label: "Coin"
-    },
-    {
-      path: "amount",
-      label: "Amount"
-    },
-    {
-      path: "date",
-      label: "Date"
-    },
-    {
-      path: "information",
-
-      label: "Information"
-    }
+    { path: "status_text", label: "Status" },
+    { path: "currency.symbol", label: "Coin" },
+    { path: "amount", label: "Amount" },
+    { path: "created_at", label: "Date" },
+    { path: "address", label: "Information" }
   ];
 
+  async componentDidMount() {
+    try {
+      const { data } = await http.get("/auth/get-transactions-history");
+
+      this.setState({ deposits: data.deposits, withdrawals: data.withdrawals });
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        console.log(ex.response.data);
+      }
+    }
+  }
+
   render() {
+    const { deposits, withdrawals } = this.state;
+
     return (
       <React.Fragment>
         <div className="navigation-two">
@@ -43,7 +44,9 @@ class TransactionHistory extends Component {
         <div className="container my-5">
           <div className="row">
             <div className="col-12">
-              <h4>Open Order</h4>
+              <div className="latest-tranjections-block-inner panel-heading-block mb-2">
+                <h5>Transaction History</h5>
+              </div>
             </div>
           </div>
           {/* /////// */}
@@ -52,17 +55,22 @@ class TransactionHistory extends Component {
               <li className="nav-item">
                 <a
                   className="nav-link active"
-                  href=""
+                  href="#deposits"
                   role="tab"
                   data-toggle="tab"
                 >
-                  <h5>Deposits History</h5>
+                  Deposits History
                   <i className="fa fa-stroopwafel"></i>
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="" role="tab" data-toggle="tab">
-                  <h5>Withd rawal History</h5>
+                <a
+                  className="nav-link"
+                  href="#withdrawals"
+                  role="tab"
+                  data-toggle="tab"
+                >
+                  Withdrawal History
                   <i className="fa fa-stroopwafel"></i>
                 </a>
               </li>
@@ -72,13 +80,27 @@ class TransactionHistory extends Component {
           {/* // */}
           <div className="row">
             <div className="col-12">
-              <div className="latest-tranjections-block-inner">
-                <Table
-                  columns={this.columns}
-                  data={tHTableValue}
-                  classes="coin-list latest-tranjections-table"
-                  sortColumn=""
-                />
+              <div className="tab-content latest-tranjections-block-inner">
+                <div
+                  role="tabpanel"
+                  className="tab-pane fade in active show"
+                  id="deposits"
+                >
+                  <Table
+                    columns={this.columns}
+                    data={deposits}
+                    classes="coin-list latest-tranjections-table"
+                    sortColumn=""
+                  />
+                </div>
+                <div role="tabpanel" className="tab-pane fade" id="withdrawals">
+                  <Table
+                    columns={this.columns}
+                    data={withdrawals}
+                    classes="coin-list latest-tranjections-table"
+                    sortColumn=""
+                  />
+                </div>
               </div>
             </div>
           </div>

@@ -109,8 +109,12 @@ class Deposits2 extends Component {
         <div className="navigation-two">
           <Header />
         </div>
+
         <div className="row spinner_wrapper my-5">
           <div className="col-md-10 offset-1 mt-20 ">
+            <div className="latest-tranjections-block-inner panel-heading-block mb-2">
+              <h5>Deposits</h5>
+            </div>
             <select
               className="form-control"
               onChange={this.handleCurrencyChange}
@@ -162,7 +166,7 @@ class Deposits2 extends Component {
                 </tbody>
               </table>
             </div>
-            <div className="col-md-10 offset-1  ">
+            <div className="col-md-10 offset-1  mb-5">
               <div className="border mb-20 adbox">
                 <h5 className="text-warning mt-4 ml-3">
                   <strong>Important</strong>

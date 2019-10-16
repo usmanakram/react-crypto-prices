@@ -43,7 +43,9 @@ class Withdrawal extends Component {
         <div className="container my-5">
           <div className="row">
             <div className="col-12">
-              <h4>Withdrawal</h4>
+              <div className="latest-tranjections-block-inner panel-heading-block mb-2">
+                <h5>Withdrawal</h5>
+              </div>
             </div>
           </div>
 

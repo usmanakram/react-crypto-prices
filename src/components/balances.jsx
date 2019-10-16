@@ -13,6 +13,7 @@ class Balances extends Component {
   async componentDidMount() {
     try {
       const { data: balances } = await http.get("/auth/get-balances");
+
       this.setState({ balances });
     } catch (ex) {
       console.log(ex);
@@ -33,7 +34,7 @@ class Balances extends Component {
             <ul className="nav trending-info-tab">
               <li className="nav-item">
                 <div className=" trending-info-currency-option">
-                  <h3>Balances</h3>
+                  <h4>Balances</h4>
                   <h4> Estimated Value： 0.00000000 BTC / $0.00</h4>
                 </div>
               </li>
@@ -58,7 +59,7 @@ class Balances extends Component {
             </ul>
 
             <div className="trandinginfo-table-block">
-              <table className="table coin-list table-hover">
+              <table className="table coin-list latest-tranjections-table">
                 <thead>
                   <tr>
                     {balanceHeadings.map(balanceHeading => (

@@ -15,7 +15,7 @@ const BuyOrderBookTable = ({ orderBookData }) => {
             style={{ width: "33.33%" }}
           ></th>
           <th className="text-right" scope="col" style={{ width: "33.33%" }}>
-            <img src="./images/exchange/2.png" alt="img" />
+            {/* <img src="./images/exchange/2.png" alt="img" /> */}
           </th>
         </tr>
       </thead>
