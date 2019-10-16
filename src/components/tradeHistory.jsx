@@ -9,7 +9,9 @@ import Spinner from "./spinner";
 class TradeHistory extends Component {
   state = {
     tradeHistory: [],
-    startDate: new Date()
+    startDate: new Date(),
+    endDate: new Date(),
+    select: ""
   };
   columns = [
     { path: "created_at", label: "Date" },
@@ -44,9 +46,30 @@ class TradeHistory extends Component {
     }
   }
 
-  handleChange = date => {
+  handleStartDate = date => {
     this.setState({
       startDate: date
+    });
+  };
+
+  handleEndDate = date => {
+    this.setState({
+      endDate: date
+    });
+  };
+  handeValueChange = c => {
+    console.log("c.target.value");
+    console.log(c.currentTarget.value);
+    this.setState({ select: c.currentTarget.value });
+  };
+
+  handleReset = () => {
+    const date = new Date();
+
+    this.setState({
+      endDate: date,
+      startDate: date,
+      select: ""
     });
   };
 
@@ -73,48 +96,34 @@ class TradeHistory extends Component {
                   {/* <label htmlFor="date"> </label> */}
                   <DatePicker
                     selected={this.state.startDate}
-                    onChange={this.handleChange}
+                    onChange={this.handleStartDate}
                   />
                 </div>
                 <div className="form-group ">
                   {/* <label htmlFor="exampleInputEmail2">-</label> */}
                   <DatePicker
-                    selected={this.state.startDate}
-                    onChange={this.handleChange}
+                    selected={this.state.endDate}
+                    onChange={this.handleEndDate}
                   />
                 </div>
                 <div className="form-group wrapper">
                   {/* <label htmlFor="date"></label> */}
                   <select name="" id="" className="form-control">
-                    <option value="">Pair: Coin</option>
-                    <option value="">ADA</option>
-                    <option value="">ADD</option>
-                    <option value="">ADX</option>
-                    <option value="">AE</option>
-                    <option value="">AGI</option>
-                    <option value="">AION</option>
-                    <option value="">AST</option>
-                    <option value="">ARN</option>
-                    <option value="">BCX</option>
-                    <option value="">Ten</option>
+                    <option value="17">BCBTC</option>
                   </select>
                 </div>
-                <div className="form-group wrapper ">
-                  {/* <label htmlFor="date">-</label> */}
-                  <select name="" id="" className="form-control">
-                    <option value="">All</option>
-                    <option value="">BNB</option>
-                    <option value="">BTC</option>
-                    <option value="">ETH</option>
-                    <option value="">USDT</option>
-                  </select>
-                </div>
+
                 <div className="form-group wrapper">
                   {/* <label htmlFor="date"></label> */}
-                  <select name="" id="" className="form-control">
-                    <option value="">Side: All</option>
-                    <option value="">Buy</option>
-                    <option value="">Sell</option>
+                  <select
+                    onClick={this.handeValueChange}
+                    name=""
+                    id=""
+                    className="form-control"
+                  >
+                    <option value="">Both</option>
+                    <option value="1">Buy</option>
+                    <option value="0">Sell</option>
                   </select>
                 </div>
                 <div className="form-group wrapper">
@@ -123,7 +132,11 @@ class TradeHistory extends Component {
                   </button>
                 </div>
                 <div className="form-group wrapper">
-                  <button type="button" className="btn btn-primary ml-3">
+                  <button
+                    onClick={this.handleReset}
+                    type="button"
+                    className="btn btn-primary ml-3"
+                  >
                     Reset
                   </button>
                 </div>

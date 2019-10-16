@@ -208,7 +208,7 @@ class Exchange extends Component {
         />
 
         <ThemeTable selectedPair={selectedPair} openOrders={openOrders} />
-        {!user && <GettingStarted />}
+        <GettingStarted />
       </React.Fragment>
     );
   }

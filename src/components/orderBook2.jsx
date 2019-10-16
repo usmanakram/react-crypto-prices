@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import SellOrderBookTable from "./sellOrderBookTable";
 import BuyOrderBookTable from "./buyOrderBookTable";
 import ws from "../services/webSocketService";

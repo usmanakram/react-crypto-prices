@@ -49,7 +49,11 @@ class Header extends Component {
                 {user && (
                   <React.Fragment>
                     <li className="nav-item dropdown">
-                      <Link className="nav-link" to="">
+                      <Link
+                        onClick={e => e.preventDefault()}
+                        className="nav-link"
+                        to=""
+                      >
                         Fund
                       </Link>
                       <ul className="dropdown-menu">
@@ -76,7 +80,11 @@ class Header extends Component {
                       </ul>
                     </li>
                     <li className="nav-item dropdown">
-                      <Link className="nav-link" to="">
+                      <Link
+                        onClick={e => e.preventDefault()}
+                        className="nav-link"
+                        to=""
+                      >
                         Order
                       </Link>
                       <ul className="dropdown-menu">
@@ -99,8 +107,8 @@ class Header extends Component {
                     </li>
                   </React.Fragment>
                 )}
-                <li className="nav-item">
-                  <Link className="nav-link" to="features.html">
+                {/* <li className="nav-item">
+                  <Link className="nav-link" to="features">
                     Features
                   </Link>
                 </li>
@@ -110,12 +118,12 @@ class Header extends Component {
                   </Link>
                   <ul className="dropdown-menu">
                     <li className="nav-item">
-                      <Link className="nav-link" to="support.html">
+                      <Link className="nav-link" to="support">
                         Support Default
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <Link className="nav-link" to="support-details.html">
+                      <Link className="nav-link" to="support-details">
                         Support Details
                       </Link>
                     </li>
@@ -127,12 +135,12 @@ class Header extends Component {
                   </Link>
                   <ul className="dropdown-menu">
                     <li className="nav-item">
-                      <Link className="nav-link" to="latest-news.html">
+                      <Link className="nav-link" to="latest-news">
                         Latest News
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <Link className="nav-link" to="news-details.html">
+                      <Link className="nav-link" to="news-details">
                         News Details
                       </Link>
                     </li>
@@ -144,22 +152,22 @@ class Header extends Component {
                   </Link>
                   <ul className="dropdown-menu">
                     <li className="nav-item">
-                      <Link className="nav-link" to="faq.html">
+                      <Link className="nav-link" to="faq">
                         Faq
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <Link className="nav-link" to="how-work.html">
+                      <Link className="nav-link" to="how-work">
                         How Work
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <Link className="nav-link" to="contact.html">
+                      <Link className="nav-link" to="contact">
                         Contact Us
                       </Link>
                     </li>
                   </ul>
-                </li>
+                </li> */}
                 <li className="nav-item dropdown language-option">
                   <Link className="nav-link" to="#">
                     <i className="fas fa-globe"></i> EN
@@ -193,7 +201,7 @@ class Header extends Component {
                     </li>
 
                     <li className="nav-item button active">
-                      <Link className="btn nav-link" to="signup.html">
+                      <Link className="btn nav-link" to="signup">
                         Sign Up
                       </Link>
                     </li>

@@ -142,8 +142,7 @@ class MarketsTable extends Component {
 
   getPagedData = () => {
     const { pageSize, currentPage, sortColumn, coins: allCoins } = this.state;
-    console.log("coin");
-    console.log(allCoins);
+
     const sorted = _.orderBy(allCoins, [sortColumn.path], [sortColumn.order]);
     const coins = paginate(sorted, currentPage, pageSize);
 

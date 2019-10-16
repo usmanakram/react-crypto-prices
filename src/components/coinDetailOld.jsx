@@ -6,12 +6,12 @@ import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
 import moment from "moment";
-import Header from "./header";
+
 // const apiEndpoint = "http://localhost/projects/bittrain_exchange/coinmarketcap.com/api.php?coin=";
 // const apiEndpoint = "?coin=";
 const apiEndpoint = "/currencies/";
 
-class CoinInfo extends Component {
+class CoinDetail extends Component {
   columns = [
     {
       path: "open_time",
@@ -77,47 +77,27 @@ class CoinInfo extends Component {
 
     return (
       <React.Fragment>
-        <div className="navigation-two">
-          <Header />
-        </div>
         <h1>
           {this.props.match.params.coin}{" "}
           <Link to="/" className="btn btn-primary pull-right">
             Back to coins list
           </Link>
         </h1>
-
-        <div className="container my-5">
-          <div className="row">
-            <div className="col-12">
-              <div className="latest-tranjections-block-inner panel-heading-block mb-2">
-                <h5>Hitorical Data</h5>
-              </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-12">
-              <div className="latest-tranjections-block-inner">
-                <Table
-                  columns={this.columns}
-                  data={coinHistory}
-                  sortColumn={sortColumn}
-                  onSort={this.handleSort}
-                />
-                <Pagination
-                  itemsCount={totalCount}
-                  pageSize={pageSize}
-                  currentPage={currentPage}
-                  onPageChange={this.handlePageChange}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        <Table
+          columns={this.columns}
+          data={coinHistory}
+          sortColumn={sortColumn}
+          onSort={this.handleSort}
+        />
+        <Pagination
+          itemsCount={totalCount}
+          pageSize={pageSize}
+          currentPage={currentPage}
+          onPageChange={this.handlePageChange}
+        />
       </React.Fragment>
     );
   }
 }
 
-export default CoinInfo;
+export default CoinDetail;

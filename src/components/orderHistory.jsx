@@ -11,7 +11,8 @@ class OrderHistory extends Component {
   state = {
     orderHistory: [],
     orderHeadings: orderHeadings,
-    startDate: new Date()
+    startDate: new Date(),
+    endDate: new Date()
   };
 
   columns = [
@@ -64,9 +65,14 @@ class OrderHistory extends Component {
     }
   }
 
-  handleChange = date => {
+  handleStartDate = date => {
     this.setState({
       startDate: date
+    });
+  };
+  handleEndDate = date => {
+    this.setState({
+      endDate: date
     });
   };
 
@@ -93,46 +99,27 @@ class OrderHistory extends Component {
                   {/* <label htmlFor="date"> </label> */}
                   <DatePicker
                     selected={this.state.startDate}
-                    onChange={this.handleChange}
+                    onChange={this.handleStartDate}
                   />
                 </div>
                 <div className="form-group ">
                   {/* <label htmlFor="exampleInputEmail2">-</label> */}
                   <DatePicker
-                    selected={this.state.startDate}
-                    onChange={this.handleChange}
+                    selected={this.state.endDate}
+                    onChange={this.handleEndDate}
                   />
                 </div>
                 <div className="form-group wrapper">
                   {/* <label htmlFor="date"></label> */}
                   <select name="" id="" className="form-control">
-                    <option value="">Pair: Coin</option>
-                    <option value="">ADA</option>
-                    <option value="">ADD</option>
-                    <option value="">ADX</option>
-                    <option value="">AE</option>
-                    <option value="">AGI</option>
-                    <option value="">AION</option>
-                    <option value="">AST</option>
-                    <option value="">ARN</option>
-                    <option value="">BCX</option>
-                    <option value="">Ten</option>
+                    <option value="17">BCBTC</option>
                   </select>
                 </div>
-                <div className="form-group wrapper ">
-                  {/* <label htmlFor="date">-</label> */}
-                  <select name="" id="" className="form-control">
-                    <option value="">All</option>
-                    <option value="">BNB</option>
-                    <option value="">BTC</option>
-                    <option value="">ETH</option>
-                    <option value="">USDT</option>
-                  </select>
-                </div>
+
                 <div className="form-group wrapper">
                   {/* <label htmlFor="date"></label> */}
                   <select name="" id="" className="form-control">
-                    <option value="">Side: All</option>
+                    <option value="">Both</option>
                     <option value="">Buy</option>
                     <option value="">Sell</option>
                   </select>
