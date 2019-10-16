@@ -4,6 +4,7 @@ import BuyInstantOrderForm from "./buyInstantOrderForm";
 
 const InstantOrder = ({
   selectedPair,
+  selectedPairStats,
   onTrade,
   quoteCurrencyBalance,
   baseCurrencyBalance
@@ -27,11 +28,13 @@ const InstantOrder = ({
               <tr>
                 <BuyInstantOrderForm
                   selectedPair={selectedPair}
+                  selectedPairStats={selectedPairStats}
                   onTrade={onTrade}
                   balance={quoteCurrencyBalance}
                 />
                 <SellInstantOrderForm
                   selectedPair={selectedPair}
+                  selectedPairStats={selectedPairStats}
                   onTrade={onTrade}
                   balance={baseCurrencyBalance}
                 />

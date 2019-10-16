@@ -4,6 +4,7 @@ import InstantOrder from "./instantOrder";
 
 const ExchangeOrderArea = ({
   selectedPair,
+  selectedPairStats,
   onTrade,
   quoteCurrencyBalance,
   baseCurrencyBalance
@@ -43,6 +44,7 @@ const ExchangeOrderArea = ({
           />
           <InstantOrder
             selectedPair={selectedPair}
+            selectedPairStats={selectedPairStats}
             onTrade={onTrade}
             quoteCurrencyBalance={quoteCurrencyBalance}
             baseCurrencyBalance={quoteCurrencyBalance}

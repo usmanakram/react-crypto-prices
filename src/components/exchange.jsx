@@ -194,6 +194,7 @@ class Exchange extends Component {
         <CurrencyRate selectedPairStats={selectedPairStats} />
         <ExchangeOneBody
           selectedPair={selectedPair}
+          selectedPairStats={selectedPairStats}
           orderBookData={orderBookData}
           onOrderBookUpdate={this.handleOrderBook}
           onTrade={this.setBalances}
