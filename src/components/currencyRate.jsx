@@ -10,17 +10,18 @@ const CurrencyRate = ({ selectedPairStats }) => {
             <div className="currency-rate">
               <div className="currency-convert">
                 <div className="dropdown">
-                  <button
-                    className="btn dropdown-toggle"
+                  {/* <button
+                    // className="btn dropdown-toggle"
+                    className="btn"
                     type="button"
                     id="dropdownMenuButton"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
-                  >
-                    BTC / USD
-                  </button>
-                  <div
+                  > */}
+                  BTC / USD
+                  {/* </button> */}
+                  {/* <div
                     className="dropdown-menu"
                     aria-labelledby="dropdownMenuButton"
                   >
@@ -33,7 +34,7 @@ const CurrencyRate = ({ selectedPairStats }) => {
                     <Link className="dropdown-item" to="#">
                       BTC / USD
                     </Link>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="update-rate">
