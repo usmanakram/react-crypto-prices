@@ -34,7 +34,7 @@ class ExchangeRightBottomTable extends Component {
   };
 
   render() {
-    const { tradeHistory } = this.props;
+    const { selectedPair, tradeHistory } = this.props;
 
     this.handleTradeHistoryStream();
 
@@ -49,8 +49,10 @@ class ExchangeRightBottomTable extends Component {
             <table className="table coin-list table-hover history-table">
               <thead>
                 <tr>
-                  <th scope="col">Price(BTC)</th>
-                  <th scope="col">AMT(ETH)</th>
+                  <th scope="col">
+                    Price({selectedPair.quote_currency_symbol})
+                  </th>
+                  <th scope="col">Qty({selectedPair.base_currency_symbol})</th>
                   <th scope="col">Time</th>
                 </tr>
               </thead>
@@ -61,10 +63,13 @@ class ExchangeRightBottomTable extends Component {
                     <td>
                       <span
                         className={
-                          tradeHistory[i - 1] &&
-                          tradeHistory[i - 1].rate > value.rate
+                          tradeHistory[i + 1] &&
+                          tradeHistory[i + 1].rate > value.rate
                             ? "color-sell"
-                            : "color-buy"
+                            : tradeHistory[i + 1] &&
+                              tradeHistory[i + 1].rate < value.rate
+                            ? "color-buy"
+                            : "color"
                         }
                       >
                         {value.rate}

@@ -23,6 +23,7 @@ const ExchangeOneBody = ({
             <div className="col-lg-3">
               <OrderBook2
                 selectedPair={selectedPair}
+                selectedPairStats={selectedPairStats}
                 orderBookData={orderBookData}
                 onOrderBookUpdate={onOrderBookUpdate}
               />

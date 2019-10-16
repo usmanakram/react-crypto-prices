@@ -191,7 +191,10 @@ class Exchange extends Component {
         <div className="navigation-two">
           <Header />
         </div>
-        <CurrencyRate selectedPairStats={selectedPairStats} />
+        <CurrencyRate
+          selectedPair={selectedPair}
+          selectedPairStats={selectedPairStats}
+        />
         <ExchangeOneBody
           selectedPair={selectedPair}
           selectedPairStats={selectedPairStats}

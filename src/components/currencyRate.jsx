@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const CurrencyRate = ({ selectedPairStats }) => {
+const CurrencyRate = ({ selectedPair, selectedPairStats }) => {
   return (
     <div className="section-padding-50">
       <div className="container">
@@ -19,7 +19,8 @@ const CurrencyRate = ({ selectedPairStats }) => {
                     aria-haspopup="true"
                     aria-expanded="false"
                   > */}
-                  BTC / USD
+                  {selectedPair.base_currency_symbol} /{" "}
+                  {selectedPair.quote_currency_symbol}
                   {/* </button> */}
                   {/* <div
                     className="dropdown-menu"

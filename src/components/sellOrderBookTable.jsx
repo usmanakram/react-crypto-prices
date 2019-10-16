@@ -1,7 +1,7 @@
 import React from "react";
 import Spinner from "./spinner";
 
-const SellOrderBookTable = ({ orderBookData }) => {
+const SellOrderBookTable = ({ selectedPair, orderBookData }) => {
   return (
     <React.Fragment>
       {orderBookData.buyOrders == 0 && <Spinner />}
@@ -10,13 +10,13 @@ const SellOrderBookTable = ({ orderBookData }) => {
         <thead>
           <tr>
             <th className="text-center" scope="col">
-              Price(BTC)
+              Price({selectedPair.quote_currency_symbol})
             </th>
             <th className="text-center" scope="col">
-              AMT(ETH)
+              Qty({selectedPair.base_currency_symbol})
             </th>
             <th className="text-right" scope="col">
-              Total(BTC)
+              Total({selectedPair.quote_currency_symbol})
             </th>
           </tr>
         </thead>
@@ -30,7 +30,7 @@ const SellOrderBookTable = ({ orderBookData }) => {
                 <span>{value.tradable_quantity}</span>
               </td>
               <td className="text-right">
-                <span>total_BTC</span>
+                <span>{value.total.toFixed(8)}</span>
                 <div className="rate-ratio"></div>
               </td>
             </tr>

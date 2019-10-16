@@ -26,7 +26,7 @@ class OrderBook2 extends Component {
   };
 
   render() {
-    const { orderBookData } = this.props;
+    const { selectedPair, selectedPairStats, orderBookData } = this.props;
     this.handleStream();
 
     return (
@@ -95,9 +95,15 @@ class OrderBook2 extends Component {
         </ul> */}
 
         <div className="das-oreder-table-block ">
-          <SellOrderBookTable orderBookData={orderBookData} />
+          <SellOrderBookTable
+            selectedPair={selectedPair}
+            orderBookData={orderBookData}
+          />
 
-          <BuyOrderBookTable orderBookData={orderBookData} />
+          <BuyOrderBookTable
+            selectedPairStats={selectedPairStats}
+            orderBookData={orderBookData}
+          />
         </div>
       </div>
     );

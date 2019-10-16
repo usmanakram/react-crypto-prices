@@ -1,12 +1,15 @@
 import React from "react";
 
-const BuyOrderBookTable = ({ orderBookData }) => {
+const BuyOrderBookTable = ({ selectedPairStats, orderBookData }) => {
   return (
     <table className="table das-oreder-table das-buy-table table-hover">
       <thead>
         <tr>
           <th className="text-left" scope="col" style={{ width: "33.33%" }}>
-            <span className="color-buy">0.059132</span>
+            <span className="color-buy">
+              {Object.keys(selectedPairStats).length > 0 &&
+                selectedPairStats.last_price}
+            </span>
             <img src="./images/exchange/4.png" alt="img" />
           </th>
           <th
@@ -29,7 +32,7 @@ const BuyOrderBookTable = ({ orderBookData }) => {
               <span>{value.tradable_quantity}</span>
             </td>
             <td className="text-right">
-              <span>value.total_BTC</span>
+              <span>{value.total.toFixed(8)}</span>
               <div className="rate-ratio"></div>
             </td>
           </tr>
