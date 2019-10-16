@@ -52,7 +52,7 @@ const Footer = () => {
                       <Link to="#">Terms of Use</Link>
                     </li>
                     <li>
-                      <Link to="#">AML&CFT</Link>
+                      <Link to="#">AML and CFT</Link>
                     </li>
                     <li>
                       <Link to="#">Privacy Policy</Link>
