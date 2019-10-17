@@ -1,18 +1,20 @@
 import React, { Component } from "react";
-import { orderHeadings } from "../services/fakeOrderHistory";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Header from "./header";
 import Table from "./common/table";
 import trade from "../services/tradeService";
 import Spinner from "./spinner";
+import moment from "moment";
 
 class OrderHistory extends Component {
   state = {
     orderHistory: [],
-    orderHeadings: orderHeadings,
+    orderHistorySpinner: false,
     startDate: new Date(),
-    endDate: new Date()
+    endDate: new Date(),
+    pairId: 17,
+    direction: ""
   };
 
   columns = [
@@ -55,29 +57,59 @@ class OrderHistory extends Component {
   ];
 
   async componentDidMount() {
+    this.setOrderHistory();
+  }
+
+  setOrderHistory = async () => {
+    const { startDate, endDate, pairId, direction } = this.state;
+    const start = moment(startDate).format("YYYY-M-D");
+    const end = moment(endDate).format("YYYY-M-D");
     try {
-      const orderHistory = await trade.getUserOrderHistory();
-      this.setState({ orderHistory });
+      this.setState({ orderHistory: [], orderHistorySpinner: true });
+
+      const orderHistory = await trade.getUserOrderHistory(
+        start,
+        end,
+        pairId,
+        direction
+      );
+
+      this.setState({ orderHistory, orderHistorySpinner: false });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         console.log(ex.response.data);
       }
     }
-  }
+  };
 
   handleStartDate = date => {
+    this.setState({ startDate: date });
+  };
+
+  handleEndDate = date => {
+    this.setState({ endDate: date });
+  };
+  handeValueChange = c => {
+    this.setState({ direction: c.currentTarget.value });
+  };
+
+  handleReset = () => {
+    const date = new Date();
+
     this.setState({
-      startDate: date
+      endDate: date,
+      startDate: date,
+      direction: ""
     });
   };
-  handleEndDate = date => {
-    this.setState({
-      endDate: date
-    });
+
+  doSubmit = async e => {
+    e.preventDefault();
+    this.setOrderHistory();
   };
 
   render() {
-    const { orderHistory } = this.state;
+    const { direction, orderHistory } = this.state;
 
     return (
       <React.Fragment>
@@ -94,7 +126,7 @@ class OrderHistory extends Component {
           </div>
           <div className="row">
             <div className="col-12">
-              <form className="form-inline mb-2">
+              <form className="form-inline mb-2" onSubmit={this.doSubmit}>
                 <div className="form-group ">
                   {/* <label htmlFor="date"> </label> */}
                   <DatePicker
@@ -118,26 +150,38 @@ class OrderHistory extends Component {
 
                 <div className="form-group wrapper">
                   {/* <label htmlFor="date"></label> */}
-                  <select name="" id="" className="form-control">
+                  <select
+                    onChange={this.handeValueChange}
+                    name="direction"
+                    id=""
+                    className="form-control"
+                    value={direction}
+                  >
                     <option value="">Both</option>
-                    <option value="">Buy</option>
-                    <option value="">Sell</option>
+                    <option value="1">Buy</option>
+                    <option value="0">Sell</option>
                   </select>
                 </div>
                 <div className="form-group wrapper">
-                  <button type="button" className="btn btn-primary ml-3">
-                    Search
-                  </button>
+                  <input
+                    type="submit"
+                    className="btn btn-primary ml-3"
+                    value="Search"
+                  />
                 </div>
                 <div className="form-group wrapper">
-                  <button type="button" className="btn btn-primary ml-3">
+                  <button
+                    onClick={this.handleReset}
+                    type="button"
+                    className="btn btn-primary ml-3"
+                  >
                     Reset
                   </button>
                 </div>
               </form>
 
               <div className="latest-tranjections-block-inner">
-                {orderHistory == 0 && <Spinner />}
+                <Spinner status={this.state.orderHistorySpinner} />
 
                 <Table
                   columns={this.columns}

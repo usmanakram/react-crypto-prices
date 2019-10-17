@@ -1,19 +1,22 @@
-import React, { Component } from "react";
+import React from "react";
 
-class Spinner extends Component {
-  state = {};
+const Spinner = ({ status }) => {
+  if (status === false) return null;
 
-  render() {
-    return (
-      <div className="spinner_processing">
-        <div className="spinner_center">
-          <i
-            className="fa fa-spinner fa-spin  "
-            style={{ fontSize: 45, color: "#797979" }}
-          ></i>
-        </div>
+  return (
+    <div className="spinner_processing">
+      <div className="spinner_center">
+        <i
+          className="fa fa-spinner fa-spin  "
+          style={{ fontSize: 45, color: "#797979" }}
+        ></i>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+Spinner.defaultProps = {
+  status: true
+};
+
 export default Spinner;

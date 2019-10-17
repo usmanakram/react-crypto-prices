@@ -17,10 +17,10 @@ class Header extends Component {
       <React.Fragment>
         <nav className="navbar main-nav navbar-expand-lg">
           <div className="container">
-            <Link className="navbar-brand" to="home">
+            <Link className="navbar-brand" to="/home">
               <img
                 className="navbar-logo"
-                src="images/logo.png"
+                src="./images/logo.png"
                 alt="..."
                 style={{ width: 200 }}
               />
@@ -42,7 +42,7 @@ class Header extends Component {
             >
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item dropdown">
-                  <Link className="nav-link" to="exchange">
+                  <Link className="nav-link" to="/exchange">
                     Exchange
                   </Link>
                 </li>
@@ -58,22 +58,22 @@ class Header extends Component {
                       </Link>
                       <ul className="dropdown-menu">
                         <li className="nav-item">
-                          <Link className="nav-link" to="balances">
+                          <Link className="nav-link" to="/balances">
                             Balances
                           </Link>
                         </li>
                         <li className="nav-item">
-                          <Link className="nav-link" to="deposits2">
+                          <Link className="nav-link" to="/deposits2">
                             Deposits
                           </Link>
                         </li>
                         <li className="nav-item">
-                          <Link className="nav-link" to="withdrawal">
+                          <Link className="nav-link" to="/withdrawal">
                             Withdrawal
                           </Link>
                         </li>
                         <li className="nav-item">
-                          <Link className="nav-link" to="transactionHistory">
+                          <Link className="nav-link" to="/transactionHistory">
                             Transaction History
                           </Link>
                         </li>
@@ -89,17 +89,17 @@ class Header extends Component {
                       </Link>
                       <ul className="dropdown-menu">
                         <li className="nav-item">
-                          <Link className="nav-link" to="openOrder">
+                          <Link className="nav-link" to="/openOrder">
                             Open Order
                           </Link>
                         </li>
                         <li className="nav-item">
-                          <Link className="nav-link" to="orderHistory">
+                          <Link className="nav-link" to="/orderHistory">
                             Order History
                           </Link>
                         </li>
                         <li className="nav-item">
-                          <Link className="nav-link" to="tradeHistory">
+                          <Link className="nav-link" to="/tradeHistory">
                             Trade History
                           </Link>
                         </li>
@@ -195,13 +195,13 @@ class Header extends Component {
                 {!user && (
                   <React.Fragment>
                     <li className="nav-item button">
-                      <Link className="btn nav-link" to="login">
+                      <Link className="btn nav-link" to="/login">
                         Login
                       </Link>
                     </li>
 
                     <li className="nav-item button active">
-                      <Link className="btn nav-link" to="signup">
+                      <Link className="btn nav-link" to="/signup">
                         Sign Up
                       </Link>
                     </li>

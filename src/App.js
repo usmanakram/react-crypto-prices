@@ -7,7 +7,7 @@ import "./App2.css";
 import CoinsList from "./components/coinsList";
 import Login from "./components/login";
 import Logout from "./components/logout";
-import CoinDetail from "./components/coinDetail";
+import CoinInfo from "./components/coinInfo";
 // import Deposits from "./components/deposits";
 import Deposits2 from "./components/deposits2";
 import Withdrawal from "./components/withdrawal";
@@ -28,7 +28,7 @@ const App = () => {
     <React.Fragment>
       <ToastContainer />
       <Switch>
-        <Route path="/coin-detail/:coin" component={CoinDetail} />
+        <Route path="/coin-info/:coin" component={CoinInfo} />
         <Route path="/login" component={Login} />
         <Route path="/home" component={Home} />
         <Route path="/logout" component={Logout} />

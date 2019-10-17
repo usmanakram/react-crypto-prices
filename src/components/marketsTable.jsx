@@ -20,7 +20,7 @@ class MarketsTable extends Component {
       path: "symbol",
       label: "Coin Name",
       content: coin => (
-        <Link to={`/coin-detail/${this.decorateColumnName(coin.symbol)}`}>
+        <Link to={`/coin-info/${this.decorateColumnName(coin.symbol)}`}>
           {this.decorateColumnName(coin.symbol)}
         </Link>
       )
@@ -158,12 +158,12 @@ class MarketsTable extends Component {
 
     const { totalCount, coins } = this.getPagedData();
 
-    let classes = "tab-pane fade in active show";
+    // let classes = "tab-pane fade in active show pagination-margin";
     // if (getTableKey === 0) classes += "in active show";
     return (
       <div
         role="tabpanel"
-        className={classes}
+        className="tab-pane fade in active show pagination-margin"
         // id={getTable.heading}
       >
         <Table
@@ -173,14 +173,13 @@ class MarketsTable extends Component {
           onSort={this.handleSort}
           classes="coin-list table-hover"
         />
-        <div className="my-3">
-          <Pagination
-            itemsCount={totalCount}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            onPageChange={this.handlePageChange}
-          />
-        </div>
+
+        <Pagination
+          itemsCount={totalCount}
+          pageSize={pageSize}
+          currentPage={currentPage}
+          onPageChange={this.handlePageChange}
+        />
       </div>
     );
   }

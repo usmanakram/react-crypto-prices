@@ -39,17 +39,17 @@ const CurrencyRate = ({ selectedPair, selectedPairStats }) => {
                 </div>
               </div>
               <div className="update-rate">
-                <div className="currency-info last-price">
+                <div className="currency-info last-price text-center">
                   <span>Last Price</span>
                   <h6>
                     <span className="color-sell">
                       {Object.keys(selectedPairStats).length > 0 &&
                         selectedPairStats.last_price}
                     </span>
-                    <span className="currency-info-base">$390.68</span>
+                    {/* <span className="currency-info-base">$390.68</span> */}
                   </h6>
                 </div>
-                <div className="currency-info change">
+                {/* <div className="currency-info change">
                   <span>24h Change</span>
                   <h6 className="color-buy">
                     0.001447 <sub className="transmoney-value">+3.05</sub>
@@ -62,8 +62,8 @@ const CurrencyRate = ({ selectedPair, selectedPairStats }) => {
                 <div className="currency-info low">
                   <span>24h Low</span>
                   <h6 className="currency-info-base">0.056864</h6>
-                </div>
-                <div className="currency-info volume-value">
+                </div> */}
+                <div className="currency-info volume-value text-center">
                   <span>24h Volume</span>
                   <h6 className="currency-info-base">
                     {Object.keys(selectedPairStats).length > 0 &&
