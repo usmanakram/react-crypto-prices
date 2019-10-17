@@ -35,7 +35,7 @@ class ThemeTable extends Component {
   ];
 
   render() {
-    const { openOrders } = this.props;
+    const { openOrders, status } = this.props;
 
     return (
       <div className="latest-tranjections-area">
@@ -45,7 +45,7 @@ class ThemeTable extends Component {
               <div className="panel-heading-block">
                 <h5>Open Orders</h5>
               </div>
-              {openOrders == 0 && <Spinner />}
+              <Spinner status={status} />
 
               <Table
                 columns={this.columns}

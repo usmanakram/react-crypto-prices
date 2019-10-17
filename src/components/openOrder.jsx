@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { orderHeadings } from "../services/fakeOrderHistory";
 import "react-datepicker/dist/react-datepicker.css";
 import Header from "./header";
 import Table from "./common/table";
@@ -9,7 +8,7 @@ import Spinner from "./spinner";
 class OpenOrder extends Component {
   state = {
     openOrders: [],
-    orderHeadings: orderHeadings
+    openOrderSpinner: false
   };
 
   columns = [
@@ -43,8 +42,10 @@ class OpenOrder extends Component {
 
   async componentDidMount() {
     try {
+      this.setState({ openOrderSpinner: true });
       const openOrders = await trade.getUserOpenOrders();
-      this.setState({ openOrders });
+
+      this.setState({ openOrders, openOrderSpinner: false });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         console.log(ex.response.data);
@@ -71,7 +72,7 @@ class OpenOrder extends Component {
           <div className="row">
             <div className="col-12">
               <div className="latest-tranjections-block-inner">
-                {openOrders == 0 && <Spinner />}
+                <Spinner status={this.state.openOrderSpinner} />
 
                 <Table
                   columns={this.columns}
