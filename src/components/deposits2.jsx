@@ -16,7 +16,8 @@ class Deposits2 extends Component {
     currencies: [],
     transactions: [],
     isLoadComponent: false,
-    isLoadSpinner: false
+    isLoadSpinner: false,
+    depositsSpinner: false
   };
 
   username = React.createRef();
@@ -24,7 +25,6 @@ class Deposits2 extends Component {
   async componentDidMount() {
     try {
       const { data } = await http.get("/get-all-currencies");
-      console.log(data);
       // const currencies = data.filter(c => c.symbol !== "BC");
       this.setState({ currencies: data });
 
@@ -32,7 +32,9 @@ class Deposits2 extends Component {
       const { data: firstCurrency } = await http.get(
         "/auth/get-deposit-address/" + data[0].symbol
       );
-      this.setState({ selectedCurrency: firstCurrency });
+      this.setState({
+        selectedCurrency: firstCurrency
+      });
     } catch (ex) {
       console.log(ex);
     }
@@ -61,15 +63,16 @@ class Deposits2 extends Component {
       isLoadSpinner: true
     }); //
     try {
+      this.setState({ depositsSpinner: true });
       const { data } = await http.get(
         "/auth/get-deposit-address/" + select.value
       );
-      console.log(data);
 
       this.setState({ selectedCurrency: data });
       //new
       this.setState({
-        isLoadSpinner: false
+        isLoadSpinner: false,
+        depositsSpinner: false
       }); //
     } catch (ex) {
       console.log(ex);
@@ -142,25 +145,33 @@ class Deposits2 extends Component {
                 <tbody>
                   <tr>
                     <td>Total balance</td>
-                    <td>0.00000000 {symbol}</td>
+                    <td>
+                      {selectedCurrency.total_balance} {symbol}
+                    </td>
                   </tr>
 
                   <tr>
                     <td>In Order</td>
-                    <td>0.00000000 {symbol}</td>
+                    <td>
+                      {selectedCurrency.in_order_balance} {symbol}
+                    </td>
                   </tr>
                   <tr>
                     <td>Available balance</td>
-                    <td>0.00000000 {symbol}</td>
                     <td>
-                      <Link to="/">
+                      {selectedCurrency.total_balance -
+                        selectedCurrency.in_order_balance}
+                      {symbol}
+                    </td>
+                    <td>
+                      {/* <Link to="/">
                         <i
                           className="fa fa-info-circle fa-fw"
                           aria-hidden="true"
                         ></i>
                         What's
                         {symbol}?
-                      </Link>
+                      </Link> */}
                     </td>
                   </tr>
                 </tbody>
@@ -188,9 +199,8 @@ class Deposits2 extends Component {
                     className="form-control disabled text-center"
                     value={address}
                   />
-                  {this.state.isLoadSpinner ? <Spinner /> : null}
                 </div>
-
+                <Spinner status={this.state.depositsSpinner} />
                 <button
                   onClick={this.handleLoadComponent}
                   type="button"

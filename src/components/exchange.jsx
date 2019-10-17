@@ -24,7 +24,8 @@ class Exchange extends Component {
     openOrders: [],
     orderBookData: {
       buyOrders: [],
-      sellOrders: []
+      sellOrders: [],
+      openOrderspinner: false
     },
     tradeHistory: []
   };
@@ -123,9 +124,11 @@ class Exchange extends Component {
 
     if (Object.keys(selectedPair).length) {
       try {
+        this.setState({ openOrderspinner: true });
         const orders = await trade.getUserOpenOrders();
 
         this.handleOpenOrders(orders);
+        this.setState({ openOrderspinner: false });
       } catch (ex) {
         if (ex.response && ex.response.status === 400) {
           console.log(ex.response.data);
@@ -207,7 +210,12 @@ class Exchange extends Component {
           onTradeHistoryUpdate={this.handleTradeHistory}
         />
 
-        <ThemeTable selectedPair={selectedPair} openOrders={openOrders} />
+        <ThemeTable
+          status={this.state.openOrderspinner}
+          selectedPair={selectedPair}
+          openOrders={openOrders}
+        />
+
         <GettingStarted />
       </React.Fragment>
     );
