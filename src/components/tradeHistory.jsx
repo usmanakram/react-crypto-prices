@@ -5,13 +5,16 @@ import Header from "./header";
 import Table from "./common/table";
 import trade from "../services/tradeService";
 import Spinner from "./spinner";
+import moment from "moment";
 
 class TradeHistory extends Component {
   state = {
     tradeHistory: [],
+    tradeHistorySpinner: false,
     startDate: new Date(),
     endDate: new Date(),
-    select: ""
+    pairId: 17,
+    direction: ""
   };
   columns = [
     { path: "created_at", label: "Date" },
@@ -36,31 +39,40 @@ class TradeHistory extends Component {
   ];
 
   async componentDidMount() {
+    this.setTradeHistory();
+  }
+
+  setTradeHistory = async () => {
+    const { startDate, endDate, pairId, direction } = this.state;
+    const start = moment(startDate).format("YYYY-M-D");
+    const end = moment(endDate).format("YYYY-M-D");
     try {
-      const tradeHistory = await trade.getUserTradeHistory();
-      this.setState({ tradeHistory });
+      this.setState({ tradeHistorySpinner: true });
+
+      const tradeHistory = await trade.getUserTradeHistory(
+        start,
+        end,
+        pairId,
+        direction
+      );
+
+      this.setState({ tradeHistory, tradeHistorySpinner: false });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         console.log(ex.response.data);
       }
     }
-  }
+  };
 
   handleStartDate = date => {
-    this.setState({
-      startDate: date
-    });
+    this.setState({ startDate: date });
   };
 
   handleEndDate = date => {
-    this.setState({
-      endDate: date
-    });
+    this.setState({ endDate: date });
   };
   handeValueChange = c => {
-    console.log("c.target.value");
-    console.log(c.currentTarget.value);
-    this.setState({ select: c.currentTarget.value });
+    this.setState({ direction: c.currentTarget.value });
   };
 
   handleReset = () => {
@@ -69,12 +81,17 @@ class TradeHistory extends Component {
     this.setState({
       endDate: date,
       startDate: date,
-      select: ""
+      direction: ""
     });
   };
 
+  doSubmit = async e => {
+    e.preventDefault();
+    this.setTradeHistory();
+  };
+
   render() {
-    const { tradeHistory } = this.state;
+    const { tradeHistory, direction } = this.state;
 
     return (
       <React.Fragment>
@@ -91,7 +108,7 @@ class TradeHistory extends Component {
           </div>
           <div className="row">
             <div className="col-12">
-              <form className="form-inline mb-2">
+              <form className="form-inline mb-2 " onSubmit={this.doSubmit}>
                 <div className="form-group ">
                   {/* <label htmlFor="date"> </label> */}
                   <DatePicker
@@ -116,10 +133,11 @@ class TradeHistory extends Component {
                 <div className="form-group wrapper">
                   {/* <label htmlFor="date"></label> */}
                   <select
-                    onClick={this.handeValueChange}
-                    name=""
+                    onChange={this.handeValueChange}
+                    name="direction"
                     id=""
                     className="form-control"
+                    value={direction}
                   >
                     <option value="">Both</option>
                     <option value="1">Buy</option>
@@ -127,9 +145,11 @@ class TradeHistory extends Component {
                   </select>
                 </div>
                 <div className="form-group wrapper">
-                  <button type="button" className="btn btn-primary ml-3">
-                    Search
-                  </button>
+                  <input
+                    type="submit"
+                    className="btn btn-primary ml-3"
+                    value="Search"
+                  />
                 </div>
                 <div className="form-group wrapper">
                   <button
@@ -143,7 +163,8 @@ class TradeHistory extends Component {
               </form>
 
               <div className="latest-tranjections-block-inner ">
-                {tradeHistory == 0 && <Spinner />}
+                <Spinner status={this.state.tradeHistorySpinner} />
+
                 <Table
                   columns={this.columns}
                   data={tradeHistory}

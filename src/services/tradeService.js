@@ -60,13 +60,25 @@ async function getChartTradeHistory(pair_id) {
   return data;
 }
 
-async function getUserTradeHistory() {
-  const { data } = await http.post("/auth/user-trades");
+async function getUserTradeHistory(start, end, pair_id, direction) {
+  const formData = new FormData();
+  formData.append("start", start);
+  formData.append("end", end);
+  formData.append("pair_id", pair_id);
+  formData.append("direction", direction);
+
+  const { data } = await http.post("/auth/user-trades", formData);
   return data;
 }
 
-async function getUserOrderHistory() {
-  const { data } = await http.post("/auth/user-orders");
+async function getUserOrderHistory(start, end, pair_id, direction) {
+  const formData = new FormData();
+  formData.append("start", start);
+  formData.append("end", end);
+  formData.append("pair_id", pair_id);
+  formData.append("direction", direction);
+
+  const { data } = await http.post("/auth/user-orders", formData);
   return data;
 }
 

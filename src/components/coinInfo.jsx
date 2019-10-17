@@ -80,12 +80,6 @@ class CoinInfo extends Component {
         <div className="navigation-two">
           <Header />
         </div>
-        <h1>
-          {this.props.match.params.coin}{" "}
-          <Link to="/" className="btn btn-primary pull-right">
-            Back to coins list
-          </Link>
-        </h1>
 
         <div className="container my-5">
           <div className="row">
@@ -98,12 +92,13 @@ class CoinInfo extends Component {
 
           <div className="row">
             <div className="col-12">
-              <div className="latest-tranjections-block-inner">
+              <div className="latest-tranjections-block-inner pagination-margin">
                 <Table
                   columns={this.columns}
                   data={coinHistory}
                   sortColumn={sortColumn}
                   onSort={this.handleSort}
+                  classes="coin-list latest-tranjections-table"
                 />
                 <Pagination
                   itemsCount={totalCount}
