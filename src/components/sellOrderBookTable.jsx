@@ -30,7 +30,7 @@ const SellOrderBookTable = ({ selectedPair, orderBookData }) => {
                 <span>{value.tradable_quantity}</span>
               </td>
               <td className="text-right">
-                <span>{value.total.toFixed(8)}</span>
+                <span>{(value.rate * value.tradable_quantity).toFixed(8)}</span>
                 <div className="rate-ratio"></div>
               </td>
             </tr>

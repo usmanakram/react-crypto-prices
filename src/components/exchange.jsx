@@ -24,10 +24,10 @@ class Exchange extends Component {
     openOrders: [],
     orderBookData: {
       buyOrders: [],
-      sellOrders: [],
-      openOrderspinner: false
+      sellOrders: []
     },
-    tradeHistory: []
+    tradeHistory: [],
+    openOrderspinner: false
   };
 
   async componentDidMount() {
@@ -39,9 +39,12 @@ class Exchange extends Component {
       const selectedPair = currencyPairs[0];
 
       this.setState({ currencyPairs, selectedPair });
+      const user = auth.getCurrentUser();
 
-      this.setBalances();
-      this.setOpenOrders();
+      if (auth.getCurrentUser()) {
+        this.setBalances();
+        this.setOpenOrders();
+      }
 
       this.setOrderBookAndTradeHistory();
 
@@ -125,6 +128,7 @@ class Exchange extends Component {
     if (Object.keys(selectedPair).length) {
       try {
         this.setState({ openOrderspinner: true });
+
         const orders = await trade.getUserOpenOrders();
 
         this.handleOpenOrders(orders);
