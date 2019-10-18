@@ -53,8 +53,28 @@ class OrderHistory extends Component {
           : o.status === 2
           ? "Filled"
           : "Cancled"
+    },
+    {
+      path: "Cancel",
+      content: o => (
+        <button onClick={() => this.onCancel(o.id)} className="btn btn-primary">
+          Cancel
+        </button>
+      )
     }
   ];
+
+  onCancel = async id => {
+    console.log(id);
+    try {
+      const response = await trade.cancelOrder(id);
+
+      console.log("form response");
+      console.log(response);
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
 
   async componentDidMount() {
     this.setOrderHistory();

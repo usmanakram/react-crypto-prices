@@ -25,6 +25,11 @@ async function sell(pair_id, price, quantity) {
   return data;
 }
 
+async function cancelOrder(order_id) {
+  const { data } = await http.get("/auth/cancel-order/" + order_id);
+  return data;
+}
+
 async function getLatestPrices() {
   const { data } = await http.get("/latest-prices");
   return data;
@@ -90,6 +95,7 @@ async function getUserOpenOrders() {
 export default {
   buy,
   sell,
+  cancelOrder,
   getLatestPrices,
   getLatestPrice,
   getBalances,

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Table from "./common/table";
 import Spinner from "./spinner";
+import trade from "../services/tradeService";
 
 class ThemeTable extends Component {
   state = {};
@@ -31,8 +32,28 @@ class ThemeTable extends Component {
       content: o =>
         (((o.quantity - o.tradable_quantity) / o.quantity) * 100).toFixed(2) +
         "%"
+    },
+    {
+      path: "Cancel",
+      content: o => (
+        <button onClick={() => this.onCancel(o.id)} className="btn btn-primary">
+          Cancel
+        </button>
+      )
     }
   ];
+
+  onCancel = async id => {
+    console.log(id);
+    try {
+      const response = await trade.cancelOrder(id);
+
+      console.log("form response");
+      console.log(response);
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
 
   render() {
     const { openOrders, status } = this.props;

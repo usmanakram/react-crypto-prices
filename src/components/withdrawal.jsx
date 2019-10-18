@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Form from "./common/form";
+import Joi from "joi-browser";
 import { Link, Redirect } from "react-router-dom";
 import http from "../services/httpService";
 import { toast } from "react-toastify";
@@ -6,66 +8,54 @@ import auth from "../services/authService";
 import Spinner from "./spinner";
 import Header from "./header";
 
-class Withdrawal extends Component {
+class Withdrawal extends Form {
   state = {
+    data: { address: "", quantity: "" },
+    errors: {},
     selectedCurrency: {},
     currencies: [],
-    transactions: [],
-    isLoadComponent: false,
-    isLoadSpinner: false
+    transactions: []
   };
 
-  username = React.createRef();
+  schema = {
+    address: Joi.string()
+      .required()
+      .label("Address"),
+    quantity: Joi.string()
+      .required()
+      .label("Quantity")
+  };
 
   async componentDidMount() {
     try {
       const { data } = await http.get("/get-all-currencies");
-      console.log(data);
-      // const currencies = data.filter(c => c.symbol !== "BC");
-      this.setState({ currencies: data });
 
-      // Populate first currency address and relevant data
-      const { data: firstCurrency } = await http.get(
-        "/auth/get-deposit-address/" + data[0].symbol
+      const currencies = data.find(c => c.symbol === "BTC");
+
+      // Populate BTC address and relevant data
+      const { data: selectedCurrency } = await http.get(
+        "/auth/get-deposit-address/BTC"
       );
-      this.setState({ selectedCurrency: firstCurrency });
+
+      this.setState({ currencies, selectedCurrency });
     } catch (ex) {
       console.log(ex);
     }
   }
 
-  handleCurrencyChange = async ({ currentTarget: select }) => {
-    //new
-    this.setState({
-      isLoadSpinner: true
-    }); //
+  doSubmit = async () => {
     try {
-      const { data } = await http.get(
-        "/auth/get-deposit-address/" + select.value
-      );
-      console.log(data);
+      const formData = new FormData();
+      formData.append("address", this.state.data.address);
+      formData.append("quantity", this.state.data.quantity);
 
-      this.setState({ selectedCurrency: data });
-      //new
-      this.setState({
-        isLoadSpinner: false
-      }); //
+      const { data } = await http.post("/auth/withdraw", formData);
+
+      console.log("form response");
+      console.log(data);
     } catch (ex) {
       console.log(ex);
-      //new
-      this.setState({
-        isLoadSpinner: false
-      }); //
-      toast.error(
-        "Deposit of " +
-          select.value +
-          " is not functional right now. Please, try again later"
-      );
     }
-  };
-
-  doSubmit = e => {
-    e.preventDefault();
   };
 
   render() {
@@ -93,8 +83,8 @@ class Withdrawal extends Component {
           <Header />
         </div>
 
-        <div className="row spinner_wrapper my-5">
-          <div className="col-md-10 offset-1 mt-20 ">
+        <div className="row spinner_wrapper mt-5">
+          <div className="col-md-10 offset-1">
             <div className="latest-tranjections-block-inner panel-heading-block mb-2">
               <h5>Withdrawal</h5>
             </div>
@@ -114,91 +104,49 @@ class Withdrawal extends Component {
 
         {Object.keys(selectedCurrency).length > 0 && (
           <React.Fragment>
-            <div
-              className="
+            <div className="row">
+              <div
+                className="
               col-lg-10
               col-md-10
               col-sm-10
               offset-1
-              mt-20"
-            >
-              <table className="table table-borderless   ">
-                <tbody>
-                  <tr>
-                    <td>Total balance</td>
-                    <td>
-                      {selectedCurrency.total_balance} {symbol}
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td>In Order</td>
-                    <td>
-                      {selectedCurrency.in_order_balance} {symbol}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Available balance</td>
-                    <td>
-                      {selectedCurrency.total_balance -
-                        selectedCurrency.in_order_balance}
-                      {symbol}
-                    </td>
-                    <td>
-                      {/* <Link to="/">
-                        <i
-                          className="fa fa-info-circle fa-fw"
-                          aria-hidden="true"
-                        ></i>
-                        What's
-                        {symbol}?
-                      </Link> */}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              my-3"
+              >
+                <div className="col-12">
+                  <strong>Total balance:</strong>{" "}
+                  {selectedCurrency.total_balance} {symbol}
+                  <br />
+                  <strong>In Order </strong> {selectedCurrency.in_order_balance}{" "}
+                  {symbol}
+                  <br />
+                  <strong>Available balance: </strong>{" "}
+                  {selectedCurrency.total_balance -
+                    selectedCurrency.in_order_balance}
+                  {symbol}
+                </div>
+              </div>
             </div>
-            <div className="col-md-10 offset-1  mb-5">
-              <div className="border mb-20 adbox">
-                <h5 className="text-warning mt-4 ml-3">
-                  <strong>Important</strong>
-                </h5>
-                <p className="text-warning ml-3">
-                  Send only <strong>{symbol}</strong> to this deposit address.
-                  Sending any other coin or token to this address may result in
-                  the loss of your deposit.
-                </p>
-                <form onSubmit={this.doSubmit}>
-                  <label className="text-warning ml-3" htmlFor="ex">
-                    <strong>{symbol} Withdrawal Address</strong>
-                  </label>
-
-                  <div className="form-group mx-3">
-                    <input
-                      ref={this.username}
-                      type="text"
-                      className="form-control"
-                      value=""
-                      placeholder="Address"
-                    />
-                  </div>
-
-                  <label className="text-warning ml-3" htmlFor="ex">
-                    <strong>{symbol} Withdrawal Amount</strong>
-                  </label>
-                  <div className="form-group mx-3">
-                    <input
-                      type="text"
-                      className="form-control"
-                      value=""
-                      placeholder="Amount"
-                    />
-                  </div>
-                  <button type="submit" className="btn btn-primary ml-3 mb-3">
-                    Submit
-                  </button>
-                </form>
-                {this.state.isLoadSpinner ? <Spinner /> : null}
+            <div className="row">
+              <div className="col-md-10 offset-1  mb-5">
+                <div className="border mb-20 adbox">
+                  <h5 className="text-warning mt-4 ml-3">
+                    <strong>Important</strong>
+                  </h5>
+                  <span className="text-warning ml-3">
+                    Provide only <strong>{symbol}</strong> address. Providing
+                    any other coin or token address may result in the loss of
+                    your balance.
+                  </span>
+                  <form onSubmit={this.handleSubmit}>
+                    <div className="mx-3 mb-3">
+                      {this.renderInput("address", "Address")}
+                      {this.renderInput("quantity", "Quantity")}
+                      {this.renderButton("Withdraw", "btn-default")}
+                    </div>
+                  </form>
+                  {this.state.isLoadSpinner ? <Spinner /> : null}
+                </div>
               </div>
             </div>
           </React.Fragment>
