@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import http from "../services/httpService";
 import Table from "./common/table";
 import Pagination from "./common/pagination";
@@ -65,14 +64,6 @@ class CoinInfo extends Component {
     const { length: count } = this.state.coinHistory;
     const { pageSize, currentPage, sortColumn } = this.state;
 
-    if (count === 0)
-      return (
-        <p>
-          There are not any historical data against{" "}
-          {this.props.match.params.coin} in the database.
-        </p>
-      );
-
     const { totalCount, coinHistory } = this.getPagedData();
 
     return (
@@ -93,19 +84,28 @@ class CoinInfo extends Component {
           <div className="row">
             <div className="col-12">
               <div className="latest-tranjections-block-inner pagination-margin">
-                <Table
-                  columns={this.columns}
-                  data={coinHistory}
-                  sortColumn={sortColumn}
-                  onSort={this.handleSort}
-                  classes="coin-list latest-tranjections-table"
-                />
-                <Pagination
-                  itemsCount={totalCount}
-                  pageSize={pageSize}
-                  currentPage={currentPage}
-                  onPageChange={this.handlePageChange}
-                />
+                {count === 0 ? (
+                  <p className="my-3">
+                    There are not any historical data against{" "}
+                    {this.props.match.params.coin} in the database.
+                  </p>
+                ) : (
+                  <React.Fragment>
+                    <Table
+                      columns={this.columns}
+                      data={coinHistory}
+                      sortColumn={sortColumn}
+                      onSort={this.handleSort}
+                      classes="coin-list latest-tranjections-table"
+                    />
+                    <Pagination
+                      itemsCount={totalCount}
+                      pageSize={pageSize}
+                      currentPage={currentPage}
+                      onPageChange={this.handlePageChange}
+                    />
+                  </React.Fragment>
+                )}
               </div>
             </div>
           </div>

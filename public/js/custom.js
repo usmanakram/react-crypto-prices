@@ -43,61 +43,61 @@ jQuery(document).ready(function() {
         Updating Chart
     ---------------------------------------------*/
 
-  var updatingChartOne = $(".updating-chart-one").peity("line", {
-    width: 60,
-    height: 70,
-    fill: "rgba(0,93,98,.30)",
-    stroke: "#00c162"
-  });
-  setInterval(function() {
-    var random = Math.round(Math.random() * 10);
-    var values = updatingChartOne.text().split(",");
-    values.shift();
-    values.push(random);
-    updatingChartOne.text(values.join(",")).change();
-  }, 1000);
+  // var updatingChartOne = $(".updating-chart-one").peity("line", {
+  //   width: 60,
+  //   height: 70,
+  //   fill: "rgba(0,93,98,.30)",
+  //   stroke: "#00c162"
+  // });
+  // setInterval(function() {
+  //   var random = Math.round(Math.random() * 10);
+  //   var values = updatingChartOne.text().split(",");
+  //   values.shift();
+  //   values.push(random);
+  //   updatingChartOne.text(values.join(",")).change();
+  // }, 1000);
 
-  var updatingChartTwo = $(".updating-chart-two").peity("line", {
-    width: 60,
-    height: 70,
-    fill: "rgba(220,0,0,.20)",
-    stroke: "#dd1900"
-  });
-  setInterval(function() {
-    var random = Math.round(Math.random() * 10);
-    var values = updatingChartTwo.text().split(",");
-    values.shift();
-    values.push(random);
-    updatingChartTwo.text(values.join(",")).change();
-  }, 1000);
+  // var updatingChartTwo = $(".updating-chart-two").peity("line", {
+  //   width: 60,
+  //   height: 70,
+  //   fill: "rgba(220,0,0,.20)",
+  //   stroke: "#dd1900"
+  // });
+  // setInterval(function() {
+  //   var random = Math.round(Math.random() * 10);
+  //   var values = updatingChartTwo.text().split(",");
+  //   values.shift();
+  //   values.push(random);
+  //   updatingChartTwo.text(values.join(",")).change();
+  // }, 1000);
 
-  var updatingChartThree = $(".updating-chart-three").peity("line", {
-    width: 60,
-    height: 70,
-    fill: "rgba(220,0,0,.20)",
-    stroke: "#dd1900"
-  });
-  setInterval(function() {
-    var random = Math.round(Math.random() * 10);
-    var values = updatingChartThree.text().split(",");
-    values.shift();
-    values.push(random);
-    updatingChartThree.text(values.join(",")).change();
-  }, 1000);
+  // var updatingChartThree = $(".updating-chart-three").peity("line", {
+  //   width: 60,
+  //   height: 70,
+  //   fill: "rgba(220,0,0,.20)",
+  //   stroke: "#dd1900"
+  // });
+  // setInterval(function() {
+  //   var random = Math.round(Math.random() * 10);
+  //   var values = updatingChartThree.text().split(",");
+  //   values.shift();
+  //   values.push(random);
+  //   updatingChartThree.text(values.join(",")).change();
+  // }, 1000);
 
-  var updatingChartFour = $(".updating-chart-four").peity("line", {
-    width: 60,
-    height: 70,
-    fill: "rgba(0,93,98,.30)",
-    stroke: "#00c162"
-  });
-  setInterval(function() {
-    var random = Math.round(Math.random() * 10);
-    var values = updatingChartFour.text().split(",");
-    values.shift();
-    values.push(random);
-    updatingChartFour.text(values.join(",")).change();
-  }, 1000);
+  // var updatingChartFour = $(".updating-chart-four").peity("line", {
+  //   width: 60,
+  //   height: 70,
+  //   fill: "rgba(0,93,98,.30)",
+  //   stroke: "#00c162"
+  // });
+  // setInterval(function() {
+  //   var random = Math.round(Math.random() * 10);
+  //   var values = updatingChartFour.text().split(",");
+  //   values.shift();
+  //   values.push(random);
+  //   updatingChartFour.text(values.join(",")).change();
+  // }, 1000);
   /*--------------------------------------------
         Latest News Settings
     ---------------------------------------------*/
@@ -115,13 +115,13 @@ jQuery(document).ready(function() {
   /*-------------------------------------
     Slick slider Settings
     -------------------------------------*/
-  $("#testimonial").slick({
-    dots: true,
-    infinite: true,
-    speed: 300,
-    slidesToShow: 1,
-    adaptiveHeight: true
-  });
+  // $("#testimonial").slick({
+  //   dots: true,
+  //   infinite: true,
+  //   speed: 300,
+  //   slidesToShow: 1,
+  //   adaptiveHeight: true
+  // });
   /*-------------------------------------
     Height assign
     -------------------------------------*/
