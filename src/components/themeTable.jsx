@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Table from "./common/table";
 import Spinner from "./spinner";
 import trade from "../services/tradeService";
+import { toast } from "react-toastify";
 
 class ThemeTable extends Component {
   state = {};
@@ -44,12 +45,11 @@ class ThemeTable extends Component {
   ];
 
   onCancel = async id => {
-    console.log(id);
     try {
       const response = await trade.cancelOrder(id);
-
-      console.log("form response");
-      console.log(response);
+      const orders = this.props.openOrders.filter(o => o.id !== id);
+      this.props.onCancelOrder(orders);
+      toast.success(response);
     } catch (ex) {
       console.log(ex);
     }

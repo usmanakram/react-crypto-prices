@@ -4,6 +4,7 @@ import Header from "./header";
 import Table from "./common/table";
 import trade from "../services/tradeService";
 import Spinner from "./spinner";
+import { toast } from "react-toastify";
 
 class OpenOrder extends Component {
   state = {
@@ -37,8 +38,27 @@ class OpenOrder extends Component {
       content: o =>
         (((o.quantity - o.tradable_quantity) / o.quantity) * 100).toFixed(2) +
         "%"
+    },
+    {
+      path: "delete",
+      content: o => (
+        <button onClick={() => this.onCancel(o.id)} className="btn btn-primary">
+          Cancel
+        </button>
+      )
     }
   ];
+
+  onCancel = async id => {
+    try {
+      const response = await trade.cancelOrder(id);
+      const openOrders = this.state.openOrders.filter(o => o.id !== id);
+      this.setState({ openOrders });
+      toast.success(response);
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
 
   async componentDidMount() {
     try {

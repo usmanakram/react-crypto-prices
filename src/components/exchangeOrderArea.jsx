@@ -11,7 +11,7 @@ const ExchangeOrderArea = ({
 }) => {
   return (
     <div className="order-form-area-block">
-      <ul className="nav nav-tabs ticker-nav parent-order-tab" role="tablist">
+      {/* <ul className="nav nav-tabs ticker-nav parent-order-tab" role="tablist">
         <li className="nav-item">
           <a
             className="nav-link active"
@@ -32,7 +32,7 @@ const ExchangeOrderArea = ({
             <h5>Instant order</h5>
           </a>
         </li>
-      </ul>
+      </ul> */}
       <div className="market-ticker-block">
         {/* <!-- Tab panes --> */}
         <div className="tab-content">
