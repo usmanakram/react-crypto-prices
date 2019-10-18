@@ -218,6 +218,7 @@ class Exchange extends Component {
           status={this.state.openOrderspinner}
           selectedPair={selectedPair}
           openOrders={openOrders}
+          onCancelOrder={this.handleOpenOrders}
         />
 
         <GettingStarted />

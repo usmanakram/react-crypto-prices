@@ -30,15 +30,7 @@ class TradeHistory extends Component {
         )
     },
     { path: "rate", label: "Price" },
-    { path: "quantity", label: "Quantity" },
-    {
-      path: "Cancel",
-      content: o => (
-        <button onClick={() => this.onCancel(o.id)} className="btn btn-primary">
-          Cancel
-        </button>
-      )
-    }
+    { path: "quantity", label: "Quantity" }
 
     /* {
       path: "fee",
@@ -46,18 +38,6 @@ class TradeHistory extends Component {
       content: o => o.fee + " " + o.base_currency_symbol
     } */
   ];
-
-  onCancel = async id => {
-    console.log(id);
-    try {
-      const response = await trade.cancelOrder(id);
-
-      console.log("form response");
-      console.log(response);
-    } catch (ex) {
-      console.log(ex);
-    }
-  };
 
   async componentDidMount() {
     this.setTradeHistory();

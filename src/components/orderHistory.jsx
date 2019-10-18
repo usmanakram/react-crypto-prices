@@ -6,6 +6,7 @@ import Table from "./common/table";
 import trade from "../services/tradeService";
 import Spinner from "./spinner";
 import moment from "moment";
+import { toast } from "react-toastify";
 
 class OrderHistory extends Component {
   state = {
@@ -56,21 +57,29 @@ class OrderHistory extends Component {
     },
     {
       path: "Cancel",
-      content: o => (
-        <button onClick={() => this.onCancel(o.id)} className="btn btn-primary">
-          Cancel
-        </button>
-      )
+      content: o => {
+        if ([0, 1].indexOf(o.status) === -1) return null;
+        return (
+          <button
+            onClick={() => this.onCancel(o.id)}
+            className="btn btn-primary"
+          >
+            Cancel
+          </button>
+        );
+      }
     }
   ];
 
   onCancel = async id => {
-    console.log(id);
     try {
       const response = await trade.cancelOrder(id);
-
-      console.log("form response");
-      console.log(response);
+      const orderHistory = this.state.orderHistory.map(o => {
+        if (o.id === id) o.status = 3;
+        return o;
+      });
+      this.setState({ orderHistory });
+      toast.success(response);
     } catch (ex) {
       console.log(ex);
     }
