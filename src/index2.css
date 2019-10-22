@@ -186,6 +186,13 @@ input.disabled {
   margin: 15px;
 }
 
+.tv_ammount-form-block .form-input-block .tv-btc-tag {
+  right: 17px;
+  width: 35px;
+  height: 38px;
+  padding: 0 5px;
+}
+
 .rate-ratio {
   width: 80%;
 }

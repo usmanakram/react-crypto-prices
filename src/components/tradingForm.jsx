@@ -55,15 +55,18 @@ class TradingForm extends Form {
     const data = { ...this.state.data };
     data[input.name] = input.value;
 
+    let total = { ...this.state.total };
+
     if (
       (input.name === "quantity" && data.price) ||
       (input.name === "price" && data.quantity)
     ) {
       // data.total = (data.quantity * (data.price * 100000000)) / 100000000;
       data.total = (data.quantity * data.price).toFixed(8);
+      total = (data.quantity * data.price).toFixed(8);
     }
 
-    this.setState({ data });
+    this.setState({ data, total });
   };
 
   renderHorizontalFormInput(name, label, type = "text", readOnly = false) {
@@ -125,6 +128,28 @@ class TradingForm extends Form {
       />
     );
   }
+
+  renderReadOnlyInputTradeForm(
+    name,
+    label,
+    value,
+    symbol,
+    type = "text",
+    step = "any"
+  ) {
+    return (
+      <InpuTradeForm
+        type={type}
+        name={name}
+        value={value}
+        label={label}
+        symbol={symbol}
+        readOnly={true}
+        step={step}
+      />
+    );
+  }
+
   renderInputHidden(name) {
     const { data, errors } = this.state;
 

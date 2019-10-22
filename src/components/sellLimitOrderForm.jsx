@@ -7,7 +7,8 @@ import { toast } from "react-toastify";
 class SellLimitOrderForm extends TradingForm {
   state = {
     data: { price: "", quantity: "", total: "", type: 1 },
-    errors: {}
+    errors: {},
+    total: 0
   };
 
   doSubmit = async () => {
@@ -61,7 +62,7 @@ class SellLimitOrderForm extends TradingForm {
                 selectedPair.base_currency_symbol,
                 "number"
               )}
-              {this.renderInputTradeForm(
+              {/* {this.renderInputTradeForm(
                 "total",
                 "Total",
                 selectedPair.quote_currency_symbol,
@@ -87,7 +88,7 @@ class SellLimitOrderForm extends TradingForm {
                     {selectedPair.base_currency_symbol}
                   </span>
                 </div>
-              </div>
+              </div> */}
               {/* {this.renderInputTradeForm(
                 "commission",
                 "Commission",
@@ -102,6 +103,21 @@ class SellLimitOrderForm extends TradingForm {
                 "number",
                 true
               )} */}
+
+              {this.renderReadOnlyInputTradeForm(
+                "total",
+                "Total",
+                this.state.total,
+                selectedPair.quote_currency_symbol,
+                "number"
+              )}
+              {this.renderReadOnlyInputTradeForm(
+                "balance",
+                "Available Balance",
+                this.getAvailableBalance(),
+                selectedPair.quote_currency_symbol,
+                "number"
+              )}
               <div className="form-group row">
                 <label className="col-3 col-form-label"></label>
                 <div className="col-9 form-input-block">

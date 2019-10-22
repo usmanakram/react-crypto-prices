@@ -1,6 +1,6 @@
 import React from "react";
 
-const InpuTradeForm = ({ name, label, error, symbol, ...rest }) => {
+const InpuTradeForm = ({ name, label, symbol, ...rest }) => {
   return (
     <div className="form-group row">
       <label htmlFor={name} className="col-3 col-form-label">

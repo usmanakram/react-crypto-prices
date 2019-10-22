@@ -7,7 +7,8 @@ import { toast } from "react-toastify";
 class BuyLimitOrderForm extends TradingForm {
   state = {
     data: { price: "", quantity: "", total: "", type: 1 },
-    errors: {}
+    errors: {},
+    total: 0
   };
 
   doSubmit = async () => {
@@ -64,33 +65,47 @@ class BuyLimitOrderForm extends TradingForm {
                 "number"
               )}
 
-              {this.renderInputTradeForm(
+              {/* {this.renderInputTradeForm(
                 "total",
                 "Total",
                 selectedPair.quote_currency_symbol,
                 "number",
                 true
-              )}
-              <div className="form-group row">
+              )} */}
+              {/* <div className="form-group row">
                 <label
                   htmlFor="tv_a_balance_two"
                   className="col-3 col-form-label"
-                >
+                  >
                   Available Balance
                 </label>
                 <div className="col-9 form-input-block readonly">
-                  <input
+                <input
                     className="form-control"
                     type="text"
                     value={this.getAvailableBalance()}
                     id="tv_a_balance_two"
                     readOnly
-                  />
-                  <span className="tv-btc-tag">
+                    />
+                    <span className="tv-btc-tag">
                     {selectedPair.quote_currency_symbol}
-                  </span>
-                </div>
-              </div>
+                    </span>
+                    </div>
+                  </div> */}
+              {this.renderReadOnlyInputTradeForm(
+                "total",
+                "Total",
+                this.state.total,
+                selectedPair.quote_currency_symbol,
+                "number"
+              )}
+              {this.renderReadOnlyInputTradeForm(
+                "balance",
+                "Available Balance",
+                this.getAvailableBalance(),
+                selectedPair.quote_currency_symbol,
+                "number"
+              )}
               {/* {this.renderInputTradeForm(
                 "commission",
                 "Commission",
