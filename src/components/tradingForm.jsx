@@ -100,7 +100,10 @@ class TradingForm extends Form {
   };
 
   resetFormData = () => {
-    const data = { price: "", quantity: "", total: "" };
+    // const data = { price: "", quantity: "", total: "" };
+    const data = this.state.data;
+    data.price = "";
+    data.quantity = "";
     this.setState({ data });
   };
 
