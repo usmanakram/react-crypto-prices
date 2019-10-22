@@ -1,11 +1,8 @@
 import React from "react";
-import Spinner from "./spinner";
 
 const SellOrderBookTable = ({ selectedPair, orderBookData }) => {
   return (
     <React.Fragment>
-      {orderBookData.buyOrders == 0 && <Spinner />}
-
       <table className="table das-oreder-table table-hover">
         <thead>
           <tr>

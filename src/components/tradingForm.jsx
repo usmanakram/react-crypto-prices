@@ -9,11 +9,14 @@ import InputHidden from "./common/inputHidden";
 
 class TradingForm extends Form {
   state = {
-    data: { price: "", quantity: "", total: "" },
+    data: { price: "", quantity: "", total: "", type: "" },
     errors: {}
   };
 
   schema = {
+    type: Joi.number()
+      .required()
+      .label("type"),
     price: Joi.number()
       .required()
       .label("Price"),
@@ -98,7 +101,14 @@ class TradingForm extends Form {
     this.setState({ data });
   };
 
-  renderInputTradeForm(name, label, symbol, type = "text", readOnly = false) {
+  renderInputTradeForm(
+    name,
+    label,
+    symbol,
+    type = "text",
+    readOnly = false,
+    step = "any"
+  ) {
     const { data, errors } = this.state;
 
     return (
@@ -111,6 +121,7 @@ class TradingForm extends Form {
         error={errors[name]}
         symbol={symbol}
         readOnly={readOnly}
+        step={step}
       />
     );
   }

@@ -5,11 +5,13 @@ import Joi from "joi-browser";
 import auth from "../services/authService";
 import { toast } from "react-toastify";
 import Header from "./header";
+import Spinner from "./spinner";
 
 class Login extends Form {
   state = {
     data: { username: "", password: "" },
-    errors: {}
+    errors: {},
+    loginSpinner: false
   };
 
   schema = {
@@ -25,6 +27,8 @@ class Login extends Form {
     console.log("form validated");
 
     try {
+      this.setState({ loginSpinner: true });
+
       const { data } = this.state;
       await auth.login(data.username, data.password);
 
@@ -33,6 +37,9 @@ class Login extends Form {
       window.location = state
         ? state.from.pathname
         : process.env.REACT_APP_BASENAME + "/";
+      this.setState({
+        loginSpinner: false
+      });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
@@ -73,6 +80,7 @@ class Login extends Form {
                     className="user-connected-from user-login-form"
                   >
                     {this.renderLoginFormInput("username", "Username")}
+                    <Spinner status={this.state.loginSpinner} />
 
                     {this.renderLoginFormInput(
                       "password",

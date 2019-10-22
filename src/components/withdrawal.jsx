@@ -14,7 +14,8 @@ class Withdrawal extends Form {
     errors: {},
     selectedCurrency: {},
     currencies: [],
-    transactions: []
+    transactions: [],
+    WithdrawalLoader: false
   };
 
   schema = {
@@ -28,6 +29,7 @@ class Withdrawal extends Form {
 
   async componentDidMount() {
     try {
+      this.setState({ WithdrawalLoader: true });
       const { data } = await http.get("/get-all-currencies");
 
       const currencies = data.find(c => c.symbol === "BTC");
@@ -37,7 +39,7 @@ class Withdrawal extends Form {
         "/auth/get-deposit-address/BTC"
       );
 
-      this.setState({ currencies, selectedCurrency });
+      this.setState({ currencies, selectedCurrency, WithdrawalLoader: false });
     } catch (ex) {
       console.log(ex);
     }
@@ -102,55 +104,57 @@ class Withdrawal extends Form {
           </div>
         </div>
 
-        {Object.keys(selectedCurrency).length > 0 && (
-          <React.Fragment>
-            <div className="row">
-              <div
-                className="
+        {/* {Object.keys(selectedCurrency).length > 0 && ( */}
+        <React.Fragment>
+          <div className="row">
+            <div
+              className="
               col-lg-10
               col-md-10
               col-sm-10
               offset-1
               my-3"
-              >
-                <div className="col-12">
-                  <strong>Total balance:</strong>{" "}
-                  {selectedCurrency.total_balance} {symbol}
-                  <br />
-                  <strong>In Order </strong> {selectedCurrency.in_order_balance}{" "}
-                  {symbol}
-                  <br />
-                  <strong>Available balance: </strong>{" "}
-                  {selectedCurrency.total_balance -
-                    selectedCurrency.in_order_balance}
-                  {symbol}
-                </div>
+            >
+              <div className="col-12">
+                <strong>Total balance:</strong> {selectedCurrency.total_balance}{" "}
+                {symbol}
+                <br />
+                <strong>In Order </strong> {selectedCurrency.in_order_balance}{" "}
+                {symbol}
+                <br />
+                <strong>Available balance: </strong>{" "}
+                {selectedCurrency.total_balance -
+                  selectedCurrency.in_order_balance}
+                {symbol}
               </div>
             </div>
-            <div className="row">
-              <div className="col-md-10 offset-1  mb-5">
-                <div className="border mb-20 adbox">
-                  <h5 className="text-warning mt-4 ml-3">
-                    <strong>Important</strong>
-                  </h5>
-                  <span className="text-warning ml-3">
-                    Provide only <strong>{symbol}</strong> address. Providing
-                    any other coin or token address may result in the loss of
-                    your balance.
-                  </span>
-                  <form onSubmit={this.handleSubmit}>
-                    <div className="mx-3 mb-3">
-                      {this.renderInput("address", "Address")}
-                      {this.renderInput("quantity", "Quantity")}
-                      {this.renderButton("Withdraw", "btn-default")}
-                    </div>
-                  </form>
-                  {this.state.isLoadSpinner ? <Spinner /> : null}
-                </div>
+          </div>
+          <div className="row">
+            <div className="col-md-10 offset-1  mb-5">
+              <div className="border mb-20 adbox">
+                <h5 className="text-warning mt-4 ml-3">
+                  <strong>Important</strong>
+                </h5>
+                <span className="text-warning ml-3">
+                  Provide only <strong>{symbol}</strong> address. Providing any
+                  other coin or token address may result in the loss of your
+                  balance.
+                </span>
+                <form onSubmit={this.handleSubmit}>
+                  <div className="mx-3 mb-3">
+                    {this.renderInput("address", "Address")}
+                    <Spinner status={this.state.WithdrawalLoader} />
+
+                    {this.renderInput("quantity", "Quantity")}
+                    {this.renderButton("Withdraw", "btn-default")}
+                  </div>
+                </form>
+                {this.state.isLoadSpinner ? <Spinner /> : null}
               </div>
             </div>
-          </React.Fragment>
-        )}
+          </div>
+        </React.Fragment>
+        {/* )} */}
       </React.Fragment>
     );
   }
