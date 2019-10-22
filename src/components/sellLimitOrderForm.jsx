@@ -115,7 +115,7 @@ class SellLimitOrderForm extends TradingForm {
                 "balance",
                 "Available Balance",
                 this.getAvailableBalance(),
-                selectedPair.quote_currency_symbol,
+                selectedPair.base_currency_symbol,
                 "number"
               )}
               <div className="form-group row">

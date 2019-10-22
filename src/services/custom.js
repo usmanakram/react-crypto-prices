@@ -3,6 +3,58 @@
 // import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 // am4core.useTheme(am4themes_animated);
 
+
+export function header() {
+
+
+    /*-------------------------------------
+    Navigation Settings
+    -------------------------------------*/
+    function navControl() {
+      if (window.$(window).width() < 992) {
+        window.$(document).on("click", function(event) {
+          var clickover = window.$(event.target);
+          var _opened = window.$("#navbarSupportedContent").hasClass("show");
+          if (_opened === true && !clickover.is(".dropdown, .dropdown *")) {
+            window.$("button.navbar-toggler").trigger("click");
+          }
+        });
+        window.$("#navbarSupportedContent .dropdown>a").unbind("click");
+        window
+          .$("#navbarSupportedContent .dropdown>a")
+          .on("click", function(e) {
+            e.preventDefault();
+            window
+              .$(this)
+              .toggleClass("sm-shown")
+              .siblings(".dropdown-menu")
+              .slideToggle();
+          });
+
+        window
+          .$("#navbarSupportedContent .dropdown a *")
+          .on("click", function(e) {
+            e.stopPropagation();
+          });
+      } else {
+        window
+          .$("#navbarSupportedContent .dropdown-menu")
+          .css("display", "block");
+      }
+    }
+    navControl();
+    window.$(window).on("resize orientationchange", function() {
+      navControl();
+    });
+    /*--------------------------------------------
+    		Toggle Settings
+    ---------------------------------------------*/
+    window.$(".favorite-coin").on("click", function() {
+      window.$(this).toggleClass("active");
+    });
+  
+
+}
 export function newsHeadlinesSlider() {
   window.$('#news_headlines_slider').slick({
     dots: false,

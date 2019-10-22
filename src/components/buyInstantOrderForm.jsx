@@ -53,6 +53,12 @@ class BuyInstantOrderForm extends TradingForm {
         <div className="tv_ammount-form-block">
           {Object.keys(selectedPair).length > 0 && (
             <form onSubmit={this.handleSubmit} className="form-horizontal">
+              {this.renderReadOnlyInputTradeForm(
+                "price",
+                "Price",
+                "Markit",
+                selectedPair.quote_currency_symbol
+              )}
               {this.renderInputHidden("price")}
               {this.renderInputHidden("type")}
               {this.renderInputTradeForm(
@@ -102,13 +108,13 @@ class BuyInstantOrderForm extends TradingForm {
                 "number",
                 true
               )} */}
-              {this.renderReadOnlyInputTradeForm(
+              {/* {this.renderReadOnlyInputTradeForm(
                 "total",
                 "Total",
                 this.state.total,
                 selectedPair.quote_currency_symbol,
                 "number"
-              )}
+              )} */}
               {this.renderReadOnlyInputTradeForm(
                 "balance",
                 "Available Balance",

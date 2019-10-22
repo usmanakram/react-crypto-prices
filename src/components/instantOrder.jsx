@@ -20,8 +20,8 @@ const InstantOrder = ({
           <table className="table tv_orde_table">
             <thead>
               <tr>
-                <th scope="col">Buy BTC</th>
-                <th scope="col">SELL BTC</th>
+                <th scope="col">Buy {selectedPair.base_currency_symbol}</th>
+                <th scope="col">SELL {selectedPair.base_currency_symbol}</th>
               </tr>
             </thead>
             <tbody>

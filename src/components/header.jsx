@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import auth from "../services/authService";
+import { header } from "../services/custom";
 
 class Header extends Component {
   state = { user: {} };
@@ -8,6 +9,8 @@ class Header extends Component {
   componentDidMount() {
     const user = auth.getCurrentUser();
     this.setState({ user });
+
+    header();
   }
 
   render() {
@@ -41,7 +44,7 @@ class Header extends Component {
               id="navbarSupportedContent"
             >
               <ul className="navbar-nav ml-auto">
-                <li className="nav-item dropdown">
+                <li className="nav-item ">
                   <Link className="nav-link" to="/exchange">
                     Exchange
                   </Link>
@@ -168,43 +171,43 @@ class Header extends Component {
                     </li>
                   </ul>
                 </li> */}
-                <li className="nav-item dropdown language-option">
-                  <Link className="nav-link" to="#">
-                    <i className="fas fa-globe"></i> EN
-                  </Link>
-                  <ul className="dropdown-menu">
-                    <li className="nav-item">
-                      <Link className="nav-link" to="#">
-                        <i className="fab fa-buysellads"></i> US
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link className="nav-link" to="#">
-                        <i className="fas fa-lira-sign"></i> UK
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
                 {user && (
-                  <li className="nav-item button">
-                    <Link className="btn nav-link" to="/logout">
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/logout">
                       Logout
                     </Link>
                   </li>
                 )}
                 {!user && (
                   <React.Fragment>
-                    <li className="nav-item button">
-                      <Link className="btn nav-link" to="/login">
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/login">
                         Login
                       </Link>
                     </li>
 
-                    <li className="nav-item button active">
-                      <Link className="btn nav-link" to="/signup">
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/signup">
                         Sign Up
                       </Link>
                     </li>
+                    {/* <li className="nav-item dropdown language-option">
+                    <Link className="nav-link" to="#">
+                      <i className="fas fa-globe"></i> EN
+                    </Link>
+                    <ul className="dropdown-menu">
+                      <li className="nav-item">
+                        <Link className="nav-link" to="#">
+                          <i className="fab fa-buysellads"></i> US
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link className="nav-link" to="#">
+                          <i className="fas fa-lira-sign"></i> UK
+                        </Link>
+                      </li>
+                    </ul>
+                  </li> */}
                   </React.Fragment>
                 )}
               </ul>

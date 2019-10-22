@@ -18,9 +18,10 @@ const LimitOrder = ({
         <thead>
           <tr>
             <th className="tv_orde_1st_th" scope="col">
-              Buy BTC
+              Buy {selectedPair.base_currency_symbol}
             </th>
-            <th scope="col">SELL BTC</th>
+
+            <th scope="col">SELL {selectedPair.base_currency_symbol}</th>
           </tr>
         </thead>
         <tbody>
