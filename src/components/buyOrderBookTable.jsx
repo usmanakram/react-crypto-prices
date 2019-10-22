@@ -10,7 +10,7 @@ const BuyOrderBookTable = ({ selectedPairStats, orderBookData }) => {
               {Object.keys(selectedPairStats).length > 0 &&
                 selectedPairStats.last_price}
             </span>
-            <img src="./images/exchange/4.png" alt="img" />
+            {/* <img src="./images/exchange/4.png" alt="img" /> */}
           </th>
           <th
             className="text-center"

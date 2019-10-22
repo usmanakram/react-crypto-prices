@@ -5,6 +5,11 @@ import trade from "../services/tradeService";
 import { toast } from "react-toastify";
 
 class BuyLimitOrderForm extends TradingForm {
+  state = {
+    data: { price: "", quantity: "", total: "", type: 1 },
+    errors: {}
+  };
+
   doSubmit = async () => {
     // console.log("buyOrder form validated");
 
@@ -14,6 +19,7 @@ class BuyLimitOrderForm extends TradingForm {
 
       const response = await trade.buy(
         this.props.selectedPair.id,
+        data.type,
         data.price,
         data.quantity
       );
@@ -44,6 +50,7 @@ class BuyLimitOrderForm extends TradingForm {
         <div className="tv_ammount-form-block">
           {Object.keys(selectedPair).length > 0 && (
             <form onSubmit={this.handleSubmit} className="form-horizontal">
+              {this.renderInputHidden("type")}
               {this.renderInputTradeForm(
                 "price",
                 "Price",

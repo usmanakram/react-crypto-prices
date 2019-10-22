@@ -1881,7 +1881,8 @@ input:not([type=submit]):not([type=radio]):not([type=checkbox]):focus, select:fo
   background: transparent; }
   .dark-blue-bg .das-oreder-table td span:not(.color-sell):not(.color-buy) {
     color: #fff; }
-  .dark-blue-bg .das-oreder-table td .rate-ratio {
+  /* .dark-blue-bg .das-oreder-table td .rate-ratio { */
+  .dark-blue-bg .das-oreder-table tr .rate-ratio {
     background: rgba(221, 25, 0, 0.08); }
 
 .dark-blue-bg .das-oreder-table.das-buy-table .rate-ratio {

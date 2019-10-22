@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import SellOrderBookTable from "./sellOrderBookTable";
 import BuyOrderBookTable from "./buyOrderBookTable";
 import ws from "../services/webSocketService";
+import Spinner from "./spinner";
 
 class OrderBook2 extends Component {
   state = {};
@@ -94,6 +95,8 @@ class OrderBook2 extends Component {
         </ul> */}
 
         <div className="das-oreder-table-block ">
+          {orderBookData.buyOrders == 0 && <Spinner />}
+
           <SellOrderBookTable
             selectedPair={selectedPair}
             orderBookData={orderBookData}

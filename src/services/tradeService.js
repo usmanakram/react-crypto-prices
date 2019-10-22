@@ -5,9 +5,10 @@ const apiEndpoint = {
   sell: "/auth/sell"
 };
 
-async function buy(pair_id, price, quantity) {
+async function buy(pair_id, type, price, quantity) {
   const formData = new FormData();
   formData.append("pair_id", pair_id);
+  formData.append("type", type);
   formData.append("price", price);
   formData.append("quantity", quantity);
 
@@ -15,9 +16,10 @@ async function buy(pair_id, price, quantity) {
   return data;
 }
 
-async function sell(pair_id, price, quantity) {
+async function sell(pair_id, type, price, quantity) {
   const formData = new FormData();
   formData.append("pair_id", pair_id);
+  formData.append("type", type);
   formData.append("price", price);
   formData.append("quantity", quantity);
 

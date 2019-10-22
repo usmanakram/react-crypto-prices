@@ -5,6 +5,11 @@ import trade from "../services/tradeService";
 import { toast } from "react-toastify";
 
 class SellInstantOrderForm extends TradingForm {
+  state = {
+    data: { price: "", quantity: "", total: "", type: 0 },
+    errors: {}
+  };
+
   doSubmit = async () => {
     // console.log("buyOrder form validated");
 
@@ -14,6 +19,7 @@ class SellInstantOrderForm extends TradingForm {
 
       const response = await trade.sell(
         this.props.selectedPair.id,
+        data.type,
         data.price,
         data.quantity
       );
@@ -46,6 +52,7 @@ class SellInstantOrderForm extends TradingForm {
         <div className="tv_ammount-form-block">
           {Object.keys(selectedPair).length > 0 && (
             <form onSubmit={this.handleSubmit} className="form-horizontal">
+              {this.renderInputHidden("type")}
               {this.renderInputHidden("price")}
               {this.renderInputTradeForm(
                 "quantity",
@@ -76,7 +83,7 @@ class SellInstantOrderForm extends TradingForm {
                     readOnly
                   />
                   <span className="tv-btc-tag">
-                    {selectedPair.quote_currency_symbol}
+                    {selectedPair.base_currency_symbol}
                   </span>
                 </div>
               </div>
