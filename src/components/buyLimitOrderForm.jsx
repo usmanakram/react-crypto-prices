@@ -16,7 +16,8 @@ class BuyLimitOrderForm extends TradingForm {
 
     try {
       const { data } = this.state;
-      // console.log(data);
+      console.log("data");
+      console.log(data);
 
       const response = await trade.buy(
         this.props.selectedPair.id,

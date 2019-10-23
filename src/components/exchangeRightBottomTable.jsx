@@ -76,7 +76,8 @@ class ExchangeRightBottomTable extends Component {
                       </span>
                     </td>
                     <td>{value.quantity}</td>
-                    <td>{moment(value.created_at).format("HH:mm:ss")}</td>
+                    {/* <td>{moment(value.created_at).format("HH:mm:ss")}</td> */}
+                    <td>{value.created_at.split(" ")[1]}</td>
                   </tr>
                 ))}
               </tbody>
