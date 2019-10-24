@@ -3,21 +3,29 @@ import { Link } from "react-router-dom";
 import TradingForm from "./tradingForm";
 import trade from "../services/tradeService";
 import { toast } from "react-toastify";
+import Spinner from "./spinner";
 
 class BuyLimitOrderForm extends TradingForm {
   state = {
-    data: { price: "", quantity: "", total: "", type: 1 },
+    data: {
+      price: "",
+      quantity: "",
+      total: "",
+      type: 1
+    },
     errors: {},
-    total: 0
+    total: 0,
+    buyLimitOrderFormSpinner: false
   };
 
   doSubmit = async () => {
     // console.log("buyOrder form validated");
 
     try {
+      this.setState({ buyLimitOrderFormSpinner: true });
+      // console.log("ok");
       const { data } = this.state;
-      console.log("data");
-      console.log(data);
+      // console.log(data);
 
       const response = await trade.buy(
         this.props.selectedPair.id,
@@ -31,6 +39,7 @@ class BuyLimitOrderForm extends TradingForm {
 
       // console.log(response);
       toast.success(response);
+      this.setState({ buyLimitOrderFormSpinner: false });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         // const errors = { ...this.state.errors };
@@ -121,6 +130,7 @@ class BuyLimitOrderForm extends TradingForm {
                 "number",
                 true
               )} */}
+
               <div className="form-group row">
                 <label className="col-3 col-form-label"></label>
                 <div className="col-9 form-input-block">
@@ -129,6 +139,8 @@ class BuyLimitOrderForm extends TradingForm {
                       `Buy ${selectedPair.base_currency_symbol}`,
                       "buy-btn"
                     )}
+                  <Spinner status={this.state.buyLimitOrderFormSpinner} />
+
                   {!this.user && (
                     <Link to="/login" className="btn buy-btn">
                       Login

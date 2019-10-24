@@ -44,7 +44,7 @@ class Login extends Form {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };
         errors.username = ex.response.data;
-        this.setState({ errors });
+        this.setState({ errors, loginSpinner: false });
 
         toast.error(ex.response.data);
       }

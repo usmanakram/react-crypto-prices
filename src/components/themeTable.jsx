@@ -75,10 +75,8 @@ class ThemeTable extends Component {
                 sortColumn=""
               />
             </div>
-            {/* <!-- order-history-block-inner --> */}
           </div>
         </div>
-        {/* <!-- latest-tranjections-area --> */}
       </div>
     );
   }
