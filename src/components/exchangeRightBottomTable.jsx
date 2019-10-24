@@ -34,7 +34,7 @@ class ExchangeRightBottomTable extends Component {
   };
 
   render() {
-    const { selectedPair, tradeHistory } = this.props;
+    const { selectedPair, tradeHistory, status } = this.props;
 
     this.handleTradeHistoryStream();
 
@@ -45,7 +45,8 @@ class ExchangeRightBottomTable extends Component {
         </div>
         <div className="order-history-block-inner dashboard-ticker-block-four">
           <div className="history-table-wrap">
-            {tradeHistory == 0 && <Spinner />}
+            <Spinner status={status} />
+
             <table className="table coin-list table-hover history-table">
               <thead>
                 <tr>
@@ -77,7 +78,9 @@ class ExchangeRightBottomTable extends Component {
                     </td>
                     <td>{value.quantity}</td>
                     {/* <td>{moment(value.created_at).format("HH:mm:ss")}</td> */}
-                    <td>{value.created_at.split(" ")[1]}</td>
+                    <td>
+                      {value.created_at && value.created_at.split(" ")[1]}
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -8,7 +8,7 @@ const Spinner = ({ status }) => {
       <div className="spinner_center">
         <i
           className="fa fa-spinner fa-spin  "
-          style={{ fontSize: 45, color: "#797979" }}
+          style={{ fontSize: 30, color: "#797979" }}
         ></i>
       </div>
     </div>

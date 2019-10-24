@@ -3,18 +3,21 @@ import TradingForm from "./tradingForm";
 import { Link } from "react-router-dom";
 import trade from "../services/tradeService";
 import { toast } from "react-toastify";
+import Spinner from "./spinner";
 
 class BuyInstantOrderForm extends TradingForm {
   state = {
     data: { price: "", quantity: "", total: "", type: 0 },
     errors: {},
-    total: 0
+    total: 0,
+    buyInstantOrderFormSpinner: false
   };
 
   doSubmit = async () => {
     // console.log("buyOrder form validated");
 
     try {
+      this.setState({ buyInstantOrderFormSpinner: true });
       const { data } = this.state;
       // console.log(data);
 
@@ -30,6 +33,7 @@ class BuyInstantOrderForm extends TradingForm {
 
       // console.log(response);
       toast.success(response);
+      this.setState({ buyInstantOrderFormSpinner: false });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         // const errors = { ...this.state.errors };
@@ -130,6 +134,7 @@ class BuyInstantOrderForm extends TradingForm {
                       `Buy ${selectedPair.base_currency_symbol}`,
                       "buy-btn"
                     )}
+                  <Spinner status={this.state.buyInstantOrderFormSpinner} />
                   {!this.user && (
                     <Link to="/login" className="btn buy-btn">
                       Login

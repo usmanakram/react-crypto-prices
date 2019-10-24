@@ -27,7 +27,8 @@ class Exchange extends Component {
       sellOrders: []
     },
     tradeHistory: [],
-    openOrderspinner: false
+    openOrderSpinner: false,
+    OrderBookAndTradeHistorySpinner: false
   };
 
   async componentDidMount() {
@@ -127,12 +128,11 @@ class Exchange extends Component {
 
     if (Object.keys(selectedPair).length) {
       try {
-        this.setState({ openOrderspinner: true });
-
+        this.setState({ openOrderSpinner: true });
         const orders = await trade.getUserOpenOrders();
 
         this.handleOpenOrders(orders);
-        this.setState({ openOrderspinner: false });
+        this.setState({ openOrderSpinner: false });
       } catch (ex) {
         if (ex.response && ex.response.status === 400) {
           console.log(ex.response.data);
@@ -165,6 +165,8 @@ class Exchange extends Component {
 
     if (Object.keys(selectedPair).length) {
       try {
+        this.setState({ OrderBookAndTradeHistorySpinner: true });
+
         const data = await trade.getOrderBook(selectedPair.id);
         const tradeHistory = await trade.getTradeHistory(selectedPair.id);
         const pair = await trade.getLatestPrice(selectedPair.id);
@@ -172,6 +174,7 @@ class Exchange extends Component {
         this.handleOrderBook(data);
         this.handleTradeHistory(tradeHistory);
         this.handleSelectedPairStats(pair.latest_price);
+        this.setState({ OrderBookAndTradeHistorySpinner: false });
       } catch (ex) {
         if (ex.response && ex.response.status === 400) {
           console.log(ex.response.data);
@@ -203,6 +206,7 @@ class Exchange extends Component {
           selectedPairStats={selectedPairStats}
         />
         <ExchangeOneBody
+          status={this.state.OrderBookAndTradeHistorySpinner}
           selectedPair={selectedPair}
           selectedPairStats={selectedPairStats}
           orderBookData={orderBookData}
@@ -215,7 +219,7 @@ class Exchange extends Component {
         />
 
         <ThemeTable
-          status={this.state.openOrderspinner}
+          status={this.state.openOrderSpinner}
           selectedPair={selectedPair}
           openOrders={openOrders}
           onCancelOrder={this.handleOpenOrders}

@@ -196,3 +196,7 @@ input.disabled {
 .rate-ratio {
   width: 80%;
 }
+
+.ord {
+  position: relative;
+}

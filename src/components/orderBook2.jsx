@@ -26,7 +26,12 @@ class OrderBook2 extends Component {
   };
 
   render() {
-    const { selectedPair, selectedPairStats, orderBookData } = this.props;
+    const {
+      selectedPair,
+      selectedPairStats,
+      orderBookData,
+      status
+    } = this.props;
     this.handleStream();
 
     return (
@@ -93,19 +98,20 @@ class OrderBook2 extends Component {
             </Link>
           </li>
         </ul> */}
+        <div className="ord">
+          <div className="das-oreder-table-block ">
+            <Spinner status={status} />
 
-        <div className="das-oreder-table-block ">
-          {orderBookData.buyOrders == 0 && <Spinner />}
+            <SellOrderBookTable
+              selectedPair={selectedPair}
+              orderBookData={orderBookData}
+            />
 
-          <SellOrderBookTable
-            selectedPair={selectedPair}
-            orderBookData={orderBookData}
-          />
-
-          <BuyOrderBookTable
-            selectedPairStats={selectedPairStats}
-            orderBookData={orderBookData}
-          />
+            <BuyOrderBookTable
+              selectedPairStats={selectedPairStats}
+              orderBookData={orderBookData}
+            />
+          </div>
         </div>
       </div>
     );

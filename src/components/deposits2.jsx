@@ -118,37 +118,33 @@ class Deposits2 extends Component {
         <div className="navigation-two">
           <Header />
         </div>
-
-        <div className="row spinner_wrapper my-5">
-          <div className="col-md-10 offset-1  ">
-            <div className="latest-tranjections-block-inner panel-heading-block mb-2">
-              <h5>Deposits</h5>
+        <div className="container">
+          <div className="row mt-5">
+            <div className="col-12 ">
+              <div className="latest-tranjections-block-inner panel-heading-block mb-2">
+                <h5>Deposits</h5>
+              </div>
+              <select
+                className="form-control"
+                onChange={this.handleCurrencyChange}
+              >
+                {this.state.currencies.map(c => (
+                  <option key={c.symbol} value={c.symbol}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
             </div>
-            <select
-              className="form-control"
-              onChange={this.handleCurrencyChange}
-            >
-              {this.state.currencies.map(c => (
-                <option key={c.symbol} value={c.symbol}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
           </div>
-        </div>
 
-        {/* {Object.keys(selectedCurrency).length > 0 && ( */}
-        <React.Fragment>
-          <div className="row">
-            <div
-              className="
-              col-lg-10
-              col-md-10
-              col-sm-10
-              offset-1
+          {/* {Object.keys(selectedCurrency).length > 0 && ( */}
+          <React.Fragment>
+            <div className="row">
+              <div
+                className="
+              col-12           
               my-3"
-            >
-              <div className="col-12">
+              >
                 <strong>Total balance:</strong> {selectedCurrency.total_balance}{" "}
                 {symbol}
                 <br />
@@ -161,92 +157,90 @@ class Deposits2 extends Component {
                 {symbol}
               </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-md-10 offset-1  mb-5">
-              <div className="border adbox">
-                <h5 className="text-warning mt-4 ml-3">
-                  <strong>Important</strong>
-                </h5>
-                <p className="text-warning ml-3">
-                  Send only <strong>{symbol}</strong> to this deposit address.
-                  Sending any other coin or token to this address may result in
-                  the loss of your deposit.
-                </p>
-                <h5 className="text-warning ml-3 mb-3">
-                  <strong>{symbol} Deposit Address</strong>
-                </h5>
+            <div className="row">
+              <div className="col-12 mb-5">
+                <div className="border adbox">
+                  <h5 className="text-warning mt-4 ml-3">
+                    <strong>Important</strong>
+                  </h5>
+                  <p className="text-warning ml-3">
+                    Send only <strong>{symbol}</strong> to this deposit address.
+                    Sending any other coin or token to this address may result
+                    in the loss of your deposit.
+                  </p>
+                  <h5 className="text-warning ml-3 mb-3">
+                    <strong>{symbol} Deposit Address</strong>
+                  </h5>
 
-                <div className="form-group addpdglr15">
-                  <input
-                    ref={this.username}
-                    readOnly
-                    type="text"
-                    className="form-control disabled text-center"
-                    value={address}
-                  />
-                </div>
-                <Spinner status={this.state.depositsSpinner} />
-                <div className="mb-3 ml-3">
-                  <button
-                    onClick={this.handleLoadComponent}
-                    type="button"
-                    className="btn btn-primary btn mr-3"
-                    data-toggle="modal"
-                    data-target="#myModal"
-                  >
-                    <i className="fa fa-qrcode fa-fw" aria-hidden="true"></i>
-                    Show QR Code
-                  </button>
-
-                  <button
-                    onClick={this.handleCopy}
-                    type="button"
-                    className="btn btn-primary btn "
-                  >
-                    <i className="fa fa-clipboard fa-fw" aria-hidden="true"></i>
-                    Copy Address
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div className="modal fade" id="myModal" role="dialog">
-              <div className="modal-dialog modal-sm">
-                {/* <!-- Modal content--> */}
-                <div className="modal-content">
-                  <div className="modal-header ">
-                    Deposit Address
+                  <div className="form-group addpdglr15">
+                    <input
+                      ref={this.username}
+                      readOnly
+                      type="text"
+                      className="form-control disabled text-center"
+                      value={address}
+                    />
+                  </div>
+                  <Spinner status={this.state.depositsSpinner} />
+                  <div className="mb-3 ml-3">
                     <button
+                      onClick={this.handleLoadComponent}
                       type="button"
-                      className="close"
-                      data-dismiss="modal"
-                    ></button>
+                      className="btn btn-primary mr-3"
+                      data-toggle="modal"
+                      data-target="#myModal"
+                    >
+                      <i className="fa fa-qrcode fa-fw" aria-hidden="true"></i>
+                      Show QR Code
+                    </button>
+
+                    <button
+                      onClick={this.handleCopy}
+                      type="button"
+                      className="btn btn-primary "
+                    >
+                      <i
+                        className="fa fa-clipboard fa-fw"
+                        aria-hidden="true"
+                      ></i>
+                      Copy Address
+                    </button>
                   </div>
-                  <div className="modal-body">
-                    {this.state.isLoadComponent ? (
-                      <div className="center">
-                        <QRCode
-                          value={address}
-                          size={230}
-                          level={"H"}
-                          includeMargin={true}
-                        />
-                      </div>
-                    ) : null}
-                    <p className="ow">{address}</p>
+                </div>
+              </div>
+
+              <div className="modal fade" id="myModal" role="dialog">
+                <div className="modal-dialog modal-sm">
+                  {/* <!-- Modal content--> */}
+                  <div className="modal-content">
+                    <div className="modal-header ">
+                      Deposit Address
+                      <button
+                        type="button"
+                        className="close"
+                        data-dismiss="modal"
+                      ></button>
+                    </div>
+                    <div className="modal-body">
+                      {this.state.isLoadComponent ? (
+                        <div className="center">
+                          <QRCode
+                            value={address}
+                            size={230}
+                            level={"H"}
+                            includeMargin={true}
+                          />
+                        </div>
+                      ) : null}
+                      <p className="ow">{address}</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </React.Fragment>
-        {/* )} */}
-
-        {/* <ThemeTable
-          themeTableHeadings={themeTableHeadings}
-          themeTableValue={themeTableValue}
-        /> */}
+          </React.Fragment>
+   
+        </div>
       </React.Fragment>
     );
   }

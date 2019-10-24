@@ -13,7 +13,8 @@ const ExchangeOneBody = ({
   onTrade,
   quoteCurrencyBalance,
   baseCurrencyBalance,
-  onTradeHistoryUpdate
+  onTradeHistoryUpdate,
+  status
 }) => {
   return (
     <div className="dashboard-block dashboard-white">
@@ -22,6 +23,7 @@ const ExchangeOneBody = ({
           <div className="row">
             <div className="col-lg-3">
               <OrderBook2
+                status={status}
                 selectedPair={selectedPair}
                 selectedPairStats={selectedPairStats}
                 orderBookData={orderBookData}
@@ -46,6 +48,7 @@ const ExchangeOneBody = ({
 
             <div className="col-lg-3">
               <ExchangeRightSideBar
+                status={status}
                 selectedPair={selectedPair}
                 tradeHistory={tradeHistory}
                 onTradeHistoryUpdate={onTradeHistoryUpdate}

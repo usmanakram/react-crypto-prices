@@ -15,6 +15,7 @@ const Footer = () => {
                       src="./images/logo.png"
                       alt="img"
                       className="img-responsive"
+                      style={{ width: 200 }}
                     />
                   </Link>
                 </div>
