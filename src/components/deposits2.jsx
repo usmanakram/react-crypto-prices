@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import auth from "../services/authService";
 import Spinner from "./spinner";
 
+
 import copy from "copy-to-clipboard";
 import Header from "./header";
 
@@ -53,6 +54,7 @@ class Deposits2 extends Component {
   handleCopy = () => {
     const username = this.username.current.value;
     copy(username);
+    toast("    Address Copied");
   };
 
   handleLoadSpinner = () => {
@@ -182,11 +184,11 @@ class Deposits2 extends Component {
                     />
                   </div>
                   <Spinner status={this.state.depositsSpinner} />
-                  <div className="mb-3 ml-3">
+                  <div className="my-3">
                     <button
                       onClick={this.handleLoadComponent}
                       type="button"
-                      className="btn btn-primary mr-3"
+                      className="btn btn-primary mx-3"
                       data-toggle="modal"
                       data-target="#myModal"
                     >
@@ -197,7 +199,7 @@ class Deposits2 extends Component {
                     <button
                       onClick={this.handleCopy}
                       type="button"
-                      className="btn btn-primary "
+                      className="btn btn-primary mx-3"
                     >
                       <i
                         className="fa fa-clipboard fa-fw"
@@ -239,7 +241,6 @@ class Deposits2 extends Component {
               </div>
             </div>
           </React.Fragment>
-   
         </div>
       </React.Fragment>
     );
