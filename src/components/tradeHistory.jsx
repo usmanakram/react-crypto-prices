@@ -109,29 +109,29 @@ class TradeHistory extends Component {
           </div>
           <div className="row">
             <div className="col-12">
-              <form className="form-inline mb-2 " onSubmit={this.doSubmit}>
-                <div className="form-group ">
+              <form className="form-inline  " onSubmit={this.doSubmit}>
+                <div className="form-group my-2 ">
                   {/* <label htmlFor="date"> </label> */}
                   <DatePicker
                     selected={this.state.startDate}
                     onChange={this.handleStartDate}
                   />
                 </div>
-                <div className="form-group ">
+                <div className="form-group my-2 ">
                   {/* <label htmlFor="exampleInputEmail2">-</label> */}
                   <DatePicker
                     selected={this.state.endDate}
                     onChange={this.handleEndDate}
                   />
                 </div>
-                <div className="form-group wrapper">
+                <div className="form-group my-2 wrapper">
                   {/* <label htmlFor="date"></label> */}
                   <select name="" id="" className="form-control">
                     <option value="17">BCBTC</option>
                   </select>
                 </div>
 
-                <div className="form-group wrapper">
+                <div className="form-group my-2 wrapper">
                   {/* <label htmlFor="date"></label> */}
                   <select
                     onChange={this.handeValueChange}
@@ -145,14 +145,14 @@ class TradeHistory extends Component {
                     <option value="0">Sell</option>
                   </select>
                 </div>
-                <div className="form-group wrapper">
+                <div className="form-group my-2 wrapper">
                   <input
                     type="submit"
                     className="btn btn-primary ml-3"
                     value="Search"
                   />
                 </div>
-                <div className="form-group wrapper">
+                <div className="form-group my-2 wrapper">
                   <button
                     onClick={this.handleReset}
                     type="button"
