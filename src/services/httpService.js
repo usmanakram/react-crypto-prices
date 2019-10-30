@@ -1,6 +1,10 @@
 import axios from "axios";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+/**
+ * Header added to restrict laravel from redirecing unauthenticated user to login page
+ */
+// axios.defaults.headers.common["Accept"] = "application/json";
 
 axios.interceptors.response.use(null, error => {
   console.log("INTERCEPTOR CALLED");
@@ -19,6 +23,9 @@ axios.interceptors.response.use(null, error => {
   // START
   if (error.response.status === 401) {
     console.log("access denied");
+    // window.location = process.env.REACT_APP_BASENAME + "/logout";
+    localStorage.removeItem("token");
+    window.location.reload();
   }
   // END
 
