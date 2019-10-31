@@ -30,6 +30,8 @@ class Exchange extends Component {
     openOrderSpinner: false,
     OrderBookAndTradeHistorySpinner: false
   };
+  user = auth.getCurrentUser();
+
 
   async componentDidMount() {
     try {
@@ -40,9 +42,8 @@ class Exchange extends Component {
       const selectedPair = currencyPairs[0];
 
       this.setState({ currencyPairs, selectedPair });
-      const user = auth.getCurrentUser();
 
-      if (auth.getCurrentUser()) {
+      if (this.user) {
         this.setBalances();
         this.setOpenOrders();
       }
@@ -70,10 +71,9 @@ class Exchange extends Component {
   };
 
   handleUserStream = () => {
-    const user = auth.getCurrentUser();
 
-    if (auth.getCurrentUser()) {
-      ws.channel("User." + user.sub)
+    if (this.user) {
+      ws.channel("User." + this.user.sub)
         .listen("TradeOrderFilled", e => {
           /**
            * It's temporary solution. Balances will be received over websocket connection at OrderFiled event.
@@ -184,7 +184,7 @@ class Exchange extends Component {
   };
 
   render() {
-    const user = auth.getCurrentUser();
+
 
     const {
       selectedPair,

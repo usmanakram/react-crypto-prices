@@ -2,8 +2,7 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 // import logo from "./logo.svg";
-import "./App.css";
-import CoinsList from "./components/coinsList";
+import "./App.css"
 import Login from "./components/login";
 import Logout from "./components/logout";
 import CoinInfo from "./components/coinInfo";

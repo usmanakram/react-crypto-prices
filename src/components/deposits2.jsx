@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import http from "../services/httpService";
 import { toast } from "react-toastify";
 import auth from "../services/authService";
@@ -100,7 +100,7 @@ class Deposits2 extends Component {
 
     const { selectedCurrency, address } = this.state;
     // let address, name, symbol;
-    let name, symbol;
+    let symbol;
 
     if (Object.keys(selectedCurrency).length) {
       /* const {
@@ -111,7 +111,7 @@ class Deposits2 extends Component {
       } = this.state; */
 
       // address = selectedCurrency.address;
-      name = selectedCurrency.currency.name;
+      // name = selectedCurrency.currency.name;
       symbol = selectedCurrency.currency.symbol;
     }
 

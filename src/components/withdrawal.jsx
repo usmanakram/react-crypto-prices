@@ -1,9 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import Form from "./common/form";
 import Joi from "joi-browser";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import http from "../services/httpService";
-import { toast } from "react-toastify";
 import auth from "../services/authService";
 import Spinner from "./spinner";
 import Header from "./header";
@@ -64,7 +63,7 @@ class Withdrawal extends Form {
     if (!auth.getCurrentUser()) return <Redirect to="/login" />;
 
     const { selectedCurrency } = this.state;
-    let address, name, symbol;
+    let symbol;
 
     if (Object.keys(selectedCurrency).length) {
       /* const {
@@ -74,8 +73,8 @@ class Withdrawal extends Form {
         }
       } = this.state; */
 
-      address = selectedCurrency.address;
-      name = selectedCurrency.currency.name;
+      // address = selectedCurrency.address;
+      // name = selectedCurrency.currency.name;
       symbol = selectedCurrency.currency.symbol;
     }
 
