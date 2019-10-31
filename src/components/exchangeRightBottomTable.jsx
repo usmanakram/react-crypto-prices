@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import moment from "moment";
-import { exchangeRightBottomValues } from "../services/fakeExchange";
 import Spinner from "./spinner";
 import ws from "../services/webSocketService";
 
@@ -65,12 +64,12 @@ class ExchangeRightBottomTable extends Component {
                       <span
                         className={
                           tradeHistory[i + 1] &&
-                          tradeHistory[i + 1].rate > value.rate
+                            tradeHistory[i + 1].rate > value.rate
                             ? "color-sell"
                             : tradeHistory[i + 1] &&
                               tradeHistory[i + 1].rate < value.rate
-                            ? "color-buy"
-                            : "color"
+                              ? "color-buy"
+                              : "color"
                         }
                       >
                         {value.rate}
