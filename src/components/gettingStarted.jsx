@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import auth from "../services/authService";
-
+import { Link } from "react-router-dom"
 class GettingStarted extends Component {
   state = {};
   render() {
@@ -19,7 +19,7 @@ class GettingStarted extends Component {
                   </p>
                 </div>
                 <div className="colto-btn-group">
-                  <button className="btn callto-btn">Log In</button>
+                  <Link to='/login' className="btn callto-btn">Log In</Link>
                   {/* <span>or</span>
                 <button className="btn callto-btn">Create Account</button> */}
                 </div>

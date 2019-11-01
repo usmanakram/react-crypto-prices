@@ -35,6 +35,7 @@ class SellInstantOrderForm extends TradingForm {
       toast.success(response);
       this.setState({ sellInstantOrderFormSpinner: false });
     } catch (ex) {
+      this.setState({ sellInstantOrderFormSpinner: false });
       if (ex.response && ex.response.status === 400) {
         // const errors = { ...this.state.errors };
         // errors.username = ex.response.data;

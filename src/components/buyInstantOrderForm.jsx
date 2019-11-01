@@ -19,7 +19,7 @@ class BuyInstantOrderForm extends TradingForm {
     try {
       this.setState({ buyInstantOrderFormSpinner: true });
       const { data } = this.state;
-      // console.log(data);
+
 
       const response = await trade.buy(
         this.props.selectedPair.id,
@@ -35,14 +35,18 @@ class BuyInstantOrderForm extends TradingForm {
       toast.success(response);
       this.setState({ buyInstantOrderFormSpinner: false });
     } catch (ex) {
+      this.setState({ buyInstantOrderFormSpinner: false });
+
       if (ex.response && ex.response.status === 400) {
         // const errors = { ...this.state.errors };
         // errors.username = ex.response.data;
         // this.setState({ errors });
         // toast.error(ex.response.data);
 
-        // console.log(ex.response.data);
+
         toast.error(ex.response.data);
+
+
       }
     }
   };
