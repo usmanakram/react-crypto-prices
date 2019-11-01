@@ -34,6 +34,7 @@ class SellLimitOrderForm extends TradingForm {
       toast.success(response);
       this.setState({ sellLimitOrderFormSpinner: false });
     } catch (ex) {
+      this.setState({ sellInstantOrderFormSpinner: false });
       if (ex.response && ex.response.status === 400) {
         // const errors = { ...this.state.errors };
         // errors.username = ex.response.data;
@@ -41,6 +42,7 @@ class SellLimitOrderForm extends TradingForm {
         // toast.error(ex.response.data);
 
         // console.log(ex.response.data);
+
         toast.error(ex.response.data);
       }
     }
