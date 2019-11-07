@@ -6,11 +6,9 @@ import "./App.css"
 import Login from "./components/login";
 import Logout from "./components/logout";
 import CoinInfo from "./components/coinInfo";
-// import Deposits from "./components/deposits";
-import Deposits2 from "./components/deposits2";
+import Deposits from "./components/deposits";
 import Withdrawal from "./components/withdrawal";
 import OrderHistory from "./components/orderHistory";
-import Transactions from "./components/transactions";
 import Balances from "./components/balances";
 import Exchange from "./components/exchange";
 import NotFound from "./components/notFound";
@@ -30,16 +28,13 @@ const App = () => {
         <Route path="/login" component={Login} />
         <Route path="/home" component={Home} />
         <Route path="/logout" component={Logout} />
-        <Route path="/deposits2" component={Deposits2} />
-        {/* <Route path="/deposits" component={Deposits} /> */}
+        <Route path="/deposits" component={Deposits} />
         <Route path="/withdrawal" component={Withdrawal} />
         <Route path="/orderHistory" component={OrderHistory} />
         <Route path="/tradeHistory" component={TradeHistory} />
         <Route path="/openOrder" component={OpenOrder} />
-        <Route path="/transactions" component={Transactions} />
         <Route path="/balances" component={Balances} />
         <Route path="/transactionHistory" component={TransactionHistory} />
-
         <Route path="/exchange" component={Exchange} />
         <Route path="/not-found" component={NotFound} />
         <Route path="/" exact component={Home} />
