@@ -11,7 +11,7 @@ import Header from "./header";
 
 var QRCode = require("qrcode.react");
 
-class Deposits2 extends Component {
+class Deposits extends Component {
   state = {
     selectedCurrency: {},
     currencies: [],
@@ -121,7 +121,7 @@ class Deposits2 extends Component {
           <Header />
         </div>
         <div className="container">
-          <div className="row mt-5">
+          <div className="row mt-3">
             <div className="col-12 ">
               <div className="latest-tranjections-block-inner panel-heading-block mb-2">
                 <h5>Deposits</h5>
@@ -145,7 +145,7 @@ class Deposits2 extends Component {
               <div
                 className="
               col-12           
-              my-3"
+              my-2"
               >
                 <strong>Total balance:</strong> {selectedCurrency.total_balance}{" "}
                 {symbol}
@@ -160,9 +160,9 @@ class Deposits2 extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="col-12 mb-5">
+              <div className="col-12 mb-3">
                 <div className="border adbox">
-                  <h5 className="text-warning mt-4 ml-3">
+                  <h5 className="text-warning mt-3 ml-3">
                     <strong>Important</strong>
                   </h5>
                   <p className="text-warning ml-3">
@@ -247,4 +247,4 @@ class Deposits2 extends Component {
   }
 }
 
-export default Deposits2;
+export default Deposits;

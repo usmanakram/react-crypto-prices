@@ -116,7 +116,7 @@ class TradingViewWidget extends Component {
 
     return (
       <div className="tradingview-widget-container">
-        <div id="tradingview_57f17" ref={this._id}>
+        <div ref={this._id}>
           {/* <TradingViewGraph
             symbol="EURUSD"
             theme="Light"

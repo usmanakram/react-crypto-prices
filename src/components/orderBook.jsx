@@ -1,44 +1,14 @@
 import React, { Component } from "react";
-import Table from "./common/table";
+import SellOrderBookTable from "./sellOrderBookTable";
+import BuyOrderBookTable from "./buyOrderBookTable";
 import ws from "../services/webSocketService";
-import { toast } from "react-toastify";
-import auth from "../services/authService";
+import Spinner from "./spinner";
 
 class OrderBook extends Component {
-  columns = [
-    {
-      path: "rate",
-      label: "Price"
-    },
-    { path: "tradable_quantity", label: "Quantity" }
-  ];
-
-  orderBookPairId = 0;
-
-  // Channel didn't invoked inside componentDidMount() because, it is executed before assigning value to "selectedPair"
-  /* componentDidMount() {
-    ws.channel("live2").listen("OrderBookUpdated", e => {
-      this.props.onOrderBookUpdate(e.orderBookData);
-    });
-  } */
-
-  componentDidMount() {
-    const user = auth.getCurrentUser();
-
-    if (auth.getCurrentUser()) {
-      ws.channel("User." + user.sub).listen("TradeOrderFilled", e => {
-        /**
-         * It's temporary solution. Balances will be received over websocket connection at OrderFiled event.
-         */
-        this.props.onTrade();
-
-        toast.success(e.message);
-      });
-    }
-  }
+  state = {};
 
   handleStream = () => {
-    const { selectedPair } = this.props;
+    const { selectedPair, onOrderBookUpdate } = this.props;
 
     if (
       Object.keys(selectedPair).length &&
@@ -49,33 +19,101 @@ class OrderBook extends Component {
       ws.channel("OrderBook." + this.orderBookPairId).listen(
         "OrderBookUpdated",
         e => {
-          this.props.onOrderBookUpdate(e.orderBookData);
+          onOrderBookUpdate(e.orderBookData);
         }
       );
     }
   };
 
   render() {
-    const { orderBookData } = this.props;
-
+    const {
+      selectedPair,
+      selectedPairStats,
+      orderBookData,
+      status
+    } = this.props;
     this.handleStream();
 
     return (
-      <React.Fragment>
-        <h3>Order Book</h3>
-        <Table
-          columns={this.columns}
-          data={orderBookData.sellOrders}
-          sortColumn=""
-          onSort=""
-        />
-        <Table
-          columns={this.columns}
-          data={orderBookData.buyOrders}
-          sortColumn=""
-          onSort=""
-        />
-      </React.Fragment>
+      <div className="dahboard-order-block">
+        <div className="panel-heading-block">
+          <h5>Order Book</h5>
+        </div>
+        {/* <ul className="nav das-oreder-nav">
+          <li className="nav-item nav-item-first">
+            <Link className="nav-link" to="#">
+              Order book
+            </Link>
+          </li>
+          <li className="nav-item">
+            <div className="dropdown order-count-dropdown">
+              <button
+                className="btn dropdown-toggle"
+                type="button"
+                id="dropdownMenu2"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                8
+              </button>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <button className="dropdown-item" type="button">
+                  10
+                </button>
+                <button className="dropdown-item" type="button">
+                  14
+                </button>
+                <button className="dropdown-item" type="button">
+                  18
+                </button>
+              </div>
+            </div>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="#">
+              <img
+                src="./images/exchange/1.png"
+                alt="img"
+                className="img-responsive"
+              />
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="#">
+              <img
+                src="./images/exchange/2.png"
+                alt="img"
+                className="img-responsive"
+              />
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="#">
+              <img
+                src="./images/exchange/3.png"
+                alt="img"
+                className="img-responsive"
+              />
+            </Link>
+          </li>
+        </ul> */}
+        <div className="ord">
+          <div className="das-oreder-table-block ">
+            <Spinner status={status} />
+
+            <SellOrderBookTable
+              selectedPair={selectedPair}
+              orderBookData={orderBookData}
+            />
+
+            <BuyOrderBookTable
+              selectedPairStats={selectedPairStats}
+              orderBookData={orderBookData}
+            />
+          </div>
+        </div>
+      </div>
     );
   }
 }
