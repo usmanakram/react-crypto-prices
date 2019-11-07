@@ -3,7 +3,7 @@ import moment from "moment";
 import Spinner from "./spinner";
 import ws from "../services/webSocketService";
 
-class ExchangeRightBottomTable extends Component {
+class ExchangeTradingHistory extends Component {
   state = {};
 
   tradeHistoryPairId = 0;
@@ -46,7 +46,8 @@ class ExchangeRightBottomTable extends Component {
           <div className="history-table-wrap">
             <Spinner status={status} />
 
-            <table className="table coin-list table-hover history-table">
+            {/* <table className="table coin-list table-hover history-table trade-history"> */}
+            <table className="table das-oreder-table table-hover trade-history">
               <thead>
                 <tr>
                   <th scope="col">
@@ -91,4 +92,4 @@ class ExchangeRightBottomTable extends Component {
   }
 }
 
-export default ExchangeRightBottomTable;
+export default ExchangeTradingHistory;

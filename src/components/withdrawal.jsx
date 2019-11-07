@@ -84,7 +84,7 @@ class Withdrawal extends Form {
           <Header />
         </div>
         <div className="container">
-          <div className="row mt-5">
+          <div className="row mt-3">
             <div className="col-12">
               <div className="latest-tranjections-block-inner panel-heading-block mb-2">
                 <h5>Withdrawal</h5>
@@ -109,7 +109,7 @@ class Withdrawal extends Form {
               <div
                 className="
               col-12
-              my-3"
+              my-2"
               >
                 <strong>Total balance:</strong>
                 {"   "}
@@ -127,9 +127,9 @@ class Withdrawal extends Form {
               </div>
             </div>
             <div className="row">
-              <div className="col-12 mb-5">
-                <div className="border mb-20 adbox">
-                  <h5 className="text-warning mt-4 ml-3">
+              <div className="col-12 mb-3">
+                <div className="border adbox">
+                  <h5 className="text-warning mt-3 ml-3">
                     <strong>Important</strong>
                   </h5>
                   <p className="text-warning ml-3">

@@ -8,6 +8,7 @@ import moment from "moment";
 import Header from "./header";
 // const apiEndpoint = "http://localhost/projects/bittrain_exchange/coinmarketcap.com/api.php?coin=";
 // const apiEndpoint = "?coin=";
+
 const apiEndpoint = "/currencies/";
 
 class CoinInfo extends Component {
@@ -57,6 +58,13 @@ class CoinInfo extends Component {
 
     const sorted = _.orderBy(allHistory, [sortColumn.path], [sortColumn.order]);
     const coinHistory = paginate(sorted, currentPage, pageSize);
+    console.log("sorted");
+    console.log(sorted);
+    console.log("currentPage");
+    console.log(currentPage);
+    console.log("pageSize");
+    console.log(pageSize);
+
     return { totalCount: allHistory.length, coinHistory };
   };
 
@@ -65,6 +73,7 @@ class CoinInfo extends Component {
     const { pageSize, currentPage, sortColumn } = this.state;
 
     const { totalCount, coinHistory } = this.getPagedData();
+
 
     return (
       <React.Fragment>
@@ -90,22 +99,22 @@ class CoinInfo extends Component {
                     {this.props.match.params.coin} in the database.
                   </p>
                 ) : (
-                  <React.Fragment>
-                    <Table
-                      columns={this.columns}
-                      data={coinHistory}
-                      sortColumn={sortColumn}
-                      onSort={this.handleSort}
-                      classes="coin-list latest-tranjections-table"
-                    />
-                    <Pagination
-                      itemsCount={totalCount}
-                      pageSize={pageSize}
-                      currentPage={currentPage}
-                      onPageChange={this.handlePageChange}
-                    />
-                  </React.Fragment>
-                )}
+                    <React.Fragment>
+                      <Table
+                        columns={this.columns}
+                        data={coinHistory}
+                        sortColumn={sortColumn}
+                        onSort={this.handleSort}
+                        classes="coin-list latest-tranjections-table"
+                      />
+                      <Pagination
+                        itemsCount={totalCount}
+                        pageSize={pageSize}
+                        currentPage={currentPage}
+                        onPageChange={this.handlePageChange}
+                      />
+                    </React.Fragment>
+                  )}
               </div>
             </div>
           </div>

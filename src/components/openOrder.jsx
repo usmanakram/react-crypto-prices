@@ -27,8 +27,8 @@ class OpenOrder extends Component {
         o.direction === 1 ? (
           <span className="ex-color-buy">Buy</span>
         ) : (
-          <span className="ex-color-sell">Sell</span>
-        )
+            <span className="ex-color-sell">Sell</span>
+          )
     },
     { path: "rate", label: "Price" },
     { path: "quantity", label: "Quantity" },
@@ -81,7 +81,7 @@ class OpenOrder extends Component {
         <div className="navigation-two">
           <Header />
         </div>
-        <div className="container my-5">
+        <div className="container my-3">
           <div className="row">
             <div className="col-12">
               <div className="latest-tranjections-block-inner panel-heading-block mb-2">

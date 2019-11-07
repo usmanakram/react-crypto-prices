@@ -1,9 +1,9 @@
 import React from "react";
-import OrderBook2 from "./orderBook2";
 import TradingViewWidget from "./tradingViewWidget";
-import ExchangeRightSideBar from "./exchangeRightSideBar";
 // import DepthChartWidget from "./depthChartWidget";
 import ExchangeOrderArea from "./exchangeOrderArea";
+import ExchangeTradingHistory from "./exchangeTradingHistory";
+import OrderBook from "./orderBook";
 const ExchangeOneBody = ({
   selectedPair,
   selectedPairStats,
@@ -21,8 +21,8 @@ const ExchangeOneBody = ({
       <div className="container">
         <div className="dashboard-body">
           <div className="row">
-            <div className="col-lg-3">
-              <OrderBook2
+            <div className="col-lg-3 orderBook-right">
+              <OrderBook
                 status={status}
                 selectedPair={selectedPair}
                 selectedPairStats={selectedPairStats}
@@ -46,8 +46,8 @@ const ExchangeOneBody = ({
               />
             </div>
 
-            <div className="col-lg-3">
-              <ExchangeRightSideBar
+            <div className="col-lg-3 tradeHistory-left">
+              <ExchangeTradingHistory
                 status={status}
                 selectedPair={selectedPair}
                 tradeHistory={tradeHistory}

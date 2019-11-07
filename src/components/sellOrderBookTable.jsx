@@ -3,13 +3,13 @@ import React from "react";
 const SellOrderBookTable = ({ selectedPair, orderBookData }) => {
   return (
     <React.Fragment>
-      <table className="table das-oreder-table table-hover">
+      <table className="table das-oreder-table table-hover exchange-orderBook">
         <thead>
           <tr>
-            <th className="text-center" scope="col">
+            <th className="" scope="col">
               Price({selectedPair.quote_currency_symbol})
             </th>
-            <th className="text-center" scope="col">
+            <th className="" scope="col">
               Qty({selectedPair.base_currency_symbol})
             </th>
             <th className="text-right" scope="col">
@@ -23,7 +23,7 @@ const SellOrderBookTable = ({ selectedPair, orderBookData }) => {
               <td>
                 <span className="color-sell">{value.rate}</span>
               </td>
-              <td className="text-right">
+              <td className="">
                 <span>{value.tradable_quantity}</span>
               </td>
               <td className="text-right">

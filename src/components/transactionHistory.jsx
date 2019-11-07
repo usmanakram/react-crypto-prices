@@ -41,7 +41,7 @@ class TransactionHistory extends Component {
           <Header />
         </div>
 
-        <div className="container my-5">
+        <div className="container my-3">
           <div className="row">
             <div className="col-12">
               <div className="latest-tranjections-block-inner panel-heading-block mb-2">

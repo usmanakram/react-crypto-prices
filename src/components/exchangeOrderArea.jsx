@@ -1,6 +1,7 @@
 import React from "react";
 import LimitOrder from "./limitOrder";
 import InstantOrder from "./instantOrder";
+import StopLimit from "./stopLimit";
 
 const ExchangeOrderArea = ({
   selectedPair,
@@ -29,9 +30,19 @@ const ExchangeOrderArea = ({
             role="tab"
             data-toggle="tab"
           >
-            <h5>Instant order</h5>
+            <h5>Markit order</h5>
           </a>
         </li>
+        {/* <li className="nav-item">
+          <a
+            className="nav-link"
+            href="#stop-limit"
+            role="tab"
+            data-toggle="tab"
+          >
+            <h5>Stop Limit</h5>
+          </a>
+        </li> */}
       </ul>
       <div className="market-ticker-block">
         {/* <!-- Tab panes --> */}
@@ -45,6 +56,12 @@ const ExchangeOrderArea = ({
           <InstantOrder
             selectedPair={selectedPair}
             selectedPairStats={selectedPairStats}
+            onTrade={onTrade}
+            quoteCurrencyBalance={quoteCurrencyBalance}
+            baseCurrencyBalance={baseCurrencyBalance}
+          />
+          <StopLimit
+            selectedPair={selectedPair}
             onTrade={onTrade}
             quoteCurrencyBalance={quoteCurrencyBalance}
             baseCurrencyBalance={baseCurrencyBalance}
