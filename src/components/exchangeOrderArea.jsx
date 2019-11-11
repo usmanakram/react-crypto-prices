@@ -33,7 +33,7 @@ const ExchangeOrderArea = ({
             <h5>Markit order</h5>
           </a>
         </li>
-        {/* <li className="nav-item">
+        <li className="nav-item">
           <a
             className="nav-link"
             href="#stop-limit"
@@ -42,7 +42,7 @@ const ExchangeOrderArea = ({
           >
             <h5>Stop Limit</h5>
           </a>
-        </li> */}
+        </li>
       </ul>
       <div className="market-ticker-block">
         {/* <!-- Tab panes --> */}

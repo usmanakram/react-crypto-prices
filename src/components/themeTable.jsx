@@ -13,7 +13,22 @@ class ThemeTable extends Component {
     {
       path: "type",
       label: "Type",
-      content: o => (o.type === 0 ? "Market" : "Limit")
+      // content: o => (o.type === 0 ? "Market" : "Limit")
+      content: o => {
+        switch (o.type) {
+          case 0:
+            return "Market";
+            break;
+          case 1:
+            return "Limit";
+            break;
+          case 2:
+            return "Stop-limit";
+            break;
+          default:
+            break;
+        }
+      }
     },
     {
       path: "direction",
@@ -33,6 +48,17 @@ class ThemeTable extends Component {
       content: o =>
         (((o.quantity - o.tradable_quantity) / o.quantity) * 100).toFixed(2) +
         "%"
+    },
+    {
+      path: "trigger_condition",
+      label: "Trigger Condition",
+      content: o => {
+        if (o.type === 2) {
+          return o.lower_trigger_rate === null
+            ? ">= " + o.upper_trigger_rate
+            : "<= " + o.lower_trigger_rate;
+        }
+      }
     },
     {
       path: "Cancel",

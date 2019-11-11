@@ -5,23 +5,29 @@ const apiEndpoint = {
   sell: "/auth/sell"
 };
 
-async function buy(pair_id, type, price, quantity) {
+async function buy(pair_id, type, price, quantity, trigger_rate) {
   const formData = new FormData();
   formData.append("pair_id", pair_id);
   formData.append("type", type);
   formData.append("price", price);
   formData.append("quantity", quantity);
+  if (trigger_rate) {
+    formData.append("trigger_rate", trigger_rate);
+  }
 
   const { data } = await http.post(apiEndpoint.buy, formData);
   return data;
 }
 
-async function sell(pair_id, type, price, quantity) {
+async function sell(pair_id, type, price, quantity, trigger_rate) {
   const formData = new FormData();
   formData.append("pair_id", pair_id);
   formData.append("type", type);
   formData.append("price", price);
   formData.append("quantity", quantity);
+  if (trigger_rate) {
+    formData.append("trigger_rate", trigger_rate);
+  }
 
   const { data } = await http.post(apiEndpoint.sell, formData);
   return data;

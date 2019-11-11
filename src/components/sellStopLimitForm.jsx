@@ -1,16 +1,41 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import TradingForm from "./tradingForm";
+import Joi from "joi-browser";
 import trade from "../services/tradeService";
 import { toast } from "react-toastify";
 import Spinner from "./spinner";
 
 class SellStopLimitForm extends TradingForm {
   state = {
-    data: { price: "", quantity: "", total: "", type: 1 },
+    data: {
+      stop: "",
+      price: "",
+      quantity: "",
+      total: "",
+      type: 2
+    },
     errors: {},
     total: 0,
     sellLimitOrderFormSpinner: false
+  };
+
+  schema = {
+    type: Joi.number()
+      .required()
+      .label("type"),
+    stop: Joi.number()
+      .required()
+      .label("Stop"),
+    price: Joi.number()
+      .required()
+      .label("Price"),
+    quantity: Joi.number()
+      .required()
+      .label("Quantity"),
+    total: Joi.number()
+      .required()
+      .label("Total")
   };
 
   doSubmit = async () => {
@@ -25,7 +50,8 @@ class SellStopLimitForm extends TradingForm {
         this.props.selectedPair.id,
         data.type,
         data.price,
-        data.quantity
+        data.quantity,
+        data.stop
       );
 
       this.resetFormData();
@@ -35,6 +61,7 @@ class SellStopLimitForm extends TradingForm {
       this.setState({ sellLimitOrderFormSpinner: false });
     } catch (ex) {
       this.setState({ sellInstantOrderFormSpinner: false });
+
       if (ex.response && ex.response.status === 400) {
         // const errors = { ...this.state.errors };
         // errors.username = ex.response.data;
@@ -42,7 +69,6 @@ class SellStopLimitForm extends TradingForm {
         // toast.error(ex.response.data);
 
         // console.log(ex.response.data);
-
         toast.error(ex.response.data);
       }
     }
@@ -57,14 +83,14 @@ class SellStopLimitForm extends TradingForm {
             <form onSubmit={this.handleSubmit} className="form-horizontal">
               {this.renderInputHidden("type")}
               {this.renderInputTradeForm(
-                "price",
-                "Price",
+                "stop",
+                "Stop",
                 selectedPair.quote_currency_symbol,
                 "number"
               )}
               {this.renderInputTradeForm(
-                "stop",
-                "Stop",
+                "price",
+                "Price",
                 selectedPair.quote_currency_symbol,
                 "number"
               )}
@@ -74,48 +100,6 @@ class SellStopLimitForm extends TradingForm {
                 selectedPair.base_currency_symbol,
                 "number"
               )}
-              {/* {this.renderInputTradeForm(
-                "total",
-                "Total",
-                selectedPair.quote_currency_symbol,
-                "number",
-                true
-              )}
-              <div className="form-group row">
-                <label
-                  htmlFor="tv_a_balance_two"
-                  className="col-3 col-form-label"
-                >
-                  Available balance
-                </label>
-                <div className="col-9 form-input-block readonly">
-                  <input
-                    className="form-control"
-                    type="text"
-                    value={this.getAvailableBalance()}
-                    id="tv_a_balance_two"
-                    readOnly
-                  />
-                  <span className="tv-btc-tag">
-                    {selectedPair.base_currency_symbol}
-                  </span>
-                </div>
-              </div> */}
-              {/* {this.renderInputTradeForm(
-                "commission",
-                "Commission",
-                "EUR",
-                "number",
-                true
-              )} */}
-              {/* {this.renderInputTradeForm(
-                "balance",
-                "Available Balance",
-                "BTC",
-                "number",
-                true
-              )} */}
-
               {this.renderReadOnlyInputTradeForm(
                 "total",
                 "Total",
@@ -130,6 +114,13 @@ class SellStopLimitForm extends TradingForm {
                 selectedPair.base_currency_symbol,
                 "number"
               )}
+              {/* {this.renderInputTradeForm(
+                "commission",
+                "Commission",
+                "EUR",
+                "number",
+                true
+              )} */}
               <div className="form-group row">
                 <label className="col-3 col-form-label"></label>
                 <div className="col-9 form-input-block">
@@ -139,6 +130,7 @@ class SellStopLimitForm extends TradingForm {
                       "sell-btn"
                     )}
                   <Spinner status={this.state.sellLimitOrderFormSpinner} />
+
                   {!this.user && (
                     <Link to="/login" className="btn sell-btn">
                       Login

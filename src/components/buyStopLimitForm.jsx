@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import TradingForm from "./tradingForm";
+import Joi from "joi-browser";
 import trade from "../services/tradeService";
 import { toast } from "react-toastify";
 import Spinner from "./spinner";
@@ -8,14 +9,33 @@ import Spinner from "./spinner";
 class BuyStopLimitForm extends TradingForm {
   state = {
     data: {
+      stop: "",
       price: "",
       quantity: "",
       total: "",
-      type: 1
+      type: 2
     },
     errors: {},
     total: 0,
     buyLimitOrderFormSpinner: false
+  };
+
+  schema = {
+    type: Joi.number()
+      .required()
+      .label("type"),
+    stop: Joi.number()
+      .required()
+      .label("Stop"),
+    price: Joi.number()
+      .required()
+      .label("Price"),
+    quantity: Joi.number()
+      .required()
+      .label("Quantity"),
+    total: Joi.number()
+      .required()
+      .label("Total")
   };
 
   doSubmit = async () => {
@@ -23,7 +43,6 @@ class BuyStopLimitForm extends TradingForm {
 
     try {
       this.setState({ buyLimitOrderFormSpinner: true });
-      // console.log("ok");
       const { data } = this.state;
       // console.log(data);
 
@@ -31,13 +50,13 @@ class BuyStopLimitForm extends TradingForm {
         this.props.selectedPair.id,
         data.type,
         data.price,
-        data.quantity
+        data.quantity,
+        data.stop
       );
 
       this.resetFormData();
       this.props.onTrade();
 
-      // console.log(response);
       toast.success(response);
       this.setState({ buyLimitOrderFormSpinner: false });
     } catch (ex) {
@@ -63,17 +82,16 @@ class BuyStopLimitForm extends TradingForm {
         <div className="tv_ammount-form-block">
           {Object.keys(selectedPair).length > 0 && (
             <form onSubmit={this.handleSubmit} className="form-horizontal">
-
               {this.renderInputHidden("type")}
               {this.renderInputTradeForm(
-                "price",
-                "Price",
+                "stop",
+                "Stop",
                 selectedPair.quote_currency_symbol,
                 "number"
               )}
               {this.renderInputTradeForm(
-                "stop",
-                "Stop",
+                "price",
+                "Price",
                 selectedPair.quote_currency_symbol,
                 "number"
               )}
@@ -83,34 +101,6 @@ class BuyStopLimitForm extends TradingForm {
                 selectedPair.base_currency_symbol,
                 "number"
               )}
-
-              {/* {this.renderInputTradeForm(
-                "total",
-                "Total",
-                selectedPair.quote_currency_symbol,
-                "number",
-                true
-              )} */}
-              {/* <div className="form-group row">
-                <label
-                  htmlFor="tv_a_balance_two"
-                  className="col-3 col-form-label"
-                  >
-                  Available Balance
-                </label>
-                <div className="col-9 form-input-block readonly">
-                <input
-                    className="form-control"
-                    type="text"
-                    value={this.getAvailableBalance()}
-                    id="tv_a_balance_two"
-                    readOnly
-                    />
-                    <span className="tv-btc-tag">
-                    {selectedPair.quote_currency_symbol}
-                    </span>
-                    </div>
-                  </div> */}
               {this.renderReadOnlyInputTradeForm(
                 "total",
                 "Total",
@@ -132,14 +122,6 @@ class BuyStopLimitForm extends TradingForm {
                 "number",
                 true
               )} */}
-              {/* {this.renderInputTradeForm(
-                "balance",
-                "Available Balance",
-                "BTC",
-                "number",
-                true
-              )} */}
-
               <div className="form-group row">
                 <label className="col-3 col-form-label"></label>
                 <div className="col-9 form-input-block">
