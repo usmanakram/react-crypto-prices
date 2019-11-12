@@ -24,7 +24,22 @@ class OrderHistory extends Component {
     {
       path: "type",
       label: "Type",
-      content: o => (o.type === 0 ? "Market" : "Limit")
+      // content: o => (o.type === 0 ? "Market" : "Limit")
+      content: o => {
+        switch (o.type) {
+          case 0:
+            return "Market";
+            break;
+          case 1:
+            return "Limit";
+            break;
+          case 2:
+            return "Stop-limit";
+            break;
+          default:
+            break;
+        }
+      }
     },
     {
       path: "direction",
@@ -33,8 +48,8 @@ class OrderHistory extends Component {
         o.direction === 1 ? (
           <span className="ex-color-buy">Buy</span>
         ) : (
-            <span className="ex-color-sell">Sell</span>
-          )
+          <span className="ex-color-sell">Sell</span>
+        )
     },
     { path: "rate", label: "Price" },
     { path: "quantity", label: "Quantity" },
@@ -44,18 +59,29 @@ class OrderHistory extends Component {
       content: o => o.quantity - o.tradable_quantity
     },
     {
+      path: "trigger_condition",
+      label: "Trigger Condition",
+      content: o => {
+        if (o.type === 2) {
+          return o.lower_trigger_rate === null
+            ? ">= " + o.upper_trigger_rate
+            : "<= " + o.lower_trigger_rate;
+        }
+      }
+    },
+    {
       path: "status",
       label: "Status",
       content: o =>
         o.status === 0
           ? "Inactive"
           : o.status === 1
-            ? "Active"
-            : o.status === 2
-              ? "Filled"
-              : "Cancled"
-    },
-    {
+          ? "Active"
+          : o.status === 2
+          ? "Filled"
+          : "Canceled"
+    }
+    /* {
       path: "Cancel",
       content: o => {
         if ([0, 1].indexOf(o.status) === -1) return null;
@@ -68,7 +94,7 @@ class OrderHistory extends Component {
           </button>
         );
       }
-    }
+    } */
   ];
 
   onCancel = async id => {
