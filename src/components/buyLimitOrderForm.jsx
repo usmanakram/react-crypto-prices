@@ -41,7 +41,7 @@ class BuyLimitOrderForm extends TradingForm {
       toast.success(response);
       this.setState({ buyLimitOrderFormSpinner: false });
     } catch (ex) {
-      this.setState({ sellInstantOrderFormSpinner: false });
+      this.setState({ buyLimitOrderFormSpinner: false });
 
       if (ex.response && ex.response.status === 400) {
         // const errors = { ...this.state.errors };
@@ -89,7 +89,7 @@ class BuyLimitOrderForm extends TradingForm {
                   htmlFor="tv_a_balance_two"
                   className="col-3 col-form-label"
                   >
-                  Available Balance
+                  Balance
                 </label>
                 <div className="col-9 form-input-block readonly">
                 <input
@@ -113,7 +113,7 @@ class BuyLimitOrderForm extends TradingForm {
               )}
               {this.renderReadOnlyInputTradeForm(
                 "balance",
-                "Available Balance",
+                "Balance",
                 this.getAvailableBalance(),
                 selectedPair.quote_currency_symbol,
                 "number"
@@ -127,7 +127,7 @@ class BuyLimitOrderForm extends TradingForm {
               )} */}
               {/* {this.renderInputTradeForm(
                 "balance",
-                "Available Balance",
+                "Balance",
                 "BTC",
                 "number",
                 true

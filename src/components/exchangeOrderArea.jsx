@@ -2,6 +2,7 @@ import React from "react";
 import LimitOrder from "./limitOrder";
 import InstantOrder from "./instantOrder";
 import StopLimit from "./stopLimit";
+import Oco from "./oco";
 
 const ExchangeOrderArea = ({
   selectedPair,
@@ -43,6 +44,11 @@ const ExchangeOrderArea = ({
             <h5>Stop Limit</h5>
           </a>
         </li>
+        <li className="nav-item">
+          <a className="nav-link" href="#oco" role="tab" data-toggle="tab">
+            <h5>OCO</h5>
+          </a>
+        </li>
       </ul>
       <div className="market-ticker-block">
         {/* <!-- Tab panes --> */}
@@ -61,6 +67,12 @@ const ExchangeOrderArea = ({
             baseCurrencyBalance={baseCurrencyBalance}
           />
           <StopLimit
+            selectedPair={selectedPair}
+            onTrade={onTrade}
+            quoteCurrencyBalance={quoteCurrencyBalance}
+            baseCurrencyBalance={baseCurrencyBalance}
+          />
+          <Oco
             selectedPair={selectedPair}
             onTrade={onTrade}
             quoteCurrencyBalance={quoteCurrencyBalance}

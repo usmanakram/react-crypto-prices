@@ -193,104 +193,112 @@ input.disabled {
   padding: 0 5px;
 }
 
-
-
 .ord {
   position: relative;
 }
-.exchange-orderBook td, .exchange-orderBook th{
-  padding: 0 .5rem;
+.exchange-orderBook td,
+.exchange-orderBook th {
+  padding: 0 0.5rem;
 }
-.exchange-orderBook .th{
-font-size: 15px !important;
-font-weight: 700;
-}
-
-.trade-history td, .trade-history th{
-  padding: 0 .5rem;
+.exchange-orderBook .th {
+  font-size: 15px !important;
+  font-weight: 700;
 }
 
-.section-padding-50{
+.trade-history td,
+.trade-history th {
+  padding: 0 0.5rem;
+}
+
+.section-padding-50 {
   padding: 15px 0;
 }
-.currency-rate{
+.currency-rate {
   padding: 5px 50px;
 }
 .das-oreder-table td span {
   font-weight: 400;
   font-size: 13px !important;
- }
- .das-oreder-table td {
+}
+.das-oreder-table td {
   font-weight: 400 !important;
   font-size: 13px !important;
- }
-.dahboard-order-block, .order-form-area-block, .order-history-block{
+}
+.dahboard-order-block,
+.order-form-area-block,
+.order-history-block {
   margin-bottom: 15px;
 }
 /* order Book & trade left right Padding */
-@media screen and (max-width: 1199px){
-.dashboard-body .table.das-oreder-table {
+@media screen and (max-width: 1199px) {
+  .dashboard-body .table.das-oreder-table {
     min-width: 0px;
-}}
+  }
+}
 @media (min-width: 425px) {
-  .dahboard-order-block{
+  .dahboard-order-block {
     width: 100% !important;
   }
 }
- @media (min-width: 1024px) {
-  .orderBook-right{
-  padding-right: 0;
+@media (min-width: 1024px) {
+  .orderBook-right {
+    padding-right: 0;
+  }
+  .tradeHistory-left {
+    padding-left: 0;
+  }
 }
-.tradeHistory-left{
-  padding-left: 0;
-} }
 /* ----------------- */
- /* order area */
- .ticker-nav .nav-item a{
-   padding: 5px;
- }
- .tv_orde_table tr th{
-   padding: 5px;
- }
- .dashboard-body{
-   margin-bottom: 0;
- }
- .exchange-chart-block{
-   padding: 7px;
-   margin-bottom: 15px;
- }
- .latest-tranjections-area{
-   padding-bottom: 15px;
- }
- .tv_orde_table tbody td{
-   padding-top: 7px;
-   padding-bottom: 0px;
- }
- .tv_ammount-form-block form .form-group {
-  margin-bottom: .5rem;
- }
- /* -------------- */
- /* balances Pge */
- .teanding-info-block{
-  padding: 15px 0;
- }
- .trending-info-tab {
+/* order area */
+.ticker-nav .nav-item a {
+  padding: 5px;
+}
+.tv_orde_table tr th {
+  padding: 5px;
+}
+.dashboard-body {
+  margin-bottom: 0;
+}
+.exchange-chart-block {
+  padding: 7px;
   margin-bottom: 15px;
- }
- /* -------------- */
- .orderBookRow{
+}
+.latest-tranjections-area {
+  padding-bottom: 15px;
+}
+.tv_orde_table tbody td {
+  padding-top: 7px;
+  padding-bottom: 0px;
+}
+.tv_ammount-form-block form .form-group {
+  margin-bottom: 0.5rem;
+}
+/* -------------- */
+/* balances Pge */
+.teanding-info-block {
+  padding: 15px 0;
+}
+.trending-info-tab {
+  margin-bottom: 15px;
+}
+/* -------------- */
+.orderBookRow {
   position: relative;
   border-top: none;
   background: #fff;
 }
-.orderBookRow .col-md-4 span{
+.orderBookRow .col-md-4 span {
   font-weight: 400 !important;
   font-size: 13px !important;
 }
 
-.rate-ratio{
-  top:36%;
+.rate-ratio {
+  top: 36%;
   height: 27px;
   width: 100%;
   z-index: 0;
+}
+.dashes {
+  border-bottom: 1px #d3d3d3 dashed;
+  margin-bottom: 0.5rem;
 }

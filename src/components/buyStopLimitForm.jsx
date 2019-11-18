@@ -110,7 +110,7 @@ class BuyStopLimitForm extends TradingForm {
               )}
               {this.renderReadOnlyInputTradeForm(
                 "balance",
-                "Available Balance",
+                "Balance",
                 this.getAvailableBalance(),
                 selectedPair.quote_currency_symbol,
                 "number"
