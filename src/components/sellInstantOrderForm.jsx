@@ -84,7 +84,7 @@ class SellInstantOrderForm extends TradingForm {
                   htmlFor="tv_a_balance_two"
                   className="col-3 col-form-label"
                 >
-                  Available balance
+                  Balance
                 </label>
                 <div className="col-9 form-input-block readonly">
                   <input
@@ -108,7 +108,7 @@ class SellInstantOrderForm extends TradingForm {
               )} */}
               {/* {this.renderInputTradeForm(
                 "balance",
-                "Available Balance",
+                "Balance",
                 "BTC",
                 "number",
                 true
@@ -122,7 +122,7 @@ class SellInstantOrderForm extends TradingForm {
               )} */}
               {this.renderReadOnlyInputTradeForm(
                 "balance",
-                "Available Balance",
+                "Balance",
                 this.getAvailableBalance(),
                 selectedPair.base_currency_symbol,
                 "number"

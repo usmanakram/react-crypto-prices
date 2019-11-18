@@ -20,7 +20,6 @@ class BuyInstantOrderForm extends TradingForm {
       this.setState({ buyInstantOrderFormSpinner: true });
       const { data } = this.state;
 
-
       const response = await trade.buy(
         this.props.selectedPair.id,
         data.type,
@@ -43,10 +42,7 @@ class BuyInstantOrderForm extends TradingForm {
         // this.setState({ errors });
         // toast.error(ex.response.data);
 
-
         toast.error(ex.response.data);
-
-
       }
     }
   };
@@ -87,7 +83,7 @@ class BuyInstantOrderForm extends TradingForm {
                   htmlFor="tv_a_balance_two"
                   className="col-3 col-form-label"
                 >
-                  Available balance
+                  Balance
                 </label>
                 <div className="col-9 form-input-block readonly">
                   <input
@@ -111,7 +107,7 @@ class BuyInstantOrderForm extends TradingForm {
               )} */}
               {/* {this.renderInputTradeForm(
                 "balance",
-                "Available Balance",
+                "Balance",
                 "BTC",
                 "number",
                 true
@@ -125,7 +121,7 @@ class BuyInstantOrderForm extends TradingForm {
               )} */}
               {this.renderReadOnlyInputTradeForm(
                 "balance",
-                "Available Balance",
+                "Balance",
                 this.getAvailableBalance(),
                 selectedPair.quote_currency_symbol,
                 "number"

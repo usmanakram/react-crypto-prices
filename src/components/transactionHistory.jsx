@@ -2,12 +2,10 @@ import React, { Component } from "react";
 import Header from "./header";
 import Table from "./common/table";
 import http from "../services/httpService";
-import { tHTableHeadings, tHTableValue } from "../services/fakeExchange";
+
 
 class TransactionHistory extends Component {
   state = {
-    themeTableHeadings: tHTableHeadings,
-    themeTableValue: tHTableValue,
     deposits: [],
     withdrawals: []
   };

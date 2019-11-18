@@ -6,7 +6,7 @@ import trade from "../services/tradeService";
 import { toast } from "react-toastify";
 import Spinner from "./spinner";
 
-class SellStopLimitForm extends TradingForm {
+class SellOcoForm extends TradingForm {
   state = {
     data: {
       stop: "",
@@ -17,7 +17,7 @@ class SellStopLimitForm extends TradingForm {
     },
     errors: {},
     total: 0,
-    sellLimitOrderFormSpinner: false
+    sellOcoFormSpinner: false
   };
 
   schema = {
@@ -42,7 +42,7 @@ class SellStopLimitForm extends TradingForm {
     // console.log("buyOrder form validated");
 
     try {
-      this.setState({ sellLimitOrderFormSpinner: true });
+      this.setState({ sellOcoFormSpinner: true });
       const { data } = this.state;
       // console.log(data);
 
@@ -58,7 +58,7 @@ class SellStopLimitForm extends TradingForm {
       this.props.onTrade();
 
       toast.success(response);
-      this.setState({ sellLimitOrderFormSpinner: false });
+      this.setState({ sellOcoFormSpinner: false });
     } catch (ex) {
       this.setState({ sellInstantOrderFormSpinner: false });
 
@@ -82,18 +82,29 @@ class SellStopLimitForm extends TradingForm {
           {Object.keys(selectedPair).length > 0 && (
             <form onSubmit={this.handleSubmit} className="form-horizontal">
               {this.renderInputHidden("type")}
+              <div className="dashes">
+                {this.renderInputTradeForm(
+                  "price",
+                  "Price",
+                  selectedPair.quote_currency_symbol,
+                  "number"
+                )}
+              </div>
               {this.renderInputTradeForm(
                 "stop",
                 "Stop",
                 selectedPair.quote_currency_symbol,
                 "number"
               )}
-              {this.renderInputTradeForm(
-                "price",
-                "Price",
-                selectedPair.quote_currency_symbol,
-                "number"
-              )}
+              <div className="dashes">
+                {this.renderInputTradeForm(
+                  "stop_limit_rate",
+                  "Limit",
+                  selectedPair.quote_currency_symbol,
+                  "number"
+                )}
+              </div>
+
               {this.renderInputTradeForm(
                 "quantity",
                 "Quantity",
@@ -129,7 +140,7 @@ class SellStopLimitForm extends TradingForm {
                       `Sell ${selectedPair.base_currency_symbol}`,
                       "sell-btn"
                     )}
-                  <Spinner status={this.state.sellLimitOrderFormSpinner} />
+                  <Spinner status={this.state.sellOcoFormSpinner} />
 
                   {!this.user && (
                     <Link to="/login" className="btn sell-btn">
@@ -146,4 +157,4 @@ class SellStopLimitForm extends TradingForm {
   }
 }
 
-export default SellStopLimitForm;
+export default SellOcoForm;
