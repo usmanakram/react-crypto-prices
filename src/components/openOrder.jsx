@@ -28,7 +28,13 @@ class OpenOrder extends Component {
             return "Limit";
             break;
           case 2:
-            return "Stop-limit";
+            return "Stop-Limit";
+            break;
+          case 3:
+            return "OCO-Limit";
+            break;
+          case 4:
+            return "OCO-Stop-Limit";
             break;
           default:
             break;
@@ -58,7 +64,7 @@ class OpenOrder extends Component {
       path: "trigger_condition",
       label: "Trigger Condition",
       content: o => {
-        if (o.type === 2) {
+        if ([2, 4].includes(o.type)) {
           return o.lower_trigger_rate === null
             ? ">= " + o.upper_trigger_rate
             : "<= " + o.lower_trigger_rate;

@@ -5,7 +5,14 @@ const apiEndpoint = {
   sell: "/auth/sell"
 };
 
-async function buy(pair_id, type, price, quantity, trigger_rate) {
+async function buy(
+  pair_id,
+  type,
+  price,
+  quantity,
+  trigger_rate,
+  stop_limit_rate
+) {
   const formData = new FormData();
   formData.append("pair_id", pair_id);
   formData.append("type", type);
@@ -14,12 +21,22 @@ async function buy(pair_id, type, price, quantity, trigger_rate) {
   if (trigger_rate) {
     formData.append("trigger_rate", trigger_rate);
   }
+  if (stop_limit_rate) {
+    formData.append("stop_limit_rate", stop_limit_rate);
+  }
 
   const { data } = await http.post(apiEndpoint.buy, formData);
   return data;
 }
 
-async function sell(pair_id, type, price, quantity, trigger_rate) {
+async function sell(
+  pair_id,
+  type,
+  price,
+  quantity,
+  trigger_rate,
+  stop_limit_rate
+) {
   const formData = new FormData();
   formData.append("pair_id", pair_id);
   formData.append("type", type);
@@ -27,6 +44,9 @@ async function sell(pair_id, type, price, quantity, trigger_rate) {
   formData.append("quantity", quantity);
   if (trigger_rate) {
     formData.append("trigger_rate", trigger_rate);
+  }
+  if (stop_limit_rate) {
+    formData.append("stop_limit_rate", stop_limit_rate);
   }
 
   const { data } = await http.post(apiEndpoint.sell, formData);

@@ -23,7 +23,13 @@ class ThemeTable extends Component {
             return "Limit";
             break;
           case 2:
-            return "Stop-limit";
+            return "Stop-Limit";
+            break;
+          case 3:
+            return "OCO-Limit";
+            break;
+          case 4:
+            return "OCO-Stop-Limit";
             break;
           default:
             break;
@@ -53,7 +59,7 @@ class ThemeTable extends Component {
       path: "trigger_condition",
       label: "Trigger Condition",
       content: o => {
-        if (o.type === 2) {
+        if ([2, 4].includes(o.type)) {
           return o.lower_trigger_rate === null
             ? ">= " + o.upper_trigger_rate
             : "<= " + o.lower_trigger_rate;
@@ -72,10 +78,13 @@ class ThemeTable extends Component {
 
   onCancel = async id => {
     try {
-      const response = await trade.cancelOrder(id);
-      const orders = this.props.openOrders.filter(o => o.id !== id);
+      const { order_ids, message } = await trade.cancelOrder(id);
+      // const orders = this.props.openOrders.filter(o => o.id !== id);
+      const orders = this.props.openOrders.filter(
+        o => !order_ids.includes(o.id)
+      );
       this.props.onCancelOrder(orders);
-      toast.success(response);
+      toast.success(message);
     } catch (ex) {
       console.log(ex);
     }

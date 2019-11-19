@@ -11,9 +11,10 @@ class BuyOcoForm extends TradingForm {
     data: {
       stop: "",
       price: "",
+      stop_limit_rate: "",
       quantity: "",
       total: "",
-      type: 2
+      type: 3
     },
     errors: {},
     total: 0,
@@ -30,6 +31,9 @@ class BuyOcoForm extends TradingForm {
     price: Joi.number()
       .required()
       .label("Price"),
+    stop_limit_rate: Joi.number()
+      .required()
+      .label("Limit"),
     quantity: Joi.number()
       .required()
       .label("Quantity"),
@@ -51,7 +55,8 @@ class BuyOcoForm extends TradingForm {
         data.type,
         data.price,
         data.quantity,
-        data.stop
+        data.stop,
+        data.stop_limit_rate
       );
 
       this.resetFormData();
