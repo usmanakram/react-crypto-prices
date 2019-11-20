@@ -72,6 +72,8 @@ class TradingViewWidget extends Component {
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
+    if (this.selectedPairId)
+      ws.leaveChannel("CandleStickGraph." + this.selectedPairId);
   }
   updateDimensions = () => {
     this.chart.resize(

@@ -14,6 +14,11 @@ class ExchangeTradingHistory extends Component {
     });
   }
 
+  componentWillUnmount() {
+    if (this.tradeHistoryPairId)
+      ws.leaveChannel("TradeHistory." + this.tradeHistoryPairId);
+  }
+
   handleTradeHistoryStream = () => {
     const { selectedPair } = this.props;
 
@@ -65,12 +70,12 @@ class ExchangeTradingHistory extends Component {
                       <span
                         className={
                           tradeHistory[i + 1] &&
-                            tradeHistory[i + 1].rate > value.rate
+                          tradeHistory[i + 1].rate > value.rate
                             ? "color-sell"
                             : tradeHistory[i + 1] &&
                               tradeHistory[i + 1].rate < value.rate
-                              ? "color-buy"
-                              : "color"
+                            ? "color-buy"
+                            : "color"
                         }
                       >
                         {value.rate}

@@ -32,7 +32,6 @@ class Exchange extends Component {
   };
   user = auth.getCurrentUser();
 
-
   async componentDidMount() {
     try {
       const { data } = await http.get("/currency-pairs");
@@ -48,7 +47,11 @@ class Exchange extends Component {
         this.setOpenOrders();
       }
 
+      // Testing
+      // console.log("befor function call");
       this.setOrderBookAndTradeHistory();
+      // Testing
+      // console.log("after function call");
 
       ws.channel("live").listen("LiveRates", e => {
         const pair = e.rates.find(p => p.id === selectedPair.id);
@@ -61,6 +64,13 @@ class Exchange extends Component {
     this.handleUserStream();
   }
 
+  componentWillUnmount() {
+    if (this.user) {
+      ws.leaveChannel("User." + this.user.sub);
+    }
+    ws.leaveChannel("live");
+  }
+
   handleSelectedPairStats = latest_price => {
     this.setState({
       selectedPairStats: {
@@ -71,7 +81,6 @@ class Exchange extends Component {
   };
 
   handleUserStream = () => {
-
     if (this.user) {
       ws.channel("User." + this.user.sub)
         .listen("TradeOrderFilled", e => {
@@ -167,9 +176,19 @@ class Exchange extends Component {
       try {
         this.setState({ OrderBookAndTradeHistorySpinner: true });
 
+        // Testing
+        // console.log("getting Order Book");
         const data = await trade.getOrderBook(selectedPair.id);
+        // Testing
+        // console.log("getting Trade History");
         const tradeHistory = await trade.getTradeHistory(selectedPair.id);
+        // Testing
+        // console.log("getting Latest Price");
         const pair = await trade.getLatestPrice(selectedPair.id);
+        /* const dataPromise = trade.getOrderBook(selectedPair.id);
+        const tradeHistoryPromise = trade.getTradeHistory(selectedPair.id);
+        const pairPromise = trade.getLatestPrice(selectedPair.id);
+        const [data, tradeHistory, pair] = await Promise.all([dataPromise, tradeHistoryPromise, pairPromise]); */
 
         this.handleOrderBook(data);
         this.handleTradeHistory(tradeHistory);
@@ -184,8 +203,6 @@ class Exchange extends Component {
   };
 
   render() {
-
-
     const {
       selectedPair,
       selectedPairStats,

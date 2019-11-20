@@ -7,6 +7,11 @@ import Spinner from "./spinner";
 class OrderBook extends Component {
   state = {};
 
+  componentWillUnmount() {
+    if (this.orderBookPairId)
+      ws.leaveChannel("OrderBook." + this.orderBookPairId);
+  }
+
   handleStream = () => {
     const { selectedPair, onOrderBookUpdate } = this.props;
 

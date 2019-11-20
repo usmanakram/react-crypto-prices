@@ -128,7 +128,7 @@ class MarketsTable extends Component {
 
   componentWillUnmount() {
     this._isMounted = false;
-    // ws.leaveChannel("live");
+    ws.leaveChannel("live");
     // ws.leave("live");
   }
 
