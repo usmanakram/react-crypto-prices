@@ -10,14 +10,12 @@ class BuyInstantOrderForm extends TradingForm {
     data: { price: "", quantity: "", total: "", type: 0 },
     errors: {},
     total: 0,
-    buyInstantOrderFormSpinner: false
+    spinnerStatus: false
   };
 
   doSubmit = async () => {
-    // console.log("buyOrder form validated");
-
+    this.setState({ spinnerStatus: true });
     try {
-      this.setState({ buyInstantOrderFormSpinner: true });
       const { data } = this.state;
 
       const response = await trade.buy(
@@ -32,10 +30,7 @@ class BuyInstantOrderForm extends TradingForm {
 
       // console.log(response);
       toast.success(response);
-      this.setState({ buyInstantOrderFormSpinner: false });
     } catch (ex) {
-      this.setState({ buyInstantOrderFormSpinner: false });
-
       if (ex.response && ex.response.status === 400) {
         // const errors = { ...this.state.errors };
         // errors.username = ex.response.data;
@@ -45,6 +40,7 @@ class BuyInstantOrderForm extends TradingForm {
         toast.error(ex.response.data);
       }
     }
+    this.setState({ spinnerStatus: false });
   };
 
   render() {
@@ -134,7 +130,7 @@ class BuyInstantOrderForm extends TradingForm {
                       `Buy ${selectedPair.base_currency_symbol}`,
                       "buy-btn"
                     )}
-                  <Spinner status={this.state.buyInstantOrderFormSpinner} />
+                  <Spinner status={this.state.spinnerStatus} />
                   {!this.user && (
                     <Link to="/login" className="btn buy-btn">
                       Login
