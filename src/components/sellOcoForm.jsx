@@ -18,7 +18,7 @@ class SellOcoForm extends TradingForm {
     },
     errors: {},
     total: 0,
-    sellOcoFormSpinner: false
+    spinnerStatus: false
   };
 
   schema = {
@@ -43,10 +43,8 @@ class SellOcoForm extends TradingForm {
   };
 
   doSubmit = async () => {
-    // console.log("buyOrder form validated");
-
+    this.setState({ spinnerStatus: true });
     try {
-      this.setState({ sellOcoFormSpinner: true });
       const { data } = this.state;
       // console.log(data);
 
@@ -63,10 +61,7 @@ class SellOcoForm extends TradingForm {
       this.props.onTrade();
 
       toast.success(response);
-      this.setState({ sellOcoFormSpinner: false });
     } catch (ex) {
-      this.setState({ sellInstantOrderFormSpinner: false });
-
       if (ex.response && ex.response.status === 400) {
         // const errors = { ...this.state.errors };
         // errors.username = ex.response.data;
@@ -77,6 +72,7 @@ class SellOcoForm extends TradingForm {
         toast.error(ex.response.data);
       }
     }
+    this.setState({ spinnerStatus: false });
   };
 
   render() {
@@ -145,7 +141,7 @@ class SellOcoForm extends TradingForm {
                       `Sell ${selectedPair.base_currency_symbol}`,
                       "sell-btn"
                     )}
-                  <Spinner status={this.state.sellOcoFormSpinner} />
+                  <Spinner status={this.state.spinnerStatus} />
 
                   {!this.user && (
                     <Link to="/login" className="btn sell-btn">

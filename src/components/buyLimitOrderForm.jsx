@@ -15,18 +15,13 @@ class BuyLimitOrderForm extends TradingForm {
     },
     errors: {},
     total: 0,
-    buyLimitOrderFormSpinner: false
+    spinnerStatus: false
   };
 
   doSubmit = async () => {
-    // console.log("buyOrder form validated");
-
+    this.setState({ spinnerStatus: true });
     try {
-      this.setState({ buyLimitOrderFormSpinner: true });
-      // console.log("ok");
       const { data } = this.state;
-      // console.log(data);
-
       const response = await trade.buy(
         this.props.selectedPair.id,
         data.type,
@@ -39,10 +34,7 @@ class BuyLimitOrderForm extends TradingForm {
 
       // console.log(response);
       toast.success(response);
-      this.setState({ buyLimitOrderFormSpinner: false });
     } catch (ex) {
-      this.setState({ buyLimitOrderFormSpinner: false });
-
       if (ex.response && ex.response.status === 400) {
         // const errors = { ...this.state.errors };
         // errors.username = ex.response.data;
@@ -53,6 +45,7 @@ class BuyLimitOrderForm extends TradingForm {
         toast.error(ex.response.data);
       }
     }
+    this.setState({ spinnerStatus: false });
   };
 
   render() {
@@ -141,7 +134,7 @@ class BuyLimitOrderForm extends TradingForm {
                       `Buy ${selectedPair.base_currency_symbol}`,
                       "buy-btn"
                     )}
-                  <Spinner status={this.state.buyLimitOrderFormSpinner} />
+                  <Spinner status={this.state.spinnerStatus} />
 
                   {!this.user && (
                     <Link to="/login" className="btn buy-btn">
