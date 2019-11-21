@@ -15,25 +15,27 @@ class ThemeTable extends Component {
       label: "Type",
       // content: o => (o.type === 0 ? "Market" : "Limit")
       content: o => {
+        let type = "";
         switch (o.type) {
           case 0:
-            return "Market";
+            type = "Market";
             break;
           case 1:
-            return "Limit";
+            type = "Limit";
             break;
           case 2:
-            return "Stop-Limit";
+            type = "Stop-Limit";
             break;
           case 3:
-            return "OCO-Limit";
+            type = "OCO-Limit";
             break;
           case 4:
-            return "OCO-Stop-Limit";
+            type = "OCO-Stop-Limit";
             break;
           default:
             break;
         }
+        return type;
       }
     },
     {
