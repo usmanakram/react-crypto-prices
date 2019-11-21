@@ -90,7 +90,7 @@ class BuyStopLimitForm extends TradingForm {
               )}
               {this.renderInputTradeForm(
                 "price",
-                "Price",
+                "Limit",
                 selectedPair.quote_currency_symbol,
                 "number"
               )}

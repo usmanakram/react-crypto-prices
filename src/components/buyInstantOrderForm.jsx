@@ -56,7 +56,7 @@ class BuyInstantOrderForm extends TradingForm {
               {this.renderReadOnlyInputTradeForm(
                 "price",
                 "Price",
-                "Markit",
+                "Market",
                 selectedPair.quote_currency_symbol
               )}
               {this.renderInputHidden("price")}
