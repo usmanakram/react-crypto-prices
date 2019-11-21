@@ -31,7 +31,7 @@ const ExchangeOrderArea = ({
             role="tab"
             data-toggle="tab"
           >
-            <h5>Markit order</h5>
+            <h5>Market order</h5>
           </a>
         </li>
         <li className="nav-item">
