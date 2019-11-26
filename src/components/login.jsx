@@ -6,6 +6,7 @@ import auth from "../services/authService";
 import { toast } from "react-toastify";
 import Header from "./header";
 import Spinner from "./spinner";
+import { Link } from "react-router-dom";
 
 class Login extends Form {
   state = {
@@ -70,7 +71,7 @@ class Login extends Form {
                         <i className="fas fa-lock"></i>
                         https://
                       </span>
-                      www.excoin.com
+                      www.bittrainex.com
                     </p>
                   </div>
                 </div>
@@ -91,7 +92,15 @@ class Login extends Form {
                     {this.renderButton("Login", "btn-default")}
                   </form>
                   <p>
-                    Don't have an account? <a href="#e"> Register</a>
+                    <a
+                      href="https://www.bittrain.org/sample/forgotpass.php"
+                      target="blank"
+                    >
+                      Forgot password?
+                    </a>
+                  </p>
+                  <p>
+                    Don't have an account? <Link to="/signup">Register</Link>
                   </p>
                 </div>
               </div>

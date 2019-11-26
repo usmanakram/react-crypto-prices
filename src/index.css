@@ -302,3 +302,40 @@ input.disabled {
   border-bottom: 1px #d3d3d3 dashed;
   margin-bottom: 0.5rem;
 }
+/* Tooltip Style */
+/* .popover {
+  border: 1px solid rgba(112, 112, 112, 0.178);
+  border-radius: 0.2rem;
+  text-align: left;
+  color: #a2a2a2;
+  font-size: 13px;
+} */
+
+/* Tooltip */
+
+/* signUp */
+.checkbox_inline > label > input {
+  min-height: 0px;
+  margin-left: 20px !important;
+  margin-bottom: 10px;
+}
+/* signUp */
+
+/* signup signin reset */
+.user-login-signup-section {
+  padding: 125px 0 50px 0;
+}
+.user-connected-from .form-group {
+  margin: 10px 0px;
+}
+.user-connected-form-block {
+  padding: 10px 40px 20px 40px !important;
+}
+.user-login-signup-form-wrap .modal-content {
+  flex-basis: 40%;
+}
+.user-login-signup-form-wrap .modal-content > h3 {
+  margin: 0 auto 20px auto;
+}
+
+/* signup signin reset */

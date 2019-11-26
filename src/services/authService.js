@@ -9,7 +9,8 @@ import jwtDecode from "jwt-decode";
 // const apiEndpoint = "/auth/login";
 const apiEndpoint = {
   login: "/auth/login",
-  logout: "/auth/logout"
+  logout: "/auth/logout",
+  signup: "/auth/signup"
 };
 const tokenKey = "token";
 
@@ -24,8 +25,8 @@ async function login(username, password) {
 
   // 3rd Cases (Content-Type: multipart/form-data; boundary=----WebKitFormBoundarydBgA8CMJMGMEFFX4)
   const formData = new FormData();
-  formData.append("bit_uname", username);
-  formData.append("bit_password", password);
+  formData.append("username", username);
+  formData.append("password", password);
 
   // Wrong format
   // const formData = { bit_uname: username, bit_password: password };
@@ -43,6 +44,26 @@ async function login(username, password) {
   // async/await
   const { data } = await http.post(apiEndpoint.login, formData);
   localStorage.setItem(tokenKey, data.access_token);
+}
+async function signup(
+  username,
+  password,
+  firstname,
+  lastname,
+  email,
+  gender,
+  referrer_username
+) {
+  const formData = new FormData();
+  formData.append("username", username);
+  formData.append("password", password);
+  formData.append("firstname", firstname);
+  formData.append("lastname", lastname);
+  formData.append("email", email);
+  formData.append("gender", gender);
+  formData.append("referrer_username", referrer_username);
+
+  const { data } = await http.post(apiEndpoint.signup, formData);
 }
 
 async function logout() {
@@ -68,6 +89,7 @@ function getJwt() {
 }
 
 export default {
+  signup,
   login,
   logout,
   getCurrentUser,

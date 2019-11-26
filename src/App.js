@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 // import logo from "./logo.svg";
-import "./App.css"
+import "./App.css";
 import Login from "./components/login";
 import Logout from "./components/logout";
 import CoinInfo from "./components/coinInfo";
@@ -18,6 +18,7 @@ import Home from "./components/home";
 import TradeHistory from "./components/tradeHistory";
 import OpenOrder from "./components/openOrder";
 import TransactionHistory from "./components/transactionHistory";
+import SignUp from "./components/signUp";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
       <Switch>
         <Route path="/coin-info/:coin" component={CoinInfo} />
         <Route path="/login" component={Login} />
+        <Route path="/signup" component={SignUp} />
         <Route path="/home" component={Home} />
         <Route path="/logout" component={Logout} />
         <Route path="/deposits" component={Deposits} />
