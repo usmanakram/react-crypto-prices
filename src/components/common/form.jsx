@@ -26,7 +26,12 @@ class Form extends Component {
   validateProperty = ({ name, value }) => {
     const obj = { [name]: value };
     const schema = { [name]: this.schema[name] };
+    if (name === "confirmpassword") {
+      obj["password"] = this.state.data.password;
+      schema["password"] = this.schema.password;
+    }
     const { error } = Joi.validate(obj, schema);
+
     return error ? error.details[0].message : null;
   };
 
@@ -95,6 +100,26 @@ class Form extends Component {
         onChange={this.handleChange}
         error={errors[name]}
       />
+    );
+  }
+
+  renderRadioButton(name, placeholder) {
+    const { data, errors } = this.state;
+
+    return (
+      <div className="form-check-inline checkbox_inline">
+        <label className="form-check-label">
+          <input
+            type="radio"
+            className="form-check-input"
+            id={placeholder}
+            name={name}
+            value={placeholder}
+            onChange={this.handleChange}
+          />
+          {placeholder}
+        </label>
+      </div>
     );
   }
 }
