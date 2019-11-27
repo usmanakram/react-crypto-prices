@@ -9,8 +9,8 @@ const options = {
   // wsHost: window.location.hostname,
   // wsHost: "bittrain.org",
   // wsHost: "148.72.198.128",
-  wsHost: "18.220.217.218",
-  wsPort: 6001
+  wsHost: process.env.REACT_APP_WS_HOST,
+  wsPort: process.env.REACT_APP_WS_PORT
   // wsPort: 443
 };
 
