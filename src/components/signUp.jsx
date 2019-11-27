@@ -25,7 +25,10 @@ class SignUp extends Form {
   };
 
   schema = {
-    referrer_username: Joi.string().label("Referrer Username"),
+    referrer_username: Joi.string()
+      .allow("")
+      .optional()
+      .label("Referrer Username"),
     firstname: Joi.string()
       .required()
       .label("First Name"),
@@ -33,11 +36,13 @@ class SignUp extends Form {
       .required()
       .label("Last Name"),
     username: Joi.string()
+      .min(6)
+      .max(20)
       .required()
       .label("Username"),
     email: Joi.string()
-      .required()
       .email()
+      .required()
       .label("Email"),
     password: Joi.string()
       .min(6)
@@ -46,7 +51,6 @@ class SignUp extends Form {
       .label("Password")
       .error(errors => {
         errors.forEach(error => {
-          console.log(error);
           if (error.type === "string.regex.base") {
             error.message =
               "Password must have atleast one capital and one small letter.";
@@ -65,6 +69,19 @@ class SignUp extends Form {
     gender: Joi.string().required()
   };
 
+  resetFormData = () => {
+    const data = {
+      firstname: "",
+      lastname: "",
+      username: "",
+      email: "",
+      password: "",
+      confirmpassword: ""
+    };
+
+    this.setState({ data });
+  };
+
   doSubmit = async () => {
     console.log("form validated");
 
@@ -81,6 +98,8 @@ class SignUp extends Form {
         data.gender,
         data.referrer_username
       );
+
+      this.resetFormData();
       toast.success(response);
     } catch (ex) {
       if (ex.response) {
@@ -139,14 +158,14 @@ class SignUp extends Form {
                     )}
                     <div className="row">
                       <div className="col-md-6">
-                        {this.renderLoginFormInput("firstname", "FirstName")}
+                        {this.renderLoginFormInput("firstname", "First Name")}
                       </div>
                       <div className="col-md-6">
-                        {this.renderLoginFormInput("lastname", "LastName")}
+                        {this.renderLoginFormInput("lastname", "Last Name")}
                       </div>
                     </div>
                     <Spinner status={this.state.loginSpinner} />
-                    {this.renderLoginFormInput("email", "Email", "email")}
+                    {this.renderLoginFormInput("email", "Email")}
 
                     {this.renderLoginFormInput("username", "Username")}
                     <div className="row">
@@ -160,14 +179,15 @@ class SignUp extends Form {
                       <div className="col-md-6">
                         {this.renderLoginFormInput(
                           "confirmpassword",
-                          "Confirmpassword",
+                          "Confirm Password",
                           "password"
                         )}
                       </div>
                     </div>
                     <h4 style={{ marginLeft: 20 }}> Gender</h4>
-                    {this.renderRadioButton("gender", "Male")}
-                    {this.renderRadioButton("gender", "Female")}
+                    {/* {this.renderRadioButton("gender", "Male")} */}
+                    {/* {this.renderRadioButton("gender", "Female")} */}
+                    {this.renderRadioButtons("gender", ["Male", "Female"])}
 
                     {this.renderButton("SignUp", "btn-default")}
                   </form>

@@ -107,7 +107,7 @@ class Form extends Component {
     const { data, errors } = this.state;
 
     return (
-      <div className="form-check-inline checkbox_inline">
+      <div className="form-check-inline checkbox_inline" key={placeholder}>
         <label className="form-check-label">
           <input
             type="radio"
@@ -119,6 +119,20 @@ class Form extends Component {
           />
           {placeholder}
         </label>
+      </div>
+    );
+  }
+
+  renderRadioButtons(name, placeholders) {
+    const { data, errors } = this.state;
+    const error = errors[name];
+
+    return (
+      <div className="form-group">
+        {placeholders.map(placeholder => {
+          return this.renderRadioButton(name, placeholder);
+        })}
+        {error && <div className="alert alert-danger">{error}</div>}
       </div>
     );
   }
