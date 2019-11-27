@@ -64,6 +64,7 @@ async function signup(
   formData.append("referrer_username", referrer_username);
 
   const { data } = await http.post(apiEndpoint.signup, formData);
+  return data;
 }
 
 async function logout() {
