@@ -46,7 +46,7 @@ class HighLightWedget extends Component {
               ))}
             </div>
           </div>
-          <NewsHeadline />
+          {/* <NewsHeadline /> */}
         </div>
       </React.Fragment>
     );
