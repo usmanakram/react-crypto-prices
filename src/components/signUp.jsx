@@ -83,12 +83,21 @@ class SignUp extends Form {
       );
       toast.success(response);
     } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
-        const errors = { ...this.state.errors };
-        errors.username = ex.response.data;
-        this.setState({ errors });
+      if (ex.response) {
+        if (ex.response.status === 400) {
+          const errors = { ...this.state.errors };
+          errors.username = ex.response.data;
+          this.setState({ errors });
 
-        toast.error(ex.response.data);
+          toast.error(ex.response.data);
+        } else if (ex.response.status === 422) {
+          // Laravel returns 422 against form validation errors
+          const { errors } = ex.response.data;
+
+          for (let item in errors) {
+            toast.error(errors[item][0]);
+          }
+        }
       }
     }
     this.setState({
