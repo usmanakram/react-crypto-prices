@@ -104,8 +104,6 @@ class Form extends Component {
   }
 
   renderRadioButton(name, placeholder) {
-    const { data, errors } = this.state;
-
     return (
       <div className="form-check-inline checkbox_inline" key={placeholder}>
         <label className="form-check-label">
@@ -124,7 +122,7 @@ class Form extends Component {
   }
 
   renderRadioButtons(name, placeholders) {
-    const { data, errors } = this.state;
+    const { errors } = this.state;
     const error = errors[name];
 
     return (
