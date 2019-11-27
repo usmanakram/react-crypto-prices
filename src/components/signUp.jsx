@@ -62,11 +62,9 @@ class SignUp extends Form {
       .required()
       .label("Confirm Password")
       .options({ language: { any: { allowOnly: "must match password" } } }),
-    // confirmpassword: Joi.string()
-    //   .required()
-    //   .label("Confirmpassword"),
-
-    gender: Joi.string().required()
+    gender: Joi.string()
+      .required()
+      .label("Gender")
   };
 
   resetFormData = () => {

@@ -10,7 +10,8 @@ import jwtDecode from "jwt-decode";
 const apiEndpoint = {
   login: "/auth/login",
   logout: "/auth/logout",
-  signup: "/auth/signup"
+  signup: "/auth/signup",
+  getUser: "/auth/user"
 };
 const tokenKey = "token";
 
@@ -66,6 +67,13 @@ async function signup(
   const { data } = await http.post(apiEndpoint.signup, formData);
   return data;
 }
+async function getUser() {
+  const user = this.getCurrentUser();
+  if (user === null) return null;
+
+  const { data } = await http.get(apiEndpoint.getUser);
+  return data;
+}
 
 async function logout() {
   try {
@@ -92,6 +100,7 @@ function getJwt() {
 export default {
   signup,
   login,
+  getUser,
   logout,
   getCurrentUser,
   getJwt

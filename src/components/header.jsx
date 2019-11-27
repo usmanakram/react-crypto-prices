@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import auth from "../services/authService";
 import { header } from "../services/custom";
+import logo from "../images/logo.png";
 
 class Header extends Component {
   state = { user: {} };
@@ -11,19 +12,31 @@ class Header extends Component {
     this.setState({ user });
 
     header();
+    this.getUser();
   }
+
+  getUser = async () => {
+    try {
+      const user = await auth.getUser();
+      console.log(user);
+      this.setState({ user });
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        console.log(ex.response.data);
+      }
+    }
+  };
 
   render() {
     const { user } = this.state;
-
     return (
       <React.Fragment>
         <nav className="navbar main-nav navbar-expand-lg">
           <div className="container">
-            <Link className="navbar-brand" to="/home">
+            <Link className="navbar-brand" to="/">
               <img
                 className="navbar-logo"
-                src="./images/logo.png"
+                src={logo}
                 alt="..."
                 style={{ width: 200 }}
               />
@@ -172,10 +185,21 @@ class Header extends Component {
                   </ul>
                 </li> */}
                 {user && (
-                  <li className="nav-item">
-                    <Link className="nav-link" to="/logout">
-                      Logout
+                  <li className="nav-item dropdown">
+                    <Link
+                      onClick={e => e.preventDefault()}
+                      className="nav-link"
+                      to=""
+                    >
+                      {user.username}
                     </Link>
+                    <ul className="dropdown-menu">
+                      <li className="nav-item">
+                        <Link className="nav-link" to="/logout">
+                          Logout
+                        </Link>
+                      </li>
+                    </ul>
                   </li>
                 )}
                 {!user && (
