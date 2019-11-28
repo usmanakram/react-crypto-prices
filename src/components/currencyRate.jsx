@@ -1,7 +1,9 @@
 import React from "react";
 
-
-const CurrencyRate = ({ selectedPair, selectedPairStats }) => {
+const CurrencyRate = ({
+  selectedPair,
+  selectedPairStats: { volume, last_price, low, high, price_change }
+}) => {
   return (
     <div className="section-padding-50">
       <div className="container">
@@ -42,33 +44,28 @@ const CurrencyRate = ({ selectedPair, selectedPairStats }) => {
                 <div className="currency-info last-price text-center">
                   <span>Last Price</span>
                   <h6>
-                    <span className="color-sell">
-                      {Object.keys(selectedPairStats).length > 0 &&
-                        selectedPairStats.last_price}
-                    </span>
+                    <span className="color-sell">{last_price}</span>
                     {/* <span className="currency-info-base">$390.68</span> */}
                   </h6>
                 </div>
-                {/* <div className="currency-info change">
+                <div className="currency-info change">
                   <span>24h Change</span>
                   <h6 className="color-buy">
-                    0.001447 <sub className="transmoney-value">+3.05</sub>
+                    {price_change} <sub className="transmoney-value">+3.05</sub>
                   </h6>
                 </div>
                 <div className="currency-info high">
                   <span>24h High</span>
-                  <h6 className="currency-info-base">0.060069</h6>
+                  <h6 className="currency-info-base">{high}</h6>
                 </div>
                 <div className="currency-info low">
                   <span>24h Low</span>
-                  <h6 className="currency-info-base">0.056864</h6>
-                </div> */}
+                  <h6 className="currency-info-base">{low}</h6>
+                </div>
                 <div className="currency-info volume-value text-center">
                   <span>24h Volume</span>
                   <h6 className="currency-info-base">
-                    {Object.keys(selectedPairStats).length > 0 &&
-                      selectedPairStats.volume}{" "}
-                    BTC
+                    {volume} {selectedPair.quote_currency_symbol}
                   </h6>
                 </div>
               </div>

@@ -17,7 +17,10 @@ class Exchange extends Component {
     selectedPair: {},
     selectedPairStats: {
       last_price: "",
-      volume: ""
+      volume: "",
+      low: "",
+      high: "",
+      price_change: ""
     },
     baseCurrencyBalance: {},
     quoteCurrencyBalance: {},
@@ -75,7 +78,10 @@ class Exchange extends Component {
     this.setState({
       selectedPairStats: {
         last_price: latest_price.last_price,
-        volume: latest_price.volume
+        volume: latest_price.volume,
+        low: latest_price.low,
+        high: latest_price.high,
+        price_change: latest_price.price_change
       }
     });
   };
