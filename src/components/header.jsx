@@ -58,7 +58,7 @@ class Header extends Component {
             >
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item ">
-                  <Link className="nav-link" to="/exchange">
+                  <Link className="nav-link" to="/exchange/BCBTC">
                     Exchange
                   </Link>
                 </li>
