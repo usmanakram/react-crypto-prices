@@ -32,14 +32,14 @@ const CurrencyRate = ({
                     aria-labelledby="dropdownMenuButton"
                   >
                     {currencyPairs.map(
-                      c =>
-                        c.id === selectedPair.id || (
+                      p =>
+                        p.symbol === selectedPair.symbol || (
                           <Link
-                            key={c.id}
+                            key={p.id}
                             className="dropdown-item"
-                            to={`/exchange/${c.symbol}`}
+                            to={`/exchange/${p.symbol}`}
                           >
-                            {c.base_currency_symbol} / {c.quote_currency_symbol}
+                            {p.base_currency_symbol} / {p.quote_currency_symbol}
                           </Link>
                         )
                     )}
@@ -56,8 +56,15 @@ const CurrencyRate = ({
                 </div>
                 <div className="currency-info change">
                   <span>24h Change</span>
-                  <h6 className="color-buy">
-                    {price_change} <sub className="transmoney-value">+3.05</sub>
+                  <h6
+                    className={
+                      price_change && parseFloat(price_change) > 0
+                        ? "color-buy"
+                        : "color-sell"
+                    }
+                  >
+                    {price_change && parseFloat(price_change).toFixed(8)}{" "}
+                    {/* <sub className="transmoney-value">+3.05</sub> */}
                   </h6>
                 </div>
                 <div className="currency-info high">

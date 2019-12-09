@@ -40,30 +40,15 @@ class Exchange extends Component {
   user = auth.getCurrentUser();
 
   async componentDidMount() {
+    const symbol = this.props.match.params.symbol;
+
     try {
       const { data: currencyPairs } = await http.get("/currency-pairs");
 
       // Temporarily block all pairs except Bittrain Coin vs Bitcoin
       // const currencyPairs = data.filter(p => p.symbol === "BCBTC");
-      const selectedPair = currencyPairs[0];
 
-      this.setState({ currencyPairs, selectedPair });
-
-      if (this.user) {
-        this.setBalances();
-        this.setOpenOrders();
-      }
-
-      // Testing
-      // console.log("befor function call");
-      this.setOrderBookAndTradeHistory();
-      // Testing
-      // console.log("after function call");
-
-      ws.channel("live").listen("LiveRates", e => {
-        const pair = e.rates.find(p => p.id === selectedPair.id);
-        this.handleSelectedPairStats(pair.latest_price);
-      });
+      this.setState({ currencyPairs });
     } catch (ex) {
       console.log(ex);
     }
@@ -77,6 +62,39 @@ class Exchange extends Component {
     }
     ws.leaveChannel("live");
   }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // console.log("inside componentDidUpdate method");
+    const symbol = this.props.match.params.symbol;
+    if (this.state.selectedPair.symbol !== symbol)
+      this.handleCurrencyPairChange(symbol);
+  }
+
+  /* static getDerivedStateFromProps(props, state) {
+    console.log("inside getDerivedStateFromProps method");
+    return null;
+  } */
+
+  handleCurrencyPairChange = async symbol => {
+    const selectedPair = this.state.currencyPairs.find(
+      p => p.symbol === symbol
+    );
+
+    await this.setState({ selectedPair });
+
+    if (this.user) {
+      this.setBalances();
+      this.setOpenOrders();
+    }
+
+    this.setOrderBookAndTradeHistory();
+
+    ws.leaveChannel("live");
+    ws.channel("live").listen("LiveRates", e => {
+      const pair = e.rates.find(p => p.id === selectedPair.id);
+      this.handleSelectedPairStats(pair.latest_price);
+    });
+  };
 
   handleSelectedPairStats = latest_price => {
     this.setState({
@@ -186,19 +204,17 @@ class Exchange extends Component {
       try {
         this.setState({ OrderBookAndTradeHistorySpinner: true });
 
-        // Testing
-        // console.log("getting Order Book");
-        const data = await trade.getOrderBook(selectedPair.id);
-        // Testing
-        // console.log("getting Trade History");
+        /* const data = await trade.getOrderBook(selectedPair.id);
         const tradeHistory = await trade.getTradeHistory(selectedPair.id);
-        // Testing
-        // console.log("getting Latest Price");
-        const pair = await trade.getLatestPrice(selectedPair.id);
-        /* const dataPromise = trade.getOrderBook(selectedPair.id);
+        const pair = await trade.getLatestPrice(selectedPair.id); */
+        const dataPromise = trade.getOrderBook(selectedPair.id);
         const tradeHistoryPromise = trade.getTradeHistory(selectedPair.id);
         const pairPromise = trade.getLatestPrice(selectedPair.id);
-        const [data, tradeHistory, pair] = await Promise.all([dataPromise, tradeHistoryPromise, pairPromise]); */
+        const [data, tradeHistory, pair] = await Promise.all([
+          dataPromise,
+          tradeHistoryPromise,
+          pairPromise
+        ]);
 
         this.handleOrderBook(data);
         this.handleTradeHistory(tradeHistory);
@@ -211,6 +227,7 @@ class Exchange extends Component {
       }
     }
   };
+
   handleChangeBg = () => {
     let { darkBg } = this.state;
     if (darkBg) {
