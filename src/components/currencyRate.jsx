@@ -1,7 +1,10 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 const CurrencyRate = ({
+  iconChange,
+  onBgChangeRequest,
   selectedPair,
+  currencyPairs,
   selectedPairStats: { volume, last_price, low, high, price_change }
 }) => {
   return (
@@ -9,10 +12,10 @@ const CurrencyRate = ({
       <div className="container">
         <div className="row">
           <div className="col">
-            <div className="currency-rate">
+            <div className="currency-rate latest-tranjections-block-inner">
               <div className="currency-convert">
                 <div className="dropdown">
-                  {/* <button
+                  <button
                     // className="btn dropdown-toggle"
                     className="btn"
                     type="button"
@@ -20,24 +23,27 @@ const CurrencyRate = ({
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
-                  > */}
-                  {selectedPair.base_currency_symbol} /{" "}
-                  {selectedPair.quote_currency_symbol}
-                  {/* </button> */}
-                  {/* <div
+                  >
+                    {selectedPair.base_currency_symbol} /{" "}
+                    {selectedPair.quote_currency_symbol}
+                  </button>{" "}
+                  <div
                     className="dropdown-menu"
                     aria-labelledby="dropdownMenuButton"
                   >
-                    <Link className="dropdown-item" to="#">
-                      BTC / USD
-                    </Link>
-                    <Link className="dropdown-item" to="#">
-                      USD / BTC
-                    </Link>
-                    <Link className="dropdown-item" to="#">
-                      BTC / USD
-                    </Link>
-                  </div> */}
+                    {currencyPairs.map(
+                      c =>
+                        c.id === selectedPair.id || (
+                          <Link
+                            key={c.id}
+                            className="dropdown-item"
+                            to={`/exchange/${c.symbol}`}
+                          >
+                            {c.base_currency_symbol} / {c.quote_currency_symbol}
+                          </Link>
+                        )
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="update-rate">
@@ -67,6 +73,13 @@ const CurrencyRate = ({
                   <h6 className="currency-info-base">
                     {volume} {selectedPair.quote_currency_symbol}
                   </h6>
+                </div>
+                <div className="currency-info volume-value my-3 ">
+                  <i
+                    className={iconChange}
+                    onClick={onBgChangeRequest}
+                    style={{ color: "#a2a2a2" }}
+                  ></i>
                 </div>
               </div>
             </div>

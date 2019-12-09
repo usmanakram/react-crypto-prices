@@ -31,8 +31,12 @@ class Exchange extends Component {
     },
     tradeHistory: [],
     openOrderSpinner: false,
-    OrderBookAndTradeHistorySpinner: false
+    OrderBookAndTradeHistorySpinner: false,
+    bgClasses: "",
+    darkBg: false,
+    iconChange: "fa fa-star"
   };
+
   user = auth.getCurrentUser();
 
   async componentDidMount() {
@@ -207,6 +211,22 @@ class Exchange extends Component {
       }
     }
   };
+  handleChangeBg = () => {
+    let { darkBg } = this.state;
+    if (darkBg) {
+      this.setState({
+        bgClasses: "",
+        darkBg: false,
+        iconChange: "fa fa-star"
+      });
+    } else {
+      this.setState({
+        bgClasses: "dark-blue-bg",
+        darkBg: true,
+        iconChange: "fa fa-sun"
+      });
+    }
+  };
 
   render() {
     const {
@@ -216,16 +236,22 @@ class Exchange extends Component {
       tradeHistory,
       openOrders,
       baseCurrencyBalance,
-      quoteCurrencyBalance
+      quoteCurrencyBalance,
+      bgClasses,
+      iconChange,
+      currencyPairs
     } = this.state;
 
     return (
-      <React.Fragment>
+      <div className={bgClasses}>
         <div className="navigation-two">
           <Header />
         </div>
         <CurrencyRate
+          iconChange={iconChange}
+          onBgChangeRequest={this.handleChangeBg}
           selectedPair={selectedPair}
+          currencyPairs={currencyPairs}
           selectedPairStats={selectedPairStats}
         />
         <ExchangeOneBody
@@ -240,16 +266,14 @@ class Exchange extends Component {
           baseCurrencyBalance={baseCurrencyBalance}
           onTradeHistoryUpdate={this.handleTradeHistory}
         />
-
         <ThemeTable
           status={this.state.openOrderSpinner}
           selectedPair={selectedPair}
           openOrders={openOrders}
           onCancelOrder={this.handleOpenOrders}
         />
-
         <GettingStarted />
-      </React.Fragment>
+      </div>
     );
   }
 }
