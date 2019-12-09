@@ -37,7 +37,7 @@ const App = () => {
         <Route path="/openOrder" component={OpenOrder} />
         <Route path="/balances" component={Balances} />
         <Route path="/transactionHistory" component={TransactionHistory} />
-        <Route path="/exchange" component={Exchange} />
+        <Route path="/exchange/:symbol" component={Exchange} />
         <Route path="/not-found" component={NotFound} />
         <Route path="/" exact component={Home} />
         <Redirect to="/" />

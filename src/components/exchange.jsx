@@ -41,10 +41,10 @@ class Exchange extends Component {
 
   async componentDidMount() {
     try {
-      const { data } = await http.get("/currency-pairs");
+      const { data: currencyPairs } = await http.get("/currency-pairs");
 
       // Temporarily block all pairs except Bittrain Coin vs Bitcoin
-      const currencyPairs = data.filter(p => p.symbol === "BCBTC");
+      // const currencyPairs = data.filter(p => p.symbol === "BCBTC");
       const selectedPair = currencyPairs[0];
 
       this.setState({ currencyPairs, selectedPair });
