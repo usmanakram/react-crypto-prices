@@ -47,11 +47,11 @@
   padding-left: 15px !important;
   padding-right: 15px !important;
 }
-.form-control:disabled,
+/* .form-control:disabled,
 .form-control[readonly] {
   background-color: #fafafa;
   opacity: 1;
-}
+} */
 /* order History table */
 
 .table-bordered thead th {
@@ -339,3 +339,11 @@ input.disabled {
 }
 
 /* signup signin reset */
+/* ==================================start Dark & Light View=================================== */
+.dark-blue-bg .latest-tranjections-block-inner h5 {
+  color: #ffffff;
+}
+.dark-blue-bg .dashes {
+  border-bottom: 1px #192030 dashed;
+}
+/* ==================================End Dark & Light View=================================== */
