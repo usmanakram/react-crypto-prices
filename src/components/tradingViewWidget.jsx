@@ -118,8 +118,9 @@ class TradingViewWidget extends Component {
 
     return (
       <div className="tradingview-widget-container">
-        <div ref={this._id}>
-          {/* <TradingViewGraph
+        <div className="exchange-chart-block">
+          <div ref={this._id}>
+            {/* <TradingViewGraph
             symbol="EURUSD"
             theme="Light"
             locale="us"
@@ -127,6 +128,7 @@ class TradingViewWidget extends Component {
             height={350}
             datafeed={candleChartdData}
           /> */}
+          </div>
         </div>
       </div>
     );

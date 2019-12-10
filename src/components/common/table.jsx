@@ -13,7 +13,14 @@ const Table = ({ columns, sortColumn, onSort, data, classes }) => {
         />
         <TableBody columns={columns} data={data} />
       </table>
-      {data.length === 0 && <h4 className="text-center">No Record Found</h4>}
+      {data.length === 0 && (
+        <h5
+          className="text-center my-5"
+          style={{ fontWeight: "600", fontSize: "large" }}
+        >
+          No Record Found
+        </h5>
+      )}
     </React.Fragment>
   );
 };

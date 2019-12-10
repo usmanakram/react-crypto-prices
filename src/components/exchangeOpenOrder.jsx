@@ -4,7 +4,7 @@ import Spinner from "./spinner";
 import trade from "../services/tradeService";
 import { toast } from "react-toastify";
 
-class ThemeTable extends Component {
+class ExchangeOpenOrder extends Component {
   state = {};
 
   columns = [
@@ -97,21 +97,19 @@ class ThemeTable extends Component {
 
     return (
       <div className="latest-tranjections-area">
-        <div className="latest-tranjections-block">
-          <div className="container">
-            <div className="latest-tranjections-block-inner">
-              <div className="panel-heading-block">
-                <h5>Open Orders</h5>
-              </div>
-              <Spinner status={status} />
-
-              <Table
-                columns={this.columns}
-                data={openOrders}
-                classes="coin-list latest-tranjections-table"
-                sortColumn=""
-              />
+        <div className="container">
+          <div className="latest-tranjections-block-inner">
+            <div className="panel-heading-block">
+              <h5>Open Orders</h5>
             </div>
+            <Spinner status={status} />
+
+            <Table
+              columns={this.columns}
+              data={openOrders}
+              classes="coin-list latest-tranjections-table"
+              sortColumn=""
+            />
           </div>
         </div>
       </div>
@@ -119,4 +117,4 @@ class ThemeTable extends Component {
   }
 }
 
-export default ThemeTable;
+export default ExchangeOpenOrder;

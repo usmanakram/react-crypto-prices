@@ -10,7 +10,11 @@ class DepthChartWidget extends Component {
   }
 
   render() {
-    return <div id="chartdiv" style={{ width: "100%", height: "350px" }}></div>;
+    return (
+      <div className="exchange-chart-block">
+        <div id="depthChartStyle"></div>
+      </div>
+    );
   }
 }
 

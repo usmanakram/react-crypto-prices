@@ -5,6 +5,7 @@ import Joi from "joi-browser";
 import trade from "../services/tradeService";
 import { toast } from "react-toastify";
 import Spinner from "./spinner";
+import ConfirmOrder from "./confirmOrder";
 
 class SellOcoForm extends TradingForm {
   state = {
@@ -18,7 +19,8 @@ class SellOcoForm extends TradingForm {
     },
     errors: {},
     total: 0,
-    spinnerStatus: false
+    spinnerStatus: false,
+    modalShow: false
   };
 
   schema = {
@@ -43,6 +45,7 @@ class SellOcoForm extends TradingForm {
   };
 
   doSubmit = async () => {
+    this.setState({ modalShow: true });
     this.setState({ spinnerStatus: true });
     try {
       const { data } = this.state;
@@ -87,82 +90,88 @@ class SellOcoForm extends TradingForm {
   render() {
     const { selectedPair } = this.props;
     return (
-      <td>
-        <div className="tv_ammount-form-block">
-          {Object.keys(selectedPair).length > 0 && (
-            <form onSubmit={this.handleSubmit} className="form-horizontal">
-              {this.renderInputHidden("type")}
-              <div className="dashes">
+      <React.Fragment>
+        <td>
+          <div className="tv_ammount-form-block">
+            {Object.keys(selectedPair).length > 0 && (
+              <form onSubmit={this.handleSubmit} className="form-horizontal">
+                {this.renderInputHidden("type")}
+                <div className="dashes">
+                  {this.renderInputTradeForm(
+                    "price",
+                    "Price",
+                    selectedPair.quote_currency_symbol,
+                    "number"
+                  )}
+                </div>
                 {this.renderInputTradeForm(
-                  "price",
-                  "Price",
+                  "stop",
+                  "Stop",
                   selectedPair.quote_currency_symbol,
                   "number"
                 )}
-              </div>
-              {this.renderInputTradeForm(
-                "stop",
-                "Stop",
-                selectedPair.quote_currency_symbol,
-                "number"
-              )}
-              <div className="dashes">
-                {this.renderInputTradeForm(
-                  "stop_limit_rate",
-                  "Limit",
-                  selectedPair.quote_currency_symbol,
-                  "number"
-                )}
-              </div>
+                <div className="dashes">
+                  {this.renderInputTradeForm(
+                    "stop_limit_rate",
+                    "Limit",
+                    selectedPair.quote_currency_symbol,
+                    "number"
+                  )}
+                </div>
 
-              {this.renderInputTradeForm(
-                "quantity",
-                "Quantity",
-                selectedPair.base_currency_symbol,
-                "number"
-              )}
-              {this.renderReadOnlyInputTradeForm(
-                "total",
-                "Total",
-                this.state.total,
-                selectedPair.quote_currency_symbol,
-                "number"
-              )}
-              {this.renderReadOnlyInputTradeForm(
-                "balance",
-                "Balance",
-                this.getAvailableBalance(),
-                selectedPair.base_currency_symbol,
-                "number"
-              )}
-              {/* {this.renderInputTradeForm(
+                {this.renderInputTradeForm(
+                  "quantity",
+                  "Quantity",
+                  selectedPair.base_currency_symbol,
+                  "number"
+                )}
+                {this.renderReadOnlyInputTradeForm(
+                  "total",
+                  "Total",
+                  this.state.total,
+                  selectedPair.quote_currency_symbol,
+                  "number"
+                )}
+                {this.renderReadOnlyInputTradeForm(
+                  "balance",
+                  "Balance",
+                  this.getAvailableBalance(),
+                  selectedPair.base_currency_symbol,
+                  "number"
+                )}
+                {/* {this.renderInputTradeForm(
                 "commission",
                 "Commission",
                 "EUR",
                 "number",
                 true
               )} */}
-              <div className="form-group row">
-                <label className="col-3 col-form-label"></label>
-                <div className="col-9 form-input-block">
-                  {this.user &&
-                    this.renderTradeButton(
-                      `Sell ${selectedPair.base_currency_symbol}`,
-                      "sell-btn"
-                    )}
-                  <Spinner status={this.state.spinnerStatus} />
+                <div className="form-group row">
+                  <label className="col-3 col-form-label"></label>
+                  <div className="col-9 form-input-block">
+                    {this.user &&
+                      this.renderTradeButton(
+                        `Sell ${selectedPair.base_currency_symbol}`,
+                        "sell-btn"
+                      )}
+                    <Spinner status={this.state.spinnerStatus} />
 
-                  {!this.user && (
-                    <Link to="/login" className="btn sell-btn">
-                      Login
-                    </Link>
-                  )}
+                    {!this.user && (
+                      <Link to="/login" className="btn sell-btn">
+                        Login
+                      </Link>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </form>
-          )}
-        </div>
-      </td>
+              </form>
+            )}
+          </div>
+        </td>
+        <ConfirmOrder
+          show={this.state.modalShow}
+          onHide={() => this.setState({ modalShow: false })}
+        />
+      </React.Fragment>
     );
   }
 }
