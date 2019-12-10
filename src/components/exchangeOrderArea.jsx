@@ -7,7 +7,6 @@ import Oco from "./oco";
 const ExchangeOrderArea = ({
   selectedPair,
   selectedPairStats,
-  onTrade,
   quoteCurrencyBalance,
   baseCurrencyBalance
 }) => {
@@ -81,26 +80,22 @@ const ExchangeOrderArea = ({
         <div className="tab-content">
           <LimitOrder
             selectedPair={selectedPair}
-            onTrade={onTrade}
             quoteCurrencyBalance={quoteCurrencyBalance}
             baseCurrencyBalance={baseCurrencyBalance}
           />
           <InstantOrder
             selectedPair={selectedPair}
             selectedPairStats={selectedPairStats}
-            onTrade={onTrade}
             quoteCurrencyBalance={quoteCurrencyBalance}
             baseCurrencyBalance={baseCurrencyBalance}
           />
           <StopLimit
             selectedPair={selectedPair}
-            onTrade={onTrade}
             quoteCurrencyBalance={quoteCurrencyBalance}
             baseCurrencyBalance={baseCurrencyBalance}
           />
           <Oco
             selectedPair={selectedPair}
-            onTrade={onTrade}
             quoteCurrencyBalance={quoteCurrencyBalance}
             baseCurrencyBalance={baseCurrencyBalance}
           />

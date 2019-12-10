@@ -4,7 +4,6 @@ import SellLimitOrderForm from "./sellLimitOrderForm";
 
 const LimitOrder = ({
   selectedPair,
-  onTrade,
   quoteCurrencyBalance,
   baseCurrencyBalance
 }) => {
@@ -28,12 +27,10 @@ const LimitOrder = ({
           <tr>
             <BuyLimitOrderForm
               selectedPair={selectedPair}
-              onTrade={onTrade}
               balance={quoteCurrencyBalance}
             />
             <SellLimitOrderForm
               selectedPair={selectedPair}
-              onTrade={onTrade}
               balance={baseCurrencyBalance}
             />
           </tr>

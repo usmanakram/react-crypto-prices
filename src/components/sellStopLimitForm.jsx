@@ -56,7 +56,6 @@ class SellStopLimitForm extends TradingForm {
       );
 
       this.resetFormData();
-      this.props.onTrade();
 
       toast.success(response);
     } catch (ex) {

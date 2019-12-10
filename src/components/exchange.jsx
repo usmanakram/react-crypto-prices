@@ -111,13 +111,13 @@ class Exchange extends Component {
   handleUserStream = () => {
     if (this.user) {
       ws.channel("User." + this.user.sub)
+        .listen("BalanceUpdated", e => {
+          this.handleBalances(e.balances);
+        })
+        // .listen("TradeOrderPlaced", e => {
+        //   this.handleBalances(e.balances);
+        // })
         .listen("TradeOrderFilled", e => {
-          /**
-           * It's temporary solution. Balances will be received over websocket connection at OrderFiled event.
-           */
-          // this.props.onTrade();
-          this.setBalances();
-
           toast.success(e.message);
         })
         .listen("OpenOrdersUpdated", e => {
@@ -126,21 +126,24 @@ class Exchange extends Component {
     }
   };
 
-  setBalances = async () => {
+  handleBalances = balances => {
     const { selectedPair } = this.state;
 
-    if (Object.keys(selectedPair).length) {
+    const baseCurrencyBalance = balances.find(
+      b => b.id === selectedPair.base_currency_id
+    );
+    const quoteCurrencyBalance = balances.find(
+      b => b.id === selectedPair.quote_currency_id
+    );
+
+    this.setState({ baseCurrencyBalance, quoteCurrencyBalance });
+  };
+
+  setBalances = async () => {
+    if (Object.keys(this.state.selectedPair).length) {
       try {
         const balances = await trade.getBalances();
-
-        const baseCurrencyBalance = balances.find(
-          b => b.id === selectedPair.base_currency_id
-        );
-        const quoteCurrencyBalance = balances.find(
-          b => b.id === selectedPair.quote_currency_id
-        );
-
-        this.setState({ baseCurrencyBalance, quoteCurrencyBalance });
+        this.handleBalances(balances);
       } catch (ex) {
         if (ex.response && ex.response.status === 400) {
           console.log(ex.response.data);
@@ -151,19 +154,15 @@ class Exchange extends Component {
   };
 
   handleOpenOrders = orders => {
-    const { selectedPair } = this.state;
-
     const openOrders = orders.filter(
-      o => o.currency_pair_id === selectedPair.id
+      o => o.currency_pair_id === this.state.selectedPair.id
     );
 
     this.setState({ openOrders });
   };
 
   setOpenOrders = async () => {
-    const { selectedPair } = this.state;
-
-    if (Object.keys(selectedPair).length) {
+    if (Object.keys(this.state.selectedPair).length) {
       try {
         this.setState({ openOrderSpinner: true });
         const orders = await trade.getUserOpenOrders();
@@ -278,7 +277,6 @@ class Exchange extends Component {
           selectedPairStats={selectedPairStats}
           orderBookData={orderBookData}
           onOrderBookUpdate={this.handleOrderBook}
-          onTrade={this.setBalances}
           tradeHistory={tradeHistory}
           quoteCurrencyBalance={quoteCurrencyBalance}
           baseCurrencyBalance={baseCurrencyBalance}

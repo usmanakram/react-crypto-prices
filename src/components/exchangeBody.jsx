@@ -13,7 +13,6 @@ const ExchangeBody = ({
   orderBookData,
   tradeHistory,
   onOrderBookUpdate,
-  onTrade,
   quoteCurrencyBalance,
   baseCurrencyBalance,
   onTradeHistoryUpdate,
@@ -77,7 +76,6 @@ const ExchangeBody = ({
               <ExchangeOrderArea
                 selectedPair={selectedPair}
                 selectedPairStats={selectedPairStats}
-                onTrade={onTrade}
                 baseCurrencyBalance={baseCurrencyBalance}
                 quoteCurrencyBalance={quoteCurrencyBalance}
               />

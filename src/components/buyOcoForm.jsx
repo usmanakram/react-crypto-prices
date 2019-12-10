@@ -59,8 +59,9 @@ class BuyOcoForm extends TradingForm {
         data.stop,
         data.stop_limit_rate
       );
+
       this.resetFormData();
-      this.props.onTrade();
+
       toast.success(response);
     } catch (ex) {
       if (ex.response) {
