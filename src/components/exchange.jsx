@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import http from "../services/httpService";
 import trade from "../services/tradeService";
 import Header from "./header";
-import ExchangeOneBody from "./exchangeOneBody";
+import ExchangeBody from "./exchangeBody";
 import CurrencyRate from "./currencyRate";
-import ThemeTable from "./themeTable";
+import ExchangeOpenOrder from "./exchangeOpenOrder";
 import GettingStarted from "./gettingStarted";
 import auth from "../services/authService";
 import ws from "../services/webSocketService";
@@ -271,7 +271,8 @@ class Exchange extends Component {
           currencyPairs={currencyPairs}
           selectedPairStats={selectedPairStats}
         />
-        <ExchangeOneBody
+        <ExchangeBody
+          currencyPairs={currencyPairs}
           status={this.state.OrderBookAndTradeHistorySpinner}
           selectedPair={selectedPair}
           selectedPairStats={selectedPairStats}
@@ -283,7 +284,7 @@ class Exchange extends Component {
           baseCurrencyBalance={baseCurrencyBalance}
           onTradeHistoryUpdate={this.handleTradeHistory}
         />
-        <ThemeTable
+        <ExchangeOpenOrder
           status={this.state.openOrderSpinner}
           selectedPair={selectedPair}
           openOrders={openOrders}

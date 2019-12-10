@@ -81,10 +81,15 @@ class ExchangeTradingHistory extends Component {
                         {value.rate}
                       </span>
                     </td>
-                    <td>{value.quantity}</td>
+                    <td>
+                      <span>{value.quantity}</span>
+                    </td>
                     {/* <td>{moment(value.created_at).format("HH:mm:ss")}</td> */}
                     <td>
-                      {value.created_at && value.created_at.split(" ")[1]}
+                      <span>
+                        {" "}
+                        {value.created_at && value.created_at.split(" ")[1]}
+                      </span>
                     </td>
                   </tr>
                 ))}

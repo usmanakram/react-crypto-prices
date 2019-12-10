@@ -47,11 +47,11 @@
   padding-left: 15px !important;
   padding-right: 15px !important;
 }
-.form-control:disabled,
+/* .form-control:disabled,
 .form-control[readonly] {
   background-color: #fafafa;
   opacity: 1;
-}
+} */
 /* order History table */
 
 .table-bordered thead th {
@@ -339,3 +339,64 @@ input.disabled {
 }
 
 /* signup signin reset */
+
+/* DepthChart */
+#depthChartStyle {
+  min-width: 310px;
+  max-width: 1040px;
+  height: 250px;
+  margin: 0 auto;
+}
+
+/* DepthChart */
+/* tradingview, exchangeorderare */
+.parent-order-tab {
+  line-height: 22px;
+}
+/* tradingview, exchangeorderare */
+/*exchangeorderare */
+.tv_orde_table thead th {
+  line-height: 15px;
+}
+/*exchangeorderare */
+
+.dark-blue-bg .latest-tranjections-block-inner h5 {
+  color: #ffffff;
+}
+.dark-blue-bg .dashes {
+  border-bottom: 1px #192030 dashed;
+}
+/* ==================================CurrencyPair=================================== */
+
+.exchange-orderBook tbody .favorite-coin {
+  padding: 0 10px;
+}
+.dark-blue-bg .table {
+  color: #ffffff;
+}
+.das-oreder-table td {
+  font-size: 12px !important;
+}
+.table {
+  color: #212529;
+}
+.currancy-pair-pad {
+  padding: 5px !important;
+}
+
+.dark-blue-bg .table-hover tbody tr:hover {
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0);
+}
+.parent-order-tab .nav-item a.nav-link h5 {
+  font-weight: 500;
+}
+.ticker-nav .nav-item a {
+  font-weight: 500;
+}
+/* ==================================CurrencyPair=================================== */
+/* ==================================style.css=================================== */
+#chartdiv {
+  height: 310px !important;
+}
+/* ==================================style.css=================================== */

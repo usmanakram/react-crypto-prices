@@ -3,7 +3,6 @@ import Header from "./header";
 import Table from "./common/table";
 import http from "../services/httpService";
 
-
 class TransactionHistory extends Component {
   state = {
     deposits: [],
@@ -79,25 +78,31 @@ class TransactionHistory extends Component {
           <div className="row">
             <div className="col-12">
               <div className="tab-content latest-tranjections-block-inner">
-                <div
-                  role="tabpanel"
-                  className="tab-pane fade in active show"
-                  id="deposits"
-                >
-                  <Table
-                    columns={this.columns}
-                    data={deposits}
-                    classes="coin-list latest-tranjections-table"
-                    sortColumn=""
-                  />
-                </div>
-                <div role="tabpanel" className="tab-pane fade" id="withdrawals">
-                  <Table
-                    columns={this.columns}
-                    data={withdrawals}
-                    classes="coin-list latest-tranjections-table"
-                    sortColumn=""
-                  />
+                <div className="tab-content">
+                  <div
+                    role="tabpanel"
+                    className="tab-pane fade in active show"
+                    id="deposits"
+                  >
+                    <Table
+                      columns={this.columns}
+                      data={deposits}
+                      classes="coin-list latest-tranjections-table"
+                      sortColumn=""
+                    />
+                  </div>
+                  <div
+                    role="tabpanel"
+                    className="tab-pane fade"
+                    id="withdrawals"
+                  >
+                    <Table
+                      columns={this.columns}
+                      data={withdrawals}
+                      classes="coin-list latest-tranjections-table"
+                      sortColumn=""
+                    />
+                  </div>
                 </div>
               </div>
             </div>
