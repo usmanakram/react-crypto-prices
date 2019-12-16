@@ -186,13 +186,6 @@ input.disabled {
   margin: 15px;
 }
 
-.tv_ammount-form-block .form-input-block .tv-btc-tag {
-  right: 17px;
-  width: 35px;
-  height: 38px;
-  padding: 0 5px;
-}
-
 .ord {
   position: relative;
 }
@@ -214,7 +207,7 @@ input.disabled {
   padding: 15px 0;
 }
 .currency-rate {
-  padding: 5px 50px;
+  padding: 2px 20px;
 }
 .das-oreder-table td span {
   font-weight: 400;
@@ -260,7 +253,7 @@ input.disabled {
   margin-bottom: 0;
 }
 .exchange-chart-block {
-  padding: 7px;
+  padding: 0px;
   margin-bottom: 15px;
 }
 .latest-tranjections-area {
@@ -302,16 +295,6 @@ input.disabled {
   border-bottom: 1px #d3d3d3 dashed;
   margin-bottom: 0.5rem;
 }
-/* Tooltip Style */
-/* .popover {
-  border: 1px solid rgba(112, 112, 112, 0.178);
-  border-radius: 0.2rem;
-  text-align: left;
-  color: #a2a2a2;
-  font-size: 13px;
-} */
-
-/* Tooltip */
 
 /* signUp */
 .checkbox_inline > label > input {
@@ -400,3 +383,66 @@ input.disabled {
   height: 310px !important;
 }
 /* ==================================style.css=================================== */
+/* ==================================orderArea=================================== */
+.tv_ammount-form-block .form-input-block .tv-btc-tag {
+  right: 16px;
+  width: 40px;
+  height: 38px;
+}
+/* ==================================orderArea=================================== */
+/* ==================================confirmOrder=================================== */
+.con-btn {
+  padding: 0.3rem 0.35rem;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+.modal-footer {
+  padding: 0.5rem 3.5rem;
+}
+/* ==================================confirmOrder=================================== */
+/* ==================================TradingViewButton=================================== */
+.tv-toolbar select,
+.tv-toolbar button {
+  background: transparent;
+  border: 1px solid #f0f0f0;
+  margin: 0px 1px;
+  font-size: 13px;
+}
+.tv-toolbar button {
+  line-height: 1.3;
+}
+.tv-toolbar button:focus {
+  outline: 0px dotted;
+  outline: 0px auto -webkit-focus-ring-color;
+}
+.dark-blue-bg .tv-toolbar select,
+.dark-blue-bg .tv-toolbar button {
+  background: #171f38;
+  border: 1px solid #242b42;
+  color: #fff;
+}
+
+.selected-interval {
+  font-weight: 900;
+  color: red;
+}
+.dark-blue-bg .selected-interval {
+  font-weight: 900;
+  color: red !important;
+}
+/* ==================================TradingViewButton=================================== */
+/* ==================================POPOVER=================================== */
+
+.dark-blue-bg .popover {
+  background-color: #192030 !important;
+}
+.dark-blue-bg .popover-body {
+  color: #ffffff !important;
+}
+/* ==================================POPOVER=================================== */
+/* ==================================Currencyrate=================================== */
+.pointer {
+  cursor: pointer;
+}
+/* ==================================Currencyrate=================================== */
+

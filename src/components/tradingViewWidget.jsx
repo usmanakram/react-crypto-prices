@@ -5,7 +5,7 @@ import trade from "../services/tradeService";
 import ws from "../services/webSocketService";
 
 class TradingViewWidget extends Component {
-  state = {};
+  state = { timeInterval: "1H" };
 
   selectedPairId = 0;
 
@@ -93,7 +93,8 @@ class TradingViewWidget extends Component {
 
       try {
         const candleChartData = await trade.getChartTradeHistory(
-          selectedPair.id
+          selectedPair.id,
+          this.state.timeInterval
         );
 
         this.candleSeries.setData(candleChartData);
@@ -113,12 +114,69 @@ class TradingViewWidget extends Component {
     }
   };
 
+  handleChange = ({ currentTarget: input }) => {
+    this.setState({
+      timeInterval: input.value
+    });
+  };
+
   render() {
     this.handleGraph();
-
+    const { timeInterval } = this.state;
     return (
       <div className="tradingview-widget-container">
         <div className="exchange-chart-block">
+          <div className="row tv-toolbar">
+            <div className="col-md-12">
+              <select
+                onChange={this.handleChange}
+                className={
+                  ["1m", "5m", "15m", "30m"].includes(timeInterval)
+                    ? "selected-interval"
+                    : ""
+                }
+              >
+                <option value="1m">1m</option>
+                <option value="5m">5m</option>
+                <option value="15m">15m</option>
+                <option value="30m">30m</option>
+              </select>
+              <select
+                onChange={this.handleChange}
+                className={
+                  ["1H", "4H"].includes(timeInterval) ? "selected-interval" : ""
+                }
+              >
+                <option>1H</option>
+                <option>4H</option>
+              </select>
+              <button
+                className={timeInterval === "1D" ? "selected-interval" : ""}
+                value="1D"
+                onClick={this.handleChange}
+                type="button"
+              >
+                1D
+              </button>
+              <button
+                className={timeInterval === "1W" ? "selected-interval" : ""}
+                value="1W"
+                onClick={this.handleChange}
+                type="button"
+              >
+                1W
+              </button>
+              <button
+                className={timeInterval === "1M" ? "selected-interval" : ""}
+                value="1M"
+                onClick={this.handleChange}
+                type="button"
+              >
+                1M
+              </button>
+            </div>
+          </div>
+
           <div ref={this._id}>
             {/* <TradingViewGraph
             symbol="EURUSD"

@@ -49,6 +49,7 @@ const ExchangeOrderArea = ({
             <h5>Stop Limit</h5>{" "}
             <span
               data-toggle="popover"
+              data-container="body"
               data-content=" A Stop-Limit order is an order to buy or sell a coin
               once the price reaches a specified price."
               data-placement="bottom"
@@ -63,6 +64,7 @@ const ExchangeOrderArea = ({
             <h5>OCO</h5>{" "}
             <span
               data-toggle="popover"
+              data-container="body"
               data-content="OCO order: To place a stop-limit order and a limit
                     order at the same time. When either of the order pairs is triggered, the
                     other order will be cancelled. And if either of the order pairs is
@@ -90,11 +92,13 @@ const ExchangeOrderArea = ({
             baseCurrencyBalance={baseCurrencyBalance}
           />
           <StopLimit
+            selectedPairStats={selectedPairStats}
             selectedPair={selectedPair}
             quoteCurrencyBalance={quoteCurrencyBalance}
             baseCurrencyBalance={baseCurrencyBalance}
           />
           <Oco
+            selectedPairStats={selectedPairStats}
             selectedPair={selectedPair}
             quoteCurrencyBalance={quoteCurrencyBalance}
             baseCurrencyBalance={baseCurrencyBalance}

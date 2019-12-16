@@ -32,9 +32,7 @@ class Exchange extends Component {
     tradeHistory: [],
     openOrderSpinner: false,
     OrderBookAndTradeHistorySpinner: false,
-    bgClasses: "",
-    darkBg: false,
-    iconChange: "fa fa-star"
+    darkBg: false
   };
 
   user = auth.getCurrentUser();
@@ -228,20 +226,7 @@ class Exchange extends Component {
   };
 
   handleChangeBg = () => {
-    let { darkBg } = this.state;
-    if (darkBg) {
-      this.setState({
-        bgClasses: "",
-        darkBg: false,
-        iconChange: "fa fa-star"
-      });
-    } else {
-      this.setState({
-        bgClasses: "dark-blue-bg",
-        darkBg: true,
-        iconChange: "fa fa-sun"
-      });
-    }
+    this.setState({ darkBg: !this.state.darkBg });
   };
 
   render() {
@@ -253,18 +238,17 @@ class Exchange extends Component {
       openOrders,
       baseCurrencyBalance,
       quoteCurrencyBalance,
-      bgClasses,
-      iconChange,
-      currencyPairs
+      currencyPairs,
+      darkBg
     } = this.state;
 
     return (
-      <div className={bgClasses}>
+      <div className={darkBg ? "dark-blue-bg" : ""}>
         <div className="navigation-two">
           <Header />
         </div>
         <CurrencyRate
-          iconChange={iconChange}
+          darkBg={darkBg}
           onBgChangeRequest={this.handleChangeBg}
           selectedPair={selectedPair}
           currencyPairs={currencyPairs}
