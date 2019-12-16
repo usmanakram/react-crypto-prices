@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 const CurrencyRate = ({
-  iconChange,
+  darkBg,
   onBgChangeRequest,
   selectedPair,
   currencyPairs,
@@ -47,7 +47,7 @@ const CurrencyRate = ({
                 </div>
               </div>
               <div className="update-rate">
-                <div className="currency-info last-price text-center">
+                <div className="currency-info last-price">
                   <span>Last Price</span>
                   <h6>
                     <span className="color-sell">{last_price}</span>
@@ -75,18 +75,22 @@ const CurrencyRate = ({
                   <span>24h Low</span>
                   <h6 className="currency-info-base">{low}</h6>
                 </div>
-                <div className="currency-info volume-value text-center">
+                <div className="currency-info volume-value">
                   <span>24h Volume</span>
                   <h6 className="currency-info-base">
                     {volume} {selectedPair.quote_currency_symbol}
                   </h6>
                 </div>
-                <div className="currency-info volume-value my-3 ">
-                  <i
-                    className={iconChange}
-                    onClick={onBgChangeRequest}
-                    style={{ color: "#a2a2a2" }}
-                  ></i>
+                <div className="currency-info volume-value my-2 ">
+                  <span title={darkBg ? "Light Mode" : "Dark Mode"}>
+                    <i
+                      className={`pointer ${
+                        darkBg ? "fa fa-sun" : "fa fa-star"
+                      }`}
+                      onClick={onBgChangeRequest}
+                      style={{ color: "#a2a2a2" }}
+                    ></i>
+                  </span>
                 </div>
               </div>
             </div>

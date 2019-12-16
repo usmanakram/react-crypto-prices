@@ -891,3 +891,26 @@ export const candleChartdData = [
   { time: "2019-05-23", open: 188.45, high: 192.54, low: 186.27, close: 192.0 },
   { time: "2019-05-24", open: 192.54, high: 193.86, low: 190.41, close: 193.59 }
 ];
+
+// ==============================================PopOver====================================================
+window.$(function() {
+  window.$('[data-toggle="popover"]').on("shown.bs.popover", function() {
+    let style = {};
+    let bodyStyle = {};
+    let popoverTopStyle = {};
+    if (window.$("#root .dark-blue-bg").length > 0) {
+      style = { background: "#171f38", color: "#fff" };
+      popoverTopStyle = { "border-bottom-color": "#171f38" };
+      bodyStyle = { color: "#fff" };
+    } else {
+      style = { background: "#fff", color: "#000" };
+      popoverTopStyle = { "border-bottom-color": "#fff" };
+      bodyStyle = { color: "#000" };
+    }
+
+    window.$(".popover.fade.bs-popover-bottom.show").css(style);
+    // window.$(".bs-popover-bottom .arrow::after").css(popoverTopStyle);
+    window.$(".popover-body").css(bodyStyle);
+  });
+});
+// ==============================================PopOver====================================================
