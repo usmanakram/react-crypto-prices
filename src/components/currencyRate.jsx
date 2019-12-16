@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { handleWidth } from "../services/custom";
 const CurrencyRate = ({
   darkBg,
   onBgChangeRequest,
@@ -91,6 +92,13 @@ const CurrencyRate = ({
                       style={{ color: "#a2a2a2" }}
                     ></i>
                   </span>
+
+                  {/* <i
+                    className="fa fa-arrows-alt"
+                    aria-hidden="true"
+                    onClick={handleWidth}
+                    style={{ color: "#a2a2a2" }}
+                  ></i> */}
                 </div>
               </div>
             </div>
