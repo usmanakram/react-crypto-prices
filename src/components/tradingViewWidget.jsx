@@ -5,9 +5,13 @@ import trade from "../services/tradeService";
 import ws from "../services/webSocketService";
 
 class TradingViewWidget extends Component {
-  state = { timeInterval: "1H" };
+  state = {
+    timeInterval: "1H"
+  };
 
+  graphData = [];
   selectedPairId = 0;
+  timeIntervalId = 0;
 
   _id = React.createRef();
   chart = {};
@@ -70,10 +74,28 @@ class TradingViewWidget extends Component {
     this.updateDimensions();
     window.addEventListener("resize", this.updateDimensions);
   }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { selectedPair } = this.props;
+    if (
+      Object.keys(selectedPair).length &&
+      (selectedPair.id !== this.selectedPairId ||
+        this.state.timeInterval !== prevState.timeInterval)
+    ) {
+      ws.leaveChannel(
+        "CandleStickGraph." + this.selectedPairId + "." + this.timeIntervalId
+      );
+      this.handleGraph();
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
-    if (this.selectedPairId)
-      ws.leaveChannel("CandleStickGraph." + this.selectedPairId);
+    if (this.selectedPairId && this.timeIntervalId) {
+      ws.leaveChannel(
+        "CandleStickGraph." + this.selectedPairId + "." + this.timeIntervalId
+      );
+    }
   }
   updateDimensions = () => {
     this.chart.resize(
@@ -85,43 +107,60 @@ class TradingViewWidget extends Component {
   handleGraph = async () => {
     const { selectedPair } = this.props;
 
-    if (
-      Object.keys(selectedPair).length &&
-      this.selectedPairId !== selectedPair.id
-    ) {
-      this.selectedPairId = selectedPair.id;
+    this.selectedPairId = selectedPair.id;
 
-      try {
-        const candleChartData = await trade.getChartTradeHistory(
-          selectedPair.id,
-          this.state.timeInterval
-        );
-
-        this.candleSeries.setData(candleChartData);
-      } catch (ex) {
-        if (ex.response && ex.response.status === 400) {
-          console.log(ex.response.data);
-          // toast.error(ex.response.data);
-        }
-      }
-
-      ws.channel("CandleStickGraph." + this.selectedPairId).listen(
-        "CandleStickGraphUpdated",
-        e => {
-          this.candleSeries.setData(e.candleStickData);
-        }
+    try {
+      const candleChartData = await trade.getChartTradeHistory(
+        selectedPair.id,
+        this.state.timeInterval
       );
+
+      this.timeIntervalId = candleChartData.time_interval_id;
+
+      this.graphData = candleChartData.history;
+
+      this.candleSeries.setData(this.graphData);
+      // this.candleSeries.setData(candleChartData);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        console.log(ex.response.data);
+        // toast.error(ex.response.data);
+      }
     }
+
+    // ws.channel("CandleStickGraph." + this.selectedPairId).listen(
+    //   "CandleStickGraphUpdated",
+    //   e => {
+    //     this.candleSeries.setData(e.candleStickData);
+    //   }
+    // );
+    this.handleGraphStreem();
   };
 
-  handleChange = ({ currentTarget: input }) => {
-    this.setState({
-      timeInterval: input.value
+  handleGraphStreem = () => {
+    ws.channel(
+      "CandleStickGraph." + this.selectedPairId + "." + this.timeIntervalId
+    ).listen("CandleStickGraphUpdated", e => {
+      if (
+        this.graphData[this.graphData.length - 1].time ===
+        e.candleStickData.time
+      ) {
+        this.graphData[this.graphData.length - 1] = e.candleStickData;
+      } else {
+        this.graphData.push(e.candleStickData);
+      }
+
+      // this.candleSeries.setData(e.candleStickData);
+      this.candleSeries.setData(this.graphData);
     });
   };
 
+  handleChange = ({ currentTarget: input }) => {
+    this.setState({ timeInterval: input.value });
+  };
+
   render() {
-    this.handleGraph();
+    // this.handleGraph();
     const { timeInterval } = this.state;
     return (
       <div className="tradingview-widget-container">
@@ -141,7 +180,7 @@ class TradingViewWidget extends Component {
                 <option value="15m">15m</option>
                 <option value="30m">30m</option>
               </select>
-              <select
+              {/* <select
                 onChange={this.handleChange}
                 className={
                   ["1H", "4H"].includes(timeInterval) ? "selected-interval" : ""
@@ -149,7 +188,15 @@ class TradingViewWidget extends Component {
               >
                 <option>1H</option>
                 <option>4H</option>
-              </select>
+              </select> */}
+              <button
+                className={timeInterval === "1H" ? "selected-interval" : ""}
+                value="1H"
+                onClick={this.handleChange}
+                type="button"
+              >
+                1H
+              </button>
               <button
                 className={timeInterval === "1D" ? "selected-interval" : ""}
                 value="1D"
