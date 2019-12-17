@@ -15,6 +15,7 @@ class TradingViewWidget extends Component {
 
   _id = React.createRef();
   chart = {};
+  minIntervals = ["1m", "5m", "15m", "30m"];
 
   componentDidMount() {
     /* const chart = createChart(this._id.current, { width: 400, height: 300 });
@@ -156,30 +157,52 @@ class TradingViewWidget extends Component {
   };
 
   handleChange = ({ currentTarget: input }) => {
+    console.log(input.value);
     this.setState({ timeInterval: input.value });
   };
 
   render() {
     // this.handleGraph();
     const { timeInterval } = this.state;
+    console.log(timeInterval);
     return (
       <div className="tradingview-widget-container">
         <div className="exchange-chart-block">
           <div className="row tv-toolbar">
             <div className="col-md-12">
-              <select
-                onChange={this.handleChange}
-                className={
-                  ["1m", "5m", "15m", "30m"].includes(timeInterval)
-                    ? "selected-interval"
-                    : ""
-                }
-              >
-                <option value="1m">1m</option>
-                <option value="5m">5m</option>
-                <option value="15m">15m</option>
-                <option value="30m">30m</option>
-              </select>
+              <div className="dropdown d-inline">
+                <button
+                  type="button"
+                  className={`dropdown-toggle ${
+                    this.minIntervals.includes(timeInterval)
+                      ? "selected-interval"
+                      : ""
+                  }`}
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  {this.minIntervals.includes(timeInterval)
+                    ? `${timeInterval}`
+                    : "1m"}
+                </button>
+                <div className="dropdown-menu">
+                  {this.minIntervals.map(i => (
+                    <li key={i}>
+                      <button
+                        className={
+                          timeInterval === i ? "selected-interval" : ""
+                        }
+                        value={i}
+                        onClick={this.handleChange}
+                        type="button"
+                      >
+                        {i}
+                      </button>
+                    </li>
+                  ))}
+                </div>
+              </div>
               {/* <select
                 onChange={this.handleChange}
                 className={
@@ -197,6 +220,7 @@ class TradingViewWidget extends Component {
               >
                 1H
               </button>
+
               <button
                 className={timeInterval === "1D" ? "selected-interval" : ""}
                 value="1D"
