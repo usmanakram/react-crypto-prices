@@ -7,7 +7,7 @@ import Spinner from "./spinner";
 
 class SellLimitOrderForm extends TradingForm {
   state = {
-    data: { price: "", quantity: "", total: "", type: 1 },
+    data: { rate: "", quantity: "", total: "", type: 1 },
     errors: {},
     total: 0,
     spinnerStatus: false
@@ -17,12 +17,11 @@ class SellLimitOrderForm extends TradingForm {
     this.setState({ spinnerStatus: true });
     try {
       const { data } = this.state;
-      // console.log(data);
 
       const response = await trade.sell(
         this.props.selectedPair.id,
         data.type,
-        data.price,
+        data.rate,
         data.quantity
       );
 
@@ -36,8 +35,6 @@ class SellLimitOrderForm extends TradingForm {
           // errors.username = ex.response.data;
           // this.setState({ errors });
           // toast.error(ex.response.data);
-
-          // console.log(ex.response.data);
 
           toast.error(ex.response.data);
         } else if (ex.response.status === 422) {
@@ -55,6 +52,7 @@ class SellLimitOrderForm extends TradingForm {
 
   render() {
     const { selectedPair } = this.props;
+
     return (
       <td>
         <div className="tv_ammount-form-block">
@@ -62,7 +60,7 @@ class SellLimitOrderForm extends TradingForm {
             <form onSubmit={this.handleSubmit} className="form-horizontal">
               {this.renderInputHidden("type")}
               {this.renderInputTradeForm(
-                "price",
+                "rate",
                 "Price",
                 selectedPair.quote_currency_symbol,
                 "number"

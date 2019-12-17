@@ -9,7 +9,7 @@ import InputHidden from "./common/inputHidden";
 
 class TradingForm extends Form {
   state = {
-    data: { price: "", quantity: "", total: "", type: "" },
+    data: { rate: "", quantity: "", total: "", type: "" },
     errors: {}
   };
 
@@ -17,7 +17,7 @@ class TradingForm extends Form {
     type: Joi.number()
       .required()
       .label("type"),
-    price: Joi.number()
+    rate: Joi.number()
       .required()
       .label("Price"),
     quantity: Joi.number()
@@ -55,15 +55,25 @@ class TradingForm extends Form {
     const data = { ...this.state.data };
     data[input.name] = input.value;
 
-    let total = { ...this.state.total };
+    let total = this.state.total;
 
     if (
-      (input.name === "quantity" && data.price) ||
-      (input.name === "price" && data.quantity)
+      (input.name === "quantity" && (data.rate || data.stop_limit_rate)) ||
+      (["rate", "stop_limit_rate"].includes(input.name) && data.quantity)
     ) {
-      // data.total = (data.quantity * (data.price * 100000000)) / 100000000;
-      data.total = (data.quantity * data.price).toFixed(8);
-      total = (data.quantity * data.price).toFixed(8);
+      // data.total = (data.quantity * (data.rate * 100000000)) / 100000000;
+
+      /**
+       * Taking "rate" or "stop_limit_rate" as per availability.
+       * If both are available, then take higher value.
+       */
+      let rate = data.rate || data.stop_limit_rate;
+      rate = data.rate && data.rate > rate ? data.rate : rate;
+      rate =
+        data.stop_limit_rate && data.stop_limit_rate > rate
+          ? data.stop_limit_rate
+          : rate;
+      total = data.total = (data.quantity * rate).toFixed(8);
     }
 
     this.setState({ data, total });
@@ -100,9 +110,9 @@ class TradingForm extends Form {
   };
 
   resetFormData = () => {
-    // const data = { price: "", quantity: "", total: "" };
+    // const data = { rate: "", quantity: "", total: "" };
     const data = this.state.data;
-    data.price = "";
+    data.rate = "";
     data.quantity = "";
     this.setState({ data });
   };

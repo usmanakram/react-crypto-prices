@@ -7,12 +7,7 @@ import Spinner from "./spinner";
 
 class BuyLimitOrderForm extends TradingForm {
   state = {
-    data: {
-      price: "",
-      quantity: "",
-      total: "",
-      type: 1
-    },
+    data: { rate: "", quantity: "", total: "", type: 1 },
     errors: {},
     total: 0,
     spinnerStatus: false
@@ -22,10 +17,11 @@ class BuyLimitOrderForm extends TradingForm {
     this.setState({ spinnerStatus: true });
     try {
       const { data } = this.state;
+
       const response = await trade.buy(
         this.props.selectedPair.id,
         data.type,
-        data.price,
+        data.rate,
         data.quantity
       );
 
@@ -40,7 +36,6 @@ class BuyLimitOrderForm extends TradingForm {
           // this.setState({ errors });
           // toast.error(ex.response.data);
 
-          // console.log(ex.response.data);
           toast.error(ex.response.data);
         } else if (ex.response.status === 422) {
           // Laravel returns 422 against form validation errors
@@ -65,7 +60,7 @@ class BuyLimitOrderForm extends TradingForm {
             <form onSubmit={this.handleSubmit} className="form-horizontal">
               {this.renderInputHidden("type")}
               {this.renderInputTradeForm(
-                "price",
+                "rate",
                 "Price",
                 selectedPair.quote_currency_symbol,
                 "number"
@@ -76,7 +71,6 @@ class BuyLimitOrderForm extends TradingForm {
                 selectedPair.base_currency_symbol,
                 "number"
               )}
-
               {/* {this.renderInputTradeForm(
                 "total",
                 "Total",
@@ -142,7 +136,6 @@ class BuyLimitOrderForm extends TradingForm {
                       "buy-btn"
                     )}
                   <Spinner status={this.state.spinnerStatus} />
-
                   {!this.user && (
                     <Link to="/login" className="btn buy-btn">
                       Login

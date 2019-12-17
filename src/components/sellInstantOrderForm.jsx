@@ -7,7 +7,7 @@ import Spinner from "./spinner";
 
 class SellInstantOrderForm extends TradingForm {
   state = {
-    data: { price: "", quantity: "", total: "", type: 0 },
+    data: { rate: "", quantity: "", total: "", type: 0 },
     errors: {},
     total: 0,
     spinnerStatus: false
@@ -17,12 +17,11 @@ class SellInstantOrderForm extends TradingForm {
     this.setState({ spinnerStatus: true });
     try {
       const { data } = this.state;
-      // console.log(data);
 
       const response = await trade.sell(
         this.props.selectedPair.id,
         data.type,
-        data.price,
+        data.rate,
         data.quantity
       );
 
@@ -37,7 +36,6 @@ class SellInstantOrderForm extends TradingForm {
           // this.setState({ errors });
           // toast.error(ex.response.data);
 
-          // console.log(ex.response.data);
           toast.error(ex.response.data);
         } else if (ex.response.status === 422) {
           // Laravel returns 422 against form validation errors
@@ -55,7 +53,7 @@ class SellInstantOrderForm extends TradingForm {
   render() {
     const { selectedPair, selectedPairStats } = this.props;
 
-    this.state.data.price = selectedPairStats.last_price;
+    this.state.data.rate = selectedPairStats.last_price;
 
     return (
       <td>
@@ -63,13 +61,13 @@ class SellInstantOrderForm extends TradingForm {
           {Object.keys(selectedPair).length > 0 && (
             <form onSubmit={this.handleSubmit} className="form-horizontal">
               {this.renderReadOnlyInputTradeForm(
-                "price",
+                "rate",
                 "Price",
                 "Market",
                 selectedPair.quote_currency_symbol
               )}
               {this.renderInputHidden("type")}
-              {this.renderInputHidden("price")}
+              {this.renderInputHidden("rate")}
               {this.renderInputTradeForm(
                 "quantity",
                 "Quantity",

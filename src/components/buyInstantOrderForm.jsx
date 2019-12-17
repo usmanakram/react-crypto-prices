@@ -7,7 +7,7 @@ import Spinner from "./spinner";
 
 class BuyInstantOrderForm extends TradingForm {
   state = {
-    data: { price: "", quantity: "", total: "", type: 0 },
+    data: { rate: "", quantity: "", total: "", type: 0 },
     errors: {},
     total: 0,
     spinnerStatus: false
@@ -21,7 +21,7 @@ class BuyInstantOrderForm extends TradingForm {
       const response = await trade.buy(
         this.props.selectedPair.id,
         data.type,
-        data.price,
+        data.rate,
         data.quantity
       );
 
@@ -53,7 +53,7 @@ class BuyInstantOrderForm extends TradingForm {
   render() {
     const { selectedPair, selectedPairStats } = this.props;
 
-    this.state.data.price = selectedPairStats.last_price;
+    this.state.data.rate = selectedPairStats.last_price;
 
     return (
       <td>
@@ -61,13 +61,13 @@ class BuyInstantOrderForm extends TradingForm {
           {Object.keys(selectedPair).length > 0 && (
             <form onSubmit={this.handleSubmit} className="form-horizontal">
               {this.renderReadOnlyInputTradeForm(
-                "price",
+                "rate",
                 "Price",
                 "Market",
                 selectedPair.quote_currency_symbol
               )}
-              {this.renderInputHidden("price")}
               {this.renderInputHidden("type")}
+              {this.renderInputHidden("rate")}
               {this.renderInputTradeForm(
                 "quantity",
                 "Quantity",

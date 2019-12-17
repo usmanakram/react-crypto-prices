@@ -10,8 +10,8 @@ import ConfirmOrder from "./confirmOrder";
 class SellOcoForm extends TradingForm {
   state = {
     data: {
-      stop: "",
-      price: "",
+      trigger_rate: "",
+      rate: "",
       stop_limit_rate: "",
       quantity: "",
       total: "",
@@ -27,10 +27,10 @@ class SellOcoForm extends TradingForm {
     type: Joi.number()
       .required()
       .label("type"),
-    stop: Joi.number()
+    trigger_rate: Joi.number()
       .required()
       .label("Stop"),
-    price: Joi.number()
+    rate: Joi.number()
       .required()
       .label("Price"),
     stop_limit_rate: Joi.number()
@@ -45,7 +45,7 @@ class SellOcoForm extends TradingForm {
   };
 
   doSubmit = async () => {
-    this.setState({ modalShow: true });
+    // this.setState({ modalShow: true });
     this.setState({ spinnerStatus: true });
     try {
       const { data } = this.state;
@@ -54,9 +54,9 @@ class SellOcoForm extends TradingForm {
       const response = await trade.sell(
         this.props.selectedPair.id,
         data.type,
-        data.price,
+        data.rate,
         data.quantity,
-        data.stop,
+        data.trigger_rate,
         data.stop_limit_rate
       );
 
@@ -88,6 +88,7 @@ class SellOcoForm extends TradingForm {
 
   render() {
     const { selectedPair } = this.props;
+
     return (
       <React.Fragment>
         <td>
@@ -97,14 +98,14 @@ class SellOcoForm extends TradingForm {
                 {this.renderInputHidden("type")}
                 <div className="dashes">
                   {this.renderInputTradeForm(
-                    "price",
+                    "rate",
                     "Price",
                     selectedPair.quote_currency_symbol,
                     "number"
                   )}
                 </div>
                 {this.renderInputTradeForm(
-                  "stop",
+                  "trigger_rate",
                   "Stop",
                   selectedPair.quote_currency_symbol,
                   "number"
@@ -117,7 +118,6 @@ class SellOcoForm extends TradingForm {
                     "number"
                   )}
                 </div>
-
                 {this.renderInputTradeForm(
                   "quantity",
                   "Quantity",

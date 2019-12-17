@@ -10,8 +10,8 @@ import ConfirmOrder from "./confirmOrder";
 class BuyStopLimitForm extends TradingForm {
   state = {
     data: {
-      stop: "",
-      price: "",
+      trigger_rate: "",
+      stop_limit_rate: "",
       quantity: "",
       total: "",
       type: 2
@@ -26,10 +26,10 @@ class BuyStopLimitForm extends TradingForm {
     type: Joi.number()
       .required()
       .label("type"),
-    stop: Joi.number()
+    trigger_rate: Joi.number()
       .required()
       .label("Stop"),
-    price: Joi.number()
+    stop_limit_rate: Joi.number()
       .required()
       .label("Price"),
     quantity: Joi.number()
@@ -41,9 +41,8 @@ class BuyStopLimitForm extends TradingForm {
   };
 
   doSubmit = async () => {
-    this.setState({ modalShow: true });
+    // this.setState({ modalShow: true });
     this.setState({ spinnerStatus: true });
-    // console.log("buyOrder form validated");
 
     try {
       const { data } = this.state;
@@ -52,9 +51,10 @@ class BuyStopLimitForm extends TradingForm {
       const response = await trade.buy(
         this.props.selectedPair.id,
         data.type,
-        data.price,
+        null,
         data.quantity,
-        data.stop
+        data.trigger_rate,
+        data.stop_limit_rate
       );
 
       this.resetFormData();
@@ -94,13 +94,13 @@ class BuyStopLimitForm extends TradingForm {
               <form onSubmit={this.handleSubmit} className="form-horizontal">
                 {this.renderInputHidden("type")}
                 {this.renderInputTradeForm(
-                  "stop",
+                  "trigger_rate",
                   "Stop",
                   selectedPair.quote_currency_symbol,
                   "number"
                 )}
                 {this.renderInputTradeForm(
-                  "price",
+                  "stop_limit_rate",
                   "Limit",
                   selectedPair.quote_currency_symbol,
                   "number"

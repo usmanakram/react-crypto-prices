@@ -8,7 +8,7 @@ const apiEndpoint = {
 async function buy(
   pair_id,
   type,
-  price,
+  rate,
   quantity,
   trigger_rate,
   stop_limit_rate
@@ -16,7 +16,9 @@ async function buy(
   const formData = new FormData();
   formData.append("pair_id", pair_id);
   formData.append("type", type);
-  formData.append("price", price);
+  if (rate) {
+    formData.append("rate", rate);
+  }
   formData.append("quantity", quantity);
   if (trigger_rate) {
     formData.append("trigger_rate", trigger_rate);
@@ -32,7 +34,7 @@ async function buy(
 async function sell(
   pair_id,
   type,
-  price,
+  rate,
   quantity,
   trigger_rate,
   stop_limit_rate
@@ -40,7 +42,9 @@ async function sell(
   const formData = new FormData();
   formData.append("pair_id", pair_id);
   formData.append("type", type);
-  formData.append("price", price);
+  if (rate) {
+    formData.append("rate", rate);
+  }
   formData.append("quantity", quantity);
   if (trigger_rate) {
     formData.append("trigger_rate", trigger_rate);
