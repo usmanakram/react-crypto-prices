@@ -80,7 +80,7 @@ class ExchangeTradingHistory extends Component {
         </div>
         <div className="order-history-block-inner dashboard-ticker-block-four">
           <div className="history-table-wrap">
-            <Spinner spinnerStatus={spinnerStatus} />
+            <Spinner status={spinnerStatus} />
 
             {/* <table className="table coin-list table-hover history-table trade-history"> */}
             <table className="table das-oreder-table table-hover trade-history">
