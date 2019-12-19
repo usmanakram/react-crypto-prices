@@ -30,7 +30,6 @@ class Exchange extends Component {
       buyOrders: [],
       sellOrders: []
     },
-    tradeHistory: [],
     openOrderSpinner: false,
     OrderBookAndTradeHistorySpinner: false,
     darkBg: false,
@@ -192,10 +191,6 @@ class Exchange extends Component {
     this.setState({ orderBookData });
   };
 
-  handleTradeHistory = tradeHistory => {
-    this.setState({ tradeHistory });
-  };
-
   setOrderBookAndTradeHistory = async () => {
     const { selectedPair } = this.state;
 
@@ -204,19 +199,12 @@ class Exchange extends Component {
         this.setState({ OrderBookAndTradeHistorySpinner: true });
 
         /* const data = await trade.getOrderBook(selectedPair.id);
-        const tradeHistory = await trade.getTradeHistory(selectedPair.id);
         const pair = await trade.getLatestPrice(selectedPair.id); */
         const dataPromise = trade.getOrderBook(selectedPair.id);
-        const tradeHistoryPromise = trade.getTradeHistory(selectedPair.id);
         const pairPromise = trade.getLatestPrice(selectedPair.id);
-        const [data, tradeHistory, pair] = await Promise.all([
-          dataPromise,
-          tradeHistoryPromise,
-          pairPromise
-        ]);
+        const [data, pair] = await Promise.all([dataPromise, pairPromise]);
 
         this.handleOrderBook(data);
-        this.handleTradeHistory(tradeHistory);
         this.handleSelectedPairStats(pair.latest_price);
         this.setState({ OrderBookAndTradeHistorySpinner: false });
       } catch (ex) {
@@ -234,12 +222,12 @@ class Exchange extends Component {
     this.setState({ isFullWidth: !this.state.isFullWidth });
     handleWidth();
   };
+
   render() {
     const {
       selectedPair,
       selectedPairStats,
       orderBookData,
-      tradeHistory,
       openOrders,
       baseCurrencyBalance,
       quoteCurrencyBalance,
@@ -270,10 +258,8 @@ class Exchange extends Component {
           selectedPairStats={selectedPairStats}
           orderBookData={orderBookData}
           onOrderBookUpdate={this.handleOrderBook}
-          tradeHistory={tradeHistory}
           quoteCurrencyBalance={quoteCurrencyBalance}
           baseCurrencyBalance={baseCurrencyBalance}
-          onTradeHistoryUpdate={this.handleTradeHistory}
         />
         <ExchangeOpenOrder
           status={this.state.openOrderSpinner}

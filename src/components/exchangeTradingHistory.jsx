@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 // import moment from "moment";
 import Spinner from "./spinner";
+import trade from "../services/tradeService";
 import ws from "../services/webSocketService";
 
 class ExchangeTradingHistory extends Component {
-  state = {};
-
-  tradeHistoryPairId = 0;
+  state = {
+    tradeHistory: []
+  };
 
   componentDidMount() {
     window.$(".dashboard-ticker-block-four").slimScroll({
@@ -15,32 +16,55 @@ class ExchangeTradingHistory extends Component {
   }
 
   componentWillUnmount() {
-    if (this.tradeHistoryPairId)
-      ws.leaveChannel("TradeHistory." + this.tradeHistoryPairId);
+    ws.leaveChannel("TradeHistory." + this.props.selectedPair.id);
   }
 
-  handleTradeHistoryStream = () => {
-    const { selectedPair } = this.props;
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { selectedPair: currentPair } = this.props;
+    const { selectedPair: prevPair } = prevProps;
 
     if (
-      Object.keys(selectedPair).length &&
-      this.tradeHistoryPairId !== selectedPair.id
+      Object.keys(currentPair).length &&
+      (Object.keys(prevPair).length === 0 || currentPair.id !== prevPair.id)
     ) {
-      this.tradeHistoryPairId = selectedPair.id;
+      ws.leaveChannel("TradeHistory." + prevPair.id);
+      this.setTradeHistory();
+    }
+  }
 
-      ws.channel("TradeHistory." + this.tradeHistoryPairId).listen(
-        "TradeHistoryUpdated",
-        e => {
-          this.props.onTradeHistoryUpdate(e.tradeHistory);
-        }
-      );
+  setTradeHistory = async () => {
+    const { selectedPair } = this.props;
+
+    if (Object.keys(selectedPair).length) {
+      const tradeHistory = await trade.getTradeHistory(selectedPair.id);
+
+      this.setState({ tradeHistory });
+
+      this.setStream();
     }
   };
 
-  render() {
-    const { selectedPair, tradeHistory, status } = this.props;
+  setStream = () => {
+    ws.channel("TradeHistory." + this.props.selectedPair.id).listen(
+      "TradeHistoryUpdated",
+      e => {
+        const { tradeHistory } = this.state;
 
-    this.handleTradeHistoryStream();
+        if (tradeHistory.length) {
+          tradeHistory.pop();
+          tradeHistory.unshift(e.tradeHistory);
+        } else {
+          tradeHistory = e.tradeHistory;
+        }
+
+        this.setState({ tradeHistory });
+      }
+    );
+  };
+
+  render() {
+    const { selectedPair, status } = this.props;
+    const { tradeHistory } = this.state;
 
     return (
       <div className="order-history-block">

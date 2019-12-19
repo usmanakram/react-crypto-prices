@@ -11,11 +11,9 @@ const ExchangeBody = ({
   selectedPair,
   selectedPairStats,
   orderBookData,
-  tradeHistory,
   onOrderBookUpdate,
   quoteCurrencyBalance,
   baseCurrencyBalance,
-  onTradeHistoryUpdate,
   status,
   isFullWidth
 }) => {
@@ -90,8 +88,6 @@ const ExchangeBody = ({
               <ExchangeTradingHistory
                 status={status}
                 selectedPair={selectedPair}
-                tradeHistory={tradeHistory}
-                onTradeHistoryUpdate={onTradeHistoryUpdate}
               />
             </div>
           </div>
