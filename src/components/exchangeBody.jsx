@@ -4,10 +4,10 @@ import DepthChartWidget from "./depthChartWidget";
 import ExchangeOrderArea from "./exchangeOrderArea";
 import ExchangeTradingHistory from "./exchangeTradingHistory";
 import OrderBook from "./orderBook";
-// import CurrencyPairs from "./currencyPairs";
+import CurrencyPairs from "./currencyPairs";
 
 const ExchangeBody = ({
-  // currencyPairs,
+  currencyPairs,
   selectedPair,
   selectedPairStats,
   quoteCurrencyBalance,
@@ -78,7 +78,7 @@ const ExchangeBody = ({
             </div>
 
             <div className="col-lg-3 tradeHistory-left">
-              {/* <CurrencyPairs currencyPairs={currencyPairs} /> */}
+              <CurrencyPairs currencyPairs={currencyPairs} />
               <ExchangeTradingHistory selectedPair={selectedPair} />
             </div>
           </div>

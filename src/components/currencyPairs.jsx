@@ -12,6 +12,10 @@ class CurrencyPairs extends Component {
 
   render() {
     const { currencyPairs } = this.props;
+    const quoteCurrencies = [
+      ...new Set(currencyPairs.map(p => p.quote_currency_symbol))
+    ];
+
     return (
       <div className="das-market-block">
         <div className="new-ticker-block market-new-ticker-block">
@@ -31,22 +35,22 @@ class CurrencyPairs extends Component {
                   <h5>Favorites</h5>
                 </a>
               </li>
-              {currencyPairs.map(c => (
-                <li key={c.id} className="nav-item">
+              {quoteCurrencies.map(c => (
+                <li key={c} className="nav-item">
                   <a
                     className="nav-link currancy-pair-pad"
-                    href={`#${c.quote_currency_symbol}`}
+                    href={`#${c}`}
                     role="tab"
                     data-toggle="tab"
                   >
-                    {c.quote_currency_symbol}
+                    {c}
                   </a>
                 </li>
               ))}
             </ul>
           </div>
           <div className="market-ticker-block dashboard-ticker-block-three">
-            <CurrencyPairsTables />
+            <CurrencyPairsTables currencyPairs={currencyPairs} />
           </div>
         </div>
       </div>

@@ -106,9 +106,6 @@ class Exchange extends Component {
         .listen("BalanceUpdated", e => {
           this.handleBalances(e.balances);
         })
-        // .listen("TradeOrderPlaced", e => {
-        //   this.handleBalances(e.balances);
-        // })
         .listen("TradeOrderFilled", e => {
           toast.success(e.message);
         });
