@@ -10,11 +10,8 @@ const ExchangeBody = ({
   // currencyPairs,
   selectedPair,
   selectedPairStats,
-  orderBookData,
-  onOrderBookUpdate,
   quoteCurrencyBalance,
   baseCurrencyBalance,
-  status,
   isFullWidth
 }) => {
   return (
@@ -24,11 +21,8 @@ const ExchangeBody = ({
           <div className="row">
             <div className="col-lg-3 orderBook-right">
               <OrderBook
-                status={status}
                 selectedPair={selectedPair}
                 selectedPairStats={selectedPairStats}
-                orderBookData={orderBookData}
-                onOrderBookUpdate={onOrderBookUpdate}
               />
             </div>
 

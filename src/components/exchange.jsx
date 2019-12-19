@@ -25,11 +25,7 @@ class Exchange extends Component {
     },
     baseCurrencyBalance: {},
     quoteCurrencyBalance: {},
-    orderBookData: {
-      buyOrders: [],
-      sellOrders: []
-    },
-    OrderBookAndTradeHistorySpinner: false,
+    // OrderBookAndTradeHistorySpinner: false,
     darkBg: false,
     isFullWidth: false
   };
@@ -146,36 +142,20 @@ class Exchange extends Component {
     }
   };
 
-  handleOrderBook = orderBookData => {
-    orderBookData.sellOrders = _(orderBookData.sellOrders)
-      .take(5)
-      .value();
-    orderBookData.buyOrders = _(orderBookData.buyOrders)
-      .take(5)
-      .value();
-
-    // Update sellOrders as "decending order rates"
-    orderBookData.sellOrders.sort((a, b) => b.rate - a.rate);
-
-    this.setState({ orderBookData });
-  };
-
   setOrderBookAndTradeHistory = async () => {
     const { selectedPair } = this.state;
 
     if (Object.keys(selectedPair).length) {
       try {
-        this.setState({ OrderBookAndTradeHistorySpinner: true });
+        // this.setState({ OrderBookAndTradeHistorySpinner: true });
 
-        /* const data = await trade.getOrderBook(selectedPair.id);
-        const pair = await trade.getLatestPrice(selectedPair.id); */
-        const dataPromise = trade.getOrderBook(selectedPair.id);
+        const pair = await trade.getLatestPrice(selectedPair.id);
+        /* const dataPromise = trade.getOrderBook(selectedPair.id);
         const pairPromise = trade.getLatestPrice(selectedPair.id);
-        const [data, pair] = await Promise.all([dataPromise, pairPromise]);
+        const [data, pair] = await Promise.all([dataPromise, pairPromise]); */
 
-        this.handleOrderBook(data);
         this.handleSelectedPairStats(pair.latest_price);
-        this.setState({ OrderBookAndTradeHistorySpinner: false });
+        // this.setState({ OrderBookAndTradeHistorySpinner: false });
       } catch (ex) {
         if (ex.response && ex.response.status === 400) {
           console.log(ex.response.data);
@@ -196,7 +176,6 @@ class Exchange extends Component {
     const {
       selectedPair,
       selectedPairStats,
-      orderBookData,
       baseCurrencyBalance,
       quoteCurrencyBalance,
       currencyPairs,
@@ -221,11 +200,8 @@ class Exchange extends Component {
         <ExchangeBody
           isFullWidth={isFullWidth}
           currencyPairs={currencyPairs}
-          status={this.state.OrderBookAndTradeHistorySpinner}
           selectedPair={selectedPair}
           selectedPairStats={selectedPairStats}
-          orderBookData={orderBookData}
-          onOrderBookUpdate={this.handleOrderBook}
           quoteCurrencyBalance={quoteCurrencyBalance}
           baseCurrencyBalance={baseCurrencyBalance}
         />
