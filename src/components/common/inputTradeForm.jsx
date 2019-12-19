@@ -7,7 +7,7 @@ const InpuTradeForm = ({ name, label, symbol, ...rest }) => {
         {label}
       </label>
       <div className="col-9 form-input-block">
-        <input name={name} id={name} {...rest} className="form-control" />
+        <input name={name} {...rest} className="form-control" />
         <span className="tv-btc-tag">{symbol}</span>
       </div>
     </div>

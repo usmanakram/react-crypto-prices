@@ -77,7 +77,7 @@ class TradingViewWidget extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { selectedPair } = this.props;
+    const { selectedPair, isFullWidth } = this.props;
     if (
       Object.keys(selectedPair).length &&
       (selectedPair.id !== this.selectedPairId ||
@@ -87,6 +87,10 @@ class TradingViewWidget extends Component {
         "CandleStickGraph." + this.selectedPairId + "." + this.timeIntervalId
       );
       this.handleGraph();
+    }
+
+    if (prevProps.isFullWidth !== isFullWidth) {
+      this.updateDimensions();
     }
   }
 
@@ -157,14 +161,12 @@ class TradingViewWidget extends Component {
   };
 
   handleChange = ({ currentTarget: input }) => {
-    console.log(input.value);
     this.setState({ timeInterval: input.value });
   };
 
   render() {
     // this.handleGraph();
     const { timeInterval } = this.state;
-    console.log(timeInterval);
     return (
       <div className="tradingview-widget-container">
         <div className="exchange-chart-block">
@@ -179,8 +181,6 @@ class TradingViewWidget extends Component {
                       : ""
                   }`}
                   data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
                 >
                   {this.minIntervals.includes(timeInterval)
                     ? `${timeInterval}`

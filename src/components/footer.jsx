@@ -7,7 +7,7 @@ const Footer = () => {
     <React.Fragment>
       <footer className="footer">
         <div className="footer-upper-section">
-          <div className="container">
+          <div className="container exclude">
             <div className="row">
               <div className="col-lg-3 col-md-4">
                 <div className="footer-logo">
@@ -123,7 +123,7 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <div className="footer-icon-wrap">
+          {/* <div className="footer-icon-wrap">
             <Link to="#">
               <img
                 src="./images/others/31.png"
@@ -131,7 +131,7 @@ const Footer = () => {
                 className="img-responsive"
               />
             </Link>
-          </div>
+          </div> */}
         </div>
         <div className="footer-bottom">
           <div className="container">

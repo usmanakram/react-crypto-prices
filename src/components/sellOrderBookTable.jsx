@@ -24,7 +24,7 @@ const SellOrderBookTable = ({ selectedPair, orderBookData }) => {
                 <span className="color-sell">{value.rate}</span>
               </td>
               <td className="">
-                <span>{value.tradable_quantity}</span>
+                <span>{value.tradable_quantity.toFixed(8)}</span>
               </td>
               <td className="text-right">
                 <span>{(value.rate * value.tradable_quantity).toFixed(8)}</span>

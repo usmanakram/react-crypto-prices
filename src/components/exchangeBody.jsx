@@ -16,7 +16,8 @@ const ExchangeBody = ({
   quoteCurrencyBalance,
   baseCurrencyBalance,
   onTradeHistoryUpdate,
-  status
+  status,
+  isFullWidth
 }) => {
   return (
     <div className="dashboard-block dashboard-white">
@@ -67,7 +68,10 @@ const ExchangeBody = ({
                   className="tab-pane fade in active show"
                   id="trading_view"
                 >
-                  <TradingViewWidget selectedPair={selectedPair} />
+                  <TradingViewWidget
+                    selectedPair={selectedPair}
+                    isFullWidth={isFullWidth}
+                  />
                 </div>
                 <div role="tabpanel" className="tab-pane fade" id="depth-chart">
                   <DepthChartWidget />
