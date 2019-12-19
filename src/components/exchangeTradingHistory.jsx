@@ -11,8 +11,8 @@ class ExchangeTradingHistory extends Component {
   };
 
   componentDidMount() {
-    window.$(".dashboard-ticker-block-four").slimScroll({
-      height: "570px"
+    window.$(".exchangeTradingHistoryScroll").slimScroll({
+      height: "440px"
     });
   }
 
@@ -78,7 +78,7 @@ class ExchangeTradingHistory extends Component {
         <div className="panel-heading-block">
           <h5>Trade History</h5>
         </div>
-        <div className="order-history-block-inner dashboard-ticker-block-four">
+        <div className="order-history-block-inner exchangeTradingHistoryScroll">
           <div className="history-table-wrap">
             <Spinner status={spinnerStatus} />
 
@@ -113,7 +113,7 @@ class ExchangeTradingHistory extends Component {
                       </span>
                     </td>
                     <td>
-                      <span>{value.quantity}</span>
+                      <span>{value.quantity.toFixed(8)}</span>
                     </td>
                     {/* <td>{moment(value.created_at).format("HH:mm:ss")}</td> */}
                     <td>

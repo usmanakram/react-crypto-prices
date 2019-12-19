@@ -5,8 +5,8 @@ class CurrencyPairs extends Component {
   state = {};
 
   componentDidMount() {
-    window.$(".dashboard-ticker-block-three").slimScroll({
-      height: "570px"
+    window.$(".currencyPairScroll").slimScroll({
+      height: "130px"
     });
   }
 
@@ -49,7 +49,7 @@ class CurrencyPairs extends Component {
               ))}
             </ul>
           </div>
-          <div className="market-ticker-block dashboard-ticker-block-three">
+          <div className="market-ticker-block currencyPairScroll">
             <CurrencyPairsTables currencyPairs={currencyPairs} />
           </div>
         </div>

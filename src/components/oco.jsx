@@ -2,7 +2,12 @@ import React from "react";
 import SellOcoForm from "./sellOcoForm";
 import BuyOcoForm from "./buyOcoForm";
 
-const Oco = ({ selectedPair, quoteCurrencyBalance, baseCurrencyBalance }) => {
+const Oco = ({
+  selectedPairStats,
+  selectedPair,
+  quoteCurrencyBalance,
+  baseCurrencyBalance
+}) => {
   return (
     <div role="tabpanel" className="tab-pane fade in show" id="oco">
       <table className="table tv_orde_table">
@@ -18,10 +23,12 @@ const Oco = ({ selectedPair, quoteCurrencyBalance, baseCurrencyBalance }) => {
         <tbody>
           <tr>
             <BuyOcoForm
+              selectedPairStats={selectedPairStats}
               selectedPair={selectedPair}
               balance={quoteCurrencyBalance}
             />
             <SellOcoForm
+              selectedPairStats={selectedPairStats}
               selectedPair={selectedPair}
               balance={baseCurrencyBalance}
             />

@@ -34,12 +34,7 @@ class Header extends Component {
         <nav className="navbar main-nav navbar-expand-lg">
           <div className="container">
             <Link className="navbar-brand" to="/">
-              <img
-                className="navbar-logo"
-                src={logo}
-                alt="..."
-                style={{ width: 200 }}
-              />
+              <img className="navbar-logo" src={logo} alt="..." />
             </Link>
             <button
               className="navbar-toggler collapsed"

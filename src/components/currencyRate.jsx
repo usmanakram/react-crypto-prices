@@ -98,30 +98,33 @@ class CurrencyRate extends Component {
                     </span>
                   </div>
                   <div className="currency-info volume-value my-2 ">
-                    <svg
-                      height="25"
-                      className={
-                        isFullWidth
-                          ? "octicon octicon-screen-normal"
-                          : "octicon octicon-screen-full"
-                      }
-                      viewBox="0 0 14 16"
-                      version="1.1"
-                      width="25"
-                      color="blue"
-                      aria-hidden="true"
-                      onClick={onWidthChange}
-                    >
-                      <path
-                        fillRule="evenodd"
-                        fill={darkBg ? "lightGrey" : "#1f2738"}
-                        d={
+                    <span title={isFullWidth ? "Normal Screen" : "Full Screen"}>
+                      <svg
+                        height="25"
+                        className={`pointer ${
                           isFullWidth
-                            ? "M2 4H0V3h2V1h1v2c0 .547-.453 1-1 1zm0 8H0v1h2v2h1v-2c0-.547-.453-1-1-1zm9-2c0 .547-.453 1-1 1H4c-.547 0-1-.453-1-1V6c0-.547.453-1 1-1h6c.547 0 1 .453 1 1v4zM9 7H5v2h4V7zm2 6v2h1v-2h2v-1h-2c-.547 0-1 .453-1 1zm1-10V1h-1v2c0 .547.453 1 1 1h2V3h-2z"
-                            : "M13 10h1v3c0 .547-.453 1-1 1h-3v-1h3v-3zM1 10H0v3c0 .547.453 1 1 1h3v-1H1v-3zm0-7h3V2H1c-.547 0-1 .453-1 1v3h1V3zm1 1h10v8H2V4zm2 6h6V6H4v4zm6-8v1h3v3h1V3c0-.547-.453-1-1-1h-3z"
+                            ? "octicon octicon-screen-normal"
+                            : "octicon octicon-screen-full"
                         }
-                      ></path>
-                    </svg>
+                        `}
+                        viewBox="0 0 14 16"
+                        version="1.1"
+                        width="25"
+                        color="blue"
+                        aria-hidden="true"
+                        onClick={onWidthChange}
+                      >
+                        <path
+                          fillRule="evenodd"
+                          fill={darkBg ? "lightGrey" : "#1f2738"}
+                          d={
+                            isFullWidth
+                              ? "M2 4H0V3h2V1h1v2c0 .547-.453 1-1 1zm0 8H0v1h2v2h1v-2c0-.547-.453-1-1-1zm9-2c0 .547-.453 1-1 1H4c-.547 0-1-.453-1-1V6c0-.547.453-1 1-1h6c.547 0 1 .453 1 1v4zM9 7H5v2h4V7zm2 6v2h1v-2h2v-1h-2c-.547 0-1 .453-1 1zm1-10V1h-1v2c0 .547.453 1 1 1h2V3h-2z"
+                              : "M13 10h1v3c0 .547-.453 1-1 1h-3v-1h3v-3zM1 10H0v3c0 .547.453 1 1 1h3v-1H1v-3zm0-7h3V2H1c-.547 0-1 .453-1 1v3h1V3zm1 1h10v8H2V4zm2 6h6V6H4v4zm6-8v1h3v3h1V3c0-.547-.453-1-1-1h-3z"
+                          }
+                        ></path>
+                      </svg>
+                    </span>
                   </div>
                 </div>
               </div>

@@ -16,11 +16,13 @@ class BuyStopLimitForm extends TradingForm {
       total: "",
       type: 2
     },
+
     errors: {},
     total: 0,
     spinnerStatus: false,
     modalShow: false
   };
+  isAllowTrade = true;
 
   schema = {
     type: Joi.number()
@@ -40,8 +42,17 @@ class BuyStopLimitForm extends TradingForm {
       .label("Total")
   };
 
+  handleAllowTrade = () => {
+    this.isAllowTrade = true;
+    this.doSubmit();
+  };
+
   doSubmit = async () => {
-    // this.setState({ modalShow: true });
+    if (this.isAllowTrade === false) {
+      this.setState({ modalShow: true });
+      return;
+    }
+    this.setState({ modalShow: false });
     this.setState({ spinnerStatus: true });
 
     try {
@@ -81,10 +92,11 @@ class BuyStopLimitForm extends TradingForm {
       }
     }
     this.setState({ spinnerStatus: false });
+    // this.isAllowTrade = false;
   };
 
   render() {
-    const { selectedPair } = this.props;
+    const { selectedPair, selectedPairStats } = this.props;
 
     return (
       <React.Fragment>
@@ -154,8 +166,13 @@ class BuyStopLimitForm extends TradingForm {
           </div>
         </td>
         <ConfirmOrder
+          selectedPair={selectedPair}
+          lastPrice={selectedPairStats.last_price}
+          data={this.state.data}
+          direction="buy"
+          onAllowTrade={this.handleAllowTrade}
           show={this.state.modalShow}
-          onHide={() => this.setState({ modalShow: false })}
+          onHideModal={() => this.setState({ modalShow: false })}
         />
       </React.Fragment>
     );

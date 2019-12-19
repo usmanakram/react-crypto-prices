@@ -2,24 +2,9 @@
   cursor: pointer;
 }
 
-/* START: Mudassir */
-/* body {
-  /* background-color: #f7f7f7 !important; */
-/* } */
 .ow {
   overflow-wrap: break-word;
-  /* word-wrap: break-word; */
-  /* hyphens: auto; */
 }
-/* .wrapper {
-  width: 125px;
-}
-.InputWidth {
-  width: 175px;
-} */
-/* Deposits :  Without padding Left And right */
-
-/* Deposits : table-borderless Without Border */
 
 .table-borderless > tbody > tr > td,
 .table-borderless > tbody > tr > th,
@@ -32,8 +17,6 @@
   padding-bottom: 3px !important;
 }
 
-/* Deposits : table-borderless Without Border */
-/* Deposits : Adress Box Bg color */
 .adbox {
   background-color: #fff;
 }
@@ -47,12 +30,6 @@
   padding-left: 15px !important;
   padding-right: 15px !important;
 }
-/* .form-control:disabled,
-.form-control[readonly] {
-  background-color: #fafafa;
-  opacity: 1;
-} */
-/* order History table */
 
 .table-bordered thead th {
   border-bottom-width: 1px;
@@ -90,9 +67,9 @@
 .center {
   text-align: center;
 }
-/* END: Mudassir */
+/*  Mudassir */
 
-/* //--------- */
+/* ===============================================Spinner================================================ */
 .spinner_wrapper {
   position: relative;
 }
@@ -103,54 +80,14 @@
   width: 100%;
   height: 100%;
   margin-left: -50%;
-
+  z-index: 9;
   padding-top: 20px;
   text-align: center;
   font-size: 1.2em;
   background-color: rgba(255, 255, 255, 0.9);
-  /* background: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    color-stop(0%, rgba(255, 255, 255, 0)),
-    color-stop(25%, rgba(255, 255, 255, 0)),
-    color-stop(100%, rgba(255, 255, 255, 0))
-  );
-  background: -webkit-linear-gradient(
-    left,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.9) 25%,
-    rgba(255, 255, 255, 0.9) 75%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  background: -moz-linear-gradient(
-    left,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.9) 25%,
-    rgba(255, 255, 255, 0.9) 75%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  background: -ms-linear-gradient(
-    left,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.9) 25%,
-    rgba(255, 255, 255, 0.9) 75%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  background: -o-linear-gradient(
-    left,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.9) 25%,
-    rgb(255, 255, 255, 0.9) 75%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255) 0%,
-    rgba(255, 255, 255, 0.9) 25%,
-    rgba(255, 255, 255 0.9) 75%,
-    rgb(255, 255, 255) 100%
-  ); */
+}
+.dark-blue-bg .spinner_processing {
+  background: rgb(23, 31, 56);
 }
 .spinner_center {
   position: absolute;
@@ -160,11 +97,13 @@
   margin-left: -50%;
   margin-top: -25px;
 }
+
+/* ===============================================Spinner================================================ */
+/* ===============================================Date Picker================================================ */
 input.disabled {
   pointer-events: none;
   font-weight: bold;
 }
-/* //Date Picer */
 .react-datepicker__input-container > input {
   display: block;
   width: 100%;
@@ -178,7 +117,9 @@ input.disabled {
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-/* #tradingview_57f17 */
+/* ===============================================Date Picker================================================ */
+/* ===============================================tradingview================================================ */
+
 .tradingview-widget-container {
   margin-bottom: 0px;
 }
@@ -222,7 +163,9 @@ input.disabled {
 .order-history-block {
   margin-bottom: 15px;
 }
-/* order Book & trade left right Padding */
+/* ===============================================tradingview================================================ */
+/* ===============================================order Book & trade left right Padding================================================ */
+
 @media screen and (max-width: 1199px) {
   .dashboard-body .table.das-oreder-table {
     min-width: 0px;
@@ -241,8 +184,9 @@ input.disabled {
     padding-left: 0;
   }
 }
-/* ----------------- */
-/* order area */
+/* ===============================================order Book & trade left right Padding================================================ */
+/* ===============================================order area================================================ */
+
 .ticker-nav .nav-item a {
   padding: 5px;
 }
@@ -266,15 +210,17 @@ input.disabled {
 .tv_ammount-form-block form .form-group {
   margin-bottom: 0.5rem;
 }
-/* -------------- */
-/* balances Pge */
+/* ===============================================order area================================================ */
+/* ===============================================balances================================================ */
+
 .teanding-info-block {
   padding: 15px 0;
 }
 .trending-info-tab {
   margin-bottom: 15px;
 }
-/* -------------- */
+/* ===============================================balances================================================ */
+
 .orderBookRow {
   position: relative;
   border-top: none;
@@ -296,13 +242,13 @@ input.disabled {
   margin-bottom: 0.5rem;
 }
 
-/* signUp */
+/* =================================================signUp============================================== */
 .checkbox_inline > label > input {
   min-height: 0px;
   margin-left: 20px !important;
   margin-bottom: 10px;
 }
-/* signUp */
+/* =================================================signUp============================================== */
 
 /* signup signin reset */
 .user-login-signup-section {
@@ -323,7 +269,7 @@ input.disabled {
 
 /* signup signin reset */
 
-/* DepthChart */
+/* ======================================= DepthChart================================================== */
 #depthChartStyle {
   min-width: 310px;
   max-width: 1040px;
@@ -331,24 +277,23 @@ input.disabled {
   margin: 0 auto;
 }
 
-/* DepthChart */
-/* tradingview, exchangeorderare */
+/* ======================================= DepthChart================================================== */
+/* ======================================= tradingview, exchangeorderare================================================== */
+
 .parent-order-tab {
   line-height: 22px;
 }
-/* tradingview, exchangeorderare */
-/*exchangeorderare */
 .tv_orde_table thead th {
   line-height: 15px;
 }
-/*exchangeorderare */
-
 .dark-blue-bg .latest-tranjections-block-inner h5 {
   color: #ffffff;
 }
 .dark-blue-bg .dashes {
   border-bottom: 1px #192030 dashed;
 }
+/* ======================================= tradingview, exchangeorderare================================================== */
+
 /* ==================================CurrencyPair=================================== */
 
 .exchange-orderBook tbody .favorite-coin {
@@ -377,11 +322,11 @@ input.disabled {
 .ticker-nav .nav-item a {
   font-weight: 500;
 }
-.fa-sun {
-  color: lightgray;
+.market-new-ticker-block {
+  margin-bottom: 15px !important;
 }
-.fa-moon {
-  color: #1f2738;
+.das-market-tab-pane {
+  height: auto;
 }
 
 /* ==================================CurrencyPair=================================== */
@@ -466,11 +411,26 @@ input.disabled {
 .pointer {
   cursor: pointer;
 }
+.currency-rate .update-rate .currency-info > span {
+  font-size: 13px;
+}
+.currency-rate .update-rate .currency-info h6 {
+  font-size: 12px;
+}
+.fa-sun {
+  color: lightgray;
+}
+.fa-moon {
+  color: #1f2738;
+}
 /* ==================================Currencyrate=================================== */
 /* ==================================Header=================================== */
 .navbar {
-  min-height: 70px;
-  padding: 0px 10px !important;
+  min-height: 45px;
+  padding: 0px 0px !important;
+}
+.navbar-logo {
+  width: 130px !important;
 }
 /* ==================================Header=================================== */
 /* ==================================Footer=================================== */
@@ -482,6 +442,8 @@ input.disabled {
 }
 .footer-info-list > h4 {
   margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: 500;
 }
 .footer-info-list ul li {
   margin-bottom: 3px;
@@ -490,4 +452,8 @@ input.disabled {
 .footer-info-list .contact-info {
   margin-bottom: 65px;
 }
+.footer-logo img {
+  width: 130px !important;
+}
+
 /* ==================================Footer=================================== */
