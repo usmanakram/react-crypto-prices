@@ -3,6 +3,7 @@ import BuyStopLimitForm from "./buyStopLimitForm";
 import SellStopLimitForm from "./sellStopLimitForm";
 
 const StopLimit = ({
+  selectedPairStats,
   selectedPair,
   quoteCurrencyBalance,
   baseCurrencyBalance
@@ -22,10 +23,12 @@ const StopLimit = ({
         <tbody>
           <tr>
             <BuyStopLimitForm
+              selectedPairStats={selectedPairStats}
               selectedPair={selectedPair}
               balance={quoteCurrencyBalance}
             />
             <SellStopLimitForm
+              selectedPairStats={selectedPairStats}
               selectedPair={selectedPair}
               balance={baseCurrencyBalance}
             />

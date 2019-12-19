@@ -22,7 +22,7 @@ class BuyOcoForm extends TradingForm {
     spinnerStatus: false,
     modalShow: false
   };
-
+  isAllowTrade = true;
   schema = {
     type: Joi.number()
       .required()
@@ -43,9 +43,17 @@ class BuyOcoForm extends TradingForm {
       .required()
       .label("Total")
   };
+  handleAllowTrade = () => {
+    this.isAllowTrade = true;
+    this.doSubmit();
+  };
 
   doSubmit = async () => {
-    // this.setState({ modalShow: true });
+    if (this.isAllowTrade === false) {
+      this.setState({ modalShow: true });
+      return;
+    }
+    this.setState({ modalShow: false });
     this.setState({ spinnerStatus: true });
     try {
       const { data } = this.state;
@@ -84,10 +92,11 @@ class BuyOcoForm extends TradingForm {
       }
     }
     this.setState({ spinnerStatus: false });
+    // this.isAllowTrade = false;
   };
 
   render() {
-    const { selectedPair } = this.props;
+    const { selectedPair, selectedPairStats } = this.props;
 
     return (
       <React.Fragment>
@@ -167,8 +176,13 @@ class BuyOcoForm extends TradingForm {
           </div>
         </td>
         <ConfirmOrder
+          selectedPair={selectedPair}
+          lastPrice={selectedPairStats.last_price}
+          data={this.state.data}
+          direction="buy"
+          onAllowTrade={this.handleAllowTrade}
           show={this.state.modalShow}
-          onHide={() => this.setState({ modalShow: false })}
+          onHideModal={() => this.setState({ modalShow: false })}
         />
       </React.Fragment>
     );

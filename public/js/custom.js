@@ -105,13 +105,13 @@ jQuery(document).ready(function() {
   /*--------------------------------------------
     		Slim-scrollbar Settings
     ---------------------------------------------*/
-  $(".dashboard-ticker-block-three").slimScroll({
-    height: "570px"
-  });
+  // $(".currencyPairScroll").slimScroll({
+  //   height: "570px"
+  // });
 
-  $(".dashboard-ticker-block-four").slimScroll({
-    height: "570px"
-  });
+  // $(".exchangeTradingHistoryScroll").slimScroll({
+  //   height: "570px"
+  // });
   /*-------------------------------------
     Slick slider Settings
     -------------------------------------*/
