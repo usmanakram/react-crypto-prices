@@ -6,11 +6,12 @@ const BuyOrderBookTable = ({ selectedPairStats, orderBookData }) => {
       <table className="table das-oreder-table das-buy-table table-hover exchange-orderBook">
         <thead>
           <tr>
-            <th className="th" scope="col"
-            //  style={{ width: "33.33%" }}
-
+            <th
+              className="th"
+              scope="col"
+              //  style={{ width: "33.33%" }}
             >
-              <span className="color-buy" >
+              <span className="color-buy">
                 {Object.keys(selectedPairStats).length > 0 &&
                   selectedPairStats.last_price}
               </span>
@@ -19,12 +20,13 @@ const BuyOrderBookTable = ({ selectedPairStats, orderBookData }) => {
             <th
               className=""
               scope="col"
-            // currency-rate
-            // style={{ width: "33.33%" }}
-
+              // currency-rate
+              // style={{ width: "33.33%" }}
             ></th>
-            <th className="text-right" scope="col"
-            //  style={{ width: "33.33%" }}
+            <th
+              className="text-right"
+              scope="col"
+              //  style={{ width: "33.33%" }}
             >
               {/* <img src="./images/exchange/2.png" alt="img" /> */}
             </th>
@@ -37,7 +39,7 @@ const BuyOrderBookTable = ({ selectedPairStats, orderBookData }) => {
                 <span className="color-buy">{value.rate}</span>
               </td>
               <td className="">
-                <span>{value.tradable_quantity}</span>
+                <span>{value.tradable_quantity.toFixed(8)}</span>
               </td>
               <td className="text-right">
                 <span>{(value.rate * value.tradable_quantity).toFixed(8)}</span>
@@ -46,7 +48,6 @@ const BuyOrderBookTable = ({ selectedPairStats, orderBookData }) => {
             </tr>
           ))}
         </tbody>
-
       </table>
       {/* <div className="container">
         {orderBookData.buyOrders.map(value => (
@@ -70,4 +71,3 @@ const BuyOrderBookTable = ({ selectedPairStats, orderBookData }) => {
 };
 
 export default BuyOrderBookTable;
-

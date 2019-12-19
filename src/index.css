@@ -377,6 +377,13 @@ input.disabled {
 .ticker-nav .nav-item a {
   font-weight: 500;
 }
+.fa-sun {
+  color: lightgray;
+}
+.fa-moon {
+  color: #1f2738;
+}
+
 /* ==================================CurrencyPair=================================== */
 /* ==================================style.css=================================== */
 #chartdiv {
@@ -430,20 +437,21 @@ input.disabled {
 
 .selected-interval {
   font-weight: 900;
-  color: red;
-}
-.dark-blue-bg .selected-interval {
-  font-weight: 900;
   color: red !important;
 }
 .tv-toolbar .dropdown-menu {
   width: 0px;
   min-width: 45px;
   padding: 0px 0;
+  display: none;
+}
+.dropdown-menu.show {
+  display: block;
 }
 .dark-blue-bg .tv-toolbar .dropdown-menu {
   background-color: #171f38 !important;
 }
+
 /* ==================================TradingViewButton=================================== */
 /* ==================================POPOVER=================================== */
 
@@ -459,3 +467,27 @@ input.disabled {
   cursor: pointer;
 }
 /* ==================================Currencyrate=================================== */
+/* ==================================Header=================================== */
+.navbar {
+  min-height: 70px;
+  padding: 0px 10px !important;
+}
+/* ==================================Header=================================== */
+/* ==================================Footer=================================== */
+.footer-upper-section {
+  padding: 32px 0;
+}
+.footer-bottom {
+  padding: 5px 0;
+}
+.footer-info-list > h4 {
+  margin-bottom: 10px;
+}
+.footer-info-list ul li {
+  margin-bottom: 3px;
+}
+
+.footer-info-list .contact-info {
+  margin-bottom: 65px;
+}
+/* ==================================Footer=================================== */

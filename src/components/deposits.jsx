@@ -72,8 +72,7 @@ class Deposits extends Component {
       const { data } = await http.get(
         "/auth/get-deposit-address/" + select.value
       );
-      console.log("data");
-      console.log(data);
+
       this.setState({ selectedCurrency: data, address: data.address });
       //new
       this.setState({

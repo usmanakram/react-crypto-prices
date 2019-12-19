@@ -913,4 +913,19 @@ window.$(function() {
     window.$(".popover-body").css(bodyStyle);
   });
 });
-// ==============================================PopOver====================================================
+// ==============================================PopOver================================================================
+// ==============================================exchangeHandleWidth====================================================
+
+export function handleWidth() {
+  let container = document.querySelectorAll("div.container:not(.exclude)");
+  let replace = "container-fluid";
+  if (container.length === 0) {
+    container = document.querySelectorAll("div.container-fluid:not(.exclude)");
+    replace = "container";
+  }
+
+  for (var i = 0; i < container.length; i++) {
+    container[i].classList.value = replace;
+  }
+}
+// ==============================================exchangeHandleWidth====================================================

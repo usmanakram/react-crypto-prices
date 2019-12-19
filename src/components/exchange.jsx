@@ -10,6 +10,7 @@ import auth from "../services/authService";
 import ws from "../services/webSocketService";
 import { toast } from "react-toastify";
 import _ from "lodash";
+import { handleWidth } from "../services/custom";
 
 class Exchange extends Component {
   state = {
@@ -32,7 +33,8 @@ class Exchange extends Component {
     tradeHistory: [],
     openOrderSpinner: false,
     OrderBookAndTradeHistorySpinner: false,
-    darkBg: false
+    darkBg: false,
+    isFullWidth: false
   };
 
   user = auth.getCurrentUser();
@@ -228,7 +230,10 @@ class Exchange extends Component {
   handleChangeBg = () => {
     this.setState({ darkBg: !this.state.darkBg });
   };
-
+  handleWidthChange = () => {
+    this.setState({ isFullWidth: !this.state.isFullWidth });
+    handleWidth();
+  };
   render() {
     const {
       selectedPair,
@@ -239,7 +244,8 @@ class Exchange extends Component {
       baseCurrencyBalance,
       quoteCurrencyBalance,
       currencyPairs,
-      darkBg
+      darkBg,
+      isFullWidth
     } = this.state;
 
     return (
@@ -253,8 +259,11 @@ class Exchange extends Component {
           selectedPair={selectedPair}
           currencyPairs={currencyPairs}
           selectedPairStats={selectedPairStats}
+          isFullWidth={isFullWidth}
+          onWidthChange={this.handleWidthChange}
         />
         <ExchangeBody
+          isFullWidth={isFullWidth}
           currencyPairs={currencyPairs}
           status={this.state.OrderBookAndTradeHistorySpinner}
           selectedPair={selectedPair}
