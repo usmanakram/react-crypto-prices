@@ -85,10 +85,7 @@ const ExchangeBody = ({
 
             <div className="col-lg-3 tradeHistory-left">
               {/* <CurrencyPairs currencyPairs={currencyPairs} /> */}
-              <ExchangeTradingHistory
-                status={status}
-                selectedPair={selectedPair}
-              />
+              <ExchangeTradingHistory selectedPair={selectedPair} />
             </div>
           </div>
         </div>

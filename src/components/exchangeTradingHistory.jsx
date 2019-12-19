@@ -6,7 +6,8 @@ import ws from "../services/webSocketService";
 
 class ExchangeTradingHistory extends Component {
   state = {
-    tradeHistory: []
+    tradeHistory: [],
+    spinnerStatus: false
   };
 
   componentDidMount() {
@@ -33,15 +34,21 @@ class ExchangeTradingHistory extends Component {
   }
 
   setTradeHistory = async () => {
-    const { selectedPair } = this.props;
-
-    if (Object.keys(selectedPair).length) {
-      const tradeHistory = await trade.getTradeHistory(selectedPair.id);
+    this.setState({ spinnerStatus: true });
+    try {
+      const tradeHistory = await trade.getTradeHistory(
+        this.props.selectedPair.id
+      );
 
       this.setState({ tradeHistory });
 
       this.setStream();
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        console.log(ex.response.data);
+      }
     }
+    this.setState({ spinnerStatus: false });
   };
 
   setStream = () => {
@@ -63,8 +70,8 @@ class ExchangeTradingHistory extends Component {
   };
 
   render() {
-    const { selectedPair, status } = this.props;
-    const { tradeHistory } = this.state;
+    const { selectedPair } = this.props;
+    const { tradeHistory, spinnerStatus } = this.state;
 
     return (
       <div className="order-history-block">
@@ -73,7 +80,7 @@ class ExchangeTradingHistory extends Component {
         </div>
         <div className="order-history-block-inner dashboard-ticker-block-four">
           <div className="history-table-wrap">
-            <Spinner status={status} />
+            <Spinner spinnerStatus={spinnerStatus} />
 
             {/* <table className="table coin-list table-hover history-table trade-history"> */}
             <table className="table das-oreder-table table-hover trade-history">
