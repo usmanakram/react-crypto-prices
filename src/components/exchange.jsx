@@ -25,12 +25,10 @@ class Exchange extends Component {
     },
     baseCurrencyBalance: {},
     quoteCurrencyBalance: {},
-    openOrders: [],
     orderBookData: {
       buyOrders: [],
       sellOrders: []
     },
-    openOrderSpinner: false,
     OrderBookAndTradeHistorySpinner: false,
     darkBg: false,
     isFullWidth: false
@@ -83,7 +81,6 @@ class Exchange extends Component {
 
     if (this.user) {
       this.setBalances();
-      this.setOpenOrders();
     }
 
     this.setOrderBookAndTradeHistory();
@@ -118,9 +115,6 @@ class Exchange extends Component {
         // })
         .listen("TradeOrderFilled", e => {
           toast.success(e.message);
-        })
-        .listen("OpenOrdersUpdated", e => {
-          this.handleOpenOrders(e.openOrders);
         });
     }
   };
@@ -143,31 +137,6 @@ class Exchange extends Component {
       try {
         const balances = await trade.getBalances();
         this.handleBalances(balances);
-      } catch (ex) {
-        if (ex.response && ex.response.status === 400) {
-          console.log(ex.response.data);
-          // toast.error(ex.response.data);
-        }
-      }
-    }
-  };
-
-  handleOpenOrders = orders => {
-    const openOrders = orders.filter(
-      o => o.currency_pair_id === this.state.selectedPair.id
-    );
-
-    this.setState({ openOrders });
-  };
-
-  setOpenOrders = async () => {
-    if (Object.keys(this.state.selectedPair).length) {
-      try {
-        this.setState({ openOrderSpinner: true });
-        const orders = await trade.getUserOpenOrders();
-
-        this.handleOpenOrders(orders);
-        this.setState({ openOrderSpinner: false });
       } catch (ex) {
         if (ex.response && ex.response.status === 400) {
           console.log(ex.response.data);
@@ -228,7 +197,6 @@ class Exchange extends Component {
       selectedPair,
       selectedPairStats,
       orderBookData,
-      openOrders,
       baseCurrencyBalance,
       quoteCurrencyBalance,
       currencyPairs,
@@ -261,12 +229,7 @@ class Exchange extends Component {
           quoteCurrencyBalance={quoteCurrencyBalance}
           baseCurrencyBalance={baseCurrencyBalance}
         />
-        <ExchangeOpenOrder
-          status={this.state.openOrderSpinner}
-          selectedPair={selectedPair}
-          openOrders={openOrders}
-          onCancelOrder={this.handleOpenOrders}
-        />
+        <ExchangeOpenOrder selectedPair={selectedPair} />
         <GettingStarted />
       </div>
     );

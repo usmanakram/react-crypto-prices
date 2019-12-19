@@ -2,10 +2,17 @@ import React, { Component } from "react";
 import Table from "./common/table";
 import Spinner from "./spinner";
 import trade from "../services/tradeService";
+import auth from "../services/authService";
+import ws from "../services/webSocketService";
 import { toast } from "react-toastify";
 
 class ExchangeOpenOrder extends Component {
-  state = {};
+  state = {
+    openOrders: [],
+    spinnerStatus: false
+  };
+
+  user = auth.getCurrentUser();
 
   columns = [
     { path: "created_at", label: "Date" },
@@ -78,14 +85,67 @@ class ExchangeOpenOrder extends Component {
     }
   ];
 
+  componentDidMount() {
+    this.setUserStream();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { selectedPair: currentPair } = this.props;
+    const { selectedPair: prevPair } = prevProps;
+
+    if (
+      Object.keys(currentPair).length &&
+      (Object.keys(prevPair).length === 0 || currentPair.id !== prevPair.id)
+    ) {
+      this.setOpenOrders();
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.user) {
+      ws.leaveChannel("User." + this.user.sub);
+    }
+  }
+
+  setUserStream = () => {
+    if (this.user) {
+      ws.channel("User." + this.user.sub).listen("OpenOrdersUpdated", e => {
+        this.handleOpenOrders(e.openOrders);
+      });
+    }
+  };
+
+  handleOpenOrders = orders => {
+    const openOrders = orders.filter(
+      o => o.currency_pair_id === this.props.selectedPair.id
+    );
+
+    this.setState({ openOrders });
+  };
+
+  setOpenOrders = async () => {
+    this.setState({ spinnerStatus: true });
+    try {
+      const orders = await trade.getUserOpenOrders();
+
+      this.handleOpenOrders(orders);
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        console.log(ex.response.data);
+      }
+    }
+    this.setState({ spinnerStatus: false });
+  };
+
   onCancel = async id => {
     try {
       const { order_ids, message } = await trade.cancelOrder(id);
-      // const orders = this.props.openOrders.filter(o => o.id !== id);
-      const orders = this.props.openOrders.filter(
+      // const orders = this.state.openOrders.filter(o => o.id !== id);
+      const orders = this.state.openOrders.filter(
         o => !order_ids.includes(o.id)
       );
-      this.props.onCancelOrder(orders);
+
+      this.handleOpenOrders(orders);
       toast.success(message);
     } catch (ex) {
       console.log(ex);
@@ -93,7 +153,7 @@ class ExchangeOpenOrder extends Component {
   };
 
   render() {
-    const { openOrders, status } = this.props;
+    const { openOrders, spinnerStatus } = this.state;
 
     return (
       <div className="latest-tranjections-area">
@@ -102,7 +162,7 @@ class ExchangeOpenOrder extends Component {
             <div className="panel-heading-block">
               <h5>Open Orders</h5>
             </div>
-            <Spinner status={status} />
+            <Spinner status={spinnerStatus} />
 
             <Table
               columns={this.columns}
