@@ -14,6 +14,8 @@ class TradingViewWidget extends Component {
   timeIntervalId = 0;
 
   _id = React.createRef();
+  tvFullWidth = React.createRef();
+  isTvFullWidth = false;
   chart = {};
   minIntervals = ["1m", "5m", "15m", "30m"];
 
@@ -74,6 +76,7 @@ class TradingViewWidget extends Component {
 
     this.updateDimensions();
     window.addEventListener("resize", this.updateDimensions);
+    window.addEventListener("fullscreenchange", this.handleFullScreenTrigger);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -102,11 +105,63 @@ class TradingViewWidget extends Component {
       );
     }
   }
+
+  handleFullScreenTrigger = () => {
+    // if (this.isTvFullWidth) this.isTvFullWidth = false;
+    // else this.isTvFullWidth = true;
+
+    this.isTvFullWidth = !this.isTvFullWidth;
+    this.updateDimensions();
+  };
+
+  handleTvFullWidth = () => {
+    if (this.isTvFullWidth) {
+      // this.isTvFullWidth = false;
+
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        /* Firefox */
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        /* Chrome, Safari and Opera */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        /* IE/Edge */
+        document.msExitFullscreen();
+      }
+    } else {
+      // this.isTvFullWidth = true;
+
+      const elem = this.tvFullWidth.current;
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.mozRequestFullScreen) {
+        /* Firefox */
+        elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) {
+        /* Chrome, Safari & Opera */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        /* IE/Edge */
+        elem.msRequestFullscreen();
+      }
+    }
+  };
+
   updateDimensions = () => {
-    this.chart.resize(
+    const height = this.isTvFullWidth
+      ? window.screen.height - 26
+      : this._id.current.offsetWidth / 2;
+    const width = this.isTvFullWidth
+      ? window.screen.width
+      : this._id.current.offsetWidth;
+
+    this.chart.resize(height, width);
+    /* this.chart.resize(
       this._id.current.offsetWidth / 2,
       this._id.current.offsetWidth
-    );
+    ); */
   };
 
   handleGraph = async () => {
@@ -169,7 +224,7 @@ class TradingViewWidget extends Component {
     const { timeInterval } = this.state;
     return (
       <div className="tradingview-widget-container">
-        <div className="exchange-chart-block">
+        <div className="exchange-chart-block" ref={this.tvFullWidth}>
           <div className="row tv-toolbar">
             <div className="col-md-12">
               <div className="dropdown d-inline">
@@ -244,6 +299,12 @@ class TradingViewWidget extends Component {
                 type="button"
               >
                 1M
+              </button>
+              <button
+                className={timeInterval === "" ? "selected-interval" : ""}
+                onClick={this.handleTvFullWidth}
+              >
+                FullWidht
               </button>
             </div>
           </div>
