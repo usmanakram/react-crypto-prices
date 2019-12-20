@@ -94,6 +94,7 @@ class ExchangeOpenOrder extends Component {
     const { selectedPair: prevPair } = prevProps;
 
     if (
+      this.user &&
       Object.keys(currentPair).length &&
       (Object.keys(prevPair).length === 0 || currentPair.id !== prevPair.id)
     ) {
