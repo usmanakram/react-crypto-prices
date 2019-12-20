@@ -31,13 +31,13 @@ class CurrencyPairsTables extends Component {
 
     const quoteCurrencies = [
       ...new Set(currencyPairs.map(p => p.quote_currency_symbol))
-    ];
+    ].sort();
 
     return (
       <div className="tab-content">
         <div
           role="tabpanel"
-          className="tab-pane fade in active show das-market-tab-pane"
+          className="tab-pane fade das-market-tab-pane"
           id="favorite_ticker"
         >
           <table className="table das-oreder-table table-hover exchange-orderBook">
@@ -57,9 +57,7 @@ class CurrencyPairsTables extends Component {
                   <tr key={value.id}>
                     <td>
                       <div
-                        className={`favorite-coin ${
-                          favorites.includes(value.symbol) ? "active" : ""
-                        }`}
+                        className={`favorite-coin ${favorites.includes(value.symbol) ? "active" : ""}`}
                         onClick={() => this.setFavorites(value.symbol)}
                       ></div>
                     </td>
@@ -93,11 +91,11 @@ class CurrencyPairsTables extends Component {
             </tbody>
           </table>
         </div>
-        {quoteCurrencies.map(c => (
+        {quoteCurrencies.map((c, i) => (
           <div
             key={c}
             role="tabpanel"
-            className="tab-pane fade das-market-tab-pane"
+            className={`tab-pane fade das-market-tab-pane ${i === 0 ? "in active show" : ""}`}
             id={c}
           >
             <table className="table das-oreder-table table-hover exchange-orderBook">
@@ -116,9 +114,7 @@ class CurrencyPairsTables extends Component {
                     <tr key={value.id}>
                       <td>
                         <div
-                          className={`favorite-coin ${
-                            favorites.includes(value.symbol) ? "active" : ""
-                          }`}
+                          className={`favorite-coin ${favorites.includes(value.symbol) ? "active" : ""}`}
                           onClick={() => this.setFavorites(value.symbol)}
                         ></div>
                       </td>

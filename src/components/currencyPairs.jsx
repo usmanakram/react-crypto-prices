@@ -14,7 +14,7 @@ class CurrencyPairs extends Component {
     const { currencyPairs } = this.props;
     const quoteCurrencies = [
       ...new Set(currencyPairs.map(p => p.quote_currency_symbol))
-    ];
+    ].sort();
 
     return (
       <div className="das-market-block">
@@ -26,7 +26,7 @@ class CurrencyPairs extends Component {
             >
               <li className="nav-item">
                 <a
-                  className="nav-link active currancy-pair-pad"
+                  className="nav-link currancy-pair-pad"
                   href="#favorite_ticker"
                   role="tab"
                   data-toggle="tab"
@@ -35,10 +35,10 @@ class CurrencyPairs extends Component {
                   <h5>Favorites</h5>
                 </a>
               </li>
-              {quoteCurrencies.map(c => (
+              {quoteCurrencies.map((c, i) => (
                 <li key={c} className="nav-item">
                   <a
-                    className="nav-link currancy-pair-pad"
+                    className={`nav-link currancy-pair-pad ${i === 0 ? "active" : ""}`}
                     href={`#${c}`}
                     role="tab"
                     data-toggle="tab"
