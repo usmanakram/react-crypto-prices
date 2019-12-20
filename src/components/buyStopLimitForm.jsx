@@ -16,13 +16,13 @@ class BuyStopLimitForm extends TradingForm {
       total: "",
       type: 2
     },
-
     errors: {},
     total: 0,
     spinnerStatus: false,
     modalShow: false
   };
-  isAllowTrade = true;
+
+  isAllowTrade = false;
 
   schema = {
     type: Joi.number()
@@ -92,7 +92,7 @@ class BuyStopLimitForm extends TradingForm {
       }
     }
     this.setState({ spinnerStatus: false });
-    // this.isAllowTrade = false;
+    this.isAllowTrade = false;
   };
 
   render() {

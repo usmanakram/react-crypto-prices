@@ -22,7 +22,9 @@ class BuyOcoForm extends TradingForm {
     spinnerStatus: false,
     modalShow: false
   };
-  isAllowTrade = true;
+
+  isAllowTrade = false;
+
   schema = {
     type: Joi.number()
       .required()
@@ -43,6 +45,27 @@ class BuyOcoForm extends TradingForm {
       .required()
       .label("Total")
   };
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { selectedPairStats: currentStats } = this.props;
+    const { selectedPairStats: prevStats } = prevProps;
+
+    if (
+      Object.keys(currentStats).length &&
+      (Object.keys(prevStats).length === 0 ||
+        currentStats.last_price !== prevStats.last_price)
+    ) {
+      this.schema.rate = Joi.number()
+        .required()
+        .less(currentStats.last_price)
+        .label("Price");
+      this.schema.trigger_rate = Joi.number()
+        .required()
+        .greater(currentStats.last_price)
+        .label("Stop");
+    }
+  }
+
   handleAllowTrade = () => {
     this.isAllowTrade = true;
     this.doSubmit();
@@ -92,7 +115,7 @@ class BuyOcoForm extends TradingForm {
       }
     }
     this.setState({ spinnerStatus: false });
-    // this.isAllowTrade = false;
+    this.isAllowTrade = false;
   };
 
   render() {

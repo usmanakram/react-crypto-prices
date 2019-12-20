@@ -9,7 +9,6 @@ import GettingStarted from "./gettingStarted";
 import auth from "../services/authService";
 import ws from "../services/webSocketService";
 import { toast } from "react-toastify";
-import _ from "lodash";
 import { handleWidth } from "../services/custom";
 
 class Exchange extends Component {

@@ -37,13 +37,20 @@ export function header() {
   window.$(window).on("resize orientationchange", function() {
     navControl();
   });
-  /*--------------------------------------------
-    		Toggle Settings
-    ---------------------------------------------*/
-  window.$(".favorite-coin").on("click", function() {
-    window.$(this).toggleClass("active");
-  });
 }
+/*--------------------------------------------
+      Toggle Settings
+  ---------------------------------------------*/
+// window.$(".favorite-coin").on("click", function() {
+//   window.$(this).toggleClass("active");
+// });
+// window.$(document).on("click", ".favorite-coin", function() {
+//   window.$(this).toggleClass("active");
+// });
+
+/**
+ * News Headlines Slider
+ */
 export function newsHeadlinesSlider() {
   window.$("#news_headlines_slider").slick({
     dots: false,

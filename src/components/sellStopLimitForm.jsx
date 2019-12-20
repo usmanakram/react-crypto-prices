@@ -21,7 +21,9 @@ class SellStopLimitForm extends TradingForm {
     spinnerStatus: false,
     modalShow: false
   };
-  isAllowTrade = true;
+
+  isAllowTrade = false;
+
   schema = {
     type: Joi.number()
       .required()
@@ -39,6 +41,7 @@ class SellStopLimitForm extends TradingForm {
       .required()
       .label("Total")
   };
+
   handleAllowTrade = () => {
     this.isAllowTrade = true;
     this.doSubmit();
@@ -89,7 +92,7 @@ class SellStopLimitForm extends TradingForm {
       }
     }
     this.setState({ spinnerStatus: false });
-    // this.isAllowTrade = false;
+    this.isAllowTrade = false;
   };
 
   render() {
