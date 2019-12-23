@@ -89,6 +89,7 @@ class Exchange extends Component {
 
     ws.leaveChannel("live");
     ws.channel("live").listen("LiveRates", e => {
+      this.setState({ currencyPairs: e.rates });
       const pair = e.rates.find(p => p.id === selectedPair.id);
       this.handleSelectedPairStats(pair.latest_rate);
     });

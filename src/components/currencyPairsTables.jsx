@@ -57,7 +57,9 @@ class CurrencyPairsTables extends Component {
                   <tr key={value.id}>
                     <td>
                       <div
-                        className={`favorite-coin ${favorites.includes(value.symbol) ? "active" : ""}`}
+                        className={`favorite-coin ${
+                          favorites.includes(value.symbol) ? "active" : ""
+                        }`}
                         onClick={() => this.setFavorites(value.symbol)}
                       ></div>
                     </td>
@@ -67,10 +69,14 @@ class CurrencyPairsTables extends Component {
                       </Link>
                     </td>
                     <td>
-                      <span className={value.color1}>{value.price}</span>
+                      <span className={value.color1}>
+                        {value.latest_rate.last_rate}
+                      </span>
                     </td>
                     <td>
-                      <span className={value.color2}>{value.change}</span>
+                      <span className={value.color2}>
+                        {value.latest_rate.rate_change.toFixed(8)}
+                      </span>
                     </td>
                   </tr>
                 ))}
@@ -95,7 +101,9 @@ class CurrencyPairsTables extends Component {
           <div
             key={c}
             role="tabpanel"
-            className={`tab-pane fade das-market-tab-pane ${i === 0 ? "in active show" : ""}`}
+            className={`tab-pane fade das-market-tab-pane ${
+              i === 0 ? "in active show" : ""
+            }`}
             id={c}
           >
             <table className="table das-oreder-table table-hover exchange-orderBook">
@@ -114,7 +122,9 @@ class CurrencyPairsTables extends Component {
                     <tr key={value.id}>
                       <td>
                         <div
-                          className={`favorite-coin ${favorites.includes(value.symbol) ? "active" : ""}`}
+                          className={`favorite-coin ${
+                            favorites.includes(value.symbol) ? "active" : ""
+                          }`}
                           onClick={() => this.setFavorites(value.symbol)}
                         ></div>
                       </td>
@@ -124,10 +134,14 @@ class CurrencyPairsTables extends Component {
                         </Link>
                       </td>
                       <td>
-                        <span className={value.color1}>{value.price}</span>
+                        <span className={value.color1}>
+                          {value.latest_rate.last_rate}
+                        </span>
                       </td>
                       <td>
-                        <span className={value.color2}>{value.change}</span>
+                        <span className={value.color2}>
+                          {value.latest_rate.rate_change.toFixed(8)}
+                        </span>
                       </td>
                     </tr>
                   ))}
