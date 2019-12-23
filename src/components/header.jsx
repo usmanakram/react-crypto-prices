@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { exchangeDefaultPair } from "../config.json";
 import { Link } from "react-router-dom";
 import auth from "../services/authService";
 import { header } from "../services/custom";
@@ -53,7 +54,10 @@ class Header extends Component {
             >
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item ">
-                  <Link className="nav-link" to="/exchange/BCBTC">
+                  <Link
+                    className="nav-link"
+                    to={`/exchange/${exchangeDefaultPair}`}
+                  >
                     Exchange
                   </Link>
                 </li>

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { exchangeDefaultPair } from "../config.json";
 import http from "../services/httpService";
 import trade from "../services/tradeService";
 import Header from "./header";
@@ -71,6 +72,11 @@ class Exchange extends Component {
     const selectedPair = this.state.currencyPairs.find(
       p => p.symbol === symbol
     );
+
+    if (selectedPair === undefined) {
+      this.props.history.replace("/exchange/" + exchangeDefaultPair);
+      return;
+    }
 
     await this.setState({ selectedPair });
 
