@@ -19,14 +19,14 @@ const ExchangeBody = ({
       <div className="container">
         <div className="dashboard-body">
           <div className="row">
-            <div className="col-lg-3 orderBook-right">
+            <div className="col-lg-3 leftSideBar">
               <OrderBook
                 selectedPair={selectedPair}
                 selectedPairStats={selectedPairStats}
               />
             </div>
 
-            <div className="col-lg-6">
+            <div className="col-lg-6 tv-oa-lr ">
               <div className="ticker-head">
                 <ul
                   className="nav nav-tabs ticker-nav parent-order-tab"
@@ -77,7 +77,7 @@ const ExchangeBody = ({
               />
             </div>
 
-            <div className="col-lg-3 tradeHistory-left">
+            <div className="col-lg-3 righSideBar">
               <CurrencyPairs currencyPairs={currencyPairs} />
               <ExchangeTradingHistory selectedPair={selectedPair} />
             </div>
