@@ -144,7 +144,7 @@ input.disabled {
   padding: 0 0.5rem;
 }
 
-.section-padding-50 {
+.currancy-pair-pad {
   padding: 15px 0;
 }
 .currency-rate {
@@ -161,8 +161,9 @@ input.disabled {
 .dahboard-order-block,
 .order-form-area-block,
 .order-history-block {
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
+
 /* ===============================================tradingview================================================ */
 /* ===============================================order Book & trade left right Padding================================================ */
 
@@ -177,13 +178,18 @@ input.disabled {
   }
 }
 @media (min-width: 1024px) {
-  .orderBook-right {
+  .leftSideBar {
     padding-right: 0;
   }
-  .tradeHistory-left {
+  .righSideBar {
     padding-left: 0;
   }
+  .tv-oa-lr {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
 }
+
 /* ===============================================order Book & trade left right Padding================================================ */
 /* ===============================================order area================================================ */
 
@@ -198,10 +204,10 @@ input.disabled {
 }
 .exchange-chart-block {
   padding: 0px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 .latest-tranjections-area {
-  padding-bottom: 15px;
+  padding-bottom: 5px;
 }
 .tv_orde_table tbody td {
   padding-top: 7px;
@@ -323,12 +329,14 @@ input.disabled {
   font-weight: 500;
 }
 .market-new-ticker-block {
-  margin-bottom: 15px !important;
+  margin-bottom: 5px !important;
 }
 .das-market-tab-pane {
   height: auto;
 }
-
+.parent-order-tab .nav-item a.nav-link.active {
+  font-weight: 600;
+}
 /* ==================================CurrencyPair=================================== */
 /* ==================================style.css=================================== */
 #chartdiv {
@@ -353,6 +361,30 @@ input.disabled {
 }
 /* ==================================confirmOrder=================================== */
 /* ==================================TradingViewButton=================================== */
+.tv-toolbar {
+  background: #fcfdff;
+  /* display: inline-block; */
+  padding: 0;
+}
+.svg-style {
+  color: #000;
+  float: right;
+  border: 1px solid #f0f0f0;
+  margin: 1px;
+  padding: 0.5px;
+}
+.dark-blue-bg .svg-style {
+  border: 1px solid #242b42;
+  background-color: #0b132d !important;
+}
+.dark-blue-bg .svg-style > path {
+  fill: #fff;
+  border: 1px solid #242b42;
+  background-color: #0b132d !important;
+}
+.dark-blue-bg .svg-style g {
+  fill: #fff;
+}
 .tv-toolbar select,
 .tv-toolbar button {
   background: transparent;
@@ -396,7 +428,9 @@ input.disabled {
 .dark-blue-bg .tv-toolbar .dropdown-menu {
   background-color: #171f38 !important;
 }
-
+.dark-blue-bg .tv-toolbar {
+  background-color: #0b132d !important;
+}
 /* ==================================TradingViewButton=================================== */
 /* ==================================POPOVER=================================== */
 
@@ -406,8 +440,12 @@ input.disabled {
 .dark-blue-bg .popover-body {
   color: #ffffff !important;
 }
+
 /* ==================================POPOVER=================================== */
 /* ==================================Currencyrate=================================== */
+.currancy-rate-tb {
+  padding: 5px 0;
+}
 .pointer {
   cursor: pointer;
 }
@@ -423,6 +461,7 @@ input.disabled {
 .fa-moon {
   color: #1f2738;
 }
+
 /* ==================================Currencyrate=================================== */
 /* ==================================Header=================================== */
 .navbar {
@@ -431,6 +470,22 @@ input.disabled {
 }
 .navbar-logo {
   width: 130px !important;
+}
+.navbar-expand-lg .navbar-nav .dropdown-menu .nav-link,
+.navbar-nav .dropdown-menu > li > a {
+  padding: 5px 10px !important;
+  font-weight: 400;
+  font-size: 14px;
+  color: #fff;
+}
+.navbar-nav .dropdown-menu > li > a:hover {
+  color: #000 !important;
+}
+.navbar-nav .dropdown-menu {
+  padding: 0px;
+  min-width: 0px;
+  margin: 0 0;
+  background-color: #1f2738;
 }
 /* ==================================Header=================================== */
 /* ==================================Footer=================================== */

@@ -13,7 +13,7 @@ class CurrencyRate extends Component {
       selectedPairStats: { volume, last_rate, low, high, rate_change }
     } = this.props;
     return (
-      <div className="section-padding-50">
+      <div className="currancy-rate-tb">
         <div className="container">
           <div className="row">
             <div className="col">

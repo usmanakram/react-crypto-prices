@@ -32,13 +32,15 @@ class CurrencyPairs extends Component {
                   data-toggle="tab"
                 >
                   <i className="far fa-star"></i>
-                  <h5>Favorites</h5>
+                  Favorites
                 </a>
               </li>
               {quoteCurrencies.map((c, i) => (
                 <li key={c} className="nav-item">
                   <a
-                    className={`nav-link currancy-pair-pad ${i === 0 ? "active" : ""}`}
+                    className={`nav-link currancy-pair-pad ${
+                      i === 0 ? "active" : ""
+                    }`}
                     href={`#${c}`}
                     role="tab"
                     data-toggle="tab"

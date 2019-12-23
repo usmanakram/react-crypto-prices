@@ -6,7 +6,8 @@ import ws from "../services/webSocketService";
 
 class TradingViewWidget extends Component {
   state = {
-    timeInterval: "1H"
+    timeInterval: "1H",
+    isTvFullWidth: false
   };
 
   graphData = [];
@@ -15,7 +16,7 @@ class TradingViewWidget extends Component {
 
   _id = React.createRef();
   tvFullWidth = React.createRef();
-  isTvFullWidth = false;
+
   chart = {};
   minIntervals = ["1m", "5m", "15m", "30m"];
 
@@ -107,16 +108,16 @@ class TradingViewWidget extends Component {
   }
 
   handleFullScreenTrigger = () => {
-    // if (this.isTvFullWidth) this.isTvFullWidth = false;
-    // else this.isTvFullWidth = true;
+    // if (isTvFullWidth) isTvFullWidth = false;
+    // else isTvFullWidth = true;
 
-    this.isTvFullWidth = !this.isTvFullWidth;
+    this.setState({ isTvFullWidth: !this.state.isTvFullWidth });
     this.updateDimensions();
   };
 
   handleTvFullWidth = () => {
-    if (this.isTvFullWidth) {
-      // this.isTvFullWidth = false;
+    if (this.state.isTvFullWidth) {
+      // isTvFullWidth = false;
 
       if (document.exitFullscreen) {
         document.exitFullscreen();
@@ -131,7 +132,7 @@ class TradingViewWidget extends Component {
         document.msExitFullscreen();
       }
     } else {
-      // this.isTvFullWidth = true;
+      // isTvFullWidth = true;
 
       const elem = this.tvFullWidth.current;
       if (elem.requestFullscreen) {
@@ -150,10 +151,10 @@ class TradingViewWidget extends Component {
   };
 
   updateDimensions = () => {
-    const height = this.isTvFullWidth
+    const height = this.state.isTvFullWidth
       ? window.screen.height - 26
       : this._id.current.offsetWidth / 2;
-    const width = this.isTvFullWidth
+    const width = this.state.isTvFullWidth
       ? window.screen.width
       : this._id.current.offsetWidth;
 
@@ -221,12 +222,12 @@ class TradingViewWidget extends Component {
 
   render() {
     // this.handleGraph();
-    const { timeInterval } = this.state;
+    const { timeInterval, isTvFullWidth } = this.state;
     return (
       <div className="tradingview-widget-container">
         <div className="exchange-chart-block" ref={this.tvFullWidth}>
-          <div className="row tv-toolbar">
-            <div className="col-md-12">
+          <div className="row" style={{ margin: "0" }}>
+            <div className="col-md-12 tv-toolbar">
               <div className="dropdown d-inline">
                 <button
                   type="button"
@@ -241,7 +242,7 @@ class TradingViewWidget extends Component {
                     ? `${timeInterval}`
                     : "1m"}
                 </button>
-                <div className="dropdown-menu">
+                <ul className="dropdown-menu">
                   {this.minIntervals.map(i => (
                     <li key={i}>
                       <button
@@ -256,17 +257,9 @@ class TradingViewWidget extends Component {
                       </button>
                     </li>
                   ))}
-                </div>
+                </ul>
               </div>
-              {/* <select
-                onChange={this.handleChange}
-                className={
-                  ["1H", "4H"].includes(timeInterval) ? "selected-interval" : ""
-                }
-              >
-                <option>1H</option>
-                <option>4H</option>
-              </select> */}
+
               <button
                 className={timeInterval === "1H" ? "selected-interval" : ""}
                 value="1H"
@@ -300,12 +293,39 @@ class TradingViewWidget extends Component {
               >
                 1M
               </button>
-              <button
-                className={timeInterval === "" ? "selected-interval" : ""}
-                onClick={this.handleTvFullWidth}
-              >
-                FullWidht
-              </button>
+              {isTvFullWidth ? (
+                <svg
+                  viewBox="0 0 14 16"
+                  height="22"
+                  width="22"
+                  onClick={this.handleTvFullWidth}
+                  className="svg-style"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M2 4H0V3h2V1h1v2c0 .547-.453 1-1 1zm0 8H0v1h2v2h1v-2c0-.547-.453-1-1-1zm9-2c0 .547-.453 1-1 1H4c-.547 0-1-.453-1-1V6c0-.547.453-1 1-1h6c.547 0 1 .453 1 1v4zM9 7H5v2h4V7zm2 6v2h1v-2h2v-1h-2c-.547 0-1 .453-1 1zm1-10V1h-1v2c0 .547.453 1 1 1h2V3h-2z"
+                  ></path>
+                </svg>
+              ) : (
+                <svg
+                  viewBox="0 0 28 28"
+                  width="22"
+                  height="22"
+                  onClick={this.handleTvFullWidth}
+                  className="svg-style"
+                >
+                  <g fill="currentColor">
+                    <path d="M21 7v4h1V6h-5v1z"></path>
+                    <path d="M16.854 11.854l5-5-.708-.708-5 5zM7 7v4H6V6h5v1z"></path>
+                    <path d="M11.146 11.854l-5-5 .708-.708 5 5zM21 21v-4h1v5h-5v-1z"></path>
+                    <path d="M16.854 16.146l5 5-.708.708-5-5z"></path>
+                    <g>
+                      <path d="M7 21v-4H6v5h5v-1z"></path>
+                      <path d="M11.146 16.146l-5 5 .708.708 5-5z"></path>
+                    </g>
+                  </g>
+                </svg>
+              )}
             </div>
           </div>
 
