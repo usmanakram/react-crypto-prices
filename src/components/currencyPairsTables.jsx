@@ -74,7 +74,13 @@ class CurrencyPairsTables extends Component {
                       </span>
                     </td>
                     <td>
-                      <span className={value.color2}>
+                      <span
+                        className={
+                          parseFloat(value.latest_rate.rate_change) > 0
+                            ? "color-buy"
+                            : "color-sell"
+                        }
+                      >
                         {value.latest_rate.rate_change.toFixed(8)}
                       </span>
                     </td>
@@ -139,7 +145,13 @@ class CurrencyPairsTables extends Component {
                         </span>
                       </td>
                       <td>
-                        <span className={value.color2}>
+                        <span
+                          className={
+                            parseFloat(value.latest_rate.rate_change) > 0
+                              ? "color-buy"
+                              : "color-sell"
+                          }
+                        >
                           {value.latest_rate.rate_change.toFixed(8)}
                         </span>
                       </td>
