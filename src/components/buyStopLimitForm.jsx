@@ -167,7 +167,7 @@ class BuyStopLimitForm extends TradingForm {
         </td>
         <ConfirmOrder
           selectedPair={selectedPair}
-          lastPrice={selectedPairStats.last_price}
+          lastRate={selectedPairStats.last_rate}
           data={this.state.data}
           direction="buy"
           onAllowTrade={this.handleAllowTrade}

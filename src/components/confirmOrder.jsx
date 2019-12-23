@@ -5,28 +5,28 @@ class ConfirmOrder extends Component {
   state = {};
 
   handleStatements = () => {
-    const { data, selectedPair, lastPrice, direction } = this.props;
+    const { data, selectedPair, lastRate, direction } = this.props;
 
     let message = "";
     // i(data.trigger_rate > "" && data.trigger_rate < data.stop_limit_rate);
     if (data.type === 2) {
       if (direction === "buy") {
-        if (data.trigger_rate > lastPrice) {
+        if (data.trigger_rate > lastRate) {
           message = `if the last price rises or above ${data.trigger_rate} ${selectedPair.quote_currency_symbol}, an order to
           buy ${data.quantity} ${selectedPair.base_currency_symbol} at a price of ${data.stop_limit_rate} ${selectedPair.quote_currency_symbol}
           will be placed`;
-        } else if (data.trigger_rate < lastPrice) {
+        } else if (data.trigger_rate < lastRate) {
           message = `if the last price drop or below  ${data.trigger_rate} ${selectedPair.quote_currency_symbol}, an order to
           buy ${data.quantity} ${selectedPair.base_currency_symbol} at a price of ${data.stop_limit_rate} ${selectedPair.quote_currency_symbol}
           will be placed`;
         }
       }
       if (direction === "sell") {
-        if (data.trigger_rate > lastPrice) {
+        if (data.trigger_rate > lastRate) {
           message = `if the last price rises or above ${data.trigger_rate} ${selectedPair.quote_currency_symbol}, an order to
           sell ${data.quantity} ${selectedPair.base_currency_symbol} at a price of ${data.stop_limit_rate} ${selectedPair.quote_currency_symbol}
           will be placed`;
-        } else if (data.trigger_rate < lastPrice) {
+        } else if (data.trigger_rate < lastRate) {
           message = `if the last price drop or below ${data.trigger_rate} ${selectedPair.quote_currency_symbol}, an order to
           sell ${data.quantity} ${selectedPair.base_currency_symbol} at a price of ${data.stop_limit_rate} ${selectedPair.quote_currency_symbol}
           will be placed`;
@@ -34,7 +34,7 @@ class ConfirmOrder extends Component {
       }
     } else if (data.type === 3) {
       if (direction === "buy") {
-        if (data.trigger_rate > lastPrice) {
+        if (data.trigger_rate > lastRate) {
           message = `if the last price rises or above ${data.trigger_rate} ${selectedPair.quote_currency_symbol}, an order to
         buy ${data.quantity} ${selectedPair.base_currency_symbol} at a price of ${data.stop_limit_rate} ${selectedPair.quote_currency_symbol}
         will be placed \n OR if the last price drop to ${data.rate} ${selectedPair.quote_currency_symbol}, buy ${data.quantity} ${selectedPair.base_currency_symbol} at a price of ${data.rate} ${selectedPair.quote_currency_symbol}
@@ -43,7 +43,7 @@ class ConfirmOrder extends Component {
       }
 
       if (direction === "sell") {
-        if (data.trigger_rate < lastPrice) {
+        if (data.trigger_rate < lastRate) {
           message = `if the last price drop or below ${data.trigger_rate} ${selectedPair.quote_currency_symbol}, an order to
         sell ${data.quantity} ${selectedPair.base_currency_symbol} at a price of ${data.stop_limit_rate} ${selectedPair.quote_currency_symbol}
         will be placed \n OR if the last price rises to ${data.rate} ${selectedPair.quote_currency_symbol}, an order to

@@ -1,7 +1,7 @@
 import React from "react";
 import MarketsTable from "./marketsTable";
 
-const LatestPrice = () => {
+const LatestRate = () => {
   return (
     <div className="new-ticker-block new-ticker-block-section">
       <div className="container">
@@ -63,4 +63,4 @@ const LatestPrice = () => {
   );
 };
 
-export default LatestPrice;
+export default LatestRate;

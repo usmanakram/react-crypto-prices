@@ -25,13 +25,13 @@ class MarketsTable extends Component {
         </Link>
       )
     },
-    { path: "latest_price.last_price", label: "Price" },
-    { path: "latest_price.volume", label: "Volume" },
+    { path: "latest_rate.last_rate", label: "Price" },
+    { path: "latest_rate.volume", label: "Volume" },
     {
-      path: "latest_price.price_change_percent",
+      path: "latest_rate.rate_change_percent",
       label: "Price Change (%)",
       content: coin =>
-        parseFloat(coin.latest_price.price_change_percent).toFixed(2)
+        parseFloat(coin.latest_rate.rate_change_percent).toFixed(2)
     }
   ];
 

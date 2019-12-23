@@ -53,15 +53,15 @@ class BuyOcoForm extends TradingForm {
     if (
       Object.keys(currentStats).length &&
       (Object.keys(prevStats).length === 0 ||
-        currentStats.last_price !== prevStats.last_price)
+        currentStats.last_rate !== prevStats.last_rate)
     ) {
       this.schema.rate = Joi.number()
         .required()
-        .less(currentStats.last_price)
+        .less(currentStats.last_rate)
         .label("Price");
       this.schema.trigger_rate = Joi.number()
         .required()
-        .greater(currentStats.last_price)
+        .greater(currentStats.last_rate)
         .label("Stop");
     }
   }
@@ -200,7 +200,7 @@ class BuyOcoForm extends TradingForm {
         </td>
         <ConfirmOrder
           selectedPair={selectedPair}
-          lastPrice={selectedPairStats.last_price}
+          lastRate={selectedPairStats.last_rate}
           data={this.state.data}
           direction="buy"
           onAllowTrade={this.handleAllowTrade}

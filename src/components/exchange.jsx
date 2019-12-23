@@ -16,11 +16,11 @@ class Exchange extends Component {
     currencyPairs: [],
     selectedPair: {},
     selectedPairStats: {
-      last_price: "",
+      last_rate: "",
       volume: "",
       low: "",
       high: "",
-      price_change: ""
+      rate_change: ""
     },
     baseCurrencyBalance: {},
     quoteCurrencyBalance: {},
@@ -78,23 +78,24 @@ class Exchange extends Component {
       this.setBalances();
     }
 
-    this.setOrderBookAndTradeHistory();
+    // this.setOrderBookAndTradeHistory();
+    this.handleSelectedPairStats(selectedPair.latest_rate);
 
     ws.leaveChannel("live");
     ws.channel("live").listen("LiveRates", e => {
       const pair = e.rates.find(p => p.id === selectedPair.id);
-      this.handleSelectedPairStats(pair.latest_price);
+      this.handleSelectedPairStats(pair.latest_rate);
     });
   };
 
-  handleSelectedPairStats = latest_price => {
+  handleSelectedPairStats = latest_rate => {
     this.setState({
       selectedPairStats: {
-        last_price: latest_price.last_price,
-        volume: latest_price.volume,
-        low: latest_price.low,
-        high: latest_price.high,
-        price_change: latest_price.price_change
+        last_rate: latest_rate.last_rate,
+        volume: latest_rate.volume,
+        low: latest_rate.low,
+        high: latest_rate.high,
+        rate_change: latest_rate.rate_change
       }
     });
   };
@@ -145,12 +146,12 @@ class Exchange extends Component {
       try {
         // this.setState({ OrderBookAndTradeHistorySpinner: true });
 
-        const pair = await trade.getLatestPrice(selectedPair.id);
+        const pair = await trade.getLatestRate(selectedPair.id);
         /* const dataPromise = trade.getOrderBook(selectedPair.id);
-        const pairPromise = trade.getLatestPrice(selectedPair.id);
+        const pairPromise = trade.getLatestRate(selectedPair.id);
         const [data, pair] = await Promise.all([dataPromise, pairPromise]); */
 
-        this.handleSelectedPairStats(pair.latest_price);
+        this.handleSelectedPairStats(pair.latest_rate);
         // this.setState({ OrderBookAndTradeHistorySpinner: false });
       } catch (ex) {
         if (ex.response && ex.response.status === 400) {

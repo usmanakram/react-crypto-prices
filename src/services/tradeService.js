@@ -62,16 +62,6 @@ async function cancelOrder(order_id) {
   return data;
 }
 
-async function getLatestPrices() {
-  const { data } = await http.get("/latest-prices");
-  return data;
-}
-
-async function getLatestPrice(pair_id) {
-  const prices = await getLatestPrices();
-  return prices.find(p => p.id === pair_id);
-}
-
 async function getBalances() {
   const { data: balances } = await http.get("/auth/get-balances");
   return balances;
@@ -130,8 +120,6 @@ export default {
   buy,
   sell,
   cancelOrder,
-  getLatestPrices,
-  getLatestPrice,
   getBalances,
   getBalance,
   getOrderBook,

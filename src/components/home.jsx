@@ -12,7 +12,7 @@ import LeatestNews from "./leatestNews";
 import Wallet from "./wallet";
 import WalletCategories from "./walletCategories";
 import ActivitySection from "./activitySection";
-import LatestPrice from "./latestPrice";
+import LatestRate from "./latestRate";
 import Banner from "./banner";
 import HighLightWedget from "./highLightWidget";
 
@@ -33,7 +33,7 @@ class Home extends Component {
           <Banner />
           <HighLightWedget highlights={this.state.highlights} />
         </div>
-        <LatestPrice />
+        <LatestRate />
         <ActivitySection activities={this.state.activities} />
         <WalletCategories categories={this.state.categories} />
         <Wallet wallets={this.state.wallets} />

@@ -10,7 +10,7 @@ class CurrencyRate extends Component {
       onWidthChange,
       selectedPair,
       currencyPairs,
-      selectedPairStats: { volume, last_price, low, high, price_change }
+      selectedPairStats: { volume, last_rate, low, high, rate_change }
     } = this.props;
     return (
       <div className="section-padding-50">
@@ -56,7 +56,7 @@ class CurrencyRate extends Component {
                   <div className="currency-info last-price">
                     <span>Last Price</span>
                     <h6>
-                      <span className="color-sell">{last_price}</span>
+                      <span className="color-sell">{last_rate}</span>
                       {/* <span className="currency-info-base">$390.68</span> */}
                     </h6>
                   </div>
@@ -64,12 +64,12 @@ class CurrencyRate extends Component {
                     <span>24h Change</span>
                     <h6
                       className={
-                        price_change && parseFloat(price_change) > 0
+                        rate_change && parseFloat(rate_change) > 0
                           ? "color-buy"
                           : "color-sell"
                       }
                     >
-                      {price_change && parseFloat(price_change).toFixed(8)}{" "}
+                      {rate_change && parseFloat(rate_change).toFixed(8)}{" "}
                       {/* <sub className="transmoney-value">+3.05</sub> */}
                     </h6>
                   </div>

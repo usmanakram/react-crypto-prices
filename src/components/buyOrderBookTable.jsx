@@ -13,7 +13,7 @@ const BuyOrderBookTable = ({ selectedPairStats, orderBookData }) => {
             >
               <span className="color-buy">
                 {Object.keys(selectedPairStats).length > 0 &&
-                  selectedPairStats.last_price}
+                  selectedPairStats.last_rate}
               </span>
               {/* <img src="./images/exchange/4.png" alt="img" /> */}
             </th>
