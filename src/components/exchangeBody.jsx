@@ -42,7 +42,7 @@ const ExchangeBody = ({
                       <h5>TraradingView</h5>
                     </a>
                   </li>
-                  {/* <li className="nav-item">
+                  <li className="nav-item">
                     <a
                       className="nav-link"
                       href="#depth-chart"
@@ -51,7 +51,7 @@ const ExchangeBody = ({
                     >
                       <h5>DepthChart</h5>
                     </a>
-                  </li> */}
+                  </li>
                 </ul>
               </div>
               <div className="tab-content">
@@ -66,7 +66,7 @@ const ExchangeBody = ({
                   />
                 </div>
                 <div role="tabpanel" className="tab-pane fade" id="depth-chart">
-                  <DepthChartWidget />
+                  <DepthChartWidget selectedPair={selectedPair} />
                 </div>
               </div>
               <ExchangeOrderArea
