@@ -3,6 +3,7 @@ import { candleChartdData } from "../services/custom";
 import { createChart, CrosshairMode } from "lightweight-charts";
 import trade from "../services/tradeService";
 import ws from "../services/webSocketService";
+import eventHandler from "../utils/eventHandler";
 
 class TradingViewWidget extends Component {
   state = {
@@ -19,6 +20,11 @@ class TradingViewWidget extends Component {
 
   chart = {};
   minIntervals = ["1m", "5m", "15m", "30m"];
+
+  _events = {
+    resize: () => this.updateDimensions(),
+    fullscreenchange: () => this.handleFullScreenTrigger()
+  };
 
   componentDidMount() {
     /* const chart = createChart(this._id.current, { width: 400, height: 300 });
@@ -76,8 +82,9 @@ class TradingViewWidget extends Component {
     this.candleSeries.setData(candleChartdData);
 
     this.updateDimensions();
-    window.addEventListener("resize", this.updateDimensions);
-    window.addEventListener("fullscreenchange", this.handleFullScreenTrigger);
+    // window.addEventListener("resize", this.updateDimensions);
+    // window.addEventListener("fullscreenchange", this.handleFullScreenTrigger);
+    eventHandler.bind(this._events);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -99,7 +106,13 @@ class TradingViewWidget extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions);
+    // window.removeEventListener("resize", this.updateDimensions);
+    // window.removeEventListener(
+    //   "fullscreenchange",
+    //   this.handleFullScreenTrigger
+    // );
+    eventHandler.unbind(this._events);
+
     if (this.selectedPairId && this.timeIntervalId) {
       ws.leaveChannel(
         "CandleStickGraph." + this.selectedPairId + "." + this.timeIntervalId
