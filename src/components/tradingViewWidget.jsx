@@ -82,8 +82,6 @@ class TradingViewWidget extends Component {
     this.candleSeries.setData(candleChartdData);
 
     this.updateDimensions();
-    // window.addEventListener("resize", this.updateDimensions);
-    // window.addEventListener("fullscreenchange", this.handleFullScreenTrigger);
     eventHandler.bind(this._events);
   }
 
@@ -106,11 +104,6 @@ class TradingViewWidget extends Component {
   }
 
   componentWillUnmount() {
-    // window.removeEventListener("resize", this.updateDimensions);
-    // window.removeEventListener(
-    //   "fullscreenchange",
-    //   this.handleFullScreenTrigger
-    // );
     eventHandler.unbind(this._events);
 
     if (this.selectedPairId && this.timeIntervalId) {
