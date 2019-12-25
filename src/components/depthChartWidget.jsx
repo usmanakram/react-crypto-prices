@@ -8,6 +8,10 @@ class DepthChartWidget extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.isFullWidth !== prevProps.isFullWidth) {
+      this.chart.reflow();
+    }
+
     this.updateDepthChartData();
   }
 
@@ -15,7 +19,8 @@ class DepthChartWidget extends Component {
     this.chart = window.Highcharts.chart("depthChartStyle", {
       chart: {
         type: "area",
-        zoomType: "xy"
+        zoomType: "xy",
+        reflow: true
       },
       title: {
         text: ""

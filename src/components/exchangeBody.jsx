@@ -131,7 +131,10 @@ class ExchangeBody extends Component {
                     className="tab-pane fade"
                     id="depth-chart"
                   >
-                    <DepthChartWidget orderBookData={orderBookData} />
+                    <DepthChartWidget
+                      orderBookData={orderBookData}
+                      isFullWidth={isFullWidth}
+                    />
                   </div>
                 </div>
                 <ExchangeOrderArea
