@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-import { depthChart } from "../services/custom";
-import trade from "../services/tradeService";
-import ws from "../services/webSocketService";
 
 class DepthChartWidget extends Component {
   chart = {};

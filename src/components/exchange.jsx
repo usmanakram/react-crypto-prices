@@ -33,14 +33,8 @@ class Exchange extends Component {
   user = auth.getCurrentUser();
 
   async componentDidMount() {
-    const symbol = this.props.match.params.symbol;
-
     try {
       const { data: currencyPairs } = await http.get("/currency-pairs");
-
-      // Temporarily block all pairs except Bittrain Coin vs Bitcoin
-      // const currencyPairs = data.filter(p => p.symbol === "BCBTC");
-
       this.setState({ currencyPairs });
     } catch (ex) {
       console.log(ex);
@@ -57,7 +51,6 @@ class Exchange extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    // console.log("inside componentDidUpdate method");
     const symbol = this.props.match.params.symbol;
     if (this.state.selectedPair.symbol !== symbol)
       this.handleCurrencyPairChange(symbol);
