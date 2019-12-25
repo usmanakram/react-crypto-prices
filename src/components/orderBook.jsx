@@ -1,88 +1,31 @@
-import React, { Component } from "react";
+import React from "react";
 import SellOrderBookTable from "./sellOrderBookTable";
 import BuyOrderBookTable from "./buyOrderBookTable";
-import trade from "../services/tradeService";
-import ws from "../services/webSocketService";
 import Spinner from "./spinner";
 import _ from "lodash";
 
-class OrderBook extends Component {
-  state = {
-    orderBookData: {
-      buyOrders: [],
-      sellOrders: []
-    },
-    spinnerStatus: false
-  };
+const OrderBook = ({
+  selectedPair,
+  selectedPairStats,
+  orderBookData,
+  spinnerStatus
+}) => {
+  const sellOrders = _(orderBookData.sellOrders)
+    .take(15)
+    .value();
+  const buyOrders = _(orderBookData.buyOrders)
+    .take(15)
+    .value();
 
-  componentWillUnmount() {
-    ws.leaveChannel("OrderBook." + this.props.selectedPair.id);
-  }
+  // Sort sellOrders as "decending order rates"
+  sellOrders.sort((a, b) => b.rate - a.rate);
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const { selectedPair: currentPair } = this.props;
-    const { selectedPair: prevPair } = prevProps;
-
-    if (
-      Object.keys(currentPair).length &&
-      (Object.keys(prevPair).length === 0 || currentPair.id !== prevPair.id)
-    ) {
-      ws.leaveChannel("OrderBook." + prevPair.id);
-      this.setOrderBook();
-    }
-  }
-
-  setOrderBook = async () => {
-    this.setState({ spinnerStatus: true });
-    try {
-      const orderBookData = await trade.getOrderBook(
-        this.props.selectedPair.id
-      );
-
-      this.handleOrderBook(orderBookData);
-
-      this.setStream();
-    } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
-      }
-    }
-    this.setState({ spinnerStatus: false });
-  };
-
-  handleOrderBook = orderBookData => {
-    orderBookData.sellOrders = _(orderBookData.sellOrders)
-      .take(5)
-      .value();
-    orderBookData.buyOrders = _(orderBookData.buyOrders)
-      .take(5)
-      .value();
-
-    // Update sellOrders as "decending order rates"
-    orderBookData.sellOrders.sort((a, b) => b.rate - a.rate);
-
-    this.setState({ orderBookData });
-  };
-
-  setStream = () => {
-    ws.channel("OrderBook." + this.props.selectedPair.id).listen(
-      "OrderBookUpdated",
-      e => {
-        this.handleOrderBook(e.orderBookData);
-      }
-    );
-  };
-
-  render() {
-    const { selectedPair, selectedPairStats } = this.props;
-    const { orderBookData, spinnerStatus } = this.state;
-
-    return (
-      <div className="dahboard-order-block">
-        <div className="panel-heading-block">
-          <h5>Order Book</h5>
-        </div>
-        {/* <ul className="nav das-oreder-nav">
+  return (
+    <div className="dahboard-order-block">
+      <div className="panel-heading-block">
+        <h5>Order Book</h5>
+      </div>
+      {/* <ul className="nav das-oreder-nav">
           <li className="nav-item nav-item-first">
             <Link className="nav-link" to="#">
               Order book
@@ -141,24 +84,23 @@ class OrderBook extends Component {
             </Link>
           </li>
         </ul> */}
-        <div className="ord">
-          <div className="das-oreder-table-block ">
-            <Spinner status={spinnerStatus} />
+      <div className="ord">
+        <div className="das-oreder-table-block ">
+          <Spinner status={spinnerStatus} />
 
-            <SellOrderBookTable
-              selectedPair={selectedPair}
-              orderBookData={orderBookData}
-            />
+          <SellOrderBookTable
+            selectedPair={selectedPair}
+            sellOrders={sellOrders}
+          />
 
-            <BuyOrderBookTable
-              selectedPairStats={selectedPairStats}
-              orderBookData={orderBookData}
-            />
-          </div>
+          <BuyOrderBookTable
+            selectedPairStats={selectedPairStats}
+            buyOrders={buyOrders}
+          />
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default OrderBook;

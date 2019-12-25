@@ -1,6 +1,6 @@
 import React from "react";
 
-const BuyOrderBookTable = ({ selectedPairStats, orderBookData }) => {
+const BuyOrderBookTable = ({ selectedPairStats, buyOrders }) => {
   return (
     <React.Fragment>
       <table className="table das-oreder-table das-buy-table table-hover exchange-orderBook">
@@ -33,7 +33,7 @@ const BuyOrderBookTable = ({ selectedPairStats, orderBookData }) => {
           </tr>
         </thead>
         <tbody>
-          {orderBookData.buyOrders.map(value => (
+          {buyOrders.map(value => (
             <tr key={value.id}>
               <td>
                 <span className="color-buy">{value.rate}</span>
@@ -50,7 +50,7 @@ const BuyOrderBookTable = ({ selectedPairStats, orderBookData }) => {
         </tbody>
       </table>
       {/* <div className="container">
-        {orderBookData.buyOrders.map(value => (
+        {buyOrders.map(value => (
           <div className="row orderBookRow" key={value.id}>
             <div className="rate-ratio" style={{}}></div>
             <div className="col-md-4">

@@ -4,27 +4,17 @@ import trade from "../services/tradeService";
 import ws from "../services/webSocketService";
 
 class DepthChartWidget extends Component {
-  state = {};
-
   chart = {};
 
   componentDidMount() {
-    this.depthChart();
+    this.initializeDepthChart();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { selectedPair: currentPair } = this.props;
-    const { selectedPair: prevPair } = prevProps;
-
-    if (
-      Object.keys(currentPair).length &&
-      (Object.keys(prevPair).length === 0 || currentPair.id !== prevPair.id)
-    ) {
-      this.updateDepthChart();
-    }
+    this.updateDepthChartData();
   }
 
-  depthChart = data => {
+  initializeDepthChart = () => {
     this.chart = window.Highcharts.chart("depthChartStyle", {
       chart: {
         type: "area",
@@ -152,33 +142,18 @@ class DepthChartWidget extends Component {
     });
   };
 
-  updateDepthChart = async () => {
-    try {
-      const chartData = await trade.getDepthChartData(
-        this.props.selectedPair.id
-      );
-      this.updateDepthChartData(chartData);
-    } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
-      }
-    }
+  updateDepthChartData = () => {
+    const { orderBookData } = this.props;
 
-    // this.handleGraphStreem();
-  };
+    const bids = orderBookData.buyOrders
+      // .sort((a, b) => a.rate - b.rate)
+      .map(o => [o.rate, o.tradable_quantity])
+      .sort((a, b) => a[0] - b[0]);
 
-  handleGraphStreem = () => {
-    ws.channel("CandleStickGraph." + this.props.selectedPair.id).listen(
-      "CandleStickGraphUpdated",
-      e => {
-        // this.updateDepthChartData();
-      }
-    );
-  };
-
-  updateDepthChartData = chartData => {
-    const bids = chartData.bids.map(o => [o.rate, o.quantity]);
-    const asks = chartData.asks.map(o => [o.rate, o.quantity]);
+    const asks = orderBookData.sellOrders.map(o => [
+      o.rate,
+      o.tradable_quantity
+    ]);
 
     this.chart.series[0].setData(bids, true, true);
     this.chart.series[1].setData(asks, true, true);

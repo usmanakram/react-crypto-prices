@@ -89,11 +89,6 @@ async function getChartTradeHistory(pair_id, timeInterval) {
   return data;
 }
 
-async function getDepthChartData(pair_id) {
-  const { data } = await http.get("/depth-chart/" + pair_id);
-  return data;
-}
-
 async function getUserTradeHistory(start, end, pair_id, direction) {
   const formData = new FormData();
   formData.append("start", start);
@@ -130,7 +125,6 @@ export default {
   getOrderBook,
   getTradeHistory,
   getChartTradeHistory,
-  getDepthChartData,
   getUserTradeHistory,
   getUserOrderHistory,
   getUserOpenOrders

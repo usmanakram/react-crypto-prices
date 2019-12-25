@@ -27,6 +27,41 @@ class TradingViewWidget extends Component {
   };
 
   componentDidMount() {
+    this.initializeCandleStickGraph();
+
+    this.updateDimensions();
+    eventHandler.bind(this._events);
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { selectedPair, isFullWidth } = this.props;
+    if (
+      Object.keys(selectedPair).length &&
+      (selectedPair.id !== this.selectedPairId ||
+        this.state.timeInterval !== prevState.timeInterval)
+    ) {
+      ws.leaveChannel(
+        "CandleStickGraph." + this.selectedPairId + "." + this.timeIntervalId
+      );
+      this.handleGraph();
+    }
+
+    if (prevProps.isFullWidth !== isFullWidth) {
+      this.updateDimensions();
+    }
+  }
+
+  componentWillUnmount() {
+    eventHandler.unbind(this._events);
+
+    if (this.selectedPairId && this.timeIntervalId) {
+      ws.leaveChannel(
+        "CandleStickGraph." + this.selectedPairId + "." + this.timeIntervalId
+      );
+    }
+  }
+
+  initializeCandleStickGraph = () => {
     /* const chart = createChart(this._id.current, { width: 400, height: 300 });
     const lineSeries = chart.addLineSeries();
     lineSeries.setData([
@@ -66,6 +101,7 @@ class TradingViewWidget extends Component {
         borderColor: "rgba(197, 203, 206, 0.8)"
       }
     });
+
     this.candleSeries = this.chart.addCandlestickSeries({
       upColor: "green",
       downColor: "red",
@@ -79,39 +115,9 @@ class TradingViewWidget extends Component {
         minMove: 0.0000001
       }
     });
+
     this.candleSeries.setData(candleChartdData);
-
-    this.updateDimensions();
-    eventHandler.bind(this._events);
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const { selectedPair, isFullWidth } = this.props;
-    if (
-      Object.keys(selectedPair).length &&
-      (selectedPair.id !== this.selectedPairId ||
-        this.state.timeInterval !== prevState.timeInterval)
-    ) {
-      ws.leaveChannel(
-        "CandleStickGraph." + this.selectedPairId + "." + this.timeIntervalId
-      );
-      this.handleGraph();
-    }
-
-    if (prevProps.isFullWidth !== isFullWidth) {
-      this.updateDimensions();
-    }
-  }
-
-  componentWillUnmount() {
-    eventHandler.unbind(this._events);
-
-    if (this.selectedPairId && this.timeIntervalId) {
-      ws.leaveChannel(
-        "CandleStickGraph." + this.selectedPairId + "." + this.timeIntervalId
-      );
-    }
-  }
+  };
 
   handleFullScreenTrigger = () => {
     // if (isTvFullWidth) isTvFullWidth = false;
@@ -187,20 +193,12 @@ class TradingViewWidget extends Component {
       this.graphData = candleChartData.history;
 
       this.candleSeries.setData(this.graphData);
-      // this.candleSeries.setData(candleChartData);
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         console.log(ex.response.data);
-        // toast.error(ex.response.data);
       }
     }
 
-    // ws.channel("CandleStickGraph." + this.selectedPairId).listen(
-    //   "CandleStickGraphUpdated",
-    //   e => {
-    //     this.candleSeries.setData(e.candleStickData);
-    //   }
-    // );
     this.handleGraphStreem();
   };
 
@@ -208,16 +206,14 @@ class TradingViewWidget extends Component {
     ws.channel(
       "CandleStickGraph." + this.selectedPairId + "." + this.timeIntervalId
     ).listen("CandleStickGraphUpdated", e => {
-      if (
-        this.graphData[this.graphData.length - 1].time ===
-        e.candleStickData.time
-      ) {
-        this.graphData[this.graphData.length - 1] = e.candleStickData;
+      const indexOfLastCandle = this.graphData.length - 1;
+
+      if (this.graphData[indexOfLastCandle].time === e.candleStickData.time) {
+        this.graphData[indexOfLastCandle] = e.candleStickData;
       } else {
         this.graphData.push(e.candleStickData);
       }
 
-      // this.candleSeries.setData(e.candleStickData);
       this.candleSeries.setData(this.graphData);
     });
   };
@@ -227,7 +223,6 @@ class TradingViewWidget extends Component {
   };
 
   render() {
-    // this.handleGraph();
     const { timeInterval, isTvFullWidth } = this.state;
     return (
       <div className="tradingview-widget-container">
