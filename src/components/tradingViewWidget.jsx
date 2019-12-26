@@ -37,7 +37,7 @@ class TradingViewWidget extends Component {
       listener: () => this.handleFullScreenTrigger()
     },
     {
-      selector: () => document.querySelectorAll("a[href='#trading-view']"),
+      selector: () => document.querySelector("a[href='#trading-view']"),
       event: "click",
       listener: () => setTimeout(() => this.updateDimensions(), 175)
     }
