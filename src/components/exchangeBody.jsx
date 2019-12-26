@@ -96,7 +96,7 @@ class ExchangeBody extends Component {
                     <li className="nav-item">
                       <a
                         className="nav-link active"
-                        href="#trading_view"
+                        href="#trading-view"
                         role="tab"
                         data-toggle="tab"
                       >
@@ -119,7 +119,7 @@ class ExchangeBody extends Component {
                   <div
                     role="tabpanel"
                     className="tab-pane fade in active show"
-                    id="trading_view"
+                    id="trading-view"
                   >
                     <TradingViewWidget
                       selectedPair={selectedPair}

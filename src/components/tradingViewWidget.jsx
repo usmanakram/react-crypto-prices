@@ -21,10 +21,27 @@ class TradingViewWidget extends Component {
   chart = {};
   minIntervals = ["1m", "5m", "15m", "30m"];
 
-  _events = {
+  /* _events = {
     resize: () => this.updateDimensions(),
     fullscreenchange: () => this.handleFullScreenTrigger()
-  };
+  }; */
+  _events = [
+    {
+      selector: () => window,
+      event: "resize",
+      listener: () => this.updateDimensions()
+    },
+    {
+      selector: () => window,
+      event: "fullscreenchange",
+      listener: () => this.handleFullScreenTrigger()
+    },
+    {
+      selector: () => document.querySelectorAll("a[href='#trading-view']"),
+      event: "click",
+      listener: () => setTimeout(() => this.updateDimensions(), 175)
+    }
+  ];
 
   componentDidMount() {
     this.initializeCandleStickGraph();

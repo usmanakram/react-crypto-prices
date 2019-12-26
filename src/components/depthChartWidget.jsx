@@ -1,18 +1,32 @@
 import React, { Component } from "react";
+import eventHandler from "../utils/eventHandler";
 
 class DepthChartWidget extends Component {
   chart = {};
 
+  _events = [
+    {
+      selector: () => document.querySelector("a[href='#depth-chart']"),
+      event: "click",
+      listener: () => setTimeout(() => this.chart.reflow(), 175)
+    }
+  ];
+
   componentDidMount() {
     this.initializeDepthChart();
+    eventHandler.bind(this._events);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.isFullWidth !== prevProps.isFullWidth) {
+    if (prevProps.isFullWidth !== this.props.isFullWidth) {
       this.chart.reflow();
     }
 
     this.updateDepthChartData();
+  }
+
+  componentWillUnmount() {
+    eventHandler.unbind(this._events);
   }
 
   initializeDepthChart = () => {
