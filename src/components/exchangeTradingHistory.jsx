@@ -9,13 +9,6 @@ class ExchangeTradingHistory extends Component {
     tradeHistory: [],
     spinnerStatus: false
   };
-
-  componentDidMount() {
-    window.$(".exchangeTradingHistoryScroll").slimScroll({
-      height: "440px"
-    });
-  }
-
   componentWillUnmount() {
     ws.leaveChannel("TradeHistory." + this.props.selectedPair.id);
   }
@@ -78,56 +71,54 @@ class ExchangeTradingHistory extends Component {
         <div className="panel-heading-block">
           <h5>Trade History</h5>
         </div>
-        <div className="order-history-block-inner exchangeTradingHistoryScroll">
-          <div className="history-table-wrap">
-            <Spinner status={spinnerStatus} />
+        <Spinner status={spinnerStatus} />
+        <table className="table table-fixed das-oreder-table trade-history">
+          <thead>
+            <tr>
+              <th scope="col" className="col-4">
+                Price({selectedPair.quote_currency_symbol})
+              </th>
+              <th scope="col" className="col-4">
+                Qty({selectedPair.base_currency_symbol})
+              </th>
+              <th scope="col" className="col-4">
+                Time
+              </th>
+            </tr>
+          </thead>
 
-            {/* <table className="table coin-list table-hover history-table trade-history"> */}
-            <table className="table das-oreder-table table-hover trade-history">
-              <thead>
-                <tr>
-                  <th scope="col">
-                    Price({selectedPair.quote_currency_symbol})
-                  </th>
-                  <th scope="col">Qty({selectedPair.base_currency_symbol})</th>
-                  <th scope="col">Time</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {tradeHistory.map((value, i) => (
-                  <tr key={value.id}>
-                    <td>
-                      <span
-                        className={
-                          tradeHistory[i + 1] &&
-                          tradeHistory[i + 1].rate > value.rate
-                            ? "color-sell"
-                            : tradeHistory[i + 1] &&
-                              tradeHistory[i + 1].rate < value.rate
-                            ? "color-buy"
-                            : "color"
-                        }
-                      >
-                        {value.rate}
-                      </span>
-                    </td>
-                    <td>
-                      <span>{value.quantity.toFixed(8)}</span>
-                    </td>
-                    {/* <td>{moment(value.created_at).format("HH:mm:ss")}</td> */}
-                    <td>
-                      <span>
-                        {" "}
-                        {value.created_at && value.created_at.split(" ")[1]}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+          <tbody>
+            {tradeHistory.map((value, i) => (
+              <tr key={value.id}>
+                <td className="col-4">
+                  <span
+                    className={
+                      tradeHistory[i + 1] &&
+                      tradeHistory[i + 1].rate > value.rate
+                        ? "color-sell"
+                        : tradeHistory[i + 1] &&
+                          tradeHistory[i + 1].rate < value.rate
+                        ? "color-buy"
+                        : "color"
+                    }
+                  >
+                    {value.rate}
+                  </span>
+                </td>
+                <td className="col-4">
+                  <span>{value.quantity.toFixed(8)}</span>
+                </td>
+                {/* <td className="col-4">{moment(value.created_at).format("HH:mm:ss")}</td> */}
+                <td className="col-4">
+                  <span>
+                    {" "}
+                    {value.created_at && value.created_at.split(" ")[1]}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     );
   }

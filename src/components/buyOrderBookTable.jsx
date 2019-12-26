@@ -3,45 +3,29 @@ import React from "react";
 const BuyOrderBookTable = ({ selectedPairStats, buyOrders }) => {
   return (
     <React.Fragment>
-      <table className="table das-oreder-table das-buy-table table-hover exchange-orderBook">
+      <table className="table table-fixed das-oreder-table das-buy-table exchange-orderBook">
         <thead>
           <tr>
-            <th
-              className="th"
-              scope="col"
-              //  style={{ width: "33.33%" }}
-            >
+            <th scope="col" className="col-4 th">
               <span className="color-buy">
                 {Object.keys(selectedPairStats).length > 0 &&
                   selectedPairStats.last_rate}
               </span>
-              {/* <img src="./images/exchange/4.png" alt="img" /> */}
             </th>
-            <th
-              className=""
-              scope="col"
-              // currency-rate
-              // style={{ width: "33.33%" }}
-            ></th>
-            <th
-              className="text-right"
-              scope="col"
-              //  style={{ width: "33.33%" }}
-            >
-              {/* <img src="./images/exchange/2.png" alt="img" /> */}
-            </th>
+            <th scope="col" className="col-4"></th>
+            <th scope="col" className="col-4"></th>
           </tr>
         </thead>
         <tbody>
           {buyOrders.map(value => (
             <tr key={value.id}>
-              <td>
+              <td className="col-4">
                 <span className="color-buy">{value.rate}</span>
               </td>
-              <td className="">
+              <td className="col-4">
                 <span>{value.tradable_quantity.toFixed(8)}</span>
               </td>
-              <td className="text-right">
+              <td className="col-4">
                 <span>{(value.rate * value.tradable_quantity).toFixed(8)}</span>
                 <div className="rate-ratio"></div>
               </td>
@@ -50,22 +34,22 @@ const BuyOrderBookTable = ({ selectedPairStats, buyOrders }) => {
         </tbody>
       </table>
       {/* <div className="container">
-        {buyOrders.map(value => (
-          <div className="row orderBookRow" key={value.id}>
-            <div className="rate-ratio" style={{}}></div>
-            <div className="col-md-4">
-              <span className="color-buy">{value.rate}</span>
+          {buyOrders.map(value => (
+            <div className="row orderBookRow" key={value.id}>
+              <div className="rate-ratio" style={{}}></div>
+              <div className="col-md-4">
+                <span className="color-buy">{value.rate}</span>
+              </div>
+              <div className=" col-md-4">
+                <span>{value.tradable_quantity}</span>
+              </div>
+              <div className="col-md-4 text-right">
+                <span>{(value.rate * value.tradable_quantity).toFixed(8)}</span>
+              </div>
+  
             </div>
-            <div className=" col-md-4">
-              <span>{value.tradable_quantity}</span>
-            </div>
-            <div className="col-md-4 text-right">
-              <span>{(value.rate * value.tradable_quantity).toFixed(8)}</span>
-            </div>
-
-          </div>
-        ))}
-      </div> */}
+          ))}
+        </div> */}
     </React.Fragment>
   );
 };

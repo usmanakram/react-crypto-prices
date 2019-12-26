@@ -4,12 +4,6 @@ import CurrencyPairsTables from "./currencyPairsTables";
 class CurrencyPairs extends Component {
   state = {};
 
-  componentDidMount() {
-    window.$(".currencyPairScroll").slimScroll({
-      height: "130px"
-    });
-  }
-
   render() {
     const { currencyPairs } = this.props;
     const quoteCurrencies = [
@@ -51,7 +45,7 @@ class CurrencyPairs extends Component {
               ))}
             </ul>
           </div>
-          <div className="market-ticker-block currencyPairScroll">
+          <div className="market-ticker-block">
             <CurrencyPairsTables currencyPairs={currencyPairs} />
           </div>
         </div>

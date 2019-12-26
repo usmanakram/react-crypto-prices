@@ -163,7 +163,11 @@ input.disabled {
 .order-history-block {
   margin-bottom: 5px;
 }
-
+.order-history-block .table-fixed tbody {
+  height: 485px;
+  overflow-y: auto;
+  width: 100%;
+}
 /* ===============================================tradingview================================================ */
 /* ===============================================order Book & trade left right Padding================================================ */
 
@@ -191,6 +195,14 @@ input.disabled {
 }
 
 /* ===============================================order Book & trade left right Padding================================================ */
+/* ===============================================LeftSideBar================================================ */
+.leftSideBar .table-fixed tbody {
+  height: 290px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+/* ===============================================LeftSideBar================================================ */
 /* ===============================================order area================================================ */
 
 .ticker-nav .nav-item a {
@@ -284,7 +296,7 @@ input.disabled {
 }
 
 /* ======================================= DepthChart================================================== */
-/* ======================================= tradingview, exchangeorderare================================================== */
+/* ======================================= tradingview, exchangeorderarea================================================== */
 
 .parent-order-tab {
   line-height: 22px;
@@ -298,7 +310,11 @@ input.disabled {
 .dark-blue-bg .dashes {
   border-bottom: 1px #192030 dashed;
 }
-/* ======================================= tradingview, exchangeorderare================================================== */
+.dark-blue-bg .form-horizontal input.form-control:not(:read-only) {
+  background: transparent;
+  color: #fff;
+}
+/* ======================================= tradingview, exchangeorderarea================================================== */
 
 /* ==================================CurrencyPair=================================== */
 
@@ -336,6 +352,11 @@ input.disabled {
 }
 .parent-order-tab .nav-item a.nav-link.active {
   font-weight: 600;
+}
+.tab-content .table-fixed tbody {
+  height: 55px;
+  overflow-y: auto;
+  width: 100%;
 }
 /* ==================================CurrencyPair=================================== */
 /* ==================================style.css=================================== */
@@ -479,7 +500,8 @@ input.disabled {
   color: #fff;
 }
 .navbar-nav .dropdown-menu > li > a:hover {
-  color: #000 !important;
+  background-color: #1f2738 !important;
+  color: rgb(177, 176, 176) !important;
 }
 .navbar-nav .dropdown-menu {
   padding: 0px;
@@ -512,3 +534,53 @@ input.disabled {
 }
 
 /* ==================================Footer=================================== */
+/* =================.table-fixed=========================== */
+.table-fixed thead,
+.table-fixed tbody,
+.table-fixed tr,
+.table-fixed td,
+.table-fixed th {
+  display: block;
+}
+
+.table-fixed tbody td,
+.table-fixed tbody th,
+.table-fixed thead > tr > th {
+  float: left;
+  position: relative;
+}
+.col-lg-3 ::after {
+  content: "";
+  clear: both;
+  display: block;
+}
+/* width */
+.col-lg-3 ::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.col-lg-3 ::-webkit-scrollbar-track {
+  background: #fff;
+}
+.dark-blue-bg .col-lg-3 ::-webkit-scrollbar-track {
+  background: #0b132d;
+}
+
+/* Handle */
+.col-lg-3 ::-webkit-scrollbar-thumb {
+  background: rgba(214, 214, 214, 0.651);
+}
+.dark-blue-bg .col-lg-3 ::-webkit-scrollbar-thumb {
+  background: #0f1938;
+}
+
+/* Handle on hover */
+.col-lg-3 ::-webkit-scrollbar-thumb:hover {
+  background: rgba(167, 167, 167, 0.795);
+}
+.dark-blue-bg .col-lg-3 ::-webkit-scrollbar-thumb:hover {
+  background: #142049;
+}
+
+/* ===================.table-fixed======================= */

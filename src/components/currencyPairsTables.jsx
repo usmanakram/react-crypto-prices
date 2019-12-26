@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { exchangeRightTopValues } from "../services/fakeExchange";
 
 class CurrencyPairsTables extends Component {
   state = {
@@ -40,14 +39,19 @@ class CurrencyPairsTables extends Component {
           className="tab-pane fade das-market-tab-pane"
           id="favorite_ticker"
         >
-          <table className="table das-oreder-table table-hover exchange-orderBook">
-            {/* <table className="table coin-list table-hover das-market-table"> */}
+          <table className="table table-fixed das-oreder-table exchange-orderBook">
             <thead>
               <tr>
-                <th></th>
-                <th scope="col">Pair</th>
-                <th scope="col">Price</th>
-                <th scope="col">Change</th>
+                <th scope="col" className="col-2"></th>
+                <th scope="col" className="col-3">
+                  Pair
+                </th>
+                <th scope="col" className="col-3">
+                  Price
+                </th>
+                <th scope="col" className="col-4">
+                  Change
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -55,7 +59,7 @@ class CurrencyPairsTables extends Component {
                 .filter(p => favorites.includes(p.symbol))
                 .map(value => (
                   <tr key={value.id}>
-                    <td>
+                    <td className="col-2">
                       <div
                         className={`favorite-coin ${
                           favorites.includes(value.symbol) ? "active" : ""
@@ -63,17 +67,17 @@ class CurrencyPairsTables extends Component {
                         onClick={() => this.setFavorites(value.symbol)}
                       ></div>
                     </td>
-                    <td>
+                    <td className="col-3">
                       <Link to={`/exchange/${value.symbol}`}>
                         {value.symbol}
                       </Link>
                     </td>
-                    <td>
+                    <td className="col-3">
                       <span className={value.color1}>
                         {value.latest_rate.last_rate}
                       </span>
                     </td>
-                    <td>
+                    <td className="col-4">
                       <span
                         className={
                           parseFloat(value.latest_rate.rate_change) > 0
@@ -88,14 +92,14 @@ class CurrencyPairsTables extends Component {
                 ))}
               {/* {exchangeRightTopValues.map(value => (
                 <tr key={value.price}>
-                  <td>
+                  <td className="col-3">
                     <div className="favorite-coin"></div>
                   </td>
-                  <td>{value.pair}</td>
-                  <td>
+                  <td className="col-3">{value.pair}</td>
+                  <td className="col-3">
                     <span className={value.color1}>{value.price}</span>
                   </td>
-                  <td>
+                  <td className="col-3">
                     <span className={value.color2}>{value.change}</span>
                   </td>
                 </tr>
@@ -112,13 +116,19 @@ class CurrencyPairsTables extends Component {
             }`}
             id={c}
           >
-            <table className="table das-oreder-table table-hover exchange-orderBook">
+            <table className="table table-fixed das-oreder-table exchange-orderBook">
               <thead>
                 <tr>
-                  <th></th>
-                  <th scope="col">Pair</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">Change</th>
+                  <th scope="col" className="col-2"></th>
+                  <th scope="col" className="col-3">
+                    Pair
+                  </th>
+                  <th scope="col" className="col-3">
+                    Price
+                  </th>
+                  <th scope="col" className="col-4">
+                    Change
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -126,7 +136,7 @@ class CurrencyPairsTables extends Component {
                   .filter(p => p.quote_currency_symbol === c)
                   .map(value => (
                     <tr key={value.id}>
-                      <td>
+                      <td className="col-2">
                         <div
                           className={`favorite-coin ${
                             favorites.includes(value.symbol) ? "active" : ""
@@ -134,17 +144,17 @@ class CurrencyPairsTables extends Component {
                           onClick={() => this.setFavorites(value.symbol)}
                         ></div>
                       </td>
-                      <td>
+                      <td className="col-3">
                         <Link to={`/exchange/${value.symbol}`}>
                           {value.symbol}
                         </Link>
                       </td>
-                      <td>
+                      <td className="col-3">
                         <span className={value.color1}>
                           {value.latest_rate.last_rate}
                         </span>
                       </td>
-                      <td>
+                      <td className="col-4">
                         <span
                           className={
                             parseFloat(value.latest_rate.rate_change) > 0
@@ -178,14 +188,14 @@ class CurrencyPairsTables extends Component {
             <tbody>
               {exchangeRightTopValues.map(value => (
                 <tr key={value.price}>
-                  <td>
+                  <td className="col-3">
                     <div className="favorite-coin"></div>
                   </td>
-                  <td>{value.pair}</td>
-                  <td>
+                  <td className="col-3">{value.pair}</td>
+                  <td className="col-3">
                     <span className={value.color1}>{value.price}</span>
                   </td>
-                  <td>
+                  <td className="col-3">
                     <span className={value.color2}>{value.change}</span>
                   </td>
                 </tr>
@@ -210,14 +220,14 @@ class CurrencyPairsTables extends Component {
             <tbody>
               {exchangeRightTopValues.map(value => (
                 <tr key={value.price}>
-                  <td>
+                  <td className="col-3">
                     <div className="favorite-coin"></div>
                   </td>
-                  <td>{value.pair}</td>
-                  <td>
+                  <td className="col-3">{value.pair}</td>
+                  <td className="col-3">
                     <span className={value.color1}>{value.price}</span>
                   </td>
-                  <td>
+                  <td className="col-3">
                     <span className={value.color2}>{value.change}</span>
                   </td>
                 </tr>
