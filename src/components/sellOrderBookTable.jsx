@@ -3,16 +3,16 @@ import React from "react";
 const SellOrderBookTable = ({ selectedPair, sellOrders }) => {
   return (
     <React.Fragment>
-      <table className="table das-oreder-table table-hover exchange-orderBook">
+      <table className="table table-fixed das-oreder-table exchange-orderBook">
         <thead>
           <tr>
-            <th className="" scope="col">
+            <th scope="col" className="col-4">
               Price({selectedPair.quote_currency_symbol})
             </th>
-            <th className="" scope="col">
+            <th scope="col" className="col-4">
               Qty({selectedPair.base_currency_symbol})
             </th>
-            <th className="text-right" scope="col">
+            <th scope="col" className="col-4">
               Total({selectedPair.quote_currency_symbol})
             </th>
           </tr>
@@ -20,13 +20,14 @@ const SellOrderBookTable = ({ selectedPair, sellOrders }) => {
         <tbody>
           {sellOrders.map(value => (
             <tr key={value.id}>
-              <td>
+              <td className="col-4">
                 <span className="color-sell">{value.rate}</span>
               </td>
-              <td className="">
+              <td className="col-4">
                 <span>{value.tradable_quantity.toFixed(8)}</span>
               </td>
-              <td className="text-right">
+              <td className="col-4">
+                {" "}
                 <span>{(value.rate * value.tradable_quantity).toFixed(8)}</span>
                 <div className="rate-ratio"></div>
               </td>
