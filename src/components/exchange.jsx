@@ -32,14 +32,8 @@ class Exchange extends Component {
 
   user = auth.getCurrentUser();
 
-  async componentDidMount() {
-    try {
-      const { data: currencyPairs } = await http.get("/currency-pairs");
-      this.setState({ currencyPairs });
-    } catch (ex) {
-      console.log(ex);
-    }
-
+  componentDidMount() {
+    this.getCurrencyPairs();
     this.handleUserStream();
   }
 
@@ -60,6 +54,15 @@ class Exchange extends Component {
     console.log("inside getDerivedStateFromProps method");
     return null;
   } */
+
+  getCurrencyPairs = async () => {
+    try {
+      const { data: currencyPairs } = await http.get("/currency-pairs");
+      this.setState({ currencyPairs });
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
 
   handleCurrencyPairChange = async symbol => {
     const selectedPair = this.state.currencyPairs.find(
