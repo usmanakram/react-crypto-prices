@@ -42,11 +42,13 @@ class CurrencyPairsTables extends Component {
           <table className="table table-fixed das-oreder-table exchange-orderBook">
             <thead>
               <tr>
-                <th scope="col" className="col-2"></th>
+                <th scope="col" className="col-1">
+                  <i className="far fa-star"></i>
+                </th>
                 <th scope="col" className="col-3">
                   Pair
                 </th>
-                <th scope="col" className="col-3">
+                <th scope="col" className="col-4">
                   Price
                 </th>
                 <th scope="col" className="col-4">
@@ -59,7 +61,7 @@ class CurrencyPairsTables extends Component {
                 .filter(p => favorites.includes(p.symbol))
                 .map(value => (
                   <tr key={value.id}>
-                    <td className="col-2">
+                    <td className="col-1">
                       <div
                         className={`favorite-coin ${
                           favorites.includes(value.symbol) ? "active" : ""
@@ -72,7 +74,7 @@ class CurrencyPairsTables extends Component {
                         {value.symbol}
                       </Link>
                     </td>
-                    <td className="col-3">
+                    <td className="col-4">
                       <span className={value.color1}>
                         {value.latest_rate.last_rate}
                       </span>
@@ -119,11 +121,13 @@ class CurrencyPairsTables extends Component {
             <table className="table table-fixed das-oreder-table exchange-orderBook">
               <thead>
                 <tr>
-                  <th scope="col" className="col-2"></th>
+                  <th scope="col" className="col-1">
+                    <i className="far fa-star"></i>
+                  </th>
                   <th scope="col" className="col-3">
                     Pair
                   </th>
-                  <th scope="col" className="col-3">
+                  <th scope="col" className="col-4">
                     Price
                   </th>
                   <th scope="col" className="col-4">
@@ -136,7 +140,7 @@ class CurrencyPairsTables extends Component {
                   .filter(p => p.quote_currency_symbol === c)
                   .map(value => (
                     <tr key={value.id}>
-                      <td className="col-2">
+                      <td className="col-1">
                         <div
                           className={`favorite-coin ${
                             favorites.includes(value.symbol) ? "active" : ""
@@ -149,7 +153,7 @@ class CurrencyPairsTables extends Component {
                           {value.symbol}
                         </Link>
                       </td>
-                      <td className="col-3">
+                      <td className="col-4">
                         <span className={value.color1}>
                           {value.latest_rate.last_rate}
                         </span>

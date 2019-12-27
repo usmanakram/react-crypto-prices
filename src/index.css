@@ -319,7 +319,7 @@ input.disabled {
 /* ==================================CurrencyPair=================================== */
 
 .exchange-orderBook tbody .favorite-coin {
-  padding: 0 10px;
+  padding: 0 0px;
 }
 .dark-blue-bg .table {
   color: #ffffff;
@@ -358,6 +358,10 @@ input.disabled {
   overflow-y: auto;
   width: 100%;
 }
+.market-new-ticker-block {
+  background: rgba(255, 255, 255, 0);
+}
+
 /* ==================================CurrencyPair=================================== */
 /* ==================================style.css=================================== */
 #chartdiv {
@@ -569,18 +573,20 @@ input.disabled {
 
 /* Handle */
 .col-lg-3 ::-webkit-scrollbar-thumb {
-  background: rgba(214, 214, 214, 0.651);
+  background: rgba(185, 184, 184, 0.651);
+  border-radius: 50px;
 }
 .dark-blue-bg .col-lg-3 ::-webkit-scrollbar-thumb {
-  background: #0f1938;
+  background: #18295a;
 }
 
 /* Handle on hover */
 .col-lg-3 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(167, 167, 167, 0.795);
+  background: rgba(114, 114, 114, 0.795);
+  border-radius: 50px;
 }
 .dark-blue-bg .col-lg-3 ::-webkit-scrollbar-thumb:hover {
-  background: #142049;
+  background: #22377a;
 }
 
 /* ===================.table-fixed======================= */

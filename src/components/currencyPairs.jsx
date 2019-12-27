@@ -25,7 +25,6 @@ class CurrencyPairs extends Component {
                   role="tab"
                   data-toggle="tab"
                 >
-                  <i className="far fa-star"></i>
                   Favorites
                 </a>
               </li>
