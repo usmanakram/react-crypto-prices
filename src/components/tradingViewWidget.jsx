@@ -19,6 +19,8 @@ class TradingViewWidget extends Component {
   tvFullWidth = React.createRef();
 
   chart = {};
+  candleSeries = {};
+  volumeSeries = {};
   minIntervals = ["1m", "5m", "15m", "30m"];
 
   /* _events = {
@@ -97,35 +99,33 @@ class TradingViewWidget extends Component {
       width: 600,
       height: 300,
       layout: {
-        backgroundColor: "#000000",
+        // backgroundColor: "#000000",
+        backgroundColor: "#131722",
         textColor: "rgba(255, 255, 255, 0.9)"
       },
       grid: {
-        vertLines: {
-          color: "rgba(197, 203, 206, 0.5)"
-        },
-        horzLines: {
-          color: "rgba(197, 203, 206, 0.5)"
-        }
+        // vertLines: { color: "rgba(197, 203, 206, 0.5)" },
+        // horzLines: { color: "rgba(197, 203, 206, 0.5)" }
+        vertLines: { color: "#363C4E" },
+        horzLines: { color: "#363C4E" }
       },
-      crosshair: {
-        mode: CrosshairMode.Normal
-      },
-      priceScale: {
-        borderColor: "rgba(197, 203, 206, 0.8)"
-      },
-      timeScale: {
-        borderColor: "rgba(197, 203, 206, 0.8)"
-      }
+      crosshair: { mode: CrosshairMode.Normal },
+      // priceScale: { borderColor: "rgba(197, 203, 206, 0.8)" },
+      // timeScale: { borderColor: "rgba(197, 203, 206, 0.8)" }
+      priceScale: { borderColor: "#ABACAF" },
+      timeScale: { borderColor: "#ABACAF" }
     });
 
+    /**
+     * CandleStick chart setup
+     */
     this.candleSeries = this.chart.addCandlestickSeries({
-      upColor: "green",
-      downColor: "red",
-      borderDownColor: "red",
-      borderUpColor: "green",
-      wickDownColor: "red",
-      wickUpColor: "green",
+      upColor: "#26A69A",
+      downColor: "#EF5350",
+      borderDownColor: "#EF5350",
+      borderUpColor: "#26A69A",
+      wickDownColor: "#EF5350",
+      wickUpColor: "#26A69A",
       priceFormat: {
         type: "price",
         precision: 8,
@@ -134,6 +134,17 @@ class TradingViewWidget extends Component {
     });
 
     this.candleSeries.setData(candleChartdData);
+
+    /**
+     * Volume chart setup
+     */
+    this.volumeSeries = this.chart.addHistogramSeries({
+      color: "#26a69a",
+      lineWidth: 2,
+      priceFormat: { type: "volume" },
+      overlay: true,
+      scaleMargins: { top: 0.8, bottom: 0 }
+    });
   };
 
   handleFullScreenTrigger = () => {
@@ -210,6 +221,9 @@ class TradingViewWidget extends Component {
       this.graphData = candleChartData.history;
 
       this.candleSeries.setData(this.graphData);
+
+      const volumeData = this.getVolumeGraphData(this.graphData);
+      this.volumeSeries.setData(volumeData);
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         console.log(ex.response.data);
@@ -232,7 +246,23 @@ class TradingViewWidget extends Component {
       }
 
       this.candleSeries.setData(this.graphData);
+
+      const volumeData = this.getVolumeGraphData(this.graphData);
+      this.volumeSeries.setData(volumeData);
     });
+  };
+
+  getVolumeGraphData = graphData => {
+    return graphData.map((c, i) => ({
+      time: c.time,
+      value: c.volume,
+      color:
+        i === 0 || graphData[i].volume === graphData[i - 1].volume
+          ? "white"
+          : graphData[i].volume > graphData[i - 1].volume
+          ? "#1D5F5E"
+          : "#813539"
+    }));
   };
 
   handleChange = ({ currentTarget: input }) => {
