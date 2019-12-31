@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { candleChartdData } from "../services/custom";
 import { createChart, CrosshairMode } from "lightweight-charts";
+import moment from "moment";
 import trade from "../services/tradeService";
 import ws from "../services/webSocketService";
 import eventHandler from "../utils/eventHandler";
@@ -21,6 +22,7 @@ class TradingViewWidget extends Component {
   chart = {};
   candleSeries = {};
   volumeSeries = {};
+  chartLabel = {};
   minIntervals = ["1m", "5m", "15m", "30m"];
 
   /* _events = {
@@ -99,21 +101,28 @@ class TradingViewWidget extends Component {
       width: 600,
       height: 300,
       layout: {
-        // backgroundColor: "#000000",
         backgroundColor: "#131722",
         textColor: "rgba(255, 255, 255, 0.9)"
       },
       grid: {
-        // vertLines: { color: "rgba(197, 203, 206, 0.5)" },
-        // horzLines: { color: "rgba(197, 203, 206, 0.5)" }
         vertLines: { color: "#363C4E" },
         horzLines: { color: "#363C4E" }
       },
       crosshair: { mode: CrosshairMode.Normal },
-      // priceScale: { borderColor: "rgba(197, 203, 206, 0.8)" },
-      // timeScale: { borderColor: "rgba(197, 203, 206, 0.8)" }
       priceScale: { borderColor: "#ABACAF" },
-      timeScale: { borderColor: "#ABACAF" }
+      timeScale: {
+        borderColor: "#ABACAF",
+        timeVisible: true,
+        secondsVisible: false
+      }
+      // watermark: {
+      //   color: "white",
+      //   visible: true,
+      //   text: "TradingView Watermark Example",
+      //   fontSize: 12,
+      //   horzAlign: "left",
+      //   vertAlign: "top"
+      // }
     });
 
     /**
@@ -145,6 +154,70 @@ class TradingViewWidget extends Component {
       overlay: true,
       scaleMargins: { top: 0.8, bottom: 0 }
     });
+
+    /**
+     * Create chart label (OHLC)
+     */
+    // document.body.style.position = "relative";
+
+    let legend = document.createElement("div");
+    // legend.style.cssText = "position: absolute; left: 3px; top: 0; z-index: 1; font-size: 12px; line-height: 18px; font-weight: 300;";
+    legend.setAttribute(
+      "style",
+      "position: absolute; left: 3px; top: 0; z-index: 1; font-size: 12px; line-height: 18px; font-weight: 300;"
+    );
+    // document.body.appendChild(legend);
+    this._id.current.appendChild(legend);
+
+    this.chartLabel = document.createElement("div");
+    this.chartLabel.innerText = "O H L C";
+    this.chartLabel.style.color = "white";
+    legend.appendChild(this.chartLabel);
+
+    // this.chart.subscribeVisibleTimeRangeChange(function(param) {
+    //   console.log("inside subscribeVisibleTimeRangeChange");
+    //   console.log(param);
+    // });
+    // this.chart.subscribeClick(function(param) {
+    //   console.log("inside subscribeClick");
+    //   console.log(param);
+    // });
+    this.chart.subscribeCrosshairMove(param => {
+      if (param.time) {
+        // if (
+        //   param === undefined ||
+        //   param.time === undefined ||
+        //   param.point.x < 0 ||
+        //   param.point.y < 0
+        // ) {
+
+        // Get hovered candle stats
+        const price = param.seriesPrices.get(this.candleSeries);
+
+        // Populate hovered candle stats in chart label
+        this.chartLabel.innerHTML = this.getOHLC({
+          ...price,
+          time: param.time
+        });
+      } else if (Object.keys(this.graphData).length) {
+        // Populate last candle stats in chart lebel, if candle doesn't exist at mouseover
+        this.chartLabel.innerHTML = this.getOHLC(
+          this.graphData[this.graphData.length - 1]
+        );
+      }
+    });
+  };
+
+  getOHLC = ({ open, high, low, close, time }) => {
+    // this.chartLabel.style.color = open > close ? "#EF5350" : "#26A69A";
+    const color = open > close ? "#EF5350" : "#26A69A";
+    return `${moment(time * 1000)
+      .utc()
+      .format("YYYY-MM-DD HH:mm")}  O:<span style="color: ${color}">${open &&
+      open.toFixed(8)}</span> H:<span style="color: ${color}">${high &&
+      high.toFixed(8)}</span> L:<span style="color: ${color}">${low &&
+      low.toFixed(8)}</span> C:<span style="color: ${color}">${close &&
+      close.toFixed(8)}</span>`;
   };
 
   handleFullScreenTrigger = () => {
@@ -222,6 +295,11 @@ class TradingViewWidget extends Component {
 
       this.candleSeries.setData(this.graphData);
 
+      // Populate last candle stats in chart lebel
+      this.chartLabel.innerHTML = this.getOHLC(
+        this.graphData[this.graphData.length - 1]
+      );
+
       const volumeData = this.getVolumeGraphData(this.graphData);
       this.volumeSeries.setData(volumeData);
     } catch (ex) {
@@ -256,17 +334,27 @@ class TradingViewWidget extends Component {
     return graphData.map((c, i) => ({
       time: c.time,
       value: c.volume,
-      color:
-        i === 0 || graphData[i].volume === graphData[i - 1].volume
-          ? "white"
-          : graphData[i].volume > graphData[i - 1].volume
-          ? "#1D5F5E"
-          : "#813539"
+      color: c.open > c.close ? "#813539" : "#1D5F5E"
     }));
   };
 
   handleChange = ({ currentTarget: input }) => {
     this.setState({ timeInterval: input.value });
+  };
+
+  createToolbarButton = (timeInterval, selectedTimeInterval) => {
+    return (
+      <button
+        className={
+          timeInterval === selectedTimeInterval ? "selected-interval" : ""
+        }
+        value={timeInterval}
+        onClick={this.handleChange}
+        type="button"
+      >
+        {timeInterval}
+      </button>
+    );
   };
 
   render() {
@@ -288,59 +376,20 @@ class TradingViewWidget extends Component {
                 >
                   {this.minIntervals.includes(timeInterval)
                     ? `${timeInterval}`
-                    : "1m"}
+                    : this.minIntervals[0]}
                 </button>
                 <ul className="dropdown-menu">
                   {this.minIntervals.map(i => (
-                    <li key={i}>
-                      <button
-                        className={
-                          timeInterval === i ? "selected-interval" : ""
-                        }
-                        value={i}
-                        onClick={this.handleChange}
-                        type="button"
-                      >
-                        {i}
-                      </button>
-                    </li>
+                    <li key={i}>{this.createToolbarButton(i, timeInterval)}</li>
                   ))}
                 </ul>
               </div>
 
-              <button
-                className={timeInterval === "1H" ? "selected-interval" : ""}
-                value="1H"
-                onClick={this.handleChange}
-                type="button"
-              >
-                1H
-              </button>
+              {this.createToolbarButton("1H", timeInterval)}
+              {this.createToolbarButton("1D", timeInterval)}
+              {this.createToolbarButton("1W", timeInterval)}
+              {this.createToolbarButton("1M", timeInterval)}
 
-              <button
-                className={timeInterval === "1D" ? "selected-interval" : ""}
-                value="1D"
-                onClick={this.handleChange}
-                type="button"
-              >
-                1D
-              </button>
-              <button
-                className={timeInterval === "1W" ? "selected-interval" : ""}
-                value="1W"
-                onClick={this.handleChange}
-                type="button"
-              >
-                1W
-              </button>
-              <button
-                className={timeInterval === "1M" ? "selected-interval" : ""}
-                value="1M"
-                onClick={this.handleChange}
-                type="button"
-              >
-                1M
-              </button>
               {isTvFullWidth ? (
                 <svg
                   viewBox="0 0 14 16"
@@ -377,7 +426,7 @@ class TradingViewWidget extends Component {
             </div>
           </div>
 
-          <div ref={this._id}>
+          <div ref={this._id} style={{ position: "relative" }}>
             {/* <TradingViewGraph
             symbol="EURUSD"
             theme="Light"

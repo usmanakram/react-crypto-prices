@@ -904,14 +904,14 @@ window.$(function() {
   window.$('[data-toggle="popover"]').on("shown.bs.popover", function() {
     let style = {};
     let bodyStyle = {};
-    let popoverTopStyle = {};
+    // let popoverTopStyle = {};
     if (window.$("#root .dark-blue-bg").length > 0) {
       style = { background: "#171f38", color: "#fff" };
-      popoverTopStyle = { "border-bottom-color": "#171f38" };
+      // popoverTopStyle = { "border-bottom-color": "#171f38" };
       bodyStyle = { color: "#fff" };
     } else {
       style = { background: "#fff", color: "#000" };
-      popoverTopStyle = { "border-bottom-color": "#fff" };
+      // popoverTopStyle = { "border-bottom-color": "#fff" };
       bodyStyle = { color: "#000" };
     }
 

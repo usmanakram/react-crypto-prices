@@ -48,7 +48,7 @@ class ExchangeTradingHistory extends Component {
     ws.channel("TradeHistory." + this.props.selectedPair.id).listen(
       "TradeHistoryUpdated",
       e => {
-        const { tradeHistory } = this.state;
+        let { tradeHistory } = this.state;
 
         if (tradeHistory.length) {
           tradeHistory.pop();
