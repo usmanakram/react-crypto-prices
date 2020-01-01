@@ -110,6 +110,7 @@ class MarketsTable extends Component {
   }
 
   decorateColumnName(column) {
+    return column;
     return column.substring(0, column.indexOf("USDT"));
   }
 
