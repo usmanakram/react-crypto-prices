@@ -75,7 +75,7 @@ class ExchangeBody extends Component {
 
     return (
       <div className="dashboard-block dashboard-white">
-        <div className="container">
+        <div className={isFullWidth ? "container-fluid" : "container"}>
           <div className="dashboard-body">
             <div className="row">
               <div className="col-lg-3 leftSideBar">

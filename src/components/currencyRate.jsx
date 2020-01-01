@@ -14,7 +14,7 @@ class CurrencyRate extends Component {
     } = this.props;
     return (
       <div className="currancy-rate-tb">
-        <div className="container">
+        <div className={isFullWidth ? "container-fluid" : "container"}>
           <div className="row">
             <div className="col">
               <div className="currency-rate latest-tranjections-block-inner">

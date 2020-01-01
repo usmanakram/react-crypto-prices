@@ -923,7 +923,7 @@ window.$(function() {
 // ==============================================PopOver================================================================
 // ==============================================exchangeHandleWidth====================================================
 
-export function handleWidth() {
+/* export function handleWidth() {
   let container = document.querySelectorAll("div.container:not(.exclude)");
   let replace = "container-fluid";
   if (container.length === 0) {
@@ -934,5 +934,5 @@ export function handleWidth() {
   for (var i = 0; i < container.length; i++) {
     container[i].classList.value = replace;
   }
-}
+} */
 // ==============================================exchangeHandleWidth====================================================

@@ -33,7 +33,9 @@ class Header extends Component {
     return (
       <React.Fragment>
         <nav className="navbar main-nav navbar-expand-lg">
-          <div className="container">
+          <div
+            className={this.props.isFullWidth ? "container-fluid" : "container"}
+          >
             <Link className="navbar-brand" to="/">
               <img className="navbar-logo" src={logo} alt="..." />
             </Link>

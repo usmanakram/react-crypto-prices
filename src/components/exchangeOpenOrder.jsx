@@ -154,11 +154,12 @@ class ExchangeOpenOrder extends Component {
   };
 
   render() {
+    const { isFullWidth } = this.props;
     const { openOrders, spinnerStatus } = this.state;
 
     return (
       <div className="latest-tranjections-area">
-        <div className="container">
+        <div className={isFullWidth ? "container-fluid" : "container"}>
           <div className="latest-tranjections-block-inner">
             <div className="panel-heading-block">
               <h5>Open Orders</h5>

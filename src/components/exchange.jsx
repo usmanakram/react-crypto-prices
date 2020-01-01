@@ -32,6 +32,14 @@ class Exchange extends Component {
 
   user = auth.getCurrentUser();
 
+  constructor() {
+    super();
+    const { darkBg, isFullWidth } = this.state;
+    this.state.darkBg = JSON.parse(localStorage.getItem("darkBg")) || darkBg;
+    this.state.isFullWidth =
+      JSON.parse(localStorage.getItem("isFullWidth")) || isFullWidth;
+  }
+
   componentDidMount() {
     this.getCurrencyPairs();
     this.handleUserStream();
@@ -165,11 +173,13 @@ class Exchange extends Component {
   };
 
   handleChangeBg = () => {
+    localStorage.setItem("darkBg", !this.state.darkBg);
     this.setState({ darkBg: !this.state.darkBg });
   };
   handleWidthChange = () => {
+    localStorage.setItem("isFullWidth", !this.state.isFullWidth);
     this.setState({ isFullWidth: !this.state.isFullWidth });
-    handleWidth();
+    // handleWidth();
   };
 
   render() {
@@ -186,7 +196,7 @@ class Exchange extends Component {
     return (
       <div className={darkBg ? "dark-blue-bg" : ""}>
         <div className="navigation-two">
-          <Header />
+          <Header isFullWidth={isFullWidth} />
         </div>
         <CurrencyRate
           darkBg={darkBg}
@@ -205,7 +215,10 @@ class Exchange extends Component {
           quoteCurrencyBalance={quoteCurrencyBalance}
           baseCurrencyBalance={baseCurrencyBalance}
         />
-        <ExchangeOpenOrder selectedPair={selectedPair} />
+        <ExchangeOpenOrder
+          selectedPair={selectedPair}
+          isFullWidth={isFullWidth}
+        />
         <GettingStarted />
       </div>
     );
