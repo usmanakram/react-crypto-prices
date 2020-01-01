@@ -22,6 +22,11 @@ class TradingViewWidget extends Component {
   chart = {};
   candleSeries = {};
   volumeSeries = {};
+  movingAverage = [
+    { period: 7, data: [], lineSeries: {}, color: "rgba(67, 83, 254, 1)" },
+    { period: 25, data: [], lineSeries: {}, color: "rgba(245, 124, 0, 1)" },
+    { period: 99, data: [], lineSeries: {}, color: "rgba(255, 255, 255, 0.8)" }
+  ];
   chartLabel = {};
   minIntervals = ["1m", "5m", "15m", "30m"];
 
@@ -49,6 +54,7 @@ class TradingViewWidget extends Component {
 
   componentDidMount() {
     this.initializeCandleStickGraph();
+    this.initializeMovingAverage();
 
     this.updateDimensions();
     eventHandler.bind(this._events);
@@ -160,7 +166,7 @@ class TradingViewWidget extends Component {
      */
     // document.body.style.position = "relative";
 
-    let legend = document.createElement("div");
+    const legend = document.createElement("div");
     // legend.style.cssText = "position: absolute; left: 3px; top: 0; z-index: 1; font-size: 12px; line-height: 18px; font-weight: 300;";
     legend.setAttribute(
       "style",
@@ -191,7 +197,7 @@ class TradingViewWidget extends Component {
         //   param.point.y < 0
         // ) {
 
-        // Get hovered candle stats
+        // Get hovered candle OHLC
         const price = param.seriesPrices.get(this.candleSeries);
 
         // Populate hovered candle stats in chart label
@@ -205,6 +211,19 @@ class TradingViewWidget extends Component {
           this.graphData[this.graphData.length - 1]
         );
       }
+    });
+  };
+
+  initializeMovingAverage = () => {
+    const options = {
+      // color: "rgba(67, 83, 254, 1)",
+      lineWidth: 1,
+      lastValueVisible: false,
+      priceLineVisible: false
+    };
+
+    this.movingAverage.map(ma => {
+      ma.lineSeries = this.chart.addLineSeries({ ...options, color: ma.color });
     });
   };
 
@@ -302,6 +321,8 @@ class TradingViewWidget extends Component {
 
       const volumeData = this.getVolumeGraphData(this.graphData);
       this.volumeSeries.setData(volumeData);
+
+      this.setMovingAverage();
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         console.log(ex.response.data);
@@ -327,6 +348,8 @@ class TradingViewWidget extends Component {
 
       const volumeData = this.getVolumeGraphData(this.graphData);
       this.volumeSeries.setData(volumeData);
+
+      this.setMovingAverage();
     });
   };
 
@@ -336,6 +359,23 @@ class TradingViewWidget extends Component {
       value: c.volume,
       color: c.open > c.close ? "#813539" : "#1D5F5E"
     }));
+  };
+
+  getMovingAverageData = (graphData, maPeriod) => {
+    // return graphData.map(c => ({ time: c.time, value: c.open }));
+    return graphData.map((candle, candleIndex) => {
+      if (candleIndex < maPeriod) return { time: candle.time, value: 0 };
+      let sum = 0;
+      for (let i = candleIndex - 1; i >= candleIndex - maPeriod; i--)
+        sum += graphData[i].close;
+      return { time: candle.time, value: sum / maPeriod };
+    });
+  };
+  setMovingAverage = () => {
+    this.movingAverage.map(ma => {
+      ma.data = this.getMovingAverageData(this.graphData, ma.period);
+      ma.lineSeries.setData(ma.data);
+    });
   };
 
   handleChange = ({ currentTarget: input }) => {
