@@ -11,6 +11,7 @@ import auth from "../services/authService";
 import ws from "../services/webSocketService";
 import { toast } from "react-toastify";
 import { handleWidth } from "../services/custom";
+import storage from "../utils/storage";
 
 class Exchange extends Component {
   state = {
@@ -26,7 +27,7 @@ class Exchange extends Component {
     baseCurrencyBalance: {},
     quoteCurrencyBalance: {},
     // OrderBookAndTradeHistorySpinner: false,
-    darkBg: false,
+    isDarkBg: false,
     isFullWidth: false
   };
 
@@ -34,10 +35,9 @@ class Exchange extends Component {
 
   constructor() {
     super();
-    const { darkBg, isFullWidth } = this.state;
-    this.state.darkBg = JSON.parse(localStorage.getItem("darkBg")) || darkBg;
-    this.state.isFullWidth =
-      JSON.parse(localStorage.getItem("isFullWidth")) || isFullWidth;
+    const { isDarkBg, isFullWidth } = this.state;
+    this.state.isDarkBg = storage.get("isDarkBg") || isDarkBg;
+    this.state.isFullWidth = storage.get("isFullWidth") || isFullWidth;
   }
 
   componentDidMount() {
@@ -173,11 +173,11 @@ class Exchange extends Component {
   };
 
   handleChangeBg = () => {
-    localStorage.setItem("darkBg", !this.state.darkBg);
-    this.setState({ darkBg: !this.state.darkBg });
+    storage.set("isDarkBg", !this.state.isDarkBg);
+    this.setState({ isDarkBg: !this.state.isDarkBg });
   };
   handleWidthChange = () => {
-    localStorage.setItem("isFullWidth", !this.state.isFullWidth);
+    storage.set("isFullWidth", !this.state.isFullWidth);
     this.setState({ isFullWidth: !this.state.isFullWidth });
     // handleWidth();
   };
@@ -189,17 +189,17 @@ class Exchange extends Component {
       baseCurrencyBalance,
       quoteCurrencyBalance,
       currencyPairs,
-      darkBg,
+      isDarkBg,
       isFullWidth
     } = this.state;
 
     return (
-      <div className={darkBg ? "dark-blue-bg" : ""}>
+      <div className={isDarkBg ? "dark-blue-bg" : ""}>
         <div className="navigation-two">
           <Header isFullWidth={isFullWidth} />
         </div>
         <CurrencyRate
-          darkBg={darkBg}
+          isDarkBg={isDarkBg}
           onBgChangeRequest={this.handleChangeBg}
           selectedPair={selectedPair}
           currencyPairs={currencyPairs}

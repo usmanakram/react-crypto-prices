@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import storage from "../utils/storage";
 
 class CurrencyPairsTables extends Component {
   state = {
@@ -9,7 +10,7 @@ class CurrencyPairsTables extends Component {
   favoritesKey = "favoritePairs";
 
   componentDidMount() {
-    const favorites = JSON.parse(localStorage.getItem(this.favoritesKey)) || [];
+    const favorites = storage.get(this.favoritesKey) || [];
     this.setState({ favorites });
   }
 
@@ -20,7 +21,7 @@ class CurrencyPairsTables extends Component {
     if (index === -1) favorites.push(symbol);
     else favorites.splice(index, 1);
 
-    localStorage.setItem(this.favoritesKey, JSON.stringify(favorites));
+    storage.set(this.favoritesKey, favorites);
     this.setState({ favorites });
   };
 
