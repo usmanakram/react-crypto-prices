@@ -23,11 +23,30 @@ class TradingViewWidget extends Component {
   candleSeries = {};
   volumeSeries = {};
   movingAverage = [
-    { period: 7, data: [], lineSeries: {}, color: "rgba(67, 83, 254, 1)" },
-    { period: 25, data: [], lineSeries: {}, color: "rgba(245, 124, 0, 1)" },
-    { period: 99, data: [], lineSeries: {}, color: "rgba(255, 255, 255, 0.8)" }
+    {
+      period: 7,
+      color: "rgba(67, 83, 254, 1)",
+      type: "close",
+      data: [],
+      lineSeries: {}
+    },
+    {
+      period: 25,
+      color: "rgba(245, 124, 0, 1)",
+      type: "close",
+      data: [],
+      lineSeries: {}
+    },
+    {
+      period: 99,
+      color: "rgba(255, 255, 255, 0.8)",
+      type: "close",
+      data: [],
+      lineSeries: {}
+    }
   ];
-  chartLabel = {};
+  chartOHLCLabel = {};
+  chartMAsLabel = {};
   minIntervals = ["1m", "5m", "15m", "30m"];
 
   /* _events = {
@@ -89,20 +108,6 @@ class TradingViewWidget extends Component {
   }
 
   initializeCandleStickGraph = () => {
-    /* const chart = createChart(this._id.current, { width: 400, height: 300 });
-    const lineSeries = chart.addLineSeries();
-    lineSeries.setData([
-      { time: "2019-04-11", value: 80.01 },
-      { time: "2019-04-12", value: 96.63 },
-      { time: "2019-04-13", value: 76.64 },
-      { time: "2019-04-14", value: 81.89 },
-      { time: "2019-04-15", value: 74.43 },
-      { time: "2019-04-16", value: 80.01 },
-      { time: "2019-04-17", value: 96.63 },
-      { time: "2019-04-18", value: 76.64 },
-      { time: "2019-04-19", value: 81.89 },
-      { time: "2019-04-20", value: 74.43 }
-    ]); */
     this.chart = createChart(this._id.current, {
       width: 600,
       height: 300,
@@ -170,15 +175,20 @@ class TradingViewWidget extends Component {
     // legend.style.cssText = "position: absolute; left: 3px; top: 0; z-index: 1; font-size: 12px; line-height: 18px; font-weight: 300;";
     legend.setAttribute(
       "style",
-      "position: absolute; left: 3px; top: 0; z-index: 1; font-size: 12px; line-height: 18px; font-weight: 300;"
+      "position: absolute; left: 3px; top: 0; z-index: 1; font-size: 12px; line-height: 11px; font-weight: 300;"
     );
     // document.body.appendChild(legend);
     this._id.current.appendChild(legend);
 
-    this.chartLabel = document.createElement("div");
-    this.chartLabel.innerText = "O H L C";
-    this.chartLabel.style.color = "white";
-    legend.appendChild(this.chartLabel);
+    this.chartOHLCLabel = document.createElement("div");
+    this.chartOHLCLabel.innerText = "O H L C";
+    this.chartOHLCLabel.style.color = "white";
+    legend.appendChild(this.chartOHLCLabel);
+
+    this.chartMAsLabel = document.createElement("div");
+    this.chartMAsLabel.innerText = "MovingAverage";
+    this.chartMAsLabel.style.color = "white";
+    legend.appendChild(this.chartMAsLabel);
 
     // this.chart.subscribeVisibleTimeRangeChange(function(param) {
     //   console.log("inside subscribeVisibleTimeRangeChange");
@@ -200,16 +210,22 @@ class TradingViewWidget extends Component {
         // Get hovered candle OHLC
         const price = param.seriesPrices.get(this.candleSeries);
 
-        // Populate hovered candle stats in chart label
-        this.chartLabel.innerHTML = this.getOHLC({
+        // Populate hovered candle OHLC in chart label
+        this.chartOHLCLabel.innerHTML = this.getOHLCLabelText({
           ...price,
           time: param.time
         });
+
+        // Populate hovered candle MAs in chart label
+        this.chartMAsLabel.innerHTML = this.getMovingAverageLabelText(param);
       } else if (Object.keys(this.graphData).length) {
-        // Populate last candle stats in chart lebel, if candle doesn't exist at mouseover
-        this.chartLabel.innerHTML = this.getOHLC(
+        // Populate last candle OHLC in chart lebel, if candle doesn't exist at mouseover
+        this.chartOHLCLabel.innerHTML = this.getOHLCLabelText(
           this.graphData[this.graphData.length - 1]
         );
+
+        // Populate last candle MAs in chart lebel, if candle doesn't exist at mouseover
+        this.chartMAsLabel.innerHTML = this.getMovingAverageLabelText();
       }
     });
   };
@@ -227,8 +243,8 @@ class TradingViewWidget extends Component {
     });
   };
 
-  getOHLC = ({ open, high, low, close, time }) => {
-    // this.chartLabel.style.color = open > close ? "#EF5350" : "#26A69A";
+  getOHLCLabelText = ({ open, high, low, close, time }) => {
+    // this.chartOHLCLabel.style.color = open > close ? "#EF5350" : "#26A69A";
     const color = open > close ? "#EF5350" : "#26A69A";
     return `${moment(time * 1000)
       .utc()
@@ -237,6 +253,20 @@ class TradingViewWidget extends Component {
       high.toFixed(8)}</span> L:<span style="color: ${color}">${low &&
       low.toFixed(8)}</span> C:<span style="color: ${color}">${close &&
       close.toFixed(8)}</span>`;
+  };
+  getMovingAverageLabelText = param => {
+    return this.movingAverage.map(ma => {
+      // Get hovered candle Moving Average
+      // const maCurrent = param.seriesPrices.get(ma.lineSeries);
+      const maCurrent =
+        param !== undefined
+          ? param.seriesPrices.get(ma.lineSeries)
+          : ma.data.length
+          ? ma.data[ma.data.length - 1].value
+          : 0;
+      return ` <span style="color: ${ma.color}">MA(${ma.period}): ${maCurrent &&
+        maCurrent.toFixed(8)}</span>`;
+    });
   };
 
   handleFullScreenTrigger = () => {
@@ -315,7 +345,7 @@ class TradingViewWidget extends Component {
       this.candleSeries.setData(this.graphData);
 
       // Populate last candle stats in chart lebel
-      this.chartLabel.innerHTML = this.getOHLC(
+      this.chartOHLCLabel.innerHTML = this.getOHLCLabelText(
         this.graphData[this.graphData.length - 1]
       );
 
@@ -323,6 +353,8 @@ class TradingViewWidget extends Component {
       this.volumeSeries.setData(volumeData);
 
       this.setMovingAverage();
+      // Populate last candle MAs in chart lebel
+      this.chartMAsLabel.innerHTML = this.getMovingAverageLabelText();
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         console.log(ex.response.data);
@@ -349,7 +381,14 @@ class TradingViewWidget extends Component {
       const volumeData = this.getVolumeGraphData(this.graphData);
       this.volumeSeries.setData(volumeData);
 
-      this.setMovingAverage();
+      // this.setMovingAverage();
+      this.updateMovingAverage(e.candleStickData);
+
+      /**
+       * Label should be updated if and only if mouse is not hovered on chart
+       */
+      // Populate last candle MAs in chart lebel
+      this.chartMAsLabel.innerHTML = this.getMovingAverageLabelText();
     });
   };
 
@@ -361,19 +400,43 @@ class TradingViewWidget extends Component {
     }));
   };
 
-  getMovingAverageData = (graphData, maPeriod) => {
-    // return graphData.map(c => ({ time: c.time, value: c.open }));
-    return graphData.map((candle, candleIndex) => {
-      if (candleIndex < maPeriod) return { time: candle.time, value: 0 };
-      let sum = 0;
-      for (let i = candleIndex - 1; i >= candleIndex - maPeriod; i--)
-        sum += graphData[i].close;
-      return { time: candle.time, value: sum / maPeriod };
+  calculateMovingAverage = (history, candleIndex, ma) => {
+    if (candleIndex < ma.period) return 0;
+    let sum = 0;
+    // for (let i = candleIndex - 1; i >= candleIndex - ma.period; i--)
+    for (let i = candleIndex - ma.period; i < candleIndex; i++)
+      sum += history[i][ma.type];
+    return sum / ma.period;
+  };
+  getMovingAverageData = (history, ma) => {
+    // return history.map(c => ({ time: c.time, value: c.open }));
+    return history.map((candle, candleIndex) => {
+      const value = this.calculateMovingAverage(history, candleIndex, ma);
+      return { time: candle.time, value };
     });
   };
   setMovingAverage = () => {
     this.movingAverage.map(ma => {
-      ma.data = this.getMovingAverageData(this.graphData, ma.period);
+      ma.data = this.getMovingAverageData(this.graphData, ma);
+      ma.lineSeries.setData(ma.data);
+    });
+  };
+  updateMovingAverage = candleStickData => {
+    this.movingAverage.map(ma => {
+      const value = this.calculateMovingAverage(
+        this.graphData,
+        this.graphData.length - 1,
+        ma
+      );
+
+      const indexOfLastCandle = ma.data.length - 1;
+
+      if (ma.data[indexOfLastCandle].time === candleStickData.time) {
+        ma.data[indexOfLastCandle].value = value;
+      } else {
+        ma.data.push({ time: candleStickData.time, value });
+      }
+
       ma.lineSeries.setData(ma.data);
     });
   };
