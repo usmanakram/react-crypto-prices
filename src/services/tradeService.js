@@ -82,10 +82,10 @@ async function getTradeHistory(pair_id) {
   return data;
 }
 
-async function getChartTradeHistory(pair_id, timeInterval) {
-  const { data } = await http.get(
-    "/chart-trade-history/" + pair_id + "/" + timeInterval
-  );
+async function getChartTradeHistory(pair_id, timeInterval, from) {
+  let url = `/chart-trade-history/${pair_id}/${timeInterval}`;
+  if (from) url += `?from=${from}`;
+  const { data } = await http.get(url);
   return data;
 }
 

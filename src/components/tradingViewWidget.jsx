@@ -15,6 +15,8 @@ class TradingViewWidget extends Component {
   graphData = [];
   selectedPairId = 0;
   timeIntervalId = 0;
+  isRequested = false;
+  isFullHistoryLoaded = false;
 
   _id = React.createRef();
   tvFullWidth = React.createRef();
@@ -99,6 +101,10 @@ class TradingViewWidget extends Component {
 
   componentWillUnmount() {
     eventHandler.unbind(this._events);
+    this.chart.unsubscribeVisibleTimeRangeChange(
+      this.handleVisibleTimeRangeChange
+    );
+    this.chart.unsubscribeCrosshairMove(this.handleCrosshairMove);
 
     if (this.selectedPairId && this.timeIntervalId) {
       ws.leaveChannel(
@@ -163,7 +169,9 @@ class TradingViewWidget extends Component {
       lineWidth: 2,
       priceFormat: { type: "volume" },
       overlay: true,
-      scaleMargins: { top: 0.8, bottom: 0 }
+      scaleMargins: { top: 0.8, bottom: 0 },
+      lastValueVisible: false,
+      priceLineVisible: false
     });
 
     /**
@@ -190,44 +198,25 @@ class TradingViewWidget extends Component {
     this.chartMAsLabel.style.color = "white";
     legend.appendChild(this.chartMAsLabel);
 
-    // this.chart.subscribeVisibleTimeRangeChange(function(param) {
-    //   console.log("inside subscribeVisibleTimeRangeChange");
-    //   console.log(param);
-    // });
+    this.chart.subscribeVisibleTimeRangeChange(
+      this.handleVisibleTimeRangeChange
+    );
     // this.chart.subscribeClick(function(param) {
     //   console.log("inside subscribeClick");
     //   console.log(param);
     // });
-    this.chart.subscribeCrosshairMove(param => {
-      if (param.time) {
-        // if (
-        //   param === undefined ||
-        //   param.time === undefined ||
-        //   param.point.x < 0 ||
-        //   param.point.y < 0
-        // ) {
-
-        // Get hovered candle OHLC
-        const price = param.seriesPrices.get(this.candleSeries);
-
-        // Populate hovered candle OHLC in chart label
-        this.chartOHLCLabel.innerHTML = this.getOHLCLabelText({
-          ...price,
-          time: param.time
-        });
-
-        // Populate hovered candle MAs in chart label
-        this.chartMAsLabel.innerHTML = this.getMovingAverageLabelText(param);
-      } else if (Object.keys(this.graphData).length) {
-        // Populate last candle OHLC in chart lebel, if candle doesn't exist at mouseover
-        this.chartOHLCLabel.innerHTML = this.getOHLCLabelText(
-          this.graphData[this.graphData.length - 1]
-        );
-
-        // Populate last candle MAs in chart lebel, if candle doesn't exist at mouseover
-        this.chartMAsLabel.innerHTML = this.getMovingAverageLabelText();
-      }
-    });
+    this.chart.subscribeCrosshairMove(this.handleCrosshairMove);
+  };
+  formatDateTime = dateTime => {
+    if (typeof dateTime === "object") {
+      const { day, month, year } = dateTime;
+      dateTime = year.toString();
+      dateTime +=
+        "-" + (month.toString().length < 2 ? "0" + month.toString() : month);
+      dateTime +=
+        "-" + (day.toString().length < 2 ? "0" + day.toString() : day);
+    }
+    return dateTime;
   };
 
   initializeMovingAverage = () => {
@@ -243,12 +232,58 @@ class TradingViewWidget extends Component {
     });
   };
 
+  handleVisibleTimeRangeChange = param => {
+    let from = param.from;
+
+    // from = { day: 1, month: 2, year: 2018 };
+
+    // console.log(typeof from);
+    // console.log(from);
+    from = this.formatDateTime(from);
+    // console.log("from & to after alteration");
+    // console.log(from);
+
+    if (
+      this.isRequested === false &&
+      this.isFullHistoryLoaded === false &&
+      this.graphData.length &&
+      from <= this.graphData[0].time
+    )
+      this.handleGraph(this.graphData[0].time);
+
+    // console.log("this.chart.timeScale().getVisibleRange()");
+    // console.log(this.chart.timeScale().getVisibleRange());
+  };
+  handleCrosshairMove = param => {
+    if (param.time) {
+      // Get hovered candle OHLC
+      const price = param.seriesPrices.get(this.candleSeries);
+
+      // Populate hovered candle OHLC in chart label
+      this.chartOHLCLabel.innerHTML = this.getOHLCLabelText({
+        ...price,
+        time: param.time
+      });
+
+      // Populate hovered candle MAs in chart label
+      this.chartMAsLabel.innerHTML = this.getMovingAverageLabelText(param);
+    } else if (Object.keys(this.graphData).length) {
+      // Populate last candle OHLC in chart lebel, if candle doesn't exist at mouseover
+      this.chartOHLCLabel.innerHTML = this.getOHLCLabelText(
+        this.graphData[this.graphData.length - 1]
+      );
+
+      // Populate last candle MAs in chart lebel, if candle doesn't exist at mouseover
+      this.chartMAsLabel.innerHTML = this.getMovingAverageLabelText();
+    }
+  };
+
   getOHLCLabelText = ({ open, high, low, close, time }) => {
     // this.chartOHLCLabel.style.color = open > close ? "#EF5350" : "#26A69A";
     const color = open > close ? "#EF5350" : "#26A69A";
     return `${moment(time * 1000)
       .utc()
-      .format("YYYY-MM-DD HH:mm")}  O:<span style="color: ${color}">${open &&
+      .format("YYYY-MM-DD HH:mm")} O:<span style="color: ${color}">${open &&
       open.toFixed(8)}</span> H:<span style="color: ${color}">${high &&
       high.toFixed(8)}</span> L:<span style="color: ${color}">${low &&
       low.toFixed(8)}</span> C:<span style="color: ${color}">${close &&
@@ -327,21 +362,29 @@ class TradingViewWidget extends Component {
     ); */
   };
 
-  handleGraph = async () => {
-    const { selectedPair } = this.props;
-
-    this.selectedPairId = selectedPair.id;
+  handleGraph = async (from = null) => {
+    this.isRequested = true;
+    this.selectedPairId = this.props.selectedPair.id;
 
     try {
-      const candleChartData = await trade.getChartTradeHistory(
-        selectedPair.id,
-        this.state.timeInterval
+      const { history, time_interval_id } = await trade.getChartTradeHistory(
+        this.selectedPairId,
+        this.state.timeInterval,
+        from
       );
 
-      this.timeIntervalId = candleChartData.time_interval_id;
+      this.isFullHistoryLoaded = history.length === 0;
+      this.timeIntervalId = time_interval_id;
+      history.reverse();
 
-      this.graphData = candleChartData.history;
+      this.graphData = from ? [...history, ...this.graphData] : history;
 
+      /**
+       * isRequested is being set as "false" before calling "setData()".
+       * Because, "setData()" will update the graph and "subscribeVisibleTimeRangeChange" trigger will be triggered and
+       * handle will be called which pull graph history if needed.
+       */
+      this.isRequested = false;
       this.candleSeries.setData(this.graphData);
 
       // Populate last candle stats in chart lebel
