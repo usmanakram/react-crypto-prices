@@ -227,7 +227,7 @@ class TradingViewWidget extends Component {
       priceLineVisible: false
     };
 
-    this.movingAverage.map(ma => {
+    this.movingAverage.forEach(ma => {
       ma.lineSeries = this.chart.addLineSeries({ ...options, color: ma.color });
     });
   };
@@ -459,13 +459,13 @@ class TradingViewWidget extends Component {
     });
   };
   setMovingAverage = () => {
-    this.movingAverage.map(ma => {
+    this.movingAverage.forEach(ma => {
       ma.data = this.getMovingAverageData(this.graphData, ma);
       ma.lineSeries.setData(ma.data);
     });
   };
   updateMovingAverage = candleStickData => {
-    this.movingAverage.map(ma => {
+    this.movingAverage.forEach(ma => {
       const value = this.calculateMovingAverage(
         this.graphData,
         this.graphData.length - 1,

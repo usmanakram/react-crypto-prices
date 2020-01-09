@@ -10,7 +10,7 @@ import GettingStarted from "./gettingStarted";
 import auth from "../services/authService";
 import ws from "../services/webSocketService";
 import { toast } from "react-toastify";
-import { handleWidth } from "../services/custom";
+// import { handleWidth } from "../services/custom";
 import storage from "../utils/storage";
 
 class Exchange extends Component {
