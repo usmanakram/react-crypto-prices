@@ -561,6 +561,7 @@ input.disabled {
 /* width */
 .col-lg-3 ::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
 }
 
 /* Track */

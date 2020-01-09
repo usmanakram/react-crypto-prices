@@ -6,6 +6,7 @@ import http from "../services/httpService";
 import auth from "../services/authService";
 import Spinner from "./spinner";
 import Header from "./header";
+import { toast } from "react-toastify";
 
 class Withdrawal extends Form {
   state = {
@@ -55,7 +56,9 @@ class Withdrawal extends Form {
       console.log("form response");
       console.log(data);
     } catch (ex) {
-      console.log(ex);
+      if (ex.response.status === 400) {
+        toast.error(ex.response.data);
+      }
     }
   };
 
