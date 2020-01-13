@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 
 class Withdrawal extends Form {
   state = {
-    data: { address: "", quantity: "" },
+    data: { currency: "", address: "", quantity: "", verification_code: "" },
     errors: {},
     selectedCurrency: {},
     currencies: [],
@@ -19,12 +19,16 @@ class Withdrawal extends Form {
   };
 
   schema = {
+    currency: Joi.string().required(),
     address: Joi.string()
       .required()
       .label("Address"),
     quantity: Joi.string()
       .required()
-      .label("Quantity")
+      .label("Quantity"),
+    verification_code: Joi.string()
+      .required()
+      .label("verification_code")
   };
 
   async componentDidMount() {
@@ -32,8 +36,11 @@ class Withdrawal extends Form {
       this.setState({ WithdrawalLoader: true });
       const { data } = await http.get("/get-all-currencies");
 
-      const currencies = data.find(c => c.symbol === "BTC");
-
+      const currencies = data.filter(c => ["BTC", "BC"].includes(c.symbol));
+      // const currencies = [
+      //   { name: "Bitcoin", symbol: "BTC" },
+      //   { name: "Bittrain Coin", symbol: "BC" }
+      // ];
       // Populate BTC address and relevant data
       const { data: selectedCurrency } = await http.get(
         "/auth/get-deposit-address/BTC"
@@ -45,16 +52,81 @@ class Withdrawal extends Form {
     }
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { selectedCurrency } = this.state;
+    const { selectedCurrency: prevCurrency } = prevState;
+
+    const data = { currency: selectedCurrency.currency_symbol };
+
+    if (
+      Object.keys(selectedCurrency).length &&
+      (Object.keys(prevCurrency).length === 0 ||
+        selectedCurrency.currency_id !== prevCurrency.currency_id)
+    ) {
+      if (selectedCurrency.currency_symbol === "BC") {
+        if (selectedCurrency.withdrawal_requested) {
+          data.verification_code = "";
+          this.schema = {
+            currency: Joi.string().required(),
+            verification_code: Joi.string()
+              .required()
+              .label("verification_code")
+          };
+        } else {
+          data.quantity = "";
+          this.schema = {
+            currency: Joi.string().required(),
+            quantity: Joi.string()
+              .required()
+              .label("Quantity")
+          };
+        }
+      } else {
+        data.address = "";
+        data.quantity = "";
+        this.schema = {
+          currency: Joi.string().required(),
+          address: Joi.string()
+            .required()
+            .label("Address"),
+          quantity: Joi.string()
+            .required()
+            .label("Quantity")
+        };
+      }
+
+      this.setState({ data });
+    }
+  }
+
   doSubmit = async () => {
+    console.log("this.schema");
+    console.log(this.schema);
+    const { selectedCurrency, data } = this.state;
+    let url = "";
+
     try {
       const formData = new FormData();
-      formData.append("address", this.state.data.address);
-      formData.append("quantity", this.state.data.quantity);
+      formData.append("currency", data.currency);
 
-      const { data } = await http.post("/auth/withdraw", formData);
+      if (selectedCurrency.currency_symbol === "BC") {
+        url = "/auth/withdraw-bittrain";
+        if (selectedCurrency.withdrawal_requested)
+          formData.append("verification_code", data.verification_code);
+        else formData.append("quantity", data.quantity);
+      } else {
+        url = "/auth/withdraw";
+        formData.append("address", data.address);
+        formData.append("quantity", data.quantity);
+      }
+
+      var { data: response } = await http.post(url, formData);
 
       console.log("form response");
-      console.log(data);
+      console.log(response);
+      toast.success(response);
+      selectedCurrency.withdrawal_requested = true;
+      this.setState({ selectedCurrency });
     } catch (ex) {
       if (ex.response.status === 400) {
         toast.error(ex.response.data);
@@ -62,10 +134,26 @@ class Withdrawal extends Form {
     }
   };
 
+  handleCurrencyChange = async ({ currentTarget: select }) => {
+    try {
+      this.setState({ WithdrawalLoader: true });
+
+      const { data: selectedCurrency } = await http.get(
+        "/auth/get-deposit-address/" + select.value
+      );
+
+      this.setState({ selectedCurrency, WithdrawalLoader: false });
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
+
   render() {
     if (!auth.getCurrentUser()) return <Redirect to="/login" />;
 
     const { selectedCurrency } = this.state;
+    console.log("selectedCurrency");
+    console.log(selectedCurrency);
     let symbol;
 
     if (Object.keys(selectedCurrency).length) {
@@ -75,7 +163,6 @@ class Withdrawal extends Form {
           currency: { name, symbol }
         }
       } = this.state; */
-
       // address = selectedCurrency.address;
       // name = selectedCurrency.currency.name;
       symbol = selectedCurrency.currency.symbol;
@@ -96,17 +183,15 @@ class Withdrawal extends Form {
                 className="form-control"
                 onChange={this.handleCurrencyChange}
               >
-                {/* {this.state.currencies.map(c => (
-                <option key={c.symbol} value={c.symbol}>
-                  {c.name}
-                </option>
-              ))} */}
-                <option value="">BTC</option>
+                {this.state.currencies.map(c => (
+                  <option key={c.symbol} value={c.symbol}>
+                    {c.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
 
-          {/* {Object.keys(selectedCurrency).length > 0 && ( */}
           <React.Fragment>
             <div className="row">
               <div
@@ -141,12 +226,30 @@ class Withdrawal extends Form {
                     your balance.
                   </p>
                   <form onSubmit={this.handleSubmit}>
+                    {this.renderInputHidden("currency")}
                     <div className="mx-3 mb-3">
-                      {this.renderInput("address", "Address")}
-                      <Spinner status={this.state.WithdrawalLoader} />
+                      {selectedCurrency.currency_symbol === "BC"
+                        ? null
+                        : this.renderInput("address", "Address")}
 
-                      {this.renderInput("quantity", "Quantity")}
-                      {this.renderButton("Withdraw", "btn-default")}
+                      <Spinner status={this.state.WithdrawalLoader} />
+                      {selectedCurrency.currency_symbol === "BC" &&
+                      selectedCurrency.withdrawal_requested === true
+                        ? null
+                        : this.renderInput("quantity", "Quantity")}
+
+                      {selectedCurrency.currency_symbol === "BC" &&
+                      selectedCurrency.withdrawal_requested === true
+                        ? this.renderInput(
+                            "verification_code",
+                            "Send verification_code Code to your Email Adress (abc123@gmail.com)."
+                          )
+                        : null}
+                      {selectedCurrency.currency_symbol === "BC" &&
+                      selectedCurrency.withdrawal_requested === true
+                        ? (this.renderButton("Resen Code", "btn-default mr-3"),
+                          this.renderButton("Withdraw", "btn-default"))
+                        : this.renderButton("Withdraw", "btn-default")}
                     </div>
                   </form>
                   {this.state.isLoadSpinner ? <Spinner /> : null}
@@ -154,7 +257,6 @@ class Withdrawal extends Form {
               </div>
             </div>
           </React.Fragment>
-          {/* )} */}
         </div>
       </React.Fragment>
     );

@@ -19,6 +19,7 @@
 
 .adbox {
   background-color: #fff;
+  border-radius: 5px;
 }
 
 .addpdglr15 {
@@ -536,6 +537,7 @@ input.disabled {
 .footer-logo img {
   width: 130px !important;
 }
+
 
 /* ==================================Footer=================================== */
 /* =================.table-fixed=========================== */
