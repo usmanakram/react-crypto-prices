@@ -52,8 +52,6 @@ class Form extends Component {
 
     const errors = this.validate();
     this.setState({ errors: errors || {} });
-    console.log("errors");
-    console.log(errors);
     if (errors) return;
 
     this.doSubmit();

@@ -18,18 +18,7 @@ class Withdrawal extends Form {
     WithdrawalLoader: false
   };
 
-  schema = {
-    currency: Joi.string().required(),
-    address: Joi.string()
-      .required()
-      .label("Address"),
-    quantity: Joi.string()
-      .required()
-      .label("Quantity"),
-    verification_code: Joi.string()
-      .required()
-      .label("verification_code")
-  };
+  schema = { currency: Joi.string().required() };
 
   async componentDidMount() {
     try {
@@ -46,23 +35,58 @@ class Withdrawal extends Form {
         "/auth/get-deposit-address/BTC"
       );
 
-      this.setState({ currencies, selectedCurrency, WithdrawalLoader: false });
+      const dataState = this.handleValidation(selectedCurrency);
+
+      this.setState({
+        currencies,
+        selectedCurrency,
+        WithdrawalLoader: false,
+        data: dataState
+      });
     } catch (ex) {
       console.log(ex);
     }
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const { selectedCurrency } = this.state;
-    const { selectedCurrency: prevCurrency } = prevState;
+  doSubmit = async () => {
+    const { selectedCurrency, data } = this.state;
+    let url = "";
 
+    try {
+      const formData = new FormData();
+      formData.append("currency", data.currency);
+
+      if (selectedCurrency.currency_symbol === "BC") {
+        url = "/auth/withdraw-bittrain";
+        if (selectedCurrency.withdrawal_requested)
+          formData.append("verification_code", data.verification_code);
+        else formData.append("quantity", data.quantity);
+      } else {
+        url = "/auth/withdraw";
+        formData.append("address", data.address);
+        formData.append("quantity", data.quantity);
+      }
+
+      var { data: response } = await http.post(url, formData);
+
+      toast.success(response);
+
+      if (selectedCurrency.currency_symbol === "BC") {
+        selectedCurrency.withdrawal_requested = !selectedCurrency.withdrawal_requested;
+        const dataState = this.handleValidation(selectedCurrency);
+        this.setState({ selectedCurrency, data: dataState });
+      }
+    } catch (ex) {
+      if (ex.response.status === 400) {
+        toast.error(ex.response.data);
+      }
+    }
+  };
+
+  handleValidation = selectedCurrency => {
     const data = { currency: selectedCurrency.currency_symbol };
 
-    if (
-      Object.keys(selectedCurrency).length &&
-      (Object.keys(prevCurrency).length === 0 ||
-        selectedCurrency.currency_id !== prevCurrency.currency_id)
-    ) {
+    if (Object.keys(selectedCurrency).length) {
       if (selectedCurrency.currency_symbol === "BC") {
         if (selectedCurrency.withdrawal_requested) {
           data.verification_code = "";
@@ -70,7 +94,8 @@ class Withdrawal extends Form {
             currency: Joi.string().required(),
             verification_code: Joi.string()
               .required()
-              .label("verification_code")
+              .length(6)
+              .label("Verification Code")
           };
         } else {
           data.quantity = "";
@@ -95,42 +120,9 @@ class Withdrawal extends Form {
         };
       }
 
-      this.setState({ data });
-    }
-  }
-
-  doSubmit = async () => {
-    console.log("this.schema");
-    console.log(this.schema);
-    const { selectedCurrency, data } = this.state;
-    let url = "";
-
-    try {
-      const formData = new FormData();
-      formData.append("currency", data.currency);
-
-      if (selectedCurrency.currency_symbol === "BC") {
-        url = "/auth/withdraw-bittrain";
-        if (selectedCurrency.withdrawal_requested)
-          formData.append("verification_code", data.verification_code);
-        else formData.append("quantity", data.quantity);
-      } else {
-        url = "/auth/withdraw";
-        formData.append("address", data.address);
-        formData.append("quantity", data.quantity);
-      }
-
-      var { data: response } = await http.post(url, formData);
-
-      console.log("form response");
-      console.log(response);
-      toast.success(response);
-      selectedCurrency.withdrawal_requested = true;
-      this.setState({ selectedCurrency });
-    } catch (ex) {
-      if (ex.response.status === 400) {
-        toast.error(ex.response.data);
-      }
+      // this.setState({ data });
+      // this.state.data = data;
+      return data;
     }
   };
 
@@ -142,7 +134,8 @@ class Withdrawal extends Form {
         "/auth/get-deposit-address/" + select.value
       );
 
-      this.setState({ selectedCurrency, WithdrawalLoader: false });
+      const data = this.handleValidation(selectedCurrency);
+      this.setState({ selectedCurrency, WithdrawalLoader: false, data });
     } catch (ex) {
       console.log(ex);
     }
@@ -152,8 +145,6 @@ class Withdrawal extends Form {
     if (!auth.getCurrentUser()) return <Redirect to="/login" />;
 
     const { selectedCurrency } = this.state;
-    console.log("selectedCurrency");
-    console.log(selectedCurrency);
     let symbol;
 
     if (Object.keys(selectedCurrency).length) {
@@ -192,71 +183,69 @@ class Withdrawal extends Form {
             </div>
           </div>
 
-          <React.Fragment>
-            <div className="row">
-              <div
-                className="
+          <div className="row">
+            <div
+              className="
               col-12
               my-2"
-              >
-                <strong>Total balance:</strong>
-                {"   "}
-                {selectedCurrency.total_balance} {symbol}
-                <br />
-                <strong>In Order </strong> {selectedCurrency.in_order_balance}
-                {"   "}
-                {symbol}
-                <br />
-                <strong>Available balance: </strong>
-                {"   "}
-                {selectedCurrency.total_balance -
-                  selectedCurrency.in_order_balance}
-                {symbol}
+            >
+              <strong>Total balance:</strong>
+              {"   "}
+              {selectedCurrency.total_balance} {symbol}
+              <br />
+              <strong>In Order </strong> {selectedCurrency.in_order_balance}
+              {"   "}
+              {symbol}
+              <br />
+              <strong>Available balance: </strong>
+              {"   "}
+              {selectedCurrency.total_balance -
+                selectedCurrency.in_order_balance}
+              {symbol}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12 mb-3">
+              <div className="border adbox">
+                <h5 className="text-warning mt-3 ml-3">
+                  <strong>Important</strong>
+                </h5>
+                <p className="text-warning ml-3">
+                  Provide only <strong>{symbol}</strong> address. Providing any
+                  other coin or token address may result in the loss of your
+                  balance.
+                </p>
+                <form onSubmit={this.handleSubmit}>
+                  {this.renderInputHidden("currency")}
+                  <div className="mx-3 mb-3">
+                    {selectedCurrency.currency_symbol === "BC"
+                      ? null
+                      : this.renderInput("address", "Address")}
+
+                    <Spinner status={this.state.WithdrawalLoader} />
+                    {selectedCurrency.currency_symbol === "BC" &&
+                    selectedCurrency.withdrawal_requested === true
+                      ? null
+                      : this.renderInput("quantity", "Quantity")}
+
+                    {selectedCurrency.currency_symbol === "BC" &&
+                    selectedCurrency.withdrawal_requested === true
+                      ? this.renderInput(
+                          "verification_code",
+                          "Verification Code"
+                        )
+                      : null}
+                    {selectedCurrency.currency_symbol === "BC" &&
+                    selectedCurrency.withdrawal_requested === true
+                      ? (this.renderButton("Resen Code", "btn-default mr-3"),
+                        this.renderButton("Withdraw", "btn-default"))
+                      : this.renderButton("Withdraw", "btn-default")}
+                  </div>
+                </form>
+                {this.state.isLoadSpinner ? <Spinner /> : null}
               </div>
             </div>
-            <div className="row">
-              <div className="col-12 mb-3">
-                <div className="border adbox">
-                  <h5 className="text-warning mt-3 ml-3">
-                    <strong>Important</strong>
-                  </h5>
-                  <p className="text-warning ml-3">
-                    Provide only <strong>{symbol}</strong> address. Providing
-                    any other coin or token address may result in the loss of
-                    your balance.
-                  </p>
-                  <form onSubmit={this.handleSubmit}>
-                    {this.renderInputHidden("currency")}
-                    <div className="mx-3 mb-3">
-                      {selectedCurrency.currency_symbol === "BC"
-                        ? null
-                        : this.renderInput("address", "Address")}
-
-                      <Spinner status={this.state.WithdrawalLoader} />
-                      {selectedCurrency.currency_symbol === "BC" &&
-                      selectedCurrency.withdrawal_requested === true
-                        ? null
-                        : this.renderInput("quantity", "Quantity")}
-
-                      {selectedCurrency.currency_symbol === "BC" &&
-                      selectedCurrency.withdrawal_requested === true
-                        ? this.renderInput(
-                            "verification_code",
-                            "Send verification_code Code to your Email Adress (abc123@gmail.com)."
-                          )
-                        : null}
-                      {selectedCurrency.currency_symbol === "BC" &&
-                      selectedCurrency.withdrawal_requested === true
-                        ? (this.renderButton("Resen Code", "btn-default mr-3"),
-                          this.renderButton("Withdraw", "btn-default"))
-                        : this.renderButton("Withdraw", "btn-default")}
-                    </div>
-                  </form>
-                  {this.state.isLoadSpinner ? <Spinner /> : null}
-                </div>
-              </div>
-            </div>
-          </React.Fragment>
+          </div>
         </div>
       </React.Fragment>
     );
