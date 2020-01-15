@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 
 class Withdrawal extends Form {
   state = {
-    data: { address: "", quantity: "" },
+    data: { currency: "", address: "", quantity: "", verification_code: "" },
     errors: {},
     selectedCurrency: {},
     currencies: [],
@@ -18,47 +18,126 @@ class Withdrawal extends Form {
     WithdrawalLoader: false
   };
 
-  schema = {
-    address: Joi.string()
-      .required()
-      .label("Address"),
-    quantity: Joi.string()
-      .required()
-      .label("Quantity")
-  };
+  schema = { currency: Joi.string().required() };
 
   async componentDidMount() {
     try {
       this.setState({ WithdrawalLoader: true });
       const { data } = await http.get("/get-all-currencies");
 
-      const currencies = data.find(c => c.symbol === "BTC");
-
+      const currencies = data.filter(c => ["BTC", "BC"].includes(c.symbol));
+      // const currencies = [
+      //   { name: "Bitcoin", symbol: "BTC" },
+      //   { name: "Bittrain Coin", symbol: "BC" }
+      // ];
       // Populate BTC address and relevant data
       const { data: selectedCurrency } = await http.get(
         "/auth/get-deposit-address/BTC"
       );
 
-      this.setState({ currencies, selectedCurrency, WithdrawalLoader: false });
+      const dataState = this.handleValidation(selectedCurrency);
+
+      this.setState({
+        currencies,
+        selectedCurrency,
+        WithdrawalLoader: false,
+        data: dataState
+      });
     } catch (ex) {
       console.log(ex);
     }
   }
 
   doSubmit = async () => {
+    const { selectedCurrency, data } = this.state;
+    let url = "";
+
     try {
       const formData = new FormData();
-      formData.append("address", this.state.data.address);
-      formData.append("quantity", this.state.data.quantity);
+      formData.append("currency", data.currency);
 
-      const { data } = await http.post("/auth/withdraw", formData);
+      if (selectedCurrency.currency_symbol === "BC") {
+        url = "/auth/withdraw-bittrain";
+        if (selectedCurrency.withdrawal_requested)
+          formData.append("verification_code", data.verification_code);
+        else formData.append("quantity", data.quantity);
+      } else {
+        url = "/auth/withdraw";
+        formData.append("address", data.address);
+        formData.append("quantity", data.quantity);
+      }
 
-      console.log("form response");
-      console.log(data);
+      var { data: response } = await http.post(url, formData);
+
+      toast.success(response);
+
+      if (selectedCurrency.currency_symbol === "BC") {
+        selectedCurrency.withdrawal_requested = !selectedCurrency.withdrawal_requested;
+        const dataState = this.handleValidation(selectedCurrency);
+        this.setState({ selectedCurrency, data: dataState });
+      }
     } catch (ex) {
       if (ex.response.status === 400) {
         toast.error(ex.response.data);
       }
+    }
+  };
+
+  handleValidation = selectedCurrency => {
+    const data = { currency: selectedCurrency.currency_symbol };
+
+    if (Object.keys(selectedCurrency).length) {
+      if (selectedCurrency.currency_symbol === "BC") {
+        if (selectedCurrency.withdrawal_requested) {
+          data.verification_code = "";
+          this.schema = {
+            currency: Joi.string().required(),
+            verification_code: Joi.string()
+              .required()
+              .length(6)
+              .label("Verification Code")
+          };
+        } else {
+          data.quantity = "";
+          this.schema = {
+            currency: Joi.string().required(),
+            quantity: Joi.string()
+              .required()
+              .label("Quantity")
+          };
+        }
+      } else {
+        data.address = "";
+        data.quantity = "";
+        this.schema = {
+          currency: Joi.string().required(),
+          address: Joi.string()
+            .required()
+            .label("Address"),
+          quantity: Joi.string()
+            .required()
+            .label("Quantity")
+        };
+      }
+
+      // this.setState({ data });
+      // this.state.data = data;
+      return data;
+    }
+  };
+
+  handleCurrencyChange = async ({ currentTarget: select }) => {
+    try {
+      this.setState({ WithdrawalLoader: true });
+
+      const { data: selectedCurrency } = await http.get(
+        "/auth/get-deposit-address/" + select.value
+      );
+
+      const data = this.handleValidation(selectedCurrency);
+      this.setState({ selectedCurrency, WithdrawalLoader: false, data });
+    } catch (ex) {
+      console.log(ex);
     }
   };
 
@@ -75,7 +154,6 @@ class Withdrawal extends Form {
           currency: { name, symbol }
         }
       } = this.state; */
-
       // address = selectedCurrency.address;
       // name = selectedCurrency.currency.name;
       symbol = selectedCurrency.currency.symbol;
@@ -96,65 +174,78 @@ class Withdrawal extends Form {
                 className="form-control"
                 onChange={this.handleCurrencyChange}
               >
-                {/* {this.state.currencies.map(c => (
-                <option key={c.symbol} value={c.symbol}>
-                  {c.name}
-                </option>
-              ))} */}
-                <option value="">BTC</option>
+                {this.state.currencies.map(c => (
+                  <option key={c.symbol} value={c.symbol}>
+                    {c.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
 
-          {/* {Object.keys(selectedCurrency).length > 0 && ( */}
-          <React.Fragment>
-            <div className="row">
-              <div
-                className="
+          <div className="row">
+            <div
+              className="
               col-12
               my-2"
-              >
-                <strong>Total balance:</strong>
-                {"   "}
-                {selectedCurrency.total_balance} {symbol}
-                <br />
-                <strong>In Order </strong> {selectedCurrency.in_order_balance}
-                {"   "}
-                {symbol}
-                <br />
-                <strong>Available balance: </strong>
-                {"   "}
-                {selectedCurrency.total_balance -
-                  selectedCurrency.in_order_balance}
-                {symbol}
-              </div>
+            >
+              <strong>Total balance:</strong>
+              {"   "}
+              {selectedCurrency.total_balance} {symbol}
+              <br />
+              <strong>In Order </strong> {selectedCurrency.in_order_balance}
+              {"   "}
+              {symbol}
+              <br />
+              <strong>Available balance: </strong>
+              {"   "}
+              {selectedCurrency.total_balance -
+                selectedCurrency.in_order_balance}
+              {symbol}
             </div>
-            <div className="row">
-              <div className="col-12 mb-3">
-                <div className="border adbox">
-                  <h5 className="text-warning mt-3 ml-3">
-                    <strong>Important</strong>
-                  </h5>
-                  <p className="text-warning ml-3">
-                    Provide only <strong>{symbol}</strong> address. Providing
-                    any other coin or token address may result in the loss of
-                    your balance.
-                  </p>
-                  <form onSubmit={this.handleSubmit}>
-                    <div className="mx-3 mb-3">
-                      {this.renderInput("address", "Address")}
-                      <Spinner status={this.state.WithdrawalLoader} />
+          </div>
+          <div className="row">
+            <div className="col-12 mb-3">
+              <div className="border adbox">
+                <h5 className="text-warning mt-3 ml-3">
+                  <strong>Important</strong>
+                </h5>
+                <p className="text-warning ml-3">
+                  Provide only <strong>{symbol}</strong> address. Providing any
+                  other coin or token address may result in the loss of your
+                  balance.
+                </p>
+                <form onSubmit={this.handleSubmit}>
+                  {this.renderInputHidden("currency")}
+                  <div className="mx-3 mb-3">
+                    {selectedCurrency.currency_symbol === "BC"
+                      ? null
+                      : this.renderInput("address", "Address")}
 
-                      {this.renderInput("quantity", "Quantity")}
-                      {this.renderButton("Withdraw", "btn-default")}
-                    </div>
-                  </form>
-                  {this.state.isLoadSpinner ? <Spinner /> : null}
-                </div>
+                    <Spinner status={this.state.WithdrawalLoader} />
+                    {selectedCurrency.currency_symbol === "BC" &&
+                    selectedCurrency.withdrawal_requested === true
+                      ? null
+                      : this.renderInput("quantity", "Quantity")}
+
+                    {selectedCurrency.currency_symbol === "BC" &&
+                    selectedCurrency.withdrawal_requested === true
+                      ? this.renderInput(
+                          "verification_code",
+                          "Verification Code"
+                        )
+                      : null}
+                    {selectedCurrency.currency_symbol === "BC" &&
+                    selectedCurrency.withdrawal_requested === true
+                      ? (this.renderButton("Resen Code", "btn-default mr-3"),
+                        this.renderButton("Withdraw", "btn-default"))
+                      : this.renderButton("Withdraw", "btn-default")}
+                  </div>
+                </form>
+                {this.state.isLoadSpinner ? <Spinner /> : null}
               </div>
             </div>
-          </React.Fragment>
-          {/* )} */}
+          </div>
         </div>
       </React.Fragment>
     );

@@ -3,6 +3,7 @@ import Joi from "joi-browser";
 import Input from "./input";
 import LoginFormInput from "./loginFormInput";
 // import { toast } from "react-toastify";
+import InputHidden from "./inputHidden";
 
 class Form extends Component {
   state = {
@@ -132,6 +133,19 @@ class Form extends Component {
         })}
         {error && <div className="alert alert-danger">{error}</div>}
       </div>
+    );
+  }
+
+  renderInputHidden(name) {
+    const { data, errors } = this.state;
+
+    return (
+      <InputHidden
+        name={name}
+        value={data[name]}
+        onChange={this.handleChange}
+        error={errors[name]}
+      />
     );
   }
 }
