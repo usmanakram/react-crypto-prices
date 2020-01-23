@@ -6,10 +6,6 @@ import { paginate } from "../utils/paginate";
 import _ from "lodash";
 import moment from "moment";
 import Header from "./header";
-// const apiEndpoint = "http://localhost/projects/bittrain_exchange/coinmarketcap.com/api.php?coin=";
-// const apiEndpoint = "?coin=";
-
-const apiEndpoint = "/currencies/";
 
 class CoinInfo extends Component {
   columns = [
@@ -35,8 +31,8 @@ class CoinInfo extends Component {
 
   async componentDidMount() {
     // console.log(moment(1565222400000).format("MMMM Do YYYY, h:mm:ss a"));
-    const coin = this.props.match.params.coin;
-    const { data } = await http.get(apiEndpoint + coin);
+    const pairId = this.props.match.params.pairId;
+    const { data } = await http.get("pair-history/" + pairId);
     this.setState({ coinHistory: data.historical_prices });
   }
 
