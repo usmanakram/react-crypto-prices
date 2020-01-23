@@ -9,7 +9,7 @@ import ws from "./../services/webSocketService";
 
 // const apiEndpoint = "http://localhost/projects/bittrain_exchange/coinmarketcap.com/api.php?coins_list=all";
 // const apiEndpoint = "?coins_list=all";
-const apiEndpoint = "/currencies";
+const apiEndpoint = "/currency-pairs";
 // -------------------------
 
 class MarketsTable extends Component {
@@ -19,11 +19,7 @@ class MarketsTable extends Component {
     {
       path: "symbol",
       label: "Coin Name",
-      content: coin => (
-        <Link to={`/coin-info/${this.decorateColumnName(coin.symbol)}`}>
-          {this.decorateColumnName(coin.symbol)}
-        </Link>
-      )
+      content: p => <Link to={`/coin-info/${p.id}`}>{p.symbol}</Link>
     },
     { path: "latest_rate.last_rate", label: "Price" },
     { path: "latest_rate.volume", label: "Volume" },

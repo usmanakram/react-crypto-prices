@@ -24,25 +24,27 @@ const App = () => {
   return (
     <React.Fragment>
       <ToastContainer />
-      <Switch>
-        <Route path="/coin-info/:coin" component={CoinInfo} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={SignUp} />
-        <Route path="/home" component={Home} />
-        <Route path="/logout" component={Logout} />
-        <Route path="/deposits" component={Deposits} />
-        <Route path="/withdrawal" component={Withdrawal} />
-        <Route path="/orderHistory" component={OrderHistory} />
-        <Route path="/tradeHistory" component={TradeHistory} />
-        <Route path="/openOrder" component={OpenOrder} />
-        <Route path="/balances" component={Balances} />
-        <Route path="/transactionHistory" component={TransactionHistory} />
-        <Route path="/exchange/:symbol" component={Exchange} />
-        <Route path="/not-found" component={NotFound} />
-        <Route path="/" exact component={Home} />
-        <Redirect to="/" />
-      </Switch>
-      <Footer />
+      <div className="container-minhight">
+        <Switch>
+          <Route path="/coin-info/:pairId" component={CoinInfo} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/home" component={Home} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/deposits" component={Deposits} />
+          <Route path="/withdrawal" component={Withdrawal} />
+          <Route path="/orderHistory" component={OrderHistory} />
+          <Route path="/tradeHistory" component={TradeHistory} />
+          <Route path="/openOrder" component={OpenOrder} />
+          <Route path="/balances" component={Balances} />
+          <Route path="/transactionHistory" component={TransactionHistory} />
+          <Route path="/exchange/:symbol" component={Exchange} />
+          <Route path="/not-found" component={NotFound} />
+          <Route path="/" exact component={Home} />
+          <Redirect to="/" />
+        </Switch>
+        <Footer />
+      </div>
     </React.Fragment>
   );
 };
