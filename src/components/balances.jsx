@@ -7,14 +7,24 @@ import { balanceHeadings } from "../services/fakeBalances";
 
 class Balances extends Component {
   state = {
-    balances: []
+    balances: [],
+    btcValue: 0,
+    dollarValue: 0
   };
 
   async componentDidMount() {
     try {
       const { data: balances } = await http.get("/auth/get-balances");
 
-      this.setState({ balances });
+      let btcValue = 0,
+        dollarValue = 0;
+
+      balances.forEach(b => {
+        btcValue += b.btc_value;
+        dollarValue += b.dollar_value;
+      });
+
+      this.setState({ balances, btcValue, dollarValue });
     } catch (ex) {
       console.log(ex);
     }
@@ -35,7 +45,11 @@ class Balances extends Component {
               <li className="nav-item">
                 <div className=" trending-info-currency-option">
                   <h4>Balances</h4>
-                  <h4> Estimated Value： 0.00000000 BTC / $0.00</h4>
+                  <h4>
+                    {" "}
+                    Estimated Value： {this.state.btcValue} BTC / $
+                    {this.state.dollarValue}
+                  </h4>
                 </div>
               </li>
               <li className="nav-item">
@@ -77,7 +91,7 @@ class Balances extends Component {
                       <td>{c.total_balance}</td>
                       <td>{c.total_balance - c.in_order_balance}</td>
                       <td>{c.in_order_balance}</td>
-                      <td></td>
+                      <td>{c.btc_value}</td>
                     </tr>
                   ))}
                 </tbody>
