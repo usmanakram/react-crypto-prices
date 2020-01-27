@@ -24,7 +24,7 @@ const App = () => {
   return (
     <React.Fragment>
       <ToastContainer />
-      <div className="container-minhight">
+      <div id="content">
         <Switch>
           <Route path="/coin-info/:pairId" component={CoinInfo} />
           <Route path="/login" component={Login} />
@@ -43,8 +43,8 @@ const App = () => {
           <Route path="/" exact component={Home} />
           <Redirect to="/" />
         </Switch>
-        <Footer />
       </div>
+      <Footer />
     </React.Fragment>
   );
 };
