@@ -233,7 +233,7 @@ input.disabled {
 /* ===============================================balances================================================ */
 
 .teanding-info-block {
-  padding: 15px 0;
+  padding: 0px;
 }
 .trending-info-tab {
   margin-bottom: 15px;
@@ -538,7 +538,6 @@ input.disabled {
   width: 130px !important;
 }
 
-
 /* ==================================Footer=================================== */
 /* =================.table-fixed=========================== */
 .table-fixed thead,
@@ -593,3 +592,16 @@ input.disabled {
 }
 
 /* ===================.table-fixed======================= */
+html {
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+#content {
+  flex: 1;
+}

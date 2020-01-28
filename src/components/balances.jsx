@@ -3,14 +3,30 @@ import { Redirect } from "react-router-dom";
 import http from "../services/httpService";
 import auth from "../services/authService";
 import Header from "./header";
-import { balanceHeadings } from "../services/fakeBalances";
+import Table from "../components/common/table";
 
 class Balances extends Component {
   state = {
     balances: [],
     btcValue: 0,
-    dollarValue: 0
+    dollarValue: 0,
+    searchqQuerry: ""
   };
+
+  columns = [
+    { path: "name", label: "Name" },
+    { path: "symbol", label: "Symbol" },
+    { path: "status", label: "Status" },
+    { path: "total_balance", label: "Total Balance" },
+    {
+      path: "in_order_balance",
+      label: "In Order"
+    },
+    {
+      path: "btc_value",
+      label: "BTC Value"
+    }
+  ];
 
   async componentDidMount() {
     try {
@@ -30,7 +46,25 @@ class Balances extends Component {
     }
   }
 
+  handleChange = ({ currentTarget: input }) => {
+    this.setState({ searchqQuerry: input.value });
+  };
+
+  filterBalances = () => {
+    const { balances, searchqQuerry } = this.state;
+
+    return balances.filter(
+      b =>
+        searchqQuerry === "" ||
+        b.name.toUpperCase().startsWith(searchqQuerry.toUpperCase()) ||
+        b.symbol.toUpperCase().startsWith(searchqQuerry.toUpperCase())
+    );
+  };
+
   render() {
+    const { searchqQuerry } = this.state;
+
+    const filteredBalances = this.filterBalances();
     if (!auth.getCurrentUser()) return <Redirect to="/login" />;
 
     return (
@@ -39,14 +73,13 @@ class Balances extends Component {
           <Header />
         </div>
 
-        <div className="container">
+        <div className="container my-3">
           <div className="teanding-info-block">
             <ul className="nav trending-info-tab">
               <li className="nav-item">
                 <div className=" trending-info-currency-option">
                   <h4>Balances</h4>
                   <h4>
-                    {" "}
                     Estimated Value： {this.state.btcValue} BTC / $
                     {this.state.dollarValue}
                   </h4>
@@ -57,12 +90,12 @@ class Balances extends Component {
                   <div className="input-box">
                     <input
                       type="text"
-                      value=""
                       required=""
-                      name="s"
-                      readOnly
+                      name="searchqQuerry"
                       className="form-control"
+                      onChange={this.handleChange}
                       placeholder="Search..."
+                      value={searchqQuerry}
                     />
                     <button type="submit">
                       <i className="fa fa-search"></i>
@@ -71,31 +104,17 @@ class Balances extends Component {
                 </form>
               </li>
             </ul>
-
-            <div className="trandinginfo-table-block">
-              <table className="table coin-list latest-tranjections-table">
-                <thead>
-                  <tr>
-                    {balanceHeadings.map(balanceHeading => (
-                      <th key={balanceHeading.balanceHeading}>
-                        {balanceHeading.balanceHeading}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.balances.map(c => (
-                    <tr key={c.symbol}>
-                      <td>{c.symbol}</td>
-                      <td>{c.name}</td>
-                      <td>{c.total_balance}</td>
-                      <td>{c.total_balance - c.in_order_balance}</td>
-                      <td>{c.in_order_balance}</td>
-                      <td>{c.btc_value}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <div className="latest-tranjections-block-inner">
+                <Table
+                  columns={this.columns}
+                  data={filteredBalances}
+                  classes="coin-list latest-tranjections-table"
+                  sortColumn=""
+                />
+              </div>
             </div>
           </div>
         </div>
