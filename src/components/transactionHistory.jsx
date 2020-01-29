@@ -13,6 +13,7 @@ class TransactionHistory extends Component {
     { path: "status_text", label: "Status" },
     { path: "currency.symbol", label: "Coin" },
     { path: "amount", label: "Amount" },
+    { path: "fee", label: "Fee", content: t => t.fee.toFixed(8) },
     { path: "created_at", label: "Date" },
     { path: "address", label: "Information" }
   ];
