@@ -233,6 +233,7 @@ class TradingViewWidget extends Component {
   };
 
   handleVisibleTimeRangeChange = param => {
+    if (param === null) return;
     let from = param.from;
 
     // from = { day: 1, month: 2, year: 2018 };
@@ -413,10 +414,18 @@ class TradingViewWidget extends Component {
     ).listen("CandleStickGraphUpdated", e => {
       const indexOfLastCandle = this.graphData.length - 1;
 
-      if (this.graphData[indexOfLastCandle].time === e.candleStickData.time) {
-        this.graphData[indexOfLastCandle] = e.candleStickData;
-      } else {
+      // if (this.graphData[indexOfLastCandle].time === e.candleStickData.time) {
+      //   this.graphData[indexOfLastCandle] = e.candleStickData;
+      // } else {
+      //   this.graphData.push(e.candleStickData);
+      // }
+      if (
+        this.graphData.length === 0 ||
+        this.graphData[indexOfLastCandle].time !== e.candleStickData.time
+      ) {
         this.graphData.push(e.candleStickData);
+      } else {
+        this.graphData[indexOfLastCandle] = e.candleStickData;
       }
 
       this.candleSeries.setData(this.graphData);
@@ -474,10 +483,18 @@ class TradingViewWidget extends Component {
 
       const indexOfLastCandle = ma.data.length - 1;
 
-      if (ma.data[indexOfLastCandle].time === candleStickData.time) {
-        ma.data[indexOfLastCandle].value = value;
-      } else {
+      // if (ma.data[indexOfLastCandle].time === candleStickData.time) {
+      //   ma.data[indexOfLastCandle].value = value;
+      // } else {
+      //   ma.data.push({ time: candleStickData.time, value });
+      // }
+      if (
+        ma.data.length === 0 ||
+        ma.data[indexOfLastCandle].time !== candleStickData.time
+      ) {
         ma.data.push({ time: candleStickData.time, value });
+      } else {
+        ma.data[indexOfLastCandle].value = value;
       }
 
       ma.lineSeries.setData(ma.data);

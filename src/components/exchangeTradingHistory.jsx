@@ -51,10 +51,10 @@ class ExchangeTradingHistory extends Component {
         let { tradeHistory } = this.state;
 
         if (tradeHistory.length) {
-          tradeHistory.pop();
           tradeHistory.unshift(e.tradeHistory);
+          if (tradeHistory.length > 25) tradeHistory.pop();
         } else {
-          tradeHistory = e.tradeHistory;
+          tradeHistory.push(e.tradeHistory);
         }
 
         this.setState({ tradeHistory });
