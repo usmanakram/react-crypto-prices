@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import auth from "../services/authService";
+import http from "./../services/httpService";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Header from "./header";
@@ -14,8 +17,9 @@ class OrderHistory extends Component {
     orderHistorySpinner: false,
     startDate: new Date(),
     endDate: new Date(),
-    pairId: 17,
-    direction: ""
+    pairId: "",
+    direction: "",
+    currencyPairs: []
   };
 
   columns = [
@@ -112,6 +116,7 @@ class OrderHistory extends Component {
         if (o.id === id) o.status = 3;
         return o;
       });
+
       this.setState({ orderHistory });
       toast.success(response);
     } catch (ex) {
@@ -120,6 +125,15 @@ class OrderHistory extends Component {
   };
 
   async componentDidMount() {
+    try {
+      const { data } = await http.get("/currency-pairs");
+      this.setState({ currencyPairs: data });
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        console.log(ex.response.data);
+      }
+    }
+
     this.setOrderHistory();
   }
 
@@ -156,13 +170,18 @@ class OrderHistory extends Component {
     this.setState({ direction: c.currentTarget.value });
   };
 
+  handleChange = ({ currentTarget: input }) => {
+    this.setState({ [input.name]: input.value });
+  };
+
   handleReset = () => {
     const date = new Date();
 
     this.setState({
       endDate: date,
       startDate: date,
-      direction: ""
+      direction: "",
+      pairId: ""
     });
   };
 
@@ -172,8 +191,8 @@ class OrderHistory extends Component {
   };
 
   render() {
-    const { direction, orderHistory } = this.state;
-
+    if (!auth.getCurrentUser()) return <Redirect to="/login" />;
+    const { direction, pairId, orderHistory, currencyPairs } = this.state;
     return (
       <React.Fragment>
         <div className="navigation-two">
@@ -206,8 +225,19 @@ class OrderHistory extends Component {
                 </div>
                 <div className="form-group my-2 wrapper">
                   {/* <label htmlFor="date"></label> */}
-                  <select name="" id="" className="form-control">
-                    <option value="17">BCBTC</option>
+
+                  <select
+                    className="form-control"
+                    onChange={this.handleChange}
+                    name="pairId"
+                    value={pairId}
+                  >
+                    <option value="">All</option>
+                    {currencyPairs.map(c => (
+                      <option key={c.id} value={c.id}>
+                        {c.symbol}
+                      </option>
+                    ))}
                   </select>
                 </div>
 

@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import auth from "../services/authService";
 import Header from "./header";
 import Table from "./common/table";
 import http from "../services/httpService";
@@ -31,6 +33,7 @@ class TransactionHistory extends Component {
   }
 
   render() {
+    if (!auth.getCurrentUser()) return <Redirect to="/login" />;
     const { deposits, withdrawals } = this.state;
 
     return (

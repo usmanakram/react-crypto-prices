@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import auth from "../services/authService";
+import http from "../services/httpService";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Header from "./header";
@@ -13,8 +16,9 @@ class TradeHistory extends Component {
     tradeHistorySpinner: false,
     startDate: new Date(),
     endDate: new Date(),
-    pairId: 17,
-    direction: ""
+    pairId: "",
+    direction: "",
+    currencyPairs: []
   };
   columns = [
     { path: "created_at", label: "Date" },
@@ -26,8 +30,8 @@ class TradeHistory extends Component {
         o.direction === 1 ? (
           <span className="ex-color-buy">Buy</span>
         ) : (
-            <span className="ex-color-sell">Sell</span>
-          )
+          <span className="ex-color-sell">Sell</span>
+        )
     },
     { path: "rate", label: "Price" },
     { path: "quantity", label: "Quantity" }
@@ -40,6 +44,15 @@ class TradeHistory extends Component {
   ];
 
   async componentDidMount() {
+    try {
+      const { data } = await http.get("/currency-pairs");
+      this.setState({ currencyPairs: data });
+    } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        console.log(ex.response.data);
+      }
+    }
+
     this.setTradeHistory();
   }
 
@@ -76,13 +89,18 @@ class TradeHistory extends Component {
     this.setState({ direction: c.currentTarget.value });
   };
 
+  handleChange = ({ currentTarget: input }) => {
+    this.setState({ [input.name]: input.value });
+  };
+
   handleReset = () => {
     const date = new Date();
 
     this.setState({
       endDate: date,
       startDate: date,
-      direction: ""
+      direction: "",
+      pairId: ""
     });
   };
 
@@ -92,7 +110,8 @@ class TradeHistory extends Component {
   };
 
   render() {
-    const { tradeHistory, direction } = this.state;
+    if (!auth.getCurrentUser()) return <Redirect to="/login" />;
+    const { tradeHistory, pairId, direction, currencyPairs } = this.state;
 
     return (
       <React.Fragment>
@@ -126,8 +145,18 @@ class TradeHistory extends Component {
                 </div>
                 <div className="form-group my-2 wrapper">
                   {/* <label htmlFor="date"></label> */}
-                  <select name="" id="" className="form-control">
-                    <option value="17">BCBTC</option>
+                  <select
+                    className="form-control"
+                    onChange={this.handleChange}
+                    name="pairId"
+                    value={pairId}
+                  >
+                    <option value="">All</option>
+                    {currencyPairs.map(c => (
+                      <option key={c.id} value={c.id}>
+                        {c.symbol}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
