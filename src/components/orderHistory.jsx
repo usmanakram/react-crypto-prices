@@ -10,6 +10,7 @@ import trade from "../services/tradeService";
 import Spinner from "./spinner";
 import moment from "moment";
 import { toast } from "react-toastify";
+import PaginationBig from "./common/paginationBig"
 
 class OrderHistory extends Component {
   state = {
@@ -19,7 +20,9 @@ class OrderHistory extends Component {
     endDate: new Date(),
     pairId: "",
     direction: "",
-    currencyPairs: []
+    currencyPairs: [],
+    lastPage: 0,
+    currentPage: 1
   };
 
   columns = [
@@ -137,27 +140,37 @@ class OrderHistory extends Component {
     this.setOrderHistory();
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.currentPage !== prevState.currentPage) this.setOrderHistory();
+  }
+
   setOrderHistory = async () => {
-    const { startDate, endDate, pairId, direction } = this.state;
-    const start = moment(startDate).format("YYYY-M-D");
-    const end = moment(endDate).format("YYYY-M-D");
+    const { startDate, endDate, pairId, direction,currentPage } = this.state;
+    const start = startDate ? moment(startDate).format("YYYY-M-D") : null;
+    const end = endDate ? moment(endDate).format("YYYY-M-D") : null;
     try {
       this.setState({ orderHistory: [], orderHistorySpinner: true });
 
-      const orderHistory = await trade.getUserOrderHistory(
+      const orderHistory = await trade.getUserOrderHistory({
         start,
         end,
-        pairId,
-        direction
-      );
+        pair_id: pairId,
+        direction,
+        page: currentPage
+      });
 
-      this.setState({ orderHistory, orderHistorySpinner: false });
+      this.setState({ orderHistory: orderHistory.data, lastPage: orderHistory.last_page, currentPage: orderHistory.current_page, orderHistorySpinner: false });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         console.log(ex.response.data);
       }
     }
   };
+
+  handlePageChange = currentPage => {
+    this.setState({ currentPage });
+  };
+
 
   handleStartDate = date => {
     this.setState({ startDate: date });
@@ -187,12 +200,13 @@ class OrderHistory extends Component {
 
   doSubmit = async e => {
     e.preventDefault();
+    this.state.currentPage=1;
     this.setOrderHistory();
   };
 
   render() {
     if (!auth.getCurrentUser()) return <Redirect to="/login" />;
-    const { direction, pairId, orderHistory, currencyPairs } = this.state;
+    const { direction, pairId, orderHistory, currencyPairs, lastPage, currentPage } = this.state;
     return (
       <React.Fragment>
         <div className="navigation-two">
@@ -282,6 +296,11 @@ class OrderHistory extends Component {
                   classes="coin-list latest-tranjections-table"
                   sortColumn=""
                 />
+                 <PaginationBig
+                lastPage={lastPage}
+                currentPage={currentPage}
+                onPageChange={this.handlePageChange}
+              />
               </div>
             </div>
           </div>

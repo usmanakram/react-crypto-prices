@@ -9,6 +9,7 @@ import Table from "./common/table";
 import trade from "../services/tradeService";
 import Spinner from "./spinner";
 import moment from "moment";
+import PaginationBig from "./common/paginationBig"
 
 class TradeHistory extends Component {
   state = {
@@ -18,7 +19,10 @@ class TradeHistory extends Component {
     endDate: new Date(),
     pairId: "",
     direction: "",
-    currencyPairs: []
+    currencyPairs: [],
+    lastPage: 0,
+    currentPage: 1
+
   };
   columns = [
     { path: "created_at", label: "Date" },
@@ -56,26 +60,34 @@ class TradeHistory extends Component {
     this.setTradeHistory();
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.currentPage !== prevState.currentPage) this.setTradeHistory();
+  }
+
   setTradeHistory = async () => {
-    const { startDate, endDate, pairId, direction } = this.state;
+    const { startDate, endDate, pairId, direction, currentPage } = this.state;
     const start = moment(startDate).format("YYYY-M-D");
     const end = moment(endDate).format("YYYY-M-D");
     try {
       this.setState({ tradeHistorySpinner: true });
 
-      const tradeHistory = await trade.getUserTradeHistory(
+      const tradeHistory = await trade.getUserTradeHistory({
         start,
         end,
-        pairId,
-        direction
-      );
+        pair_id: pairId,
+        direction,
+        page: currentPage
+      });
 
-      this.setState({ tradeHistory, tradeHistorySpinner: false });
+      this.setState({ tradeHistory: tradeHistory.data, lastPage: tradeHistory.last_page, currentPage: tradeHistory.current_page,  tradeHistorySpinner: false });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         console.log(ex.response.data);
       }
     }
+  };
+  handlePageChange = currentPage => {
+    this.setState({ currentPage });
   };
 
   handleStartDate = date => {
@@ -106,12 +118,13 @@ class TradeHistory extends Component {
 
   doSubmit = async e => {
     e.preventDefault();
+    this.state.currentPage =1;
     this.setTradeHistory();
   };
 
   render() {
     if (!auth.getCurrentUser()) return <Redirect to="/login" />;
-    const { tradeHistory, pairId, direction, currencyPairs } = this.state;
+    const { tradeHistory, pairId, direction, currencyPairs,lastPage, currentPage } = this.state;
 
     return (
       <React.Fragment>
@@ -201,6 +214,11 @@ class TradeHistory extends Component {
                   classes="coin-list latest-tranjections-table"
                   sortColumn=""
                 />
+                  <PaginationBig
+                lastPage={lastPage}
+                currentPage={currentPage}
+                onPageChange={this.handlePageChange}
+              />
               </div>
             </div>
           </div>

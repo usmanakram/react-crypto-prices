@@ -5,6 +5,13 @@ const apiEndpoint = {
   sell: "/auth/sell"
 };
 
+function setFormData(data) {
+  const formData = new FormData();
+  for (let [key, value] of Object.entries(data)) formData.append(key, value);
+  return formData;
+}
+
+
 async function buy(
   pair_id,
   type,
@@ -89,24 +96,14 @@ async function getChartTradeHistory(pair_id, timeInterval, from) {
   return data;
 }
 
-async function getUserTradeHistory(start, end, pair_id, direction) {
-  const formData = new FormData();
-  formData.append("start", start);
-  formData.append("end", end);
-  formData.append("pair_id", pair_id);
-  formData.append("direction", direction);
-
+async function getUserTradeHistory(params) {
+  const formData = setFormData(params);
   const { data } = await http.post("/auth/user-trades", formData);
   return data;
 }
 
-async function getUserOrderHistory(start, end, pair_id, direction) {
-  const formData = new FormData();
-  formData.append("start", start);
-  formData.append("end", end);
-  formData.append("pair_id", pair_id);
-  formData.append("direction", direction);
-
+async function getUserOrderHistory(params) {
+  const formData = setFormData(params);
   const { data } = await http.post("/auth/user-orders", formData);
   return data;
 }
