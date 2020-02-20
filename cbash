@@ -1,0 +1,16 @@
+#!/bin/bash
+
+function setup() {
+	docker build . -t crypto-exchange
+}
+function start() {
+	docker run -p 8080:80 --name crypto crypto-exchange
+}
+function stop() {
+	docker stop crypto
+}
+function remove() {
+	docker rm crypto -f
+}
+
+$1 $2 $3
