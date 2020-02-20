@@ -1,6 +1,6 @@
 # https://medium.com/@shakyShane/lets-talk-about-docker-artifacts-27454560384f
 # Stage 1 - the build process
-FROM node:7.10 as build-deps
+FROM node:13.8.0 as build-deps
 WORKDIR /usr/src/app
 # COPY package.json yarn.lock ./
 # RUN yarn
@@ -9,8 +9,8 @@ WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . ./
-# RUN npm run build
-CMD ["npm", "run", "build"]
+RUN npm run build
+# CMD ["npm", "run", "build"]
 
 # Stage 2 - the production environment
 FROM nginx:1.12-alpine
