@@ -2,7 +2,8 @@
 
 function setup() {
 	docker build . -t crypto-exchange
-	docker run -d -p 8080:80 --name exchange crypto-exchange
+	# docker run -d -p 8080:80 --name exchange crypto-exchange
+	docker run -d -p 8080:443 --name exchange crypto-exchange
 }
 function remove() {
 	docker rm exchange -f

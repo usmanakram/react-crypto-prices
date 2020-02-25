@@ -16,7 +16,13 @@ RUN npm run build
 FROM nginx:1.12-alpine
 COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
 COPY vhost.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
+
+COPY ssl/server.crt /etc/nginx/ssl/server.crt
+COPY ssl/server.key /etc/nginx/ssl/server.key
+
+# EXPOSE 80
+EXPOSE 443
+
 CMD ["nginx", "-g", "daemon off;"]
 
 
