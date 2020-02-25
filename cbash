@@ -5,6 +5,12 @@ function setup() {
 	# docker run -d -p 8080:80 --name exchange crypto-exchange
 	docker run -d -p 8080:443 --name exchange crypto-exchange
 }
+function start() {
+	docker start exchange
+}
+function stop() {
+	docker stop exchange
+}
 function remove() {
 	docker rm exchange -f
 }
