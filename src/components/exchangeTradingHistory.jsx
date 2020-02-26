@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import Spinner from "./spinner";
 import trade from "../services/tradeService";
 import ws from "../services/webSocketService";
+import { setDecimalsLength } from "../utils/setDecimalsLength";
 
 class ExchangeTradingHistory extends Component {
   state = {
@@ -63,7 +64,11 @@ class ExchangeTradingHistory extends Component {
   };
 
   render() {
-    const { selectedPair } = this.props;
+    const { selectedPair, selectedPairStats } = this.props;
+
+    const decimalLength = setDecimalsLength(selectedPairStats.last_rate);
+    const quantityDecimals = decimalLength === undefined ? 8 : decimalLength.quantityDecimals;
+    const rateDecimals = decimalLength === undefined ? 8 : decimalLength.rateDecimals;
     const { tradeHistory, spinnerStatus } = this.state;
 
     return (
@@ -94,19 +99,19 @@ class ExchangeTradingHistory extends Component {
                   <span
                     className={
                       tradeHistory[i + 1] &&
-                      tradeHistory[i + 1].rate > value.rate
+                        tradeHistory[i + 1].rate > value.rate
                         ? "color-sell"
                         : tradeHistory[i + 1] &&
                           tradeHistory[i + 1].rate < value.rate
-                        ? "color-buy"
-                        : "color"
+                          ? "color-buy"
+                          : "color"
                     }
                   >
-                    {value.rate}
+                    {value.rate.toFixed(rateDecimals)}
                   </span>
                 </td>
                 <td className="col-4">
-                  <span>{value.quantity.toFixed(8)}</span>
+                  <span>{value.quantity.toFixed(quantityDecimals)}</span>
                 </td>
                 {/* <td className="col-4">{moment(value.created_at).format("HH:mm:ss")}</td> */}
                 <td className="col-4">

@@ -90,6 +90,7 @@ const OrderBook = ({
 
           <SellOrderBookTable
             selectedPair={selectedPair}
+            selectedPairStats={selectedPairStats}
             sellOrders={sellOrders}
           />
 

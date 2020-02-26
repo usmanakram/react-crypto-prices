@@ -33,12 +33,15 @@ class BuyOcoForm extends TradingForm {
       .required()
       .label("Stop"),
     rate: Joi.number()
+      .min(0)
       .required()
       .label("Price"),
     stop_limit_rate: Joi.number()
+      .min(0)
       .required()
       .label("Limit"),
     quantity: Joi.number()
+      .min(0)
       .required()
       .label("Quantity"),
     total: Joi.number()

@@ -1,6 +1,11 @@
 import React from "react";
+import { setDecimalsLength } from "../utils/setDecimalsLength";
 
-const SellOrderBookTable = ({ selectedPair, sellOrders }) => {
+const SellOrderBookTable = ({ selectedPair, selectedPairStats, sellOrders }) => {
+  const decimalLength = setDecimalsLength(selectedPairStats.last_rate);
+  const quantityDecimals = decimalLength === undefined ? 8 : decimalLength.quantityDecimals;
+  const rateDecimals = decimalLength === undefined ? 8 : decimalLength.rateDecimals;
+
   return (
     <React.Fragment>
       <table className="table table-fixed das-oreder-table exchange-orderBook">
@@ -21,14 +26,14 @@ const SellOrderBookTable = ({ selectedPair, sellOrders }) => {
           {sellOrders.map(value => (
             <tr key={value.id}>
               <td className="col-4">
-                <span className="color-sell">{value.rate}</span>
+                <span className="color-sell">{value.rate.toFixed(rateDecimals)}</span>
               </td>
               <td className="col-4">
-                <span>{value.tradable_quantity.toFixed(8)}</span>
+                <span>{value.tradable_quantity.toFixed(quantityDecimals)}</span>
               </td>
               <td className="col-4">
                 {" "}
-                <span>{(value.rate * value.tradable_quantity).toFixed(8)}</span>
+                <span>{(value.rate * value.tradable_quantity).toFixed(rateDecimals)}</span>
                 <div className="rate-ratio"></div>
               </td>
             </tr>
