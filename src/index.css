@@ -1,3 +1,18 @@
+/* *{
+border-radius: 0px !important;
+} */
+body{
+  background: #ffffff;
+  
+}
+ .table thead th, .table thead th td {
+   background: #F7F7F7 !important;
+ }
+
+ .dark-blue-bg .table thead th, .dark-blue-bg .table thead th td{
+   background-color: #171F38 !important;
+ }
+
 .clickable {
   cursor: pointer;
 }
@@ -153,11 +168,11 @@ input.disabled {
 }
 .das-oreder-table td span {
   font-weight: 400;
-  font-size: 13px !important;
+  font-size: 12px !important;
 }
 .das-oreder-table td {
   font-weight: 400 !important;
-  font-size: 13px !important;
+  font-size: 12px !important;
 }
 .dahboard-order-block,
 .order-form-area-block,
@@ -169,7 +184,46 @@ input.disabled {
   overflow-y: auto;
   width: 100%;
 }
+
+.order-history-block .table-fixed thead tr th:last-child{
+  text-align: center !important;
+}
+
+.order-history-block .table-fixed tbody tr td:last-child{
+  text-align: right;
+}
+
+.order-history-block .table-fixed tbody tr td span{
+  text-align: right;
+}
 /* ===============================================tradingview================================================ */
+
+/* ===============================================currency-rate================================================ */
+
+.currency-rate .dropdown-menu{
+    min-width: 140px;
+    background-color: #353c4b;
+    padding: 5px 0;
+    left: 10%;
+}
+
+.currency-rate .dropdown-menu > a {
+  padding: 5px 10px !important;
+  font-weight: 500 !important; 
+  font-size: 15px !important;
+  color: #fff;
+
+}
+
+.currency-rate .dropdown-menu > a:hover {
+  /* background-color: #1f2738 !important; */
+  background-color: #494f5d !important;
+  /* /* color: rgb(177, 176, 176) !important; */
+   color: #DC3235 !important; 
+   
+}
+
+/* ===============================================currency-rate================================================ */
 /* ===============================================order Book & trade left right Padding================================================ */
 
 @media screen and (max-width: 1199px) {
@@ -182,17 +236,27 @@ input.disabled {
     width: 100% !important;
   }
 }
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
+  .currancy-rate-tb .container,.currancy-rate-tb .container-fluid{
+    padding-left: 5px;
+    padding-right: 5px;
+  }
   .leftSideBar {
+    padding-left: 5px;
     padding-right: 0;
   }
   .righSideBar {
     padding-left: 0;
+    padding-right: 5px;
   }
   .tv-oa-lr {
     padding-right: 5px;
     padding-left: 5px;
   }
+  .latest-tranjections-area .container, .latest-tranjections-area .container-fluid{
+  padding-left: 5px;
+  padding-right: 5px;
+}
 }
 
 /* ===============================================order Book & trade left right Padding================================================ */
@@ -222,6 +286,7 @@ input.disabled {
 .latest-tranjections-area {
   padding-bottom: 5px;
 }
+
 .tv_orde_table tbody td {
   padding-top: 7px;
   padding-bottom: 0px;
@@ -279,9 +344,9 @@ input.disabled {
 .user-connected-form-block {
   padding: 10px 40px 20px 40px !important;
 }
-.user-login-signup-form-wrap .modal-content {
+/* .user-login-signup-form-wrap .modal-content {
   flex-basis: 40%;
-}
+} */
 .user-login-signup-form-wrap .modal-content > h3 {
   margin: 0 auto 20px auto;
 }
@@ -300,7 +365,7 @@ input.disabled {
 /* ======================================= tradingview, exchangeorderarea================================================== */
 
 .parent-order-tab {
-  line-height: 22px;
+  line-height: 100%;
 }
 .tv_orde_table thead th {
   line-height: 15px;
@@ -497,23 +562,36 @@ input.disabled {
 .navbar-logo {
   width: 130px !important;
 }
-.navbar-expand-lg .navbar-nav .dropdown-menu .nav-link,
-.navbar-nav .dropdown-menu > li > a {
-  padding: 5px 10px !important;
-  font-weight: 400;
-  font-size: 14px;
-  color: #fff;
-}
-.navbar-nav .dropdown-menu > li > a:hover {
-  background-color: #1f2738 !important;
-  color: rgb(177, 176, 176) !important;
-}
+
+ .navbar-nav > li > a{
+  padding: 5px 20px !important;
+  font-weight: 500 !important; 
+  font-size: 14px !important;
+  color: #ffffff;
+  }
 .navbar-nav .dropdown-menu {
   padding: 0px;
-  min-width: 0px;
-  margin: 0 0;
-  background-color: #1f2738;
+  min-width: 140px;
+  padding: 5px 0;
+  /* background-color: #1f2738; */
+  background-color: #353c4b;
 }
+
+.navbar-nav .dropdown-menu > li > a {
+  padding: 5px 10px !important;
+  font-weight: 500 !important; 
+  font-size: 15px !important;
+  color: #fff !important;
+
+}
+.navbar-nav .dropdown-menu > li > a:hover {
+  /* background-color: #1f2738 !important; */
+  background-color: #494f5d !important;
+  /* /* color: rgb(177, 176, 176) !important; */
+   color: #DC3235 !important; 
+   
+}
+
 /* ==================================Header=================================== */
 /* ==================================Footer=================================== */
 .footer-upper-section {
@@ -605,3 +683,19 @@ html {
 #content {
   flex: 1;
 }
+/* ============================== */
+
+.dahboard-order-block .panel-heading-block,
+.order-history-block .panel-heading-block,
+.latest-tranjections-area .panel-heading-block{
+    padding: 6px 0 6px 15px;
+  }
+  .latest-tranjections-table tbody tr td {
+    padding: 6px 15px;
+    font-size: 12px;
+  }
+ .latest-tranjections-area .coin-list thead th {
+      font-size: 12px;
+        font-weight: 400;
+      padding: 0px 15px;
+ }

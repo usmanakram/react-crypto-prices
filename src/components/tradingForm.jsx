@@ -15,15 +15,20 @@ class TradingForm extends Form {
 
   schema = {
     type: Joi.number()
+      .min(0)
       .required()
       .label("type"),
     rate: Joi.number()
+      .min(0)
       .required()
       .label("Price"),
+
     quantity: Joi.number()
+      .min(0)
       .required()
       .label("Quantity"),
     total: Joi.number()
+      .min(0)
       .required()
       .label("Total")
     // commission: Joi.number()

@@ -34,8 +34,8 @@ class TradeHistory extends Component {
         o.direction === 1 ? (
           <span className="ex-color-buy">Buy</span>
         ) : (
-          <span className="ex-color-sell">Sell</span>
-        )
+            <span className="ex-color-sell">Sell</span>
+          )
     },
     { path: "rate", label: "Price" },
     { path: "quantity", label: "Quantity" }
@@ -66,8 +66,8 @@ class TradeHistory extends Component {
 
   setTradeHistory = async () => {
     const { startDate, endDate, pairId, direction, currentPage } = this.state;
-    const start = moment(startDate).format("YYYY-M-D");
-    const end = moment(endDate).format("YYYY-M-D");
+    const start = startDate ? moment(startDate).format("YYYY-M-D") : null;
+    const end = endDate ? moment(endDate).format("YYYY-M-D") : null;
     try {
       this.setState({ tradeHistorySpinner: true });
 
@@ -79,7 +79,7 @@ class TradeHistory extends Component {
         page: currentPage
       });
 
-      this.setState({ tradeHistory: tradeHistory.data, lastPage: tradeHistory.last_page, currentPage: tradeHistory.current_page,  tradeHistorySpinner: false });
+      this.setState({ tradeHistory: tradeHistory.data, lastPage: tradeHistory.last_page, currentPage: tradeHistory.current_page, tradeHistorySpinner: false });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         console.log(ex.response.data);
@@ -118,13 +118,13 @@ class TradeHistory extends Component {
 
   doSubmit = async e => {
     e.preventDefault();
-    this.state.currentPage =1;
+    this.state.currentPage = 1;
     this.setTradeHistory();
   };
 
   render() {
     if (!auth.getCurrentUser()) return <Redirect to="/login" />;
-    const { tradeHistory, pairId, direction, currencyPairs,lastPage, currentPage } = this.state;
+    const { tradeHistory, pairId, direction, currencyPairs, lastPage, currentPage } = this.state;
 
     return (
       <React.Fragment>
@@ -214,11 +214,11 @@ class TradeHistory extends Component {
                   classes="coin-list latest-tranjections-table"
                   sortColumn=""
                 />
-                  <PaginationBig
-                lastPage={lastPage}
-                currentPage={currentPage}
-                onPageChange={this.handlePageChange}
-              />
+                <PaginationBig
+                  lastPage={lastPage}
+                  currentPage={currentPage}
+                  onPageChange={this.handlePageChange}
+                />
               </div>
             </div>
           </div>

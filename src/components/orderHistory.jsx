@@ -63,8 +63,8 @@ class OrderHistory extends Component {
         o.direction === 1 ? (
           <span className="ex-color-buy">Buy</span>
         ) : (
-          <span className="ex-color-sell">Sell</span>
-        )
+            <span className="ex-color-sell">Sell</span>
+          )
     },
     { path: "rate", label: "Price" },
     { path: "quantity", label: "Quantity" },
@@ -91,10 +91,10 @@ class OrderHistory extends Component {
         o.status === 0
           ? "Inactive"
           : o.status === 1
-          ? "Active"
-          : o.status === 2
-          ? "Filled"
-          : "Canceled"
+            ? "Active"
+            : o.status === 2
+              ? "Filled"
+              : "Canceled"
     }
     /* {
       path: "Cancel",
@@ -145,7 +145,7 @@ class OrderHistory extends Component {
   }
 
   setOrderHistory = async () => {
-    const { startDate, endDate, pairId, direction,currentPage } = this.state;
+    const { startDate, endDate, pairId, direction, currentPage } = this.state;
     const start = startDate ? moment(startDate).format("YYYY-M-D") : null;
     const end = endDate ? moment(endDate).format("YYYY-M-D") : null;
     try {
@@ -200,7 +200,7 @@ class OrderHistory extends Component {
 
   doSubmit = async e => {
     e.preventDefault();
-    this.state.currentPage=1;
+    this.state.currentPage = 1;
     this.setOrderHistory();
   };
 
@@ -296,11 +296,11 @@ class OrderHistory extends Component {
                   classes="coin-list latest-tranjections-table"
                   sortColumn=""
                 />
-                 <PaginationBig
-                lastPage={lastPage}
-                currentPage={currentPage}
-                onPageChange={this.handlePageChange}
-              />
+                <PaginationBig
+                  lastPage={lastPage}
+                  currentPage={currentPage}
+                  onPageChange={this.handlePageChange}
+                />
               </div>
             </div>
           </div>

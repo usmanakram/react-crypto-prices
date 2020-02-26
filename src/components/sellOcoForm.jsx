@@ -30,15 +30,19 @@ class SellOcoForm extends TradingForm {
       .required()
       .label("type"),
     trigger_rate: Joi.number()
+      .min(0)
       .required()
       .label("Stop"),
     rate: Joi.number()
+      .min(0)
       .required()
       .label("Price"),
     stop_limit_rate: Joi.number()
+      .min(0)
       .required()
       .label("Limit"),
     quantity: Joi.number()
+      .min(0)
       .required()
       .label("Quantity"),
     total: Joi.number()

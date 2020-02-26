@@ -147,7 +147,7 @@ class ExchangeBody extends Component {
 
               <div className="col-lg-3 righSideBar">
                 <CurrencyPairs currencyPairs={currencyPairs} />
-                <ExchangeTradingHistory selectedPair={selectedPair} />
+                <ExchangeTradingHistory selectedPair={selectedPair} selectedPairStats={selectedPairStats} />
               </div>
             </div>
           </div>
