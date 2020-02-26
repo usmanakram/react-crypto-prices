@@ -1,0 +1,23 @@
+#!/bin/bash
+
+function setup() {
+	docker build . -t crypto-exchange
+	# docker run -d -p 8080:80 --name exchange crypto-exchange
+	docker run -d -p 8080:443 --name exchange crypto-exchange
+	docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
+}
+function start() {
+	docker start exchange
+}
+function stop() {
+	docker stop exchange
+}
+function remove() {
+	docker rm exchange -f
+}
+function clean() {
+	remove
+	docker rmi crypto-exchange
+}
+
+$1 $2 $3
