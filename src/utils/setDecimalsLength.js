@@ -41,7 +41,5 @@ function getZeros(lastRate) {
 export function setDecimalsLength(lastRate) {
     const countZero = getZeros(lastRate);
     const obj = decimalSetting.find(o => o.start <= countZero && o.end >= countZero);
-    console.log("countZero");
-    console.log(countZero);
     return obj;
 }
