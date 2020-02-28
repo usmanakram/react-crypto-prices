@@ -25,7 +25,9 @@ class Withdrawal extends Form {
       this.setState({ WithdrawalLoader: true });
       const { data } = await http.get("/get-all-currencies");
 
-      const currencies = data.filter(c => ["BTC", "BC"].includes(c.symbol));
+      const currencies = data.filter(
+        c => ["BTC", "BC"].includes(c.symbol) && c.is_withdraw_allowed === true
+      );
       // const currencies = [
       //   { name: "Bitcoin", symbol: "BTC" },
       //   { name: "Bittrain Coin", symbol: "BC" }

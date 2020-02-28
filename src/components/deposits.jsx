@@ -27,7 +27,9 @@ class Deposits extends Component {
     try {
       this.setState({ depositsSpinner: true });
       const { data } = await http.get("/get-all-currencies");
-      const currencies = data.filter(c => c.symbol !== "BC");
+      const currencies = data.filter(
+        c => c.symbol !== "BC" && c.is_deposit_allowed === true
+      );
       this.setState({ currencies });
 
       // Populate first currency address and relevant data
