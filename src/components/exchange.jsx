@@ -73,12 +73,25 @@ class Exchange extends Component {
   };
 
   handleCurrencyPairChange = async symbol => {
-    const selectedPair = this.state.currencyPairs.find(
-      p => p.symbol === symbol
-    );
+    const { currencyPairs } = this.state;
+    const selectedPair = currencyPairs.find(p => p.symbol === symbol);
 
     if (selectedPair === undefined) {
-      this.props.history.replace("/exchange/" + exchangeDefaultPair);
+      const defaultPairData = currencyPairs.find(
+        p => p.symbol === exchangeDefaultPair
+      );
+      let url;
+      if (defaultPairData !== undefined) {
+        // Open exchange with default pair selection
+        url = "/exchange/" + exchangeDefaultPair;
+      } else if (currencyPairs.length > 0) {
+        // Open exchange with first pair (in pairs array) selection
+        url = "/exchange/" + currencyPairs[0].symbol;
+      } else {
+        // Redirect to home page, if pairs array is empty
+        url = "/";
+      }
+      this.props.history.replace(url);
       return;
     }
 
@@ -92,11 +105,17 @@ class Exchange extends Component {
     this.handleSelectedPairStats(selectedPair.latest_rate);
 
     ws.leaveChannel("live");
-    ws.channel("live").listen("LiveRates", e => {
-      this.setState({ currencyPairs: e.rates });
-      const pair = e.rates.find(p => p.id === selectedPair.id);
-      this.handleSelectedPairStats(pair.latest_rate);
-    });
+    ws.channel("live")
+      .listen("LiveRates", e => {
+        this.setState({ currencyPairs: e.rates });
+        const pair = e.rates.find(p => p.id === selectedPair.id);
+        this.handleSelectedPairStats(pair.latest_rate);
+      })
+      .listen("CurrencyPairsUpdated", e => {
+        this.setState({ currencyPairs: e.pairs });
+        const symbol = this.props.match.params.symbol;
+        this.handleCurrencyPairChange(symbol);
+      });
   };
 
   handleSelectedPairStats = latest_rate => {
