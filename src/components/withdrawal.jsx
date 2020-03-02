@@ -79,8 +79,19 @@ class Withdrawal extends Form {
         this.setState({ selectedCurrency, data: dataState });
       }
     } catch (ex) {
-      if (ex.response.status === 400) {
-        toast.error(ex.response.data);
+      if (ex.response) {
+        if (ex.response.status === 404) {
+          console.log(ex.response.data);
+        } else if (ex.response.status === 400) {
+          toast.error(ex.response.data);
+        } else if (ex.response.status === 422) {
+          // Laravel returns 422 against form validation errors
+          const { errors } = ex.response.data;
+
+          for (let item in errors) {
+            toast.error(errors[item][0]);
+          }
+        }
       }
     }
   };
