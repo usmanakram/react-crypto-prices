@@ -48,7 +48,7 @@
 			padding: 16px 30px;
 			background: $white_clr;
 			@include radius-border(0);
-			border-right: 1px solid #f0f0f0;
+			border-right: 1px solid rgb(230, 230, 230);
 			border-left: 1px solid transparent;
 			border-bottom: 1px solid #b5d6ff;
 			&:focus,

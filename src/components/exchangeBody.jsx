@@ -68,7 +68,8 @@ class ExchangeBody extends Component {
       selectedPairStats,
       quoteCurrencyBalance,
       baseCurrencyBalance,
-      isFullWidth
+      isFullWidth,
+      isDarkBg
     } = this.props;
 
     const { orderBookData, spinnerStatus } = this.state;
@@ -124,6 +125,7 @@ class ExchangeBody extends Component {
                     <TradingViewWidget
                       selectedPair={selectedPair}
                       isFullWidth={isFullWidth}
+                      isDarkBg={isDarkBg}
                     />
                   </div>
                   <div

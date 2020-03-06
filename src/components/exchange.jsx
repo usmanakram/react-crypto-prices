@@ -28,7 +28,7 @@ class Exchange extends Component {
     quoteCurrencyBalance: {},
     // OrderBookAndTradeHistorySpinner: false,
     isDarkBg: false,
-    isFullWidth: false
+    isFullWidth: true
   };
 
   user = auth.getCurrentUser();
@@ -233,6 +233,7 @@ class Exchange extends Component {
           selectedPairStats={selectedPairStats}
           quoteCurrencyBalance={quoteCurrencyBalance}
           baseCurrencyBalance={baseCurrencyBalance}
+          isDarkBg={isDarkBg}
         />
         <ExchangeOpenOrder
           selectedPair={selectedPair}

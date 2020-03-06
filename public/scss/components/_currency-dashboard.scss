@@ -48,7 +48,7 @@
   width: 100%;
 }
 .dahboard-order-block {
-  @include radius-border(5px);
+  @include radius-border(0px);
   border: 1px solid $border_clr_two;
 }
 .das-market-nav,
@@ -174,7 +174,7 @@
     }
     input[type="text"] {
       height: 36px;
-      border-bottom: 1px solid #f0f0f0;
+      border-bottom: 1px solid rgb(230, 230, 230);
     }
   }
   .ticker-nav .nav-item {
@@ -193,7 +193,7 @@
 
 .order-history-block {
   @include radius-border(5px);
-  border: 1px solid #f0f0f0;
+  border: 1px solid rgb(230, 230, 230);
   .history-table tbody tr td {
     padding: 6px 15px;
   }
