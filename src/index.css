@@ -1,6 +1,6 @@
-/* *{
+*{
 border-radius: 0px !important;
-} */
+}
 body{
   background: #ffffff;
   
@@ -71,7 +71,7 @@ body{
   margin-bottom: 20px;
 }
 .border {
-  border: 1px solid #e8e9eb;
+  border: 1px solid rgb(230, 230, 230);
 }
 
 .theadColor {
@@ -180,7 +180,7 @@ input.disabled {
   margin-bottom: 5px;
 }
 .order-history-block .table-fixed tbody {
-  height: 485px;
+  height: 490px;
   overflow-y: auto;
   width: 100%;
 }
@@ -236,7 +236,7 @@ input.disabled {
     width: 100% !important;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .currancy-rate-tb .container,.currancy-rate-tb .container-fluid{
     padding-left: 5px;
     padding-right: 5px;
@@ -273,9 +273,6 @@ input.disabled {
 .ticker-nav .nav-item a {
   padding: 5px;
 }
-.tv_orde_table tr th {
-  padding: 5px;
-}
 .dashboard-body {
   margin-bottom: 0;
 }
@@ -287,13 +284,7 @@ input.disabled {
   padding-bottom: 5px;
 }
 
-.tv_orde_table tbody td {
-  padding-top: 7px;
-  padding-bottom: 0px;
-}
-.tv_ammount-form-block form .form-group {
-  margin-bottom: 0.5rem;
-}
+
 /* ===============================================order area================================================ */
 /* ===============================================balances================================================ */
 
@@ -323,7 +314,7 @@ input.disabled {
 }
 .dashes {
   border-bottom: 1px #d3d3d3 dashed;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 /* =================================================signUp============================================== */
@@ -363,6 +354,67 @@ input.disabled {
 
 /* ======================================= DepthChart================================================== */
 /* ======================================= tradingview, exchangeorderarea================================================== */
+
+.market-ticker-block > .tab-content > .tab-pane > .tv_orde_table{
+  min-height: 200px; 
+  background: rgb(246, 246, 246);
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(226, 226, 226);
+  border-image: initial;
+  outline: none;
+}
+
+.dark-blue-bg .market-ticker-block > .tab-content > .tab-pane > .tv_orde_table{
+  border-right:1px solid #242b42;
+  background-color: #0b132d !important;
+}
+.market-ticker-block > .tab-content > .tab-pane >  .tv_orde_table tr th {
+  padding: 5px 10px;
+  font-size: 14px;
+  color: #000;
+   border-right:1px solid rgb(226, 226, 226) ;
+}
+.dark-blue-bg .market-ticker-block > .tab-content > .tab-pane >  .tv_orde_table tr th {
+  color: #fff;
+   border:1px solid #242b42;
+}
+.market-ticker-block > .tab-content > .tab-pane > .tv_orde_table tbody td {
+  padding-top: 1rem;
+  border-right:1px solid rgb(226, 226, 226) ;
+  padding-bottom: 0px;
+}
+.dark-blue-bg .market-ticker-block > .tab-content > .tab-pane > .tv_orde_table tbody td {
+  border:1px solid #242b42 ;
+}
+.tv_ammount-form-block form .form-group {
+    margin-bottom: .5rem;
+}
+
+.tv_ammount-form-block form .form-group > .form-input-block > input {
+  height: 30px;
+  border-radius: 0%;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(226, 226, 226);
+  border-image: initial;
+  outline: none;
+}
+
+.tv_ammount-form-block form .form-group > .col-form-label {
+    line-height: 100%;
+}
+
+.tv_ammount-form-block form .form-group > .form-input-block > button {
+  height: 30px;
+  border-radius: 0%;
+}
+.tv_ammount-form-block form .form-group > .form-input-block > .tv-btc-tag {
+  right: 16px;
+  width: 40px;
+  height: 28px;
+  line-height: 30px;
+}
 
 .parent-order-tab {
   line-height: 100%;
@@ -405,10 +457,10 @@ input.disabled {
   background-color: rgba(0, 0, 0, 0);
 }
 .parent-order-tab .nav-item a.nav-link h5 {
-  font-weight: 500;
+  font-weight: 900;
 }
 .ticker-nav .nav-item a {
-  font-weight: 500;
+  font-weight: 900;
 }
 .market-new-ticker-block {
   margin-bottom: 5px !important;
@@ -434,13 +486,6 @@ input.disabled {
   height: 310px !important;
 }
 /* ==================================style.css=================================== */
-/* ==================================orderArea=================================== */
-.tv_ammount-form-block .form-input-block .tv-btc-tag {
-  right: 16px;
-  width: 40px;
-  height: 38px;
-}
-/* ==================================orderArea=================================== */
 /* ==================================confirmOrder=================================== */
 .con-btn {
   padding: 0.3rem 0.35rem;
@@ -460,7 +505,7 @@ input.disabled {
 .svg-style {
   color: #000;
   float: right;
-  border: 1px solid #f0f0f0;
+  border: 1px solid rgb(230, 230, 230);
   margin: 1px;
   padding: 0.5px;
 }
@@ -479,7 +524,7 @@ input.disabled {
 .tv-toolbar select,
 .tv-toolbar button {
   background: transparent;
-  border: 1px solid #f0f0f0;
+  border: 1px solid rgb(230, 230, 230);
   margin: 0px 1px;
   font-size: 13px;
 }
@@ -542,10 +587,13 @@ input.disabled {
 }
 .currency-rate .update-rate .currency-info > span {
   font-size: 13px;
+  color: #c6cbdb;
 }
-.currency-rate .update-rate .currency-info h6 {
-  font-size: 12px;
+.currency-rate .update-rate .currency-info .currency-info-base {
+  font-size: 14px;
+  color: #000;
 }
+
 .fa-sun {
   color: lightgray;
 }
@@ -699,3 +747,19 @@ html {
         font-weight: 400;
       padding: 0px 15px;
  }
+
+
+ .CurrencyRate{
+   background-color: #000;
+ }
+
+
+/* -------------container Fluid--------------- */
+.container-fluid{
+  width: 90%;
+}
+@media (max-width: 425px) {
+  .container-fluid{
+  width: 100%;
+}
+}

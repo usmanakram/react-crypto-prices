@@ -175,7 +175,7 @@
   .news-tags {
     display: none; }
   .ticker-nav .nav-item a {
-    border-bottom: 1px solid #e8e9eb;
+    border-bottom: 1px solid rgb(230, 230, 230);
     margin-bottom: 1px; }
   .ticker-nav .nav-item a.active {
     border-bottom: 1px solid #b5d6ff; }
