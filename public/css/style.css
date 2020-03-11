@@ -925,7 +925,7 @@ textarea:focus {
 .favorite-coin:before {
   content: "\f005";
   font-weight: 300;
-  font-family: Font awesome\5 Free;
+  font-family: Font Awesome\ 5 Free;
 }
 
 .favorite-coin.active:before {
