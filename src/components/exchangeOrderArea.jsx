@@ -8,7 +8,8 @@ const ExchangeOrderArea = ({
   selectedPair,
   selectedPairStats,
   quoteCurrencyBalance,
-  baseCurrencyBalance
+  baseCurrencyBalance,
+  spinnerStatus
 }) => {
   window.$(function() {
     window.$('[data-toggle="popover"]').popover({
@@ -84,6 +85,7 @@ const ExchangeOrderArea = ({
             selectedPair={selectedPair}
             quoteCurrencyBalance={quoteCurrencyBalance}
             baseCurrencyBalance={baseCurrencyBalance}
+            spinnerStatus={spinnerStatus}
           />
           <InstantOrder
             selectedPair={selectedPair}

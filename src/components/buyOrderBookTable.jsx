@@ -1,11 +1,12 @@
 import React from "react";
 import { setDecimalsLength } from "../utils/setDecimalsLength";
 
-
 const BuyOrderBookTable = ({ selectedPairStats, buyOrders }) => {
   const decimalLength = setDecimalsLength(selectedPairStats.last_rate);
-  const quantityDecimals = decimalLength === undefined ? 8 : decimalLength.quantityDecimals;
-  const rateDecimals = decimalLength === undefined ? 8 : decimalLength.rateDecimals;
+  const quantityDecimals =
+    decimalLength === undefined ? 8 : decimalLength.quantityDecimals;
+  const rateDecimals =
+    decimalLength === undefined ? 8 : decimalLength.rateDecimals;
 
   return (
     <React.Fragment>
@@ -26,13 +27,17 @@ const BuyOrderBookTable = ({ selectedPairStats, buyOrders }) => {
           {buyOrders.map(value => (
             <tr key={value.id}>
               <td className="col-4">
-                <span className="color-buy">{value.rate.toFixed(rateDecimals)}</span>
+                <span className="color-buy">
+                  {value.rate.toFixed(rateDecimals)}
+                </span>
               </td>
               <td className="col-4">
                 <span>{value.tradable_quantity.toFixed(quantityDecimals)}</span>
               </td>
               <td className="col-4">
-                <span>{(value.rate * value.tradable_quantity).toFixed(rateDecimals)}</span>
+                <span>
+                  {(value.rate * value.tradable_quantity).toFixed(rateDecimals)}
+                </span>
                 <div className="rate-ratio"></div>
               </td>
             </tr>

@@ -85,19 +85,26 @@ const OrderBook = ({
           </li>
         </ul> */}
       <div className="ord">
-        <div className="das-oreder-table-block ">
-          <Spinner status={spinnerStatus} />
-
-          <SellOrderBookTable
-            selectedPair={selectedPair}
-            selectedPairStats={selectedPairStats}
-            sellOrders={sellOrders}
-          />
-
-          <BuyOrderBookTable
-            selectedPairStats={selectedPairStats}
-            buyOrders={buyOrders}
-          />
+        <div className="das-oreder-table-block">
+          <div className="row">
+            <div className="col-lg-12">
+              <Spinner status={spinnerStatus} />
+              <SellOrderBookTable
+                selectedPair={selectedPair}
+                selectedPairStats={selectedPairStats}
+                sellOrders={sellOrders}
+                spinnerStatus={spinnerStatus}
+              />
+            </div>
+            <div className="col-lg-12">
+              <Spinner status={spinnerStatus} />
+              <BuyOrderBookTable
+                selectedPairStats={selectedPairStats}
+                buyOrders={buyOrders}
+                spinnerStatus={spinnerStatus}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

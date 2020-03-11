@@ -29,8 +29,17 @@ class CurrencyRate extends Component {
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      {selectedPair.base_currency_symbol} /{" "}
-                      {selectedPair.quote_currency_symbol}
+                      <span
+                        style={{
+                          fontFamily: "sans-serif",
+                          fontWeight: "bold",
+                          fontSize: "25px",
+                          paddingLeft: "0"
+                        }}
+                      >
+                        {selectedPair.base_currency_symbol}
+                      </span>{" "}
+                      /{selectedPair.quote_currency_symbol}
                     </button>{" "}
                     <div
                       className="dropdown-menu"
