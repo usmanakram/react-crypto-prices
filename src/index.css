@@ -1,17 +1,29 @@
-*{
-border-radius: 0px !important;
+* {
+  border-radius: 0px !important;
 }
-body{
-  background: #ffffff;
-  
-}
- .table thead th, .table thead th td {
-   background: #F7F7F7 !important;
- }
 
- .dark-blue-bg .table thead th, .dark-blue-bg .table thead th td{
-   background-color: #171F38 !important;
- }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: sans-serif !important;
+  font-weight: bold !important;
+}
+
+body {
+  background: #ffffff;
+}
+.table thead th,
+.table thead th td {
+  background: rgb(247, 247, 247) !important;
+}
+
+.dark-blue-bg .table thead th,
+.dark-blue-bg .table thead th td {
+  background-color: #171f38 !important;
+}
 
 .clickable {
   cursor: pointer;
@@ -167,11 +179,11 @@ input.disabled {
   padding: 2px 20px;
 }
 .das-oreder-table td span {
-  font-weight: 400;
+  font-weight: 600;
   font-size: 12px !important;
 }
 .das-oreder-table td {
-  font-weight: 400 !important;
+  font-weight: 600 !important;
   font-size: 12px !important;
 }
 .dahboard-order-block,
@@ -185,42 +197,40 @@ input.disabled {
   width: 100%;
 }
 
-.order-history-block .table-fixed thead tr th:last-child{
+.order-history-block .table-fixed thead tr th:last-child {
   text-align: center !important;
 }
 
-.order-history-block .table-fixed tbody tr td:last-child{
+.order-history-block .table-fixed tbody tr td:last-child {
   text-align: right;
 }
 
-.order-history-block .table-fixed tbody tr td span{
+.order-history-block .table-fixed tbody tr td span {
   text-align: right;
 }
 /* ===============================================tradingview================================================ */
 
 /* ===============================================currency-rate================================================ */
 
-.currency-rate .dropdown-menu{
-    min-width: 140px;
-    background-color: #353c4b;
-    padding: 5px 0;
-    left: 10%;
+.currency-rate .dropdown-menu {
+  min-width: 140px;
+  background-color: #353c4b;
+  padding: 5px 0;
+  left: 10%;
 }
 
 .currency-rate .dropdown-menu > a {
   padding: 5px 10px !important;
-  font-weight: 500 !important; 
+  font-weight: 500 !important;
   font-size: 15px !important;
   color: #fff;
-
 }
 
 .currency-rate .dropdown-menu > a:hover {
   /* background-color: #1f2738 !important; */
   background-color: #494f5d !important;
   /* /* color: rgb(177, 176, 176) !important; */
-   color: #DC3235 !important; 
-   
+  color: #dc3235 !important;
 }
 
 /* ===============================================currency-rate================================================ */
@@ -237,26 +247,28 @@ input.disabled {
   }
 }
 @media (min-width: 992px) {
-  .currancy-rate-tb .container,.currancy-rate-tb .container-fluid{
+  .currancy-rate-tb .container,
+  .currancy-rate-tb .container-fluid {
     padding-left: 5px;
     padding-right: 5px;
   }
   .leftSideBar {
     padding-left: 5px;
-    padding-right: 0;
+    padding-right: 5px;
   }
   .righSideBar {
-    padding-left: 0;
+    padding-left: 5px;
     padding-right: 5px;
   }
   .tv-oa-lr {
     padding-right: 5px;
     padding-left: 5px;
   }
-  .latest-tranjections-area .container, .latest-tranjections-area .container-fluid{
-  padding-left: 5px;
-  padding-right: 5px;
-}
+  .latest-tranjections-area .container,
+  .latest-tranjections-area .container-fluid {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
 }
 
 /* ===============================================order Book & trade left right Padding================================================ */
@@ -283,7 +295,6 @@ input.disabled {
 .latest-tranjections-area {
   padding-bottom: 5px;
 }
-
 
 /* ===============================================order area================================================ */
 /* ===============================================balances================================================ */
@@ -314,7 +325,7 @@ input.disabled {
 }
 .dashes {
   border-bottom: 1px #d3d3d3 dashed;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 /* =================================================signUp============================================== */
@@ -355,8 +366,8 @@ input.disabled {
 /* ======================================= DepthChart================================================== */
 /* ======================================= tradingview, exchangeorderarea================================================== */
 
-.market-ticker-block > .tab-content > .tab-pane > .tv_orde_table{
-  min-height: 200px; 
+.market-ticker-block > .tab-content > .tab-pane > .tv_orde_table {
+  min-height: 200px;
   background: rgb(246, 246, 246);
   border-width: 1px;
   border-style: solid;
@@ -365,30 +376,42 @@ input.disabled {
   outline: none;
 }
 
-.dark-blue-bg .market-ticker-block > .tab-content > .tab-pane > .tv_orde_table{
-  border-right:1px solid #242b42;
+.dark-blue-bg .market-ticker-block > .tab-content > .tab-pane > .tv_orde_table {
+  border-right: 1px solid #242b42;
   background-color: #0b132d !important;
 }
-.market-ticker-block > .tab-content > .tab-pane >  .tv_orde_table tr th {
+.market-ticker-block > .tab-content > .tab-pane > .tv_orde_table tr th {
   padding: 5px 10px;
   font-size: 14px;
   color: #000;
-   border-right:1px solid rgb(226, 226, 226) ;
+  border-right: 1px solid rgb(226, 226, 226);
 }
-.dark-blue-bg .market-ticker-block > .tab-content > .tab-pane >  .tv_orde_table tr th {
+.dark-blue-bg
+  .market-ticker-block
+  > .tab-content
+  > .tab-pane
+  > .tv_orde_table
+  tr
+  th {
   color: #fff;
-   border:1px solid #242b42;
+  border: 1px solid #242b42;
 }
 .market-ticker-block > .tab-content > .tab-pane > .tv_orde_table tbody td {
   padding-top: 1rem;
-  border-right:1px solid rgb(226, 226, 226) ;
+  border-right: 1px solid rgb(226, 226, 226);
   padding-bottom: 0px;
 }
-.dark-blue-bg .market-ticker-block > .tab-content > .tab-pane > .tv_orde_table tbody td {
-  border:1px solid #242b42 ;
+.dark-blue-bg
+  .market-ticker-block
+  > .tab-content
+  > .tab-pane
+  > .tv_orde_table
+  tbody
+  td {
+  border: 1px solid #242b42;
 }
 .tv_ammount-form-block form .form-group {
-    margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 .tv_ammount-form-block form .form-group > .form-input-block > input {
@@ -402,7 +425,7 @@ input.disabled {
 }
 
 .tv_ammount-form-block form .form-group > .col-form-label {
-    line-height: 100%;
+  line-height: 100%;
 }
 
 .tv_ammount-form-block form .form-group > .form-input-block > button {
@@ -506,7 +529,7 @@ input.disabled {
   color: #000;
   float: right;
   border: 1px solid rgb(230, 230, 230);
-  margin: 1px;
+  margin: 2px;
   padding: 0.5px;
 }
 .dark-blue-bg .svg-style {
@@ -607,16 +630,20 @@ input.disabled {
   min-height: 45px;
   padding: 0px 0px !important;
 }
+
+.navbar i {
+  font-size: 9px;
+}
 .navbar-logo {
   width: 130px !important;
 }
 
- .navbar-nav > li > a{
+.navbar-nav > li > a {
   padding: 5px 20px !important;
-  font-weight: 500 !important; 
+  font-weight: 500 !important;
   font-size: 14px !important;
   color: #ffffff;
-  }
+}
 .navbar-nav .dropdown-menu {
   padding: 0px;
   min-width: 140px;
@@ -627,17 +654,15 @@ input.disabled {
 
 .navbar-nav .dropdown-menu > li > a {
   padding: 5px 10px !important;
-  font-weight: 500 !important; 
+  font-weight: 500 !important;
   font-size: 15px !important;
   color: #fff !important;
-
 }
 .navbar-nav .dropdown-menu > li > a:hover {
   /* background-color: #1f2738 !important; */
   background-color: #494f5d !important;
   /* /* color: rgb(177, 176, 176) !important; */
-   color: #DC3235 !important; 
-   
+  color: #dc3235 !important;
 }
 
 /* ==================================Header=================================== */
@@ -735,31 +760,155 @@ html {
 
 .dahboard-order-block .panel-heading-block,
 .order-history-block .panel-heading-block,
-.latest-tranjections-area .panel-heading-block{
-    padding: 6px 0 6px 15px;
-  }
-  .latest-tranjections-table tbody tr td {
-    padding: 6px 15px;
-    font-size: 12px;
-  }
- .latest-tranjections-area .coin-list thead th {
-      font-size: 12px;
-        font-weight: 400;
-      padding: 0px 15px;
- }
+.latest-tranjections-area .panel-heading-block {
+  padding: 6px 0 6px 15px;
+}
+.latest-tranjections-table tbody tr td {
+  padding: 6px 15px;
+  font-size: 12px;
+}
+.latest-tranjections-area .coin-list thead th {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 0px 15px;
+}
 
-
- .CurrencyRate{
-   background-color: #000;
- }
-
+.CurrencyRate {
+  background-color: #000;
+}
 
 /* -------------container Fluid--------------- */
-.container-fluid{
-  width: 90%;
-}
 @media (max-width: 425px) {
-  .container-fluid{
-  width: 100%;
+  .container-fluid {
+    width: 100%;
+  }
 }
+
+@media (min-width: 426px) and (max-width: 1440px) {
+  .container-fluid {
+    width: 90% !important;
+  }
 }
+@media (min-width: 1441px) and (max-width: 1920px) {
+  .container-fluid {
+    width: 85% !important;
+  }
+}
+
+@media (min-width: 1921px) {
+  .container-fluid {
+    width: 55% !important;
+  }
+}
+
+/* ==============spinner============ */
+/**===== bars4 =====*/
+#bars4 {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 50px;
+  width: 50px;
+  margin: -25px 0 0 -25px;
+  z-index: 1000;
+}
+
+#bars4 span {
+  display: block;
+  bottom: 10px;
+  width: 9px;
+  height: 15px;
+  background: rgba(222, 49, 53, 0.25);
+  position: absolute;
+  -webkit-animation: bars4 2s infinite ease-in-out;
+  animation: bars4 2s infinite ease-in-out;
+}
+
+#bars4 span:nth-child(2) {
+  left: 11px;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+#bars4 span:nth-child(3) {
+  left: 22px;
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+
+#bars4 span:nth-child(4) {
+  left: 33px;
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+#bars4 span:nth-child(5) {
+  left: 44px;
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+}
+
+@keyframes bars4 {
+  0% {
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+    background: rgba(222, 49, 53, 0.25);
+  }
+
+  25% {
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+    background: rgba(222, 49, 53, 0.75);
+  }
+
+  50% {
+    -webkit-transform: translateX(15px);
+    transform: translateX(15px);
+    -webkit-transform: translateX(15px);
+    transform: translateX(15px);
+    background: rgba(222, 49, 53, 0.25);
+  }
+
+  100% {
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+    background: rgba(222, 49, 53, 0.25);
+  }
+}
+
+@-webkit-keyframes bars4 {
+  0% {
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+    background: rgba(222, 49, 53, 0.25);
+  }
+
+  25% {
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+    background: rgba(222, 49, 53, 0.75);
+  }
+
+  50% {
+    -webkit-transform: translateX(15px);
+    transform: translateX(15px);
+    background: rgba(222, 49, 53, 0.25);
+  }
+
+  100% {
+    -webkit-transform: translateX(0px);
+    transform: translateX(0px);
+    background: rgba(222, 49, 53, 0.25);
+  }
+}
+
+/** END of bars4 */
+
+/* ==============spinner============ */

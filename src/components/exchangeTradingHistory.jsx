@@ -67,8 +67,10 @@ class ExchangeTradingHistory extends Component {
     const { selectedPair, selectedPairStats } = this.props;
 
     const decimalLength = setDecimalsLength(selectedPairStats.last_rate);
-    const quantityDecimals = decimalLength === undefined ? 8 : decimalLength.quantityDecimals;
-    const rateDecimals = decimalLength === undefined ? 8 : decimalLength.rateDecimals;
+    const quantityDecimals =
+      decimalLength === undefined ? 8 : decimalLength.quantityDecimals;
+    const rateDecimals =
+      decimalLength === undefined ? 8 : decimalLength.rateDecimals;
     const { tradeHistory, spinnerStatus } = this.state;
 
     return (
@@ -99,12 +101,12 @@ class ExchangeTradingHistory extends Component {
                   <span
                     className={
                       tradeHistory[i + 1] &&
-                        tradeHistory[i + 1].rate > value.rate
+                      tradeHistory[i + 1].rate > value.rate
                         ? "color-sell"
                         : tradeHistory[i + 1] &&
                           tradeHistory[i + 1].rate < value.rate
-                          ? "color-buy"
-                          : "color"
+                        ? "color-buy"
+                        : "color"
                     }
                   >
                     {value.rate.toFixed(rateDecimals)}

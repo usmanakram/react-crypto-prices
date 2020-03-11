@@ -126,6 +126,7 @@ class ExchangeBody extends Component {
                       selectedPair={selectedPair}
                       isFullWidth={isFullWidth}
                       isDarkBg={isDarkBg}
+                      spinnerStatus={spinnerStatus}
                     />
                   </div>
                   <div
@@ -144,12 +145,25 @@ class ExchangeBody extends Component {
                   selectedPairStats={selectedPairStats}
                   baseCurrencyBalance={baseCurrencyBalance}
                   quoteCurrencyBalance={quoteCurrencyBalance}
+                  spinnerStatus={spinnerStatus}
                 />
               </div>
 
               <div className="col-lg-3 righSideBar">
-                <CurrencyPairs currencyPairs={currencyPairs} />
-                <ExchangeTradingHistory selectedPair={selectedPair} selectedPairStats={selectedPairStats} />
+                <div className="row">
+                  <div className="col-lg-12">
+                    <CurrencyPairs
+                      currencyPairs={currencyPairs}
+                      spinnerStatus={spinnerStatus}
+                    />
+                  </div>
+                  <div className="col-lg-12">
+                    <ExchangeTradingHistory
+                      selectedPair={selectedPair}
+                      selectedPairStats={selectedPairStats}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

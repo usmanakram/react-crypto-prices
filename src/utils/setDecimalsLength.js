@@ -9,7 +9,8 @@
 
 const decimalSetting = [
     { start: 0, end: 0, rateDecimals: 2, quantityDecimals: 6 },
-    { start: 1, end: 2, rateDecimals: 6, quantityDecimals: 3 },
+    // { start: 1, end: 2, rateDecimals: 6, quantityDecimals: 3 },
+    { start: 1, end: 2, rateDecimals: 6, quantityDecimals: 8 },
     { start: 3, end: 4, rateDecimals: 8, quantityDecimals: 2 },
     { start: 5, end: 8, rateDecimals: 8, quantityDecimals: 2 },
 ];

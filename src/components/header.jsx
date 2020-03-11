@@ -71,7 +71,7 @@ class Header extends Component {
                         className="nav-link"
                         to=""
                       >
-                        Fund
+                        Fund&nbsp;<i className="fa fa-chevron-down" aria-hidden="true"></i>
                       </Link>
                       <ul className="dropdown-menu">
                         <li className="nav-item">
@@ -102,7 +102,7 @@ class Header extends Component {
                         className="nav-link"
                         to=""
                       >
-                        Order
+                        Order&nbsp;<i className="fa fa-chevron-down" aria-hidden="true"></i>
                       </Link>
                       <ul className="dropdown-menu">
                         <li className="nav-item">
@@ -192,7 +192,7 @@ class Header extends Component {
                       className="nav-link"
                       to=""
                     >
-                      {user.username}
+                      {user.username}&nbsp;<i className="fa fa-chevron-down" aria-hidden="true"></i>
                     </Link>
                     <ul className="dropdown-menu">
                       <li className="nav-item">

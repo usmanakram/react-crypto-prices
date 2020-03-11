@@ -5,7 +5,7 @@ class CurrencyPairs extends Component {
   state = {};
 
   render() {
-    const { currencyPairs } = this.props;
+    const { currencyPairs, spinnerStatus } = this.props;
     const quoteCurrencies = [
       ...new Set(currencyPairs.map(p => p.quote_currency_symbol))
     ].sort();
@@ -25,7 +25,7 @@ class CurrencyPairs extends Component {
                   role="tab"
                   data-toggle="tab"
                 >
-                  Favorites
+                  <h5>Favorites</h5>
                 </a>
               </li>
               {quoteCurrencies.map((c, i) => (
@@ -38,14 +38,17 @@ class CurrencyPairs extends Component {
                     role="tab"
                     data-toggle="tab"
                   >
-                    {c}
+                    <h5>{c}</h5>
                   </a>
                 </li>
               ))}
             </ul>
           </div>
           <div className="market-ticker-block">
-            <CurrencyPairsTables currencyPairs={currencyPairs} />
+            <CurrencyPairsTables
+              currencyPairs={currencyPairs}
+              spinnerStatus={spinnerStatus}
+            />
           </div>
         </div>
       </div>

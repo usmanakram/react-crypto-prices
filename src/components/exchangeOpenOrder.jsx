@@ -52,8 +52,8 @@ class ExchangeOpenOrder extends Component {
         o.direction === 1 ? (
           <span className="ex-color-buy">Buy</span>
         ) : (
-            <span className="ex-color-sell">Sell</span>
-          )
+          <span className="ex-color-sell">Sell</span>
+        )
     },
     { path: "rate", label: "Price" },
     { path: "quantity", label: "Quantity" },
@@ -78,7 +78,10 @@ class ExchangeOpenOrder extends Component {
     {
       path: "Cancel",
       content: o => (
-        <button onClick={() => this.onCancel(o.id)} className="btn btn-primary btn-sm">
+        <button
+          onClick={() => this.onCancel(o.id)}
+          className="btn btn-primary btn-sm"
+        >
           Cancel
         </button>
       )
