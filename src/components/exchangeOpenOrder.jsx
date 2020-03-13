@@ -80,7 +80,7 @@ class ExchangeOpenOrder extends Component {
       content: o => (
         <button
           onClick={() => this.onCancel(o.id)}
-          className="btn btn-primary btn-sm"
+          className="btn btn-danger btn-sm"
         >
           Cancel
         </button>

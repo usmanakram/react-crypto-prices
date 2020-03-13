@@ -70,7 +70,7 @@ class Form extends Component {
   };
 
   renderButton(label, extraClasses = "") {
-    const classes = `btn btn-primary ${extraClasses}`;
+    const classes = `btn btn-danger ${extraClasses}`;
     return <button className={classes}>{label}</button>;
   }
 
