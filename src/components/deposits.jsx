@@ -8,6 +8,7 @@ import Spinner from "./spinner";
 import copy from "copy-to-clipboard";
 import Header from "./header";
 
+import debug from "../utils/debuger";
 var QRCode = require("qrcode.react");
 
 class Deposits extends Component {
@@ -36,13 +37,14 @@ class Deposits extends Component {
       const { data: firstCurrency } = await http.get(
         "/auth/get-deposit-address/" + data[0].symbol
       );
+
       this.setState({
         selectedCurrency: firstCurrency,
         address: firstCurrency.address,
         depositsSpinner: false
       });
     } catch (ex) {
-      console.log(ex);
+      debug.log(ex);
     }
   }
 
@@ -82,7 +84,7 @@ class Deposits extends Component {
         depositsSpinner: false
       }); //
     } catch (ex) {
-      console.log(ex);
+      debug.log(ex);
       //new
       this.setState({
         isLoadSpinner: false
@@ -162,15 +164,15 @@ class Deposits extends Component {
             <div className="row">
               <div className="col-12 mb-3">
                 <div className="border adbox">
-                  <h5 className="text-warning mt-3 ml-3">
+                  <h5 className="text-danger mt-3 ml-3">
                     <strong>Important</strong>
                   </h5>
-                  <p className="text-warning ml-3">
+                  <p className="text-danger ml-3">
                     Send only <strong>{symbol}</strong> to this deposit address.
                     Sending any other coin or token to this address may result
                     in the loss of your deposit.
                   </p>
-                  <h5 className="text-warning ml-3 mb-3">
+                  <h5 className="text-danger ml-3 mb-3">
                     <strong>{symbol} Deposit Address</strong>
                   </h5>
 
@@ -188,7 +190,7 @@ class Deposits extends Component {
                     <button
                       onClick={this.handleLoadComponent}
                       type="button"
-                      className="btn btn-primary mx-3"
+                      className="btn btn-danger mx-3"
                       data-toggle="modal"
                       data-target="#myModal"
                     >
@@ -199,7 +201,7 @@ class Deposits extends Component {
                     <button
                       onClick={this.handleCopy}
                       type="button"
-                      className="btn btn-primary mx-3"
+                      className="btn btn-danger mx-3"
                     >
                       <i
                         className="fa fa-clipboard fa-fw"

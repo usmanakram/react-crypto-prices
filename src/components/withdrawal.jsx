@@ -7,6 +7,7 @@ import auth from "../services/authService";
 import Spinner from "./spinner";
 import Header from "./header";
 import { toast } from "react-toastify";
+import debug from "../utils/debuger";
 
 class Withdrawal extends Form {
   state = {
@@ -32,6 +33,12 @@ class Withdrawal extends Form {
       //   { name: "Bitcoin", symbol: "BTC" },
       //   { name: "Bittrain Coin", symbol: "BC" }
       // ];
+
+      /**
+       * for BC withdrawal:
+       * if request already placed then show hidden feild for enter code.
+       * and hide quantity feild
+       */
       // Populate BTC address and relevant data
       const { data: selectedCurrency } = await http.get(
         "/auth/get-deposit-address/BTC"
@@ -46,7 +53,7 @@ class Withdrawal extends Form {
         data: dataState
       });
     } catch (ex) {
-      console.log(ex);
+      debug.log(ex);
     }
   }
 
@@ -81,7 +88,7 @@ class Withdrawal extends Form {
     } catch (ex) {
       if (ex.response) {
         if (ex.response.status === 404) {
-          console.log(ex.response.data);
+          debug.log(ex.response.data);
         } else if (ex.response.status === 400) {
           toast.error(ex.response.data);
         } else if (ex.response.status === 422) {
@@ -150,7 +157,7 @@ class Withdrawal extends Form {
       const data = this.handleValidation(selectedCurrency);
       this.setState({ selectedCurrency, WithdrawalLoader: false, data });
     } catch (ex) {
-      console.log(ex);
+      debug.log(ex);
     }
   };
 
@@ -220,10 +227,10 @@ class Withdrawal extends Form {
           <div className="row">
             <div className="col-12 mb-3">
               <div className="border adbox">
-                <h5 className="text-warning mt-3 ml-3">
+                <h5 className="text-danger mt-3 ml-3">
                   <strong>Important</strong>
                 </h5>
-                <p className="text-warning ml-3">
+                <p className="text-danger ml-3">
                   Provide only <strong>{symbol}</strong> address. Providing any
                   other coin or token address may result in the loss of your
                   balance.

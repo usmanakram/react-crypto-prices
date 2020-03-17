@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import auth from "../services/authService";
 import { header } from "../services/custom";
 import logo from "../images/logo.png";
+import debug from "../utils/debuger";
 
 class Header extends Component {
   state = { user: {} };
@@ -19,11 +20,11 @@ class Header extends Component {
   getUser = async () => {
     try {
       const user = await auth.getUser();
-      console.log(user);
+      debug.log(user);
       this.setState({ user });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
+        debug.log(ex.response.data);
       }
     }
   };
@@ -71,7 +72,11 @@ class Header extends Component {
                         className="nav-link"
                         to=""
                       >
-                        Fund&nbsp;<i className="fa fa-chevron-down" aria-hidden="true"></i>
+                        Fund&nbsp;
+                        <i
+                          className="fa fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
                       </Link>
                       <ul className="dropdown-menu">
                         <li className="nav-item">
@@ -102,7 +107,11 @@ class Header extends Component {
                         className="nav-link"
                         to=""
                       >
-                        Order&nbsp;<i className="fa fa-chevron-down" aria-hidden="true"></i>
+                        Order&nbsp;
+                        <i
+                          className="fa fa-chevron-down"
+                          aria-hidden="true"
+                        ></i>
                       </Link>
                       <ul className="dropdown-menu">
                         <li className="nav-item">
@@ -192,7 +201,8 @@ class Header extends Component {
                       className="nav-link"
                       to=""
                     >
-                      {user.username}&nbsp;<i className="fa fa-chevron-down" aria-hidden="true"></i>
+                      {user.username}&nbsp;
+                      <i className="fa fa-chevron-down" aria-hidden="true"></i>
                     </Link>
                     <ul className="dropdown-menu">
                       <li className="nav-item">

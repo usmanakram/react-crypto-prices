@@ -57,7 +57,7 @@ class SellStopLimitForm extends TradingForm {
 
     try {
       const { data } = this.state;
-      // console.log(data);
+      // debug.log(data);
 
       const response = await trade.sell(
         this.props.selectedPair.id,
@@ -79,7 +79,7 @@ class SellStopLimitForm extends TradingForm {
           // this.setState({ errors });
           // toast.error(ex.response.data);
 
-          // console.log(ex.response.data);
+          // debug.log(ex.response.data);
           toast.error(ex.response.data);
         } else if (ex.response.status === 422) {
           // Laravel returns 422 against form validation errors

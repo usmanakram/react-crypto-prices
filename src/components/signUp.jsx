@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import Header from "./header";
 import Spinner from "./spinner";
 import { Link } from "react-router-dom";
+import debug from "../utils/debuger";
 
 class SignUp extends Form {
   state = {
@@ -53,7 +54,7 @@ class SignUp extends Form {
         errors.forEach(error => {
           if (error.type === "string.regex.base") {
             error.message =
-              "Password must have atleast one capital and one small letter.";
+              "Password must have atleast one capital, one small letter and one number.";
           }
         });
         return errors;
@@ -81,7 +82,7 @@ class SignUp extends Form {
   };
 
   doSubmit = async () => {
-    console.log("form validated");
+    debug.log("form validated");
 
     try {
       this.setState({ loginSpinner: true });

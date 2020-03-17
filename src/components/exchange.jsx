@@ -12,6 +12,7 @@ import ws from "../services/webSocketService";
 import { toast } from "react-toastify";
 // import { handleWidth } from "../services/custom";
 import storage from "../utils/storage";
+import debug from "../utils/debuger";
 
 class Exchange extends Component {
   state = {
@@ -59,7 +60,7 @@ class Exchange extends Component {
   }
 
   /* static getDerivedStateFromProps(props, state) {
-    console.log("inside getDerivedStateFromProps method");
+    debug.log("inside getDerivedStateFromProps method");
     return null;
   } */
 
@@ -68,7 +69,7 @@ class Exchange extends Component {
       const { data: currencyPairs } = await http.get("/currency-pairs");
       this.setState({ currencyPairs });
     } catch (ex) {
-      console.log(ex);
+      debug.log(ex);
     }
   };
 
@@ -162,7 +163,7 @@ class Exchange extends Component {
         this.handleBalances(balances);
       } catch (ex) {
         if (ex.response && ex.response.status === 400) {
-          console.log(ex.response.data);
+          debug.log(ex.response.data);
           // toast.error(ex.response.data);
         }
       }
@@ -185,7 +186,7 @@ class Exchange extends Component {
         // this.setState({ OrderBookAndTradeHistorySpinner: false });
       } catch (ex) {
         if (ex.response && ex.response.status === 400) {
-          console.log(ex.response.data);
+          debug.log(ex.response.data);
         }
       }
     }

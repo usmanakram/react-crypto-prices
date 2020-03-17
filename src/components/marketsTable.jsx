@@ -6,6 +6,7 @@ import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
 import _ from "lodash";
 import ws from "./../services/webSocketService";
+import debug from "../utils/debuger";
 
 // const apiEndpoint = "http://localhost/projects/bittrain_exchange/coinmarketcap.com/api.php?coins_list=all";
 // const apiEndpoint = "?coins_list=all";
@@ -48,10 +49,10 @@ class MarketsTable extends Component {
     http
       .get(url)
       .then(response => {
-        console.log(response.data);
+        debug.log(response.data);
       })
       .catch(error => {
-        console.log(error);
+        debug.log(error);
       });
 
     /* try {
@@ -63,9 +64,9 @@ class MarketsTable extends Component {
       });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
-        console.log(ex.response);
+        debug.log(ex.response);
       }
-      console.log(ex);
+      debug.log(ex);
     } */
   }
 
@@ -98,10 +99,10 @@ class MarketsTable extends Component {
     http
       .post(url, data)
       .then(response => {
-        console.log(response.data);
+        debug.log(response.data);
       })
       .catch(error => {
-        console.log(error);
+        debug.log(error);
       });
   }
 
@@ -116,7 +117,7 @@ class MarketsTable extends Component {
     this.setState({ coins: data });
 
     /* ws.channel("home").listen("NewMessage", e => {
-      console.log(e.message);
+      debug.log(e.message);
     }); */
     ws.channel("live").listen("LiveRates", e => {
       this.setState({ coins: e.rates });

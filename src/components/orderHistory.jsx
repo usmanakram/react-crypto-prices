@@ -10,7 +10,8 @@ import trade from "../services/tradeService";
 import Spinner from "./spinner";
 import moment from "moment";
 import { toast } from "react-toastify";
-import PaginationBig from "./common/paginationBig"
+import PaginationBig from "./common/paginationBig";
+import debug from "../utils/debuger";
 
 class OrderHistory extends Component {
   state = {
@@ -63,8 +64,8 @@ class OrderHistory extends Component {
         o.direction === 1 ? (
           <span className="ex-color-buy">Buy</span>
         ) : (
-            <span className="ex-color-sell">Sell</span>
-          )
+          <span className="ex-color-sell">Sell</span>
+        )
     },
     { path: "rate", label: "Price" },
     { path: "quantity", label: "Quantity" },
@@ -91,10 +92,10 @@ class OrderHistory extends Component {
         o.status === 0
           ? "Inactive"
           : o.status === 1
-            ? "Active"
-            : o.status === 2
-              ? "Filled"
-              : "Canceled"
+          ? "Active"
+          : o.status === 2
+          ? "Filled"
+          : "Canceled"
     }
     /* {
       path: "Cancel",
@@ -123,7 +124,7 @@ class OrderHistory extends Component {
       this.setState({ orderHistory });
       toast.success(response);
     } catch (ex) {
-      console.log(ex);
+      debug.log(ex);
     }
   };
 
@@ -133,7 +134,7 @@ class OrderHistory extends Component {
       this.setState({ currencyPairs: data });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
+        debug.log(ex.response.data);
       }
     }
 
@@ -141,7 +142,8 @@ class OrderHistory extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.state.currentPage !== prevState.currentPage) this.setOrderHistory();
+    if (this.state.currentPage !== prevState.currentPage)
+      this.setOrderHistory();
   }
 
   setOrderHistory = async () => {
@@ -159,10 +161,15 @@ class OrderHistory extends Component {
         page: currentPage
       });
 
-      this.setState({ orderHistory: orderHistory.data, lastPage: orderHistory.last_page, currentPage: orderHistory.current_page, orderHistorySpinner: false });
+      this.setState({
+        orderHistory: orderHistory.data,
+        lastPage: orderHistory.last_page,
+        currentPage: orderHistory.current_page,
+        orderHistorySpinner: false
+      });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
+        debug.log(ex.response.data);
       }
     }
   };
@@ -170,7 +177,6 @@ class OrderHistory extends Component {
   handlePageChange = currentPage => {
     this.setState({ currentPage });
   };
-
 
   handleStartDate = date => {
     this.setState({ startDate: date });
@@ -206,7 +212,14 @@ class OrderHistory extends Component {
 
   render() {
     if (!auth.getCurrentUser()) return <Redirect to="/login" />;
-    const { direction, pairId, orderHistory, currencyPairs, lastPage, currentPage } = this.state;
+    const {
+      direction,
+      pairId,
+      orderHistory,
+      currencyPairs,
+      lastPage,
+      currentPage
+    } = this.state;
     return (
       <React.Fragment>
         <div className="navigation-two">

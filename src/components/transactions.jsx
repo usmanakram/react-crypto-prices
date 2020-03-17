@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import http from "../services/httpService";
 import auth from "../services/authService";
+import debug from "../utils/debuger";
 
 class Transactions extends Component {
   state = {
@@ -18,7 +19,7 @@ class Transactions extends Component {
         withdrawals: data.withdrawals
       });
     } catch (ex) {
-      console.log(ex);
+      debug.log(ex);
     }
   }
 

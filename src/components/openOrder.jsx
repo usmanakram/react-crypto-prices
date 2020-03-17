@@ -5,6 +5,7 @@ import Table from "./common/table";
 import trade from "../services/tradeService";
 import Spinner from "./spinner";
 import { toast } from "react-toastify";
+import debug from "../utils/debuger";
 
 class OpenOrder extends Component {
   state = {
@@ -90,7 +91,7 @@ class OpenOrder extends Component {
       this.setState({ openOrders });
       toast.success(response);
     } catch (ex) {
-      console.log(ex);
+      debug.log(ex);
     }
   };
 
@@ -102,7 +103,7 @@ class OpenOrder extends Component {
       this.setState({ openOrders, openOrderSpinner: false });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
+        debug.log(ex.response.data);
       }
     }
   }

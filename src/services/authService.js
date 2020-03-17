@@ -1,5 +1,7 @@
 import http from "./httpService";
 import jwtDecode from "jwt-decode";
+import debug from "../utils/debuger";
+
 // import { apiUrl } from "../config.json";
 // import { toast } from "react-toastify";
 // import qs from "qs";
@@ -36,10 +38,10 @@ async function login(username, password) {
   /* return http
     .post(apiEndpoint.login, formData)
     .then(response => {
-      console.log(response);
+      debug.log(response);
     })
     .catch(error => {
-      console.log(error);
+      debug.log(error);
     }); */
 
   // async/await
@@ -84,7 +86,7 @@ async function logout() {
 }
 
 function getCurrentUser() {
-  // console.log("getCurrentUser called");
+  // debug.log("getCurrentUser called");
   try {
     const jwt = localStorage.getItem(tokenKey);
     return jwtDecode(jwt);
