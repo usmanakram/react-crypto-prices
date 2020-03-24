@@ -326,7 +326,7 @@ input.disabled {
 
 /* signup signin reset */
 .user-login-signup-section {
-padding-top:125px;
+  padding-top: 125px;
 }
 .user-connected-from .form-group {
   margin: 10px 0px;
@@ -916,3 +916,11 @@ html {
 /** END of bars4 */
 
 /* ==============spinner============ */
+
+#depthChartStyle > .highcharts-container > svg > rect {
+  fill: #ffffff;
+}
+
+.dark-blue-bg #depthChartStyle > .highcharts-container > svg > rect {
+  fill: #131722;
+}

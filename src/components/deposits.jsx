@@ -4,10 +4,8 @@ import http from "../services/httpService";
 import { toast } from "react-toastify";
 import auth from "../services/authService";
 import Spinner from "./spinner";
-
 import copy from "copy-to-clipboard";
 import Header from "./header";
-
 import debug from "../utils/debuger";
 var QRCode = require("qrcode.react");
 
@@ -44,6 +42,9 @@ class Deposits extends Component {
         depositsSpinner: false
       });
     } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        toast.error(ex.response.data);
+      }
       debug.log(ex);
     }
   }

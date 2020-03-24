@@ -24,9 +24,9 @@ axios.interceptors.response.use(null, error => {
   // START
   if (error.response.status === 401) {
     debug.log("access denied");
-    // window.location = process.env.REACT_APP_BASENAME + "/logout";
-    localStorage.removeItem("token");
-    window.location.reload();
+    window.location = process.env.REACT_APP_BASENAME + "/logout";
+    // localStorage.removeItem("token");
+    // window.location.reload();
   }
   // END
 
