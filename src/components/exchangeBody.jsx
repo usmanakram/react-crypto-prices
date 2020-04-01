@@ -7,6 +7,7 @@ import OrderBook from "./orderBook";
 import CurrencyPairs from "./currencyPairs";
 import trade from "../services/tradeService";
 import ws from "../services/webSocketService";
+import debug from "../utils/debuger";
 
 class ExchangeBody extends Component {
   state = {
@@ -46,7 +47,7 @@ class ExchangeBody extends Component {
       this.setStream();
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
+        debug.log(ex.response.data);
       }
     }
     this.setState({ spinnerStatus: false });
@@ -79,7 +80,7 @@ class ExchangeBody extends Component {
         <div className={isFullWidth ? "container-fluid" : "container"}>
           <div className="dashboard-body">
             <div className="row">
-              <div className="col-lg-3 leftSideBar">
+              <div className="col-xl-3 col-lg-12 leftSideBar">
                 <OrderBook
                   selectedPair={selectedPair}
                   selectedPairStats={selectedPairStats}
@@ -88,7 +89,7 @@ class ExchangeBody extends Component {
                 />
               </div>
 
-              <div className="col-lg-6 tv-oa-lr ">
+              <div className="col-xl-6 col-lg-12 tv-oa-lr ">
                 <div className="ticker-head">
                   <ul
                     className="nav nav-tabs ticker-nav parent-order-tab"
@@ -149,7 +150,7 @@ class ExchangeBody extends Component {
                 />
               </div>
 
-              <div className="col-lg-3 righSideBar">
+              <div className="col-xl-3 col-lg-12 righSideBar">
                 <div className="row">
                   <div className="col-lg-12">
                     <CurrencyPairs

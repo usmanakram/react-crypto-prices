@@ -30,7 +30,7 @@ class CoinInfo extends Component {
   };
 
   async componentDidMount() {
-    // console.log(moment(1565222400000).format("MMMM Do YYYY, h:mm:ss a"));
+    // debug.log(moment(1565222400000).format("MMMM Do YYYY, h:mm:ss a"));
     const pairId = this.props.match.params.pairId;
     const { data } = await http.get("pair-history/" + pairId);
     this.setState({ coinHistory: data.historical_prices });

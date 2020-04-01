@@ -1,7 +1,6 @@
 * {
   border-radius: 0px !important;
 }
-
 h1,
 h2,
 h3,
@@ -45,7 +44,7 @@ body {
 }
 
 .adbox {
-  background-color: #fff;
+  background-color: rgb(246, 246, 246);
   border-radius: 5px;
 }
 
@@ -197,17 +196,6 @@ input.disabled {
   width: 100%;
 }
 
-.order-history-block .table-fixed thead tr th:last-child {
-  text-align: center !important;
-}
-
-.order-history-block .table-fixed tbody tr td:last-child {
-  text-align: right;
-}
-
-.order-history-block .table-fixed tbody tr td span {
-  text-align: right;
-}
 /* ===============================================tradingview================================================ */
 
 /* ===============================================currency-rate================================================ */
@@ -338,7 +326,7 @@ input.disabled {
 
 /* signup signin reset */
 .user-login-signup-section {
-  padding: 125px 0 50px 0;
+  padding-top: 125px;
 }
 .user-connected-from .form-group {
   margin: 10px 0px;
@@ -591,6 +579,21 @@ input.disabled {
   background-color: #0b132d !important;
 }
 /* ==================================TradingViewButton=================================== */
+/* ==================================exchange trading History=================================== */
+.trade-history thead tr th:nth-child(2) {
+  text-align: center;
+}
+.trade-history tbody tr td:nth-child(2) {
+  text-align: center;
+}
+.trade-history thead tr th:nth-child(3) {
+  text-align: center;
+}
+.trade-history tbody tr td:nth-child(3) {
+  text-align: center;
+}
+/* ==================================exchange trading History=================================== */
+
 /* ==================================POPOVER=================================== */
 
 .dark-blue-bg .popover {
@@ -705,40 +708,40 @@ input.disabled {
   float: left;
   position: relative;
 }
-.col-lg-3 ::after {
+.col-xl-3 ::after {
   content: "";
   clear: both;
   display: block;
 }
 /* width */
-.col-lg-3 ::-webkit-scrollbar {
+.col-xl-3 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
 
 /* Track */
-.col-lg-3 ::-webkit-scrollbar-track {
+.col-xl-3 ::-webkit-scrollbar-track {
   background: #fff;
 }
-.dark-blue-bg .col-lg-3 ::-webkit-scrollbar-track {
+.dark-blue-bg .col-xl-3 ::-webkit-scrollbar-track {
   background: #0b132d;
 }
 
 /* Handle */
-.col-lg-3 ::-webkit-scrollbar-thumb {
+.col-xl-3 ::-webkit-scrollbar-thumb {
   background: rgba(185, 184, 184, 0.651);
   border-radius: 50px;
 }
-.dark-blue-bg .col-lg-3 ::-webkit-scrollbar-thumb {
+.dark-blue-bg .col-xl-3 ::-webkit-scrollbar-thumb {
   background: #18295a;
 }
 
 /* Handle on hover */
-.col-lg-3 ::-webkit-scrollbar-thumb:hover {
+.col-xl-3 ::-webkit-scrollbar-thumb:hover {
   background: rgba(114, 114, 114, 0.795);
   border-radius: 50px;
 }
-.dark-blue-bg .col-lg-3 ::-webkit-scrollbar-thumb:hover {
+.dark-blue-bg .col-xl-3 ::-webkit-scrollbar-thumb:hover {
   background: #22377a;
 }
 
@@ -786,18 +789,19 @@ html {
 
 @media (min-width: 426px) and (max-width: 1440px) {
   .container-fluid {
-    width: 90% !important;
-  }
-}
-@media (min-width: 1441px) and (max-width: 1920px) {
-  .container-fluid {
     width: 85% !important;
   }
 }
-
-@media (min-width: 1921px) {
+@media (min-width: 1441px) {
   .container-fluid {
-    width: 55% !important;
+    max-width: 85% !important;
+  }
+  .dashboard-body > .row > .col-xl-3 {
+    max-width: 20% !important;
+  }
+  .dashboard-body > .row > .col-xl-6 {
+    max-width: 60% !important;
+    flex: 0 0 60%;
   }
 }
 
@@ -912,3 +916,11 @@ html {
 /** END of bars4 */
 
 /* ==============spinner============ */
+
+#depthChartStyle > .highcharts-container > svg > rect {
+  fill: #ffffff;
+}
+
+.dark-blue-bg #depthChartStyle > .highcharts-container > svg > rect {
+  fill: #131722;
+}

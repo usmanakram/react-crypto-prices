@@ -9,7 +9,8 @@ import Table from "./common/table";
 import trade from "../services/tradeService";
 import Spinner from "./spinner";
 import moment from "moment";
-import PaginationBig from "./common/paginationBig"
+import PaginationBig from "./common/paginationBig";
+import debug from "../utils/debuger";
 
 class TradeHistory extends Component {
   state = {
@@ -22,7 +23,6 @@ class TradeHistory extends Component {
     currencyPairs: [],
     lastPage: 0,
     currentPage: 1
-
   };
   columns = [
     { path: "created_at", label: "Date" },
@@ -34,8 +34,8 @@ class TradeHistory extends Component {
         o.direction === 1 ? (
           <span className="ex-color-buy">Buy</span>
         ) : (
-            <span className="ex-color-sell">Sell</span>
-          )
+          <span className="ex-color-sell">Sell</span>
+        )
     },
     { path: "rate", label: "Price" },
     { path: "quantity", label: "Quantity" }
@@ -53,7 +53,7 @@ class TradeHistory extends Component {
       this.setState({ currencyPairs: data });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
+        debug.log(ex.response.data);
       }
     }
 
@@ -61,7 +61,8 @@ class TradeHistory extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.state.currentPage !== prevState.currentPage) this.setTradeHistory();
+    if (this.state.currentPage !== prevState.currentPage)
+      this.setTradeHistory();
   }
 
   setTradeHistory = async () => {
@@ -79,10 +80,15 @@ class TradeHistory extends Component {
         page: currentPage
       });
 
-      this.setState({ tradeHistory: tradeHistory.data, lastPage: tradeHistory.last_page, currentPage: tradeHistory.current_page, tradeHistorySpinner: false });
+      this.setState({
+        tradeHistory: tradeHistory.data,
+        lastPage: tradeHistory.last_page,
+        currentPage: tradeHistory.current_page,
+        tradeHistorySpinner: false
+      });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
+        debug.log(ex.response.data);
       }
     }
   };
@@ -124,7 +130,14 @@ class TradeHistory extends Component {
 
   render() {
     if (!auth.getCurrentUser()) return <Redirect to="/login" />;
-    const { tradeHistory, pairId, direction, currencyPairs, lastPage, currentPage } = this.state;
+    const {
+      tradeHistory,
+      pairId,
+      direction,
+      currencyPairs,
+      lastPage,
+      currentPage
+    } = this.state;
 
     return (
       <React.Fragment>

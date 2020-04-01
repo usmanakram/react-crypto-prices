@@ -4,6 +4,7 @@ import auth from "../services/authService";
 import Header from "./header";
 import Table from "./common/table";
 import http from "../services/httpService";
+import debug from "../utils/debuger";
 
 class TransactionHistory extends Component {
   state = {
@@ -27,7 +28,7 @@ class TransactionHistory extends Component {
       this.setState({ deposits: data.deposits, withdrawals: data.withdrawals });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
+        debug.log(ex.response.data);
       }
     }
   }

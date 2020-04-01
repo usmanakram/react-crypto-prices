@@ -5,6 +5,7 @@ import trade from "../services/tradeService";
 import auth from "../services/authService";
 import ws from "../services/webSocketService";
 import { toast } from "react-toastify";
+import debug from "../utils/debuger";
 
 class ExchangeOpenOrder extends Component {
   state = {
@@ -135,7 +136,7 @@ class ExchangeOpenOrder extends Component {
       this.handleOpenOrders(orders);
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
+        debug.log(ex.response.data);
       }
     }
     this.setState({ spinnerStatus: false });
@@ -152,7 +153,7 @@ class ExchangeOpenOrder extends Component {
       this.handleOpenOrders(orders);
       toast.success(message);
     } catch (ex) {
-      console.log(ex);
+      debug.log(ex);
     }
   };
 

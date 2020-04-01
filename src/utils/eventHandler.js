@@ -1,3 +1,4 @@
+import debug from "./debuger";
 function bindUnbind(events, method) {
   const errors = [];
   for (const e of events) {
@@ -22,7 +23,7 @@ function bindUnbind(events, method) {
   /**
    * Log errors
    */
-  if (errors.length) console.log(errors);
+  if (errors.length) debug.log(errors);
 }
 
 function bind(events) {

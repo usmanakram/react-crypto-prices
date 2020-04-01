@@ -4,6 +4,7 @@ import http from "../services/httpService";
 import auth from "../services/authService";
 import Header from "./header";
 import Table from "../components/common/table";
+import debug from "../utils/debuger";
 
 class Balances extends Component {
   state = {
@@ -42,7 +43,7 @@ class Balances extends Component {
 
       this.setState({ balances, btcValue, dollarValue });
     } catch (ex) {
-      console.log(ex);
+      debug.log(ex);
     }
   }
 

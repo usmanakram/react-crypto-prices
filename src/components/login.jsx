@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import Header from "./header";
 import Spinner from "./spinner";
 import { Link } from "react-router-dom";
+import debug from "../utils/debuger";
 
 class Login extends Form {
   state = {
@@ -25,7 +26,7 @@ class Login extends Form {
   };
 
   doSubmit = async () => {
-    console.log("form validated");
+    debug.log("form validated");
 
     try {
       this.setState({ loginSpinner: true });

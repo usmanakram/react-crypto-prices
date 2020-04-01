@@ -5,6 +5,8 @@ import moment from "moment";
 import trade from "../services/tradeService";
 import ws from "../services/webSocketService";
 import eventHandler from "../utils/eventHandler";
+import Spinner from "./spinner";
+import debug from "../utils/debuger";
 
 class TradingViewWidget extends Component {
   state = {
@@ -27,21 +29,21 @@ class TradingViewWidget extends Component {
   movingAverage = [
     {
       period: 7,
-      color: "rgba(67, 83, 254, 1)",
+      color: "rgb(244,201,35)",
       type: "close",
       data: [],
       lineSeries: {}
     },
     {
       period: 25,
-      color: "rgba(245, 124, 0, 1)",
+      color: "rgb(131,57,214)",
       type: "close",
       data: [],
       lineSeries: {}
     },
     {
       period: 99,
-      color: "rgba(255, 255, 255, 0.8)",
+      color: "rgb(205,40,101)",
       type: "close",
       data: [],
       lineSeries: {}
@@ -73,6 +75,105 @@ class TradingViewWidget extends Component {
     }
   ];
 
+  settings = {
+    dark: {
+      chart: {
+        width: 600,
+        height: 300,
+        layout: {
+          backgroundColor: "#131722",
+          textColor: "rgba(255, 255, 255, 0.9)"
+        },
+        grid: {
+          vertLines: { color: "#363C4E" },
+          horzLines: { color: "#363C4E" }
+        },
+        crosshair: { mode: CrosshairMode.Normal },
+        priceScale: { borderColor: "#ABACAF" },
+        timeScale: {
+          borderColor: "#ABACAF",
+          timeVisible: true,
+          secondsVisible: false,
+          barSpacing: 24
+        }
+        // watermark: {
+        //   color: "white",
+        //   visible: true,
+        //   text: "TradingView Watermark Example",
+        //   fontSize: 12,
+        //   horzAlign: "left",
+        //   vertAlign: "top"
+        // }
+      },
+      candlestick: {
+        upColor: "#26A69A",
+        downColor: "#EF5350",
+        borderDownColor: "#EF5350",
+        borderUpColor: "#26A69A",
+        wickDownColor: "#EF5350",
+        wickUpColor: "#26A69A",
+        priceFormat: {
+          type: "price",
+          precision: 8,
+          minMove: 0.0000001
+        }
+      },
+      histogram: {
+        color: "#26a69a",
+        lineWidth: 2,
+        priceFormat: { type: "volume" },
+        overlay: true,
+        scaleMargins: { top: 0.8, bottom: 0 },
+        lastValueVisible: false,
+        priceLineVisible: false
+      }
+    },
+    light: {
+      chart: {
+        width: 600,
+        height: 300,
+        layout: {
+          backgroundColor: "#ffffff",
+          textColor: "rgba(0, 0, 0, 0.9)"
+        },
+        grid: {
+          vertLines: { color: "#E1ECF2" },
+          horzLines: { color: "#E1ECF2" }
+        },
+        crosshair: { mode: CrosshairMode.Normal },
+        priceScale: { borderColor: "#50535E" },
+        timeScale: {
+          borderColor: "#50535E",
+          timeVisible: true,
+          secondsVisible: false,
+          barSpacing: 8
+        }
+      },
+      candlestick: {
+        upColor: "#26A69A",
+        downColor: "#EF5350",
+        borderDownColor: "#EF5350",
+        borderUpColor: "#26A69A",
+        wickDownColor: "#EF5350",
+        wickUpColor: "#26A69A",
+        priceFormat: {
+          type: "price",
+          precision: 8,
+          minMove: 0.0000001
+        }
+      },
+      histogram: {
+        color: "#26a69a",
+        lineWidth: 2,
+        priceFormat: { type: "volume" },
+        overlay: true,
+        scaleMargins: { top: 0.8, bottom: 0 },
+        lastValueVisible: false,
+        priceLineVisible: false
+      }
+    }
+  };
+
   componentDidMount() {
     this.initializeCandleStickGraph();
     this.initializeMovingAverage();
@@ -82,7 +183,7 @@ class TradingViewWidget extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { selectedPair, isFullWidth } = this.props;
+    const { selectedPair, isFullWidth, isDarkBg } = this.props;
     if (
       Object.keys(selectedPair).length &&
       (selectedPair.id !== this.selectedPairId ||
@@ -96,6 +197,19 @@ class TradingViewWidget extends Component {
 
     if (prevProps.isFullWidth !== isFullWidth) {
       this.updateDimensions();
+    }
+    if (prevProps.isDarkBg !== isDarkBg) {
+      const theme = isDarkBg ? "dark" : "light";
+      this.chart.applyOptions(this.settings[theme].chart);
+      this.candleSeries.applyOptions(this.settings[theme].candlestick);
+      this.volumeSeries.applyOptions(this.settings[theme].histogram);
+
+      const lableColor = isDarkBg ? "white" : "black";
+      this.chartOHLCLabel.style.color = lableColor;
+      this.chartMAsLabel.style.color = lableColor;
+
+      const volumeData = this.getVolumeGraphData(this.graphData);
+      this.volumeSeries.setData(volumeData);
     }
   }
 
@@ -114,65 +228,27 @@ class TradingViewWidget extends Component {
   }
 
   initializeCandleStickGraph = () => {
-    this.chart = createChart(this._id.current, {
-      width: 600,
-      height: 300,
-      layout: {
-        backgroundColor: "#131722",
-        textColor: "rgba(255, 255, 255, 0.9)"
-      },
-      grid: {
-        vertLines: { color: "#363C4E" },
-        horzLines: { color: "#363C4E" }
-      },
-      crosshair: { mode: CrosshairMode.Normal },
-      priceScale: { borderColor: "#ABACAF" },
-      timeScale: {
-        borderColor: "#ABACAF",
-        timeVisible: true,
-        secondsVisible: false
-      }
-      // watermark: {
-      //   color: "white",
-      //   visible: true,
-      //   text: "TradingView Watermark Example",
-      //   fontSize: 12,
-      //   horzAlign: "left",
-      //   vertAlign: "top"
-      // }
-    });
+    const { isDarkBg } = this.props;
+    this.chart = createChart(
+      this._id.current,
+      this.settings[isDarkBg ? "dark" : "light"].chart
+    );
 
     /**
      * CandleStick chart setup
      */
-    this.candleSeries = this.chart.addCandlestickSeries({
-      upColor: "#26A69A",
-      downColor: "#EF5350",
-      borderDownColor: "#EF5350",
-      borderUpColor: "#26A69A",
-      wickDownColor: "#EF5350",
-      wickUpColor: "#26A69A",
-      priceFormat: {
-        type: "price",
-        precision: 8,
-        minMove: 0.0000001
-      }
-    });
+    this.candleSeries = this.chart.addCandlestickSeries(
+      this.settings.dark.candlestick
+    );
 
     this.candleSeries.setData(candleChartdData);
 
     /**
      * Volume chart setup
      */
-    this.volumeSeries = this.chart.addHistogramSeries({
-      color: "#26a69a",
-      lineWidth: 2,
-      priceFormat: { type: "volume" },
-      overlay: true,
-      scaleMargins: { top: 0.8, bottom: 0 },
-      lastValueVisible: false,
-      priceLineVisible: false
-    });
+    this.volumeSeries = this.chart.addHistogramSeries(
+      this.settings.dark.histogram
+    );
 
     /**
      * Create chart label (OHLC)
@@ -188,22 +264,24 @@ class TradingViewWidget extends Component {
     // document.body.appendChild(legend);
     this._id.current.appendChild(legend);
 
+    const lableColor = isDarkBg ? "white" : "black";
+
     this.chartOHLCLabel = document.createElement("div");
     this.chartOHLCLabel.innerText = "O H L C";
-    this.chartOHLCLabel.style.color = "white";
+    this.chartOHLCLabel.style.color = lableColor;
     legend.appendChild(this.chartOHLCLabel);
 
     this.chartMAsLabel = document.createElement("div");
     this.chartMAsLabel.innerText = "MovingAverage";
-    this.chartMAsLabel.style.color = "white";
+    this.chartMAsLabel.style.color = lableColor;
     legend.appendChild(this.chartMAsLabel);
 
     this.chart.subscribeVisibleTimeRangeChange(
       this.handleVisibleTimeRangeChange
     );
     // this.chart.subscribeClick(function(param) {
-    //   console.log("inside subscribeClick");
-    //   console.log(param);
+    //   debug.log("inside subscribeClick");
+    //   debug.log(param);
     // });
     this.chart.subscribeCrosshairMove(this.handleCrosshairMove);
   };
@@ -238,11 +316,11 @@ class TradingViewWidget extends Component {
 
     // from = { day: 1, month: 2, year: 2018 };
 
-    // console.log(typeof from);
-    // console.log(from);
+    // debug.log(typeof from);
+    // debug.log(from);
     from = this.formatDateTime(from);
-    // console.log("from & to after alteration");
-    // console.log(from);
+    // debug.log("from & to after alteration");
+    // debug.log(from);
 
     if (
       this.isRequested === false &&
@@ -252,8 +330,8 @@ class TradingViewWidget extends Component {
     )
       this.handleGraph(this.graphData[0].time);
 
-    // console.log("this.chart.timeScale().getVisibleRange()");
-    // console.log(this.chart.timeScale().getVisibleRange());
+    // debug.log("this.chart.timeScale().getVisibleRange()");
+    // debug.log(this.chart.timeScale().getVisibleRange());
   };
   handleCrosshairMove = param => {
     if (param.time) {
@@ -401,7 +479,7 @@ class TradingViewWidget extends Component {
       this.chartMAsLabel.innerHTML = this.getMovingAverageLabelText();
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
+        debug.log(ex.response.data);
       }
     }
 
@@ -445,10 +523,18 @@ class TradingViewWidget extends Component {
   };
 
   getVolumeGraphData = graphData => {
+    const { isDarkBg } = this.props;
     return graphData.map((c, i) => ({
       time: c.time,
       value: c.volume,
-      color: c.open > c.close ? "#813539" : "#1D5F5E"
+      // color: c.open > c.close ? "rgb(244,193,198)" : "rgb(195,231,213)"
+      color: isDarkBg
+        ? c.open > c.close
+          ? "#83363C"
+          : "#2B5E5E"
+        : c.open > c.close
+        ? "rgb(244,193,198)"
+        : "rgb(195,231,213)"
     }));
   };
 
@@ -522,6 +608,7 @@ class TradingViewWidget extends Component {
 
   render() {
     const { timeInterval, isTvFullWidth } = this.state;
+    const { spinnerStatus } = this.props;
     return (
       <div className="tradingview-widget-container">
         <div className="exchange-chart-block" ref={this.tvFullWidth}>
@@ -588,8 +675,8 @@ class TradingViewWidget extends Component {
               )}
             </div>
           </div>
-
           <div ref={this._id} style={{ position: "relative" }}>
+            <Spinner status={spinnerStatus} />
             {/* <TradingViewGraph
             symbol="EURUSD"
             theme="Light"

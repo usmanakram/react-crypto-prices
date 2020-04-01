@@ -4,6 +4,7 @@ import Spinner from "./spinner";
 import trade from "../services/tradeService";
 import ws from "../services/webSocketService";
 import { setDecimalsLength } from "../utils/setDecimalsLength";
+import debug from "../utils/debuger";
 
 class ExchangeTradingHistory extends Component {
   state = {
@@ -39,7 +40,7 @@ class ExchangeTradingHistory extends Component {
       this.setStream();
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
+        debug.log(ex.response.data);
       }
     }
     this.setState({ spinnerStatus: false });

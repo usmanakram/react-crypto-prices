@@ -11,7 +11,6 @@ function setFormData(data) {
   return formData;
 }
 
-
 async function buy(
   pair_id,
   type,

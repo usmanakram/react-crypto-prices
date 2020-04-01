@@ -1,4 +1,5 @@
 import axios from "axios";
+import debug from "../utils/debuger";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 /**
@@ -7,7 +8,7 @@ axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 // axios.defaults.headers.common["Accept"] = "application/json";
 
 axios.interceptors.response.use(null, error => {
-  console.log("INTERCEPTOR CALLED");
+  debug.log("INTERCEPTOR CALLED");
 
   const expectedError =
     error.response &&
@@ -16,16 +17,16 @@ axios.interceptors.response.use(null, error => {
 
   // Unexpected Error
   if (!expectedError) {
-    console.log("Logging the error", error);
+    debug.log("Logging the error", error);
     // alert("An unexpected error occurred");
   }
 
   // START
   if (error.response.status === 401) {
-    console.log("access denied");
-    // window.location = process.env.REACT_APP_BASENAME + "/logout";
-    localStorage.removeItem("token");
-    window.location.reload();
+    debug.log("access denied");
+    window.location = process.env.REACT_APP_BASENAME + "/logout";
+    // localStorage.removeItem("token");
+    // window.location.reload();
   }
   // END
 
@@ -34,7 +35,7 @@ axios.interceptors.response.use(null, error => {
 });
 
 axios.interceptors.request.use(config => {
-  // console.log("Logging the request config of axios", config);
+  // debug.log("Logging the request config of axios", config);
   return config;
 });
 
