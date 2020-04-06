@@ -78,8 +78,8 @@ class TradingViewWidget extends Component {
   settings = {
     dark: {
       chart: {
-        width: 600,
-        height: 300,
+        // width: 600,
+        // height: 300,
         layout: {
           backgroundColor: "#131722",
           textColor: "rgba(255, 255, 255, 0.9)"
@@ -94,7 +94,7 @@ class TradingViewWidget extends Component {
           borderColor: "#ABACAF",
           timeVisible: true,
           secondsVisible: false,
-          barSpacing: 24
+          barSpacing: 8
         }
         // watermark: {
         //   color: "white",
@@ -130,8 +130,8 @@ class TradingViewWidget extends Component {
     },
     light: {
       chart: {
-        width: 600,
-        height: 300,
+        // width: 600,
+        // height: 300,
         layout: {
           backgroundColor: "#ffffff",
           textColor: "rgba(0, 0, 0, 0.9)"
