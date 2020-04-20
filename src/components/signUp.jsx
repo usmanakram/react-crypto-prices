@@ -19,10 +19,10 @@ class SignUp extends Form {
       email: "",
       password: "",
       confirmpassword: "",
-      gender: ""
+      gender: "",
     },
     errors: {},
-    loginSpinner: false
+    loginSpinner: false,
   };
 
   schema = {
@@ -30,28 +30,17 @@ class SignUp extends Form {
       .allow("")
       .optional()
       .label("Referrer Username"),
-    firstname: Joi.string()
-      .required()
-      .label("First Name"),
-    lastname: Joi.string()
-      .required()
-      .label("Last Name"),
-    username: Joi.string()
-      .min(6)
-      .max(20)
-      .required()
-      .label("Username"),
-    email: Joi.string()
-      .email()
-      .required()
-      .label("Email"),
+    firstname: Joi.string().required().label("First Name"),
+    lastname: Joi.string().required().label("Last Name"),
+    username: Joi.string().min(6).max(20).required().label("Username"),
+    email: Joi.string().email().required().label("Email"),
     password: Joi.string()
       .min(6)
       .required()
       .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/)
       .label("Password")
-      .error(errors => {
-        errors.forEach(error => {
+      .error((errors) => {
+        errors.forEach((error) => {
           if (error.type === "string.regex.base") {
             error.message =
               "Password must have atleast one capital, one small letter and one number.";
@@ -63,9 +52,7 @@ class SignUp extends Form {
       .required()
       .label("Confirm Password")
       .options({ language: { any: { allowOnly: "must match password" } } }),
-    gender: Joi.string()
-      .required()
-      .label("Gender")
+    gender: Joi.string().required().label("Gender"),
   };
 
   resetFormData = () => {
@@ -75,7 +62,7 @@ class SignUp extends Form {
       username: "",
       email: "",
       password: "",
-      confirmpassword: ""
+      confirmpassword: "",
     };
 
     this.setState({ data });
@@ -119,7 +106,7 @@ class SignUp extends Form {
       }
     }
     this.setState({
-      loginSpinner: false
+      loginSpinner: false,
     });
   };
 
@@ -142,7 +129,7 @@ class SignUp extends Form {
                         <i className="fas fa-lock"></i>
                         https://
                       </span>
-                      www.bittrainex.com
+                      zuedex.com
                     </p>
                   </div>
                 </div>

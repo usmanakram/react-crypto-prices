@@ -7,9 +7,10 @@ const Banner = () => {
         <div className="banner-content">
           <h2>Buy and Sell Cryptocurrency</h2>
           <p>
-            Many desktop publishing packages and web page editors now use Lorem
-            Ipsum <br />
-            as their default model text
+            The World's Leading Cryptocurrency Exchange.
+            <br />
+            Trade Bitcoin, NToken and hundreds of other cryptocurrencies in
+            minutes.
           </p>
           <form action="#" method="get" className="subs-form">
             <div className="input-box">

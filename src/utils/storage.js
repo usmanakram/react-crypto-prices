@@ -1,4 +1,4 @@
-const storageKey = "bittrainex";
+const storageKey = "BEZD";
 
 function getAll() {
   return JSON.parse(localStorage.getItem(storageKey)) || {};

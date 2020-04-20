@@ -13,16 +13,12 @@ class Login extends Form {
   state = {
     data: { username: "", password: "" },
     errors: {},
-    loginSpinner: false
+    loginSpinner: false,
   };
 
   schema = {
-    username: Joi.string()
-      .required()
-      .label("Username"),
-    password: Joi.string()
-      .required()
-      .label("Password")
+    username: Joi.string().required().label("Username"),
+    password: Joi.string().required().label("Password"),
   };
 
   doSubmit = async () => {
@@ -40,7 +36,7 @@ class Login extends Form {
         ? state.from.pathname
         : process.env.REACT_APP_BASENAME + "/";
       this.setState({
-        loginSpinner: false
+        loginSpinner: false,
       });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -72,7 +68,7 @@ class Login extends Form {
                         <i className="fas fa-lock"></i>
                         https://
                       </span>
-                      www.bittrainex.com
+                      zuedex.com
                     </p>
                   </div>
                 </div>

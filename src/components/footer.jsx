@@ -86,11 +86,9 @@ const Footer = () => {
                   <h4>Contact Us</h4>
                   <ul className="contact-info">
                     <li>
-                      Email: <span>info.excoin@gmail.com</span>
+                      Email: <span>admin@zuedex.com</span>
                     </li>
-                    <li>
-                      Phone: <span>+99 5589 54789</span>
-                    </li>
+                    <li>{/* Phone: <span>+</span> */}</li>
                   </ul>
                   <ul className="social-style-two">
                     <li>
@@ -147,7 +145,7 @@ const Footer = () => {
                 </ul>
               </div>
               <div className="copyright-text">
-                © 2019 <Link to="#">Bittrainex</Link>. All Rights Reserved
+                © 2019 <Link to="#">Zuedex</Link>. All Rights Reserved
               </div>
             </div>
           </div>
