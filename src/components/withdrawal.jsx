@@ -16,18 +16,19 @@ class Withdrawal extends Form {
     selectedCurrency: {},
     currencies: [],
     transactions: [],
-    WithdrawalLoader: false
+    isLoadSpinner: false,
   };
 
   schema = { currency: Joi.string().required() };
 
   async componentDidMount() {
     try {
-      this.setState({ WithdrawalLoader: true });
+      this.setState({ isLoadSpinner: true });
       const { data } = await http.get("/get-all-currencies");
 
       const currencies = data.filter(
-        c => ["BTC", "BC"].includes(c.symbol) && c.is_withdraw_allowed === true
+        (c) =>
+          ["BTC", "BC"].includes(c.symbol) && c.is_withdraw_allowed === true
       );
       // const currencies = [
       //   { name: "Bitcoin", symbol: "BTC" },
@@ -49,12 +50,15 @@ class Withdrawal extends Form {
       this.setState({
         currencies,
         selectedCurrency,
-        WithdrawalLoader: false,
-        data: dataState
+        data: dataState,
       });
     } catch (ex) {
+      if (ex.response && ex.response.status === 400) {
+        toast.error(ex.response.data);
+      }
       debug.log(ex);
     }
+    this.setState({ isLoadSpinner: false });
   }
 
   doSubmit = async () => {
@@ -62,6 +66,7 @@ class Withdrawal extends Form {
     let url = "";
 
     try {
+      this.setState({ isLoadSpinner: true });
       const formData = new FormData();
       formData.append("currency", data.currency);
 
@@ -101,9 +106,10 @@ class Withdrawal extends Form {
         }
       }
     }
+    this.setState({ isLoadSpinner: false });
   };
 
-  handleValidation = selectedCurrency => {
+  handleValidation = (selectedCurrency) => {
     const data = { currency: selectedCurrency.currency_symbol };
 
     if (Object.keys(selectedCurrency).length) {
@@ -115,15 +121,13 @@ class Withdrawal extends Form {
             verification_code: Joi.string()
               .required()
               .length(6)
-              .label("Verification Code")
+              .label("Verification Code"),
           };
         } else {
           data.quantity = "";
           this.schema = {
             currency: Joi.string().required(),
-            quantity: Joi.string()
-              .required()
-              .label("Quantity")
+            quantity: Joi.string().required().label("Quantity"),
           };
         }
       } else {
@@ -131,12 +135,8 @@ class Withdrawal extends Form {
         data.quantity = "";
         this.schema = {
           currency: Joi.string().required(),
-          address: Joi.string()
-            .required()
-            .label("Address"),
-          quantity: Joi.string()
-            .required()
-            .label("Quantity")
+          address: Joi.string().required().label("Address"),
+          quantity: Joi.string().required().label("Quantity"),
         };
       }
 
@@ -148,14 +148,14 @@ class Withdrawal extends Form {
 
   handleCurrencyChange = async ({ currentTarget: select }) => {
     try {
-      this.setState({ WithdrawalLoader: true });
+      this.setState({ isLoadSpinner: true });
 
       const { data: selectedCurrency } = await http.get(
         "/auth/get-deposit-address/" + select.value
       );
 
       const data = this.handleValidation(selectedCurrency);
-      this.setState({ selectedCurrency, WithdrawalLoader: false, data });
+      this.setState({ selectedCurrency, isLoadSpinner: false, data });
     } catch (ex) {
       debug.log(ex);
     }
@@ -164,7 +164,7 @@ class Withdrawal extends Form {
   render() {
     if (!auth.getCurrentUser()) return <Redirect to="/login" />;
 
-    const { selectedCurrency } = this.state;
+    const { selectedCurrency, isLoadSpinner } = this.state;
     let symbol;
 
     if (Object.keys(selectedCurrency).length) {
@@ -194,7 +194,7 @@ class Withdrawal extends Form {
                 className="form-control"
                 onChange={this.handleCurrencyChange}
               >
-                {this.state.currencies.map(c => (
+                {this.state.currencies.map((c) => (
                   <option key={c.symbol} value={c.symbol}>
                     {c.name}
                   </option>
@@ -242,7 +242,7 @@ class Withdrawal extends Form {
                       ? null
                       : this.renderInput("address", "Address")}
 
-                    <Spinner status={this.state.WithdrawalLoader} />
+                    <Spinner status={isLoadSpinner} />
                     {selectedCurrency.currency_symbol === "BC" &&
                     selectedCurrency.withdrawal_requested === true
                       ? null
@@ -262,7 +262,7 @@ class Withdrawal extends Form {
                       : this.renderButton("Withdraw", "btn-default")}
                   </div>
                 </form>
-                {this.state.isLoadSpinner ? <Spinner /> : null}
+                {isLoadSpinner ? <Spinner /> : null}
               </div>
             </div>
           </div>
