@@ -5,7 +5,7 @@ import {
   news,
   activities,
   wallets,
-  categories
+  categories,
 } from "../services/fakeActivity";
 import GettingStarted from "./gettingStarted";
 import LeatestNews from "./leatestNews";
@@ -22,7 +22,7 @@ class Home extends Component {
     news: news,
     wallets: wallets,
     categories: categories,
-    activities: activities
+    activities: activities,
   };
   render() {
     return (
@@ -35,7 +35,7 @@ class Home extends Component {
         </div>
         <LatestRate />
         <ActivitySection activities={this.state.activities} />
-        <WalletCategories categories={this.state.categories} />
+        {/* <WalletCategories categories={this.state.categories} />s */}
         <Wallet wallets={this.state.wallets} />
         <LeatestNews news={this.state.news} />
         <GettingStarted />

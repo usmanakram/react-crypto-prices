@@ -68,7 +68,7 @@ class Header extends Component {
                   <React.Fragment>
                     <li className="nav-item dropdown">
                       <Link
-                        onClick={e => e.preventDefault()}
+                        onClick={(e) => e.preventDefault()}
                         className="nav-link"
                         to=""
                       >
@@ -103,7 +103,7 @@ class Header extends Component {
                     </li>
                     <li className="nav-item dropdown">
                       <Link
-                        onClick={e => e.preventDefault()}
+                        onClick={(e) => e.preventDefault()}
                         className="nav-link"
                         to=""
                       >
@@ -197,7 +197,7 @@ class Header extends Component {
                 {user && (
                   <li className="nav-item dropdown">
                     <Link
-                      onClick={e => e.preventDefault()}
+                      onClick={(e) => e.preventDefault()}
                       className="nav-link"
                       to=""
                     >

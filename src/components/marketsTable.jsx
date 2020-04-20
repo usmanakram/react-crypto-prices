@@ -18,25 +18,25 @@ class MarketsTable extends Component {
 
   columns = [
     {
-      path: "symbol",
-      label: "Coin Name",
-      content: p => <Link to={`/coin-info/${p.id}`}>{p.symbol}</Link>
+      path: "name",
+      label: "Pair Name",
+      content: (p) => <Link to={`/coin-info/${p.id}`}>{p.name}</Link>,
     },
     { path: "latest_rate.last_rate", label: "Price" },
     { path: "latest_rate.volume", label: "Volume" },
     {
       path: "latest_rate.rate_change_percent",
       label: "Price Change (%)",
-      content: coin =>
-        parseFloat(coin.latest_rate.rate_change_percent).toFixed(2)
-    }
+      content: (coin) =>
+        parseFloat(coin.latest_rate.rate_change_percent).toFixed(2),
+    },
   ];
 
   state = {
     coins: [],
     currentPage: 1,
     pageSize: 10,
-    sortColumn: { path: "", order: "asc" }
+    sortColumn: { path: "", order: "asc" },
   };
 
   getUserDetail() {
@@ -48,10 +48,10 @@ class MarketsTable extends Component {
 
     http
       .get(url)
-      .then(response => {
+      .then((response) => {
         debug.log(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         debug.log(error);
       });
 
@@ -98,10 +98,10 @@ class MarketsTable extends Component {
 
     http
       .post(url, data)
-      .then(response => {
+      .then((response) => {
         debug.log(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         debug.log(error);
       });
   }
@@ -119,7 +119,7 @@ class MarketsTable extends Component {
     /* ws.channel("home").listen("NewMessage", e => {
       debug.log(e.message);
     }); */
-    ws.channel("live").listen("LiveRates", e => {
+    ws.channel("live").listen("LiveRates", (e) => {
       this.setState({ coins: e.rates });
     });
   }
@@ -130,11 +130,11 @@ class MarketsTable extends Component {
     // ws.leave("live");
   }
 
-  handlePageChange = page => {
+  handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
 
-  handleSort = sortColumn => {
+  handleSort = (sortColumn) => {
     this.setState({ sortColumn });
   };
 
