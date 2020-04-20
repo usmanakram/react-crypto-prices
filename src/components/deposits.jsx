@@ -85,10 +85,10 @@ class Deposits extends Component {
           select.value +
           " is not functional right now. Please, try again later"
       );
-      this.setState({
-        isLoadSpinner: false,
-      });
     }
+    this.setState({
+      isLoadSpinner: false,
+    });
   };
 
   render() {
