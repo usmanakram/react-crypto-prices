@@ -16,18 +16,17 @@ class Deposits extends Component {
     transactions: [],
     isLoadComponent: false,
     isLoadSpinner: false,
-    depositsSpinner: false,
-    address: ""
+    address: "",
   };
 
   username = React.createRef();
 
   async componentDidMount() {
     try {
-      this.setState({ depositsSpinner: true });
+      this.setState({ isLoadSpinner: true });
       const { data } = await http.get("/get-all-currencies");
       const currencies = data.filter(
-        c => c.symbol !== "BC" && c.is_deposit_allowed === true
+        (c) => c.symbol !== "BC" && c.is_deposit_allowed === true
       );
       this.setState({ currencies });
 
@@ -39,7 +38,6 @@ class Deposits extends Component {
       this.setState({
         selectedCurrency: firstCurrency,
         address: firstCurrency.address,
-        depositsSpinner: false
       });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -47,11 +45,14 @@ class Deposits extends Component {
       }
       debug.log(ex);
     }
+    this.setState({
+      isLoadSpinner: false,
+    });
   }
 
   handleLoadComponent = () => {
     this.setState({
-      isLoadComponent: true
+      isLoadComponent: true,
     });
   };
 
@@ -63,45 +64,37 @@ class Deposits extends Component {
 
   handleLoadSpinner = () => {
     this.setState({
-      isLoadComponent: true
+      isLoadComponent: true,
     });
   };
 
   handleCurrencyChange = async ({ currentTarget: select }) => {
-    //new
-    this.setState({
-      isLoadSpinner: true
-    }); //
     try {
-      this.setState({ depositsSpinner: true });
+      this.setState({ isLoadSpinner: true });
       const { data } = await http.get(
         "/auth/get-deposit-address/" + select.value
       );
 
       this.setState({ selectedCurrency: data, address: data.address });
-      //new
-      this.setState({
-        isLoadSpinner: false,
-        depositsSpinner: false
-      }); //
     } catch (ex) {
       debug.log(ex);
       //new
-      this.setState({
-        isLoadSpinner: false
-      }); //
+      //
       toast.error(
         "Deposit of " +
           select.value +
           " is not functional right now. Please, try again later"
       );
     }
+    this.setState({
+      isLoadSpinner: false,
+    });
   };
 
   render() {
     if (!auth.getCurrentUser()) return <Redirect to="/login" />;
 
-    const { selectedCurrency, address } = this.state;
+    const { selectedCurrency, address, isLoadSpinner } = this.state;
     // let address, name, symbol;
     let symbol;
 
@@ -133,7 +126,7 @@ class Deposits extends Component {
                 className="form-control"
                 onChange={this.handleCurrencyChange}
               >
-                {this.state.currencies.map(c => (
+                {this.state.currencies.map((c) => (
                   <option key={c.symbol} value={c.symbol}>
                     {c.name}
                   </option>
@@ -186,7 +179,7 @@ class Deposits extends Component {
                       value={address}
                     />
                   </div>
-                  <Spinner status={this.state.depositsSpinner} />
+                  <Spinner status={isLoadSpinner} />
                   <div className="my-3">
                     <button
                       onClick={this.handleLoadComponent}
