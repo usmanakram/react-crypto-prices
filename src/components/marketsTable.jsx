@@ -27,8 +27,18 @@ class MarketsTable extends Component {
     {
       path: "latest_rate.rate_change_percent",
       label: "Price Change (%)",
-      content: (coin) =>
-        parseFloat(coin.latest_rate.rate_change_percent).toFixed(2),
+      content: (coin) => (
+        <span
+          className={
+            coin.latest_rate.rate_change_percent &&
+            parseFloat(coin.latest_rate.rate_change_percent) > 0
+              ? "color-buy"
+              : "color-sell"
+          }
+        >
+          {parseFloat(coin.latest_rate.rate_change_percent).toFixed(2)}
+        </span>
+      ),
     },
   ];
 

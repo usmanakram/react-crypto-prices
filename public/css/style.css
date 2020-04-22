@@ -1706,7 +1706,7 @@ textarea:focus {
 }
 
 .colto-section {
-  background: url("../images/bg/4.png") no-repeat center center;
+  background: url("../images/bg/1.jpg") no-repeat center bottom;
   background-size: cover;
   padding: 90px 0;
 }
