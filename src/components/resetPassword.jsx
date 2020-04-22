@@ -49,8 +49,6 @@ class ResetPassword extends Form {
       this.setState({ isSpinner: true });
 
       const { data } = this.state;
-      console.log("data");
-      console.log(data);
       const response = await auth.resetPassword(
         data.email,
         data.code,

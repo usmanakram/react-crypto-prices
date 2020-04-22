@@ -19,10 +19,16 @@ class MarketsTable extends Component {
   columns = [
     {
       path: "name",
-      label: "Pair Name",
-      content: (p) => <Link to={`/coin-info/${p.id}`}>{p.name}</Link>,
+      label: "Name",
+      content: (p) => (
+        <Link to={`/coin-info/${p.id}`}>{p.base_currency_symbol}</Link>
+      ),
     },
-    { path: "latest_rate.last_rate", label: "Price" },
+    {
+      path: "latest_rate.last_rate",
+      label: "Price",
+      content: (p) => `$ ${p.latest_rate.last_rate}`,
+    },
     { path: "latest_rate.volume", label: "Volume" },
     {
       path: "latest_rate.rate_change_percent",
@@ -36,7 +42,7 @@ class MarketsTable extends Component {
               : "color-sell"
           }
         >
-          {parseFloat(coin.latest_rate.rate_change_percent).toFixed(2)}
+          {parseFloat(coin.latest_rate.rate_change_percent).toFixed(2) + "%"}
         </span>
       ),
     },
@@ -151,10 +157,22 @@ class MarketsTable extends Component {
   getPagedData = () => {
     const { pageSize, currentPage, sortColumn, coins: allCoins } = this.state;
 
-    const sorted = _.orderBy(allCoins, [sortColumn.path], [sortColumn.order]);
+    const filteredPairs = allCoins.filter(
+      (p) => p.quote_currency_symbol === "USDT"
+    );
+    console.log("allCoins");
+    console.log(allCoins);
+
+    // const sorted = _.orderBy(allCoins, [sortColumn.path], [sortColumn.order]);
+    const sorted = _.orderBy(
+      filteredPairs,
+      [sortColumn.path],
+      [sortColumn.order]
+    );
     const coins = paginate(sorted, currentPage, pageSize);
 
-    return { totalCount: allCoins.length, coins };
+    // return { totalCount: allCoins.length, coins };
+    return { totalCount: filteredPairs.length, coins };
   };
 
   render() {
