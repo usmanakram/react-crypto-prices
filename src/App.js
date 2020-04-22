@@ -4,6 +4,8 @@ import { ToastContainer } from "react-toastify";
 // import logo from "./logo.svg";
 import "./App.css";
 import Login from "./components/login";
+import ForgotPassword from "./components/forgotPassword";
+import ResetPassword from "./components/resetPassword";
 import Logout from "./components/logout";
 import CoinInfo from "./components/coinInfo";
 import Deposits from "./components/deposits";
@@ -28,6 +30,8 @@ const App = () => {
         <Switch>
           <Route path="/coin-info/:pairId" component={CoinInfo} />
           <Route path="/login" component={Login} />
+          <Route path="/forgot-password" component={ForgotPassword} />
+          <Route path="/reset-password" component={ResetPassword} />
           <Route path="/signup" component={SignUp} />
           <Route path="/home" component={Home} />
           <Route path="/logout" component={Logout} />

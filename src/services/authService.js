@@ -11,9 +11,11 @@ import debug from "../utils/debuger";
 // const apiEndpoint = "/auth/login";
 const apiEndpoint = {
   login: "/auth/login",
+  forgotPassword: "/auth/forgot-password",
+  resetPassword: "/auth/reset-password",
   logout: "/auth/logout",
   signup: "/auth/signup",
-  getUser: "/auth/user"
+  getUser: "/auth/user",
 };
 const tokenKey = "token";
 
@@ -47,6 +49,18 @@ async function login(username, password) {
   // async/await
   const { data } = await http.post(apiEndpoint.login, formData);
   localStorage.setItem(tokenKey, data.access_token);
+}
+async function forgotPassword(email) {
+  const formData = new FormData();
+  formData.append("email", email);
+
+  const { data } = await http.post(apiEndpoint.forgotPassword, formData);
+}
+async function resetPassword(password) {
+  const formData = new FormData();
+  formData.append("password", password);
+
+  const { data } = await http.post(apiEndpoint.resetPassword, formData);
 }
 async function signup(
   username,
@@ -102,8 +116,10 @@ function getJwt() {
 export default {
   signup,
   login,
+  forgetPassword,
+  resetPassword,
   getUser,
   logout,
   getCurrentUser,
-  getJwt
+  getJwt,
 };
