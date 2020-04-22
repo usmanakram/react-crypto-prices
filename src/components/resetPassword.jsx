@@ -9,15 +9,14 @@ import Spinner from "./spinner";
 import { Link } from "react-router-dom";
 import debug from "../utils/debuger";
 
-class Login extends Form {
+class ResetPassword extends Form {
   state = {
-    data: { username: "", password: "" },
+    data: { password: "" },
     errors: {},
-    loginSpinner: false,
+    isSpinner: false,
   };
 
   schema = {
-    username: Joi.string().required().label("Username"),
     password: Joi.string().required().label("Password"),
   };
 
@@ -25,28 +24,35 @@ class Login extends Form {
     debug.log("form validated");
 
     try {
-      this.setState({ loginSpinner: true });
+      this.setState({ isSpinner: true });
 
       const { data } = this.state;
-      await auth.login(data.username, data.password);
+      await auth.resetPassword(data.password);
 
       const { state } = this.props.location;
-      // window.location = state ? state.from.pathname : "/";
+
       window.location = state
         ? state.from.pathname
-        : process.env.REACT_APP_BASENAME + "/";
-      this.setState({
-        loginSpinner: false,
-      });
+        : process.env.REACT_APP_BASENAME + "/login";
     } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
-        const errors = { ...this.state.errors };
-        errors.username = ex.response.data;
-        this.setState({ errors, loginSpinner: false });
+      if (ex.response) {
+        if (ex.response.status === 400) {
+          const errors = { ...this.state.errors };
+          errors.password = ex.response.data;
+          this.setState({ errors });
 
-        toast.error(ex.response.data);
+          toast.error(ex.response.data);
+        } else if (ex.response.status === 422) {
+          // Laravel returns 422 against form validation errors
+          const { errors } = ex.response.data;
+
+          for (let item in errors) {
+            toast.error(errors[item][0]);
+          }
+        }
       }
     }
+    this.setState({ isSpinner: false });
   };
 
   render() {
@@ -58,7 +64,7 @@ class Login extends Form {
         <div className="container">
           <div className="user-login-signup-form-wrap">
             <div className="modal-content">
-              <h3>User Login</h3>
+              <h3>Reset password</h3>
               <div className="modal-body">
                 <div className="modal-info-block">
                   <p>Always ensure you're on the correct website</p>
@@ -77,22 +83,24 @@ class Login extends Form {
                     onSubmit={this.handleSubmit}
                     className="user-connected-from user-login-form"
                   >
-                    {this.renderLoginFormInput("username", "Username")}
-                    <Spinner status={this.state.loginSpinner} />
-
                     {this.renderLoginFormInput(
                       "password",
-                      "Password",
+                      "Enter new Password",
                       "password"
                     )}
+                    {this.renderLoginFormInput(
+                      "password",
+                      "Confirm password",
+                      "password"
+                    )}
+                    <Spinner status={this.state.isSpinner} />
 
-                    {this.renderButton("Login", "btn-default")}
+                    {this.renderButton("Reset Password", "btn-default")}
                   </form>
+
                   <p>
-                    <Link to="/forgot-password">Forgot password?</Link>
-                  </p>
-                  <p>
-                    Don't have an account? <Link to="/signup">Register</Link>
+                    Don't have an account? <Link to="/signup">Register</Link> |{" "}
+                    <Link to="/login">Sign In</Link>
                   </p>
                 </div>
               </div>
@@ -104,4 +112,4 @@ class Login extends Form {
   }
 }
 
-export default Login;
+export default ResetPassword;

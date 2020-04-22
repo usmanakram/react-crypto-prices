@@ -179,7 +179,7 @@ class SignUp extends Form {
                   </form>
 
                   <p>
-                    Already on Bittrainex? <Link to="/login">Sign in</Link>
+                    Already on Zuedex? <Link to="/login">Sign in</Link>
                   </p>
                 </div>
               </div>
