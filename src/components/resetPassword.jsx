@@ -7,33 +7,57 @@ import { toast } from "react-toastify";
 import Header from "./header";
 import Spinner from "./spinner";
 import { Link } from "react-router-dom";
-import debug from "../utils/debuger";
 
 class ResetPassword extends Form {
   state = {
-    data: { password: "" },
+    data: { email: "", code: "", password: "", confirmpassword: "" },
     errors: {},
     isSpinner: false,
   };
 
   schema = {
-    password: Joi.string().required().label("Password"),
+    // password: Joi.string().required().label("Password"),
+    email: Joi.string().email().required().label("Email"),
+    code: Joi.string().required().label("Code"),
+    password: Joi.string()
+      .min(6)
+      .required()
+      .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/)
+      .label("Password")
+      .error((errors) => {
+        errors.forEach((error) => {
+          if (error.type === "string.regex.base") {
+            error.message =
+              "Password must have atleast one capital, one small letter and one number.";
+          }
+        });
+        return errors;
+      }),
+    confirmpassword: Joi.valid(Joi.ref("password"))
+      .required()
+      .label("Confirm Password")
+      .options({ language: { any: { allowOnly: "must match password" } } }),
   };
 
-  doSubmit = async () => {
-    debug.log("form validated");
+  componentDidMount() {
+    const { email, code } = this.props.match.params;
+    this.setState({ data: { email, code, password: "", confirmpassword: "" } });
+  }
 
+  doSubmit = async () => {
     try {
       this.setState({ isSpinner: true });
 
       const { data } = this.state;
-      await auth.resetPassword(data.password);
+      console.log("data");
+      console.log(data);
+      const response = await auth.resetPassword(
+        data.email,
+        data.code,
+        data.password
+      );
 
-      const { state } = this.props.location;
-
-      window.location = state
-        ? state.from.pathname
-        : process.env.REACT_APP_BASENAME + "/login";
+      toast.success(response);
     } catch (ex) {
       if (ex.response) {
         if (ex.response.status === 400) {
@@ -52,7 +76,10 @@ class ResetPassword extends Form {
         }
       }
     }
-    this.setState({ isSpinner: false });
+    this.setState({
+      isSpinner: false,
+      data: { password: "", confirmpassword: "" },
+    });
   };
 
   render() {
@@ -89,7 +116,7 @@ class ResetPassword extends Form {
                       "password"
                     )}
                     {this.renderLoginFormInput(
-                      "password",
+                      "confirmpassword",
                       "Confirm password",
                       "password"
                     )}

@@ -31,7 +31,10 @@ const App = () => {
           <Route path="/coin-info/:pairId" component={CoinInfo} />
           <Route path="/login" component={Login} />
           <Route path="/forgot-password" component={ForgotPassword} />
-          <Route path="/reset-password" component={ResetPassword} />
+          <Route
+            path="/reset-password/:email/:code"
+            component={ResetPassword}
+          />
           <Route path="/signup" component={SignUp} />
           <Route path="/home" component={Home} />
           <Route path="/logout" component={Logout} />

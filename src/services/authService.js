@@ -55,12 +55,16 @@ async function forgotPassword(email) {
   formData.append("email", email);
 
   const { data } = await http.post(apiEndpoint.forgotPassword, formData);
+  return data;
 }
-async function resetPassword(password) {
+async function resetPassword(email, code, password) {
   const formData = new FormData();
+  formData.append("email", email);
+  formData.append("code", code);
   formData.append("password", password);
 
   const { data } = await http.post(apiEndpoint.resetPassword, formData);
+  return data;
 }
 async function signup(
   username,
@@ -116,7 +120,7 @@ function getJwt() {
 export default {
   signup,
   login,
-  forgetPassword,
+  forgotPassword,
   resetPassword,
   getUser,
   logout,

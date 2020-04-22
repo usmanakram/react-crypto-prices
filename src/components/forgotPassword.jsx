@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import Header from "./header";
 import Spinner from "./spinner";
 import { Link } from "react-router-dom";
-import debug from "../utils/debuger";
 
 class ForgotPassword extends Form {
   state = {
@@ -21,15 +20,14 @@ class ForgotPassword extends Form {
   };
 
   doSubmit = async () => {
-    debug.log("form validated");
-
     try {
       this.setState({ isSpinner: true });
 
       const { data } = this.state;
-      await auth.forgotPassword(data.email);
+      const response = await auth.forgotPassword(data.email);
 
-      const { state } = this.props.location;
+      this.setState({ data: { email: "" } });
+      toast.success(response);
     } catch (ex) {
       if (ex.response) {
         if (ex.response.status === 400) {

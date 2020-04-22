@@ -3,7 +3,8 @@
 function setup() {
 	docker build . -t crypto-exchange
 	# docker run -d -p 8080:80 --name exchange crypto-exchange
-	docker run -d -p 8080:443 --name exchange crypto-exchange
+	# docker run -d -p 8080:443 --name exchange crypto-exchange
+	docker run -d -p 80:80 -p 443:443 --name exchange crypto-exchange
 	docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
 }
 function start() {
