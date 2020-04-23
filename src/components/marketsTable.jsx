@@ -8,20 +8,31 @@ import _ from "lodash";
 import ws from "./../services/webSocketService";
 import debug from "../utils/debuger";
 
-// const apiEndpoint = "http://localhost/projects/bittrain_exchange/coinmarketcap.com/api.php?coins_list=all";
-// const apiEndpoint = "?coins_list=all";
 const apiEndpoint = "/currency-pairs";
-// -------------------------
 
 class MarketsTable extends Component {
   _isMounted = false;
+
+  imgDirUrl = "https://zuedex.com:8990/images/currencies/";
+  images = ["BTC", "ETH", "XRP", "BCH", "LTC", "BNB"];
 
   columns = [
     {
       path: "name",
       label: "Name",
       content: (p) => (
-        <Link to={`/coin-info/${p.id}`}>{p.base_currency_symbol}</Link>
+        <Link to={`/coin-info/${p.id}`}>
+          <img
+            src={`${this.imgDirUrl}${
+              this.images.indexOf(p.base_currency_symbol) !== -1
+                ? p.base_currency_symbol
+                : "crypto"
+            }.png`}
+            width="30"
+          />
+          <strong style={{ margin: "0 10px" }}>{p.base_currency_symbol}</strong>
+          {p.base_currency_name}
+        </Link>
       ),
     },
     {
