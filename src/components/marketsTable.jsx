@@ -160,8 +160,6 @@ class MarketsTable extends Component {
     const filteredPairs = allCoins.filter(
       (p) => p.quote_currency_symbol === "USDT"
     );
-    console.log("allCoins");
-    console.log(allCoins);
 
     // const sorted = _.orderBy(allCoins, [sortColumn.path], [sortColumn.order]);
     const sorted = _.orderBy(
