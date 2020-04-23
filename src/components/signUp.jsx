@@ -12,7 +12,7 @@ import debug from "../utils/debuger";
 class SignUp extends Form {
   state = {
     data: {
-      referrer_username: "",
+      // referrer_username: "",
       firstname: "",
       lastname: "",
       username: "",
@@ -26,10 +26,10 @@ class SignUp extends Form {
   };
 
   schema = {
-    referrer_username: Joi.string()
-      .allow("")
-      .optional()
-      .label("Referrer Username"),
+    // referrer_username: Joi.string()
+    //   .allow("")
+    //   .optional()
+    //   .label("Referrer Username"),
     firstname: Joi.string().required().label("First Name"),
     lastname: Joi.string().required().label("Last Name"),
     username: Joi.string().min(6).max(20).required().label("Username"),
@@ -81,8 +81,8 @@ class SignUp extends Form {
         data.firstname,
         data.lastname,
         data.email,
-        data.gender,
-        data.referrer_username
+        data.gender
+        // data.referrer_username
       );
 
       this.resetFormData();
@@ -138,10 +138,10 @@ class SignUp extends Form {
                     onSubmit={this.handleSubmit}
                     className="user-connected-from user-login-form"
                   >
-                    {this.renderLoginFormInput(
+                    {/* {this.renderLoginFormInput(
                       "referrer_username",
                       "Referrer Username"
-                    )}
+                    )} */}
                     <div className="row">
                       <div className="col-md-6">
                         {this.renderLoginFormInput("firstname", "First Name")}

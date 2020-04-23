@@ -72,8 +72,8 @@ async function signup(
   firstname,
   lastname,
   email,
-  gender,
-  referrer_username
+  gender
+  // referrer_username
 ) {
   const formData = new FormData();
   formData.append("username", username);
@@ -82,7 +82,7 @@ async function signup(
   formData.append("lastname", lastname);
   formData.append("email", email);
   formData.append("gender", gender);
-  formData.append("referrer_username", referrer_username);
+  // formData.append("referrer_username", referrer_username);
 
   const { data } = await http.post(apiEndpoint.signup, formData);
   return data;
