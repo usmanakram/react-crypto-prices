@@ -7,6 +7,7 @@ import Login from "./components/login";
 import ForgotPassword from "./components/forgotPassword";
 import ResetPassword from "./components/resetPassword";
 import Logout from "./components/logout";
+import EditProfile from "./components/editProfile";
 import CoinInfo from "./components/coinInfo";
 import Deposits from "./components/deposits";
 import Withdrawal from "./components/withdrawal";
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/signup" component={SignUp} />
           <Route path="/home" component={Home} />
           <Route path="/logout" component={Logout} />
+          <Route path="/edit-profile" component={EditProfile} />
           <Route path="/deposits" component={Deposits} />
           <Route path="/withdrawal" component={Withdrawal} />
           <Route path="/orderHistory" component={OrderHistory} />
