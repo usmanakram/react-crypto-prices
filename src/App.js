@@ -18,8 +18,9 @@ import "react-toastify/dist/ReactToastify.min.css";
 import Footer from "./components/footer";
 import Home from "./components/home";
 import TradeHistory from "./components/tradeHistory";
-import OpenOrder from "./components/openOrder";
 import TransactionHistory from "./components/transactionHistory";
+import UserProfile from "./components/userProfile";
+import OpenOrder from "./components/openOrder";
 import SignUp from "./components/signUp";
 
 const App = () => {
@@ -44,6 +45,7 @@ const App = () => {
           <Route path="/tradeHistory" component={TradeHistory} />
           <Route path="/openOrder" component={OpenOrder} />
           <Route path="/balances" component={Balances} />
+          <Route path="/user-profile" component={UserProfile} />
           <Route path="/transactionHistory" component={TransactionHistory} />
           <Route path="/exchange/:symbol" component={Exchange} />
           <Route path="/not-found" component={NotFound} />
