@@ -2,12 +2,9 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import Form from "./common/form";
 import Header from "./header";
-import Joi, { resolve } from "joi-browser";
-import http from "../services/httpService";
+import Joi from "joi-browser";
 import auth from "../services/authService";
 import { toast } from "react-toastify";
-// import imgUrl from "../images/team-2-800x800.jpg";
-const imgUrl = "https://www.bittrain.org/sample/asset/img/male.png";
 
 class EditProfile extends Form {
   state = {

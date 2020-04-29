@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import NewsHeadline from "./newsHeadline";
+// import NewsHeadline from "./newsHeadline";
 import { highlights } from "../services/custom";
 class HighLightWedget extends Component {
   state = {};
@@ -16,7 +16,7 @@ class HighLightWedget extends Component {
         <div className="graph graph-padding">
           <div className="container">
             <div className="row margin-balance">
-              {highlights.map(highlight => (
+              {highlights.map((highlight) => (
                 <div key={highlight.currency} className="col-lg-3 col-6">
                   <a href="#s" className="graph-item-block">
                     <div className="graph-item">

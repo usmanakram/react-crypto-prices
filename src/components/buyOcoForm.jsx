@@ -6,7 +6,6 @@ import trade from "../services/tradeService";
 import { toast } from "react-toastify";
 import Spinner from "./spinner";
 import ConfirmOrder from "./confirmOrder";
-import debug from "../utils/debuger";
 
 class BuyOcoForm extends TradingForm {
   state = {
@@ -16,38 +15,23 @@ class BuyOcoForm extends TradingForm {
       stop_limit_rate: "",
       quantity: "",
       total: "",
-      type: 3
+      type: 3,
     },
     errors: {},
     total: 0,
     spinnerStatus: false,
-    modalShow: false
+    modalShow: false,
   };
 
   isAllowTrade = false;
 
   schema = {
-    type: Joi.number()
-      .required()
-      .label("type"),
-    trigger_rate: Joi.number()
-      .required()
-      .label("Stop"),
-    rate: Joi.number()
-      .min(0)
-      .required()
-      .label("Price"),
-    stop_limit_rate: Joi.number()
-      .min(0)
-      .required()
-      .label("Limit"),
-    quantity: Joi.number()
-      .min(0)
-      .required()
-      .label("Quantity"),
-    total: Joi.number()
-      .required()
-      .label("Total")
+    type: Joi.number().required().label("type"),
+    trigger_rate: Joi.number().required().label("Stop"),
+    rate: Joi.number().min(0).required().label("Price"),
+    stop_limit_rate: Joi.number().min(0).required().label("Limit"),
+    quantity: Joi.number().min(0).required().label("Quantity"),
+    total: Joi.number().required().label("Total"),
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -84,7 +68,6 @@ class BuyOcoForm extends TradingForm {
     this.setState({ spinnerStatus: true });
     try {
       const { data } = this.state;
-      // debug.log(data);
 
       const response = await trade.buy(
         this.props.selectedPair.id,
@@ -106,7 +89,6 @@ class BuyOcoForm extends TradingForm {
           // this.setState({ errors });
           // toast.error(ex.response.data);
 
-          // debug.log(ex.response.data);
           toast.error(ex.response.data);
         } else if (ex.response.status === 422) {
           // Laravel returns 422 against form validation errors

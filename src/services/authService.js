@@ -1,6 +1,6 @@
 import http from "./httpService";
 import jwtDecode from "jwt-decode";
-import debug from "../utils/debuger";
+// import debug from "../utils/debuger";
 
 // import { apiUrl } from "../config.json";
 // import { toast } from "react-toastify";

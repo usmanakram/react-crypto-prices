@@ -8,7 +8,7 @@ import InputHidden from "./inputHidden";
 class Form extends Component {
   state = {
     data: {},
-    errors: {}
+    errors: {},
   };
 
   validate = () => {
@@ -44,10 +44,10 @@ class Form extends Component {
    * @void
    */
   doSubmit = async () => {
-    throw "Abstract method doSubmit not implemented";
+    throw new Error("Abstract method doSubmit not implemented");
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     const errors = this.validate();
@@ -128,7 +128,7 @@ class Form extends Component {
 
     return (
       <div className="form-group">
-        {placeholders.map(placeholder => {
+        {placeholders.map((placeholder) => {
           return this.renderRadioButton(name, placeholder);
         })}
         {error && <div className="alert alert-danger">{error}</div>}

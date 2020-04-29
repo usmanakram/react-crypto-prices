@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import auth from "../services/authService";
 import Header from "./header";
-import Form from "./common/form";
-class UserProfile extends Form {
+
+class UserProfile extends Component {
   state = {
     username: "",
     name: "",
@@ -62,25 +62,36 @@ class UserProfile extends Form {
             <div className="col-md-8">
               <div className="card">
                 <div className="card-header">
-                  <h5 className="card-title">Profile</h5>
+                  <h5 className="card-title">
+                    Profile
+                    <Link className="h6 float-right" to="/edit-profile">
+                      Edit
+                    </Link>
+                  </h5>
                 </div>
                 <div className="card-body">
                   <div className="row">
                     <div className="col-md-6">
                       <h5 className="card-text my-2">User Information</h5>
                     </div>
-                    <div className="col-md-6 text-right">
+                    {/* <div className="col-md-6 text-right">
                       <Link className="h6" to="/edit-profile">
                         Edit
                       </Link>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="row">
                     <div className="col-md-6">
-                      <p className="card-text">{`Username: ${username}`}</p>
+                      <p className="card-text">
+                        <strong>Username: </strong>
+                        {username}
+                      </p>
                     </div>
                     <div className="col-md-6">
-                      <p className="card-text">{`Name: ${name}`}</p>
+                      <p className="card-text">
+                        <strong>Name: </strong>
+                        {name}
+                      </p>
                     </div>
                     <div className="col-md-12">
                       <hr />
@@ -90,10 +101,16 @@ class UserProfile extends Form {
                       <h5 className="card-text my-2">Contect Information</h5>
                     </div>
                     <div className="col-md-6">
-                      <p className="card-text">{`Email: ${email}`}</p>
+                      <p className="card-text">
+                        <strong>Email: </strong>
+                        {email}
+                      </p>
                     </div>
                     <div className="col-md-6">
-                      <p className="card-text">{`Address: ${address}`}</p>
+                      <p className="card-text">
+                        <strong>Address: </strong>
+                        {address}
+                      </p>
                     </div>
                   </div>
                 </div>

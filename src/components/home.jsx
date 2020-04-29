@@ -10,7 +10,7 @@ import {
 import GettingStarted from "./gettingStarted";
 import LeatestNews from "./leatestNews";
 import Wallet from "./wallet";
-import WalletCategories from "./walletCategories";
+// import WalletCategories from "./walletCategories";
 import ActivitySection from "./activitySection";
 import LatestRate from "./latestRate";
 import Banner from "./banner";
