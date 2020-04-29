@@ -23,6 +23,7 @@ class MarketsTable extends Component {
       content: (p) => (
         <Link to={`/coin-info/${p.id}`}>
           <img
+            alt={p.base_currency_name}
             src={`${this.imgDirUrl}${
               this.images.indexOf(p.base_currency_symbol) !== -1
                 ? p.base_currency_symbol

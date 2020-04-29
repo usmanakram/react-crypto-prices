@@ -87,6 +87,23 @@ async function signup(
   const { data } = await http.post(apiEndpoint.signup, formData);
   return data;
 }
+
+async function getProfile() {
+  const { data } = await http.get("auth/profile");
+  return data;
+}
+
+async function updateProfile(name, address, id_doc, selfie_doc) {
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("address", address);
+  formData.append("identity_document", id_doc);
+  formData.append("selfie_document", selfie_doc);
+
+  const { data } = await http.post("/auth/update-profile", formData);
+  return data;
+}
+
 async function getUser() {
   const user = this.getCurrentUser();
   if (user === null) return null;
@@ -122,6 +139,8 @@ export default {
   login,
   forgotPassword,
   resetPassword,
+  getProfile,
+  updateProfile,
   getUser,
   logout,
   getCurrentUser,
