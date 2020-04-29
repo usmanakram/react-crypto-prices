@@ -110,7 +110,7 @@ class EditProfile extends Form {
 
         <div className="container my-3">
           <div className="row">
-            <div className="col-md-8">
+            <div className="col-md-12">
               <div className="card">
                 <div className="card-header">
                   <h5 className="card-title">User Profile</h5>
@@ -145,23 +145,6 @@ class EditProfile extends Form {
                       </div>
                     </div>
                   </form>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="card">
-                <div className="card-body">
-                  {/* <h5 className="card-title">Special title treatment</h5> */}
-                  <div className="row justify-content-center">
-                    <div className="col-md-12">
-                      <img
-                        alt="..."
-                        className="rounded-circle center"
-                        src={imgUrl}
-                        height="160"
-                      />
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
