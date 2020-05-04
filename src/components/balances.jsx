@@ -11,22 +11,28 @@ class Balances extends Component {
     balances: [],
     btcValue: 0,
     dollarValue: 0,
-    searchqQuerry: ""
+    searchqQuerry: "",
   };
 
   columns = [
     { path: "name", label: "Name" },
     { path: "symbol", label: "Symbol" },
-    { path: "status", label: "Status" },
-    { path: "total_balance", label: "Total Balance" },
+    // { path: "status", label: "Status" },
+    {
+      path: "total_balance",
+      label: "Total Balance",
+      content: (b) => b.total_balance.toFixed(8),
+    },
     {
       path: "in_order_balance",
-      label: "In Order"
+      label: "In Order",
+      content: (b) => b.in_order_balance.toFixed(8),
     },
     {
       path: "btc_value",
-      label: "BTC Value"
-    }
+      label: "BTC Value",
+      content: (b) => b.btc_value.toFixed(8),
+    },
   ];
 
   async componentDidMount() {
@@ -36,7 +42,7 @@ class Balances extends Component {
       let btcValue = 0,
         dollarValue = 0;
 
-      balances.forEach(b => {
+      balances.forEach((b) => {
         btcValue += b.btc_value;
         dollarValue += b.dollar_value;
       });
@@ -55,7 +61,7 @@ class Balances extends Component {
     const { balances, searchqQuerry } = this.state;
 
     return balances.filter(
-      b =>
+      (b) =>
         searchqQuerry === "" ||
         b.name.toUpperCase().startsWith(searchqQuerry.toUpperCase()) ||
         b.symbol.toUpperCase().startsWith(searchqQuerry.toUpperCase())
@@ -81,8 +87,8 @@ class Balances extends Component {
                 <div className=" trending-info-currency-option">
                   <h4>Balances</h4>
                   <h4>
-                    Estimated Value： {this.state.btcValue} BTC / $
-                    {this.state.dollarValue}
+                    Estimated Value： {this.state.btcValue.toFixed(8)} BTC / $
+                    {this.state.dollarValue.toFixed(2)}
                   </h4>
                 </div>
               </li>
