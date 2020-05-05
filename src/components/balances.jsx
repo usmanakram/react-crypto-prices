@@ -42,10 +42,20 @@ class Balances extends Component {
       let btcValue = 0,
         dollarValue = 0;
 
-      balances.forEach((b) => {
+      /* balances.forEach((b) => {
         btcValue += b.btc_value;
         dollarValue += b.dollar_value;
+      }); */
+      /**
+       * Equelent BTC value is being calculated using total dollarValue
+       */
+      balances.forEach((b) => {
+        dollarValue += b.dollar_value;
       });
+      const btc = balances.find((b) => b.symbol === "BTC");
+      if (btc) {
+        btcValue = dollarValue / btc.last_rate;
+      }
 
       this.setState({ balances, btcValue, dollarValue });
     } catch (ex) {
