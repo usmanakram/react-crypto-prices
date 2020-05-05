@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./input";
+import File from "./file";
 import LoginFormInput from "./loginFormInput";
 // import { toast } from "react-toastify";
 import InputHidden from "./inputHidden";
@@ -79,6 +80,20 @@ class Form extends Component {
 
     return (
       <Input
+        type={type}
+        name={name}
+        value={data[name]}
+        label={label}
+        onChange={this.handleChange}
+        error={errors[name]}
+      />
+    );
+  }
+  renderFile(name, label, type = "file") {
+    const { data, errors } = this.state;
+
+    return (
+      <File
         type={type}
         name={name}
         value={data[name]}

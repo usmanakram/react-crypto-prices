@@ -139,14 +139,10 @@ class EditProfile extends Form {
                     </div>
                     <div className="row">
                       <div className="col-md-6">
-                        {this.renderInput("identity_document", "ID", "file")}
+                        {this.renderFile("identity_document", "ID")}
                       </div>
                       <div className="col-md-6">
-                        {this.renderInput(
-                          "selfie_document",
-                          "Selfie with ID",
-                          "file"
-                        )}
+                        {this.renderFile("selfie_document", "Selfie with ID")}
                       </div>
                       <div className="col-md-12 text-right">
                         {this.renderButton("Submit", "btn-default")}
