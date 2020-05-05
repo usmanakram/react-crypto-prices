@@ -9,6 +9,7 @@ class UserProfile extends Component {
     username: "",
     name: "",
     email: "",
+    contact_number: "",
     address: "",
     identity_document: "",
     selfie_document: "",
@@ -20,6 +21,7 @@ class UserProfile extends Component {
         username,
         name,
         email,
+        contact_number,
         address,
         identity_document,
         selfie_document,
@@ -29,6 +31,7 @@ class UserProfile extends Component {
         username,
         name,
         email,
+        contact_number,
         address,
         identity_document,
         selfie_document,
@@ -46,6 +49,7 @@ class UserProfile extends Component {
       username,
       name,
       email,
+      contact_number,
       address,
       identity_document,
       selfie_document,
@@ -89,7 +93,7 @@ class UserProfile extends Component {
                     </div>
                     <div className="col-md-6">
                       <p className="card-text">
-                        <strong>Name: </strong>
+                        <strong>Full Name: </strong>
                         {name}
                       </p>
                     </div>
@@ -104,6 +108,10 @@ class UserProfile extends Component {
                       <p className="card-text">
                         <strong>Email: </strong>
                         {email}
+                      </p>
+                      <p className="card-text">
+                        <strong>Contact No: </strong>
+                        {contact_number}
                       </p>
                     </div>
                     <div className="col-md-6">

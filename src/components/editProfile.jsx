@@ -10,6 +10,7 @@ class EditProfile extends Form {
   state = {
     data: {
       name: "",
+      contact_number: "",
       address: "",
       identity_document: "",
       selfie_document: "",
@@ -19,7 +20,8 @@ class EditProfile extends Form {
   };
 
   schema = {
-    name: Joi.string().required().label("Name"),
+    name: Joi.string().required().label("Full Name"),
+    contact_number: Joi.string().required().label("Contact Number"),
     address: Joi.string().required().label("Address"),
     identity_document: Joi.any()
       .meta({ swaggerType: "file" })
@@ -40,6 +42,7 @@ class EditProfile extends Form {
 
       const { data } = this.state;
       data.name = response.name;
+      data.contact_number = response.contact_number;
       data.address = response.address;
       this.setState({ data });
     } catch (ex) {
@@ -61,6 +64,7 @@ class EditProfile extends Form {
 
       const response = await auth.updateProfile(
         data.name,
+        data.contact_number,
         data.address,
         idDoc.files[0],
         selfieDoc.files[0]
@@ -119,7 +123,14 @@ class EditProfile extends Form {
                         <h5 className="card-text my-2">User Information</h5>
                       </div>
                       <div className="col-md-12">
-                        {this.renderInput("name", "Name", "text")}
+                        {this.renderInput("name", "Full Name", "text")}
+                      </div>
+                      <div className="col-md-12">
+                        {this.renderInput(
+                          "contact_number",
+                          "Contact Number",
+                          "text"
+                        )}
                       </div>
 
                       <div className="col-md-12">

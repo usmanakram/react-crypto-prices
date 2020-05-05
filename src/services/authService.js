@@ -93,9 +93,16 @@ async function getProfile() {
   return data;
 }
 
-async function updateProfile(name, address, id_doc, selfie_doc) {
+async function updateProfile(
+  name,
+  contact_number,
+  address,
+  id_doc,
+  selfie_doc
+) {
   const formData = new FormData();
   formData.append("name", name);
+  formData.append("contact_number", contact_number);
   formData.append("address", address);
   formData.append("identity_document", id_doc);
   formData.append("selfie_document", selfie_doc);
