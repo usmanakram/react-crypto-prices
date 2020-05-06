@@ -55,21 +55,41 @@ class EditProfile extends Form {
   }
 
   doSubmit = async () => {
+    // const params = { ...data, url, status };
     try {
       this.setState({ spinnerStatus: true });
 
-      const { data } = this.state;
-
       const idDoc = document.querySelector("#identity_document");
       const selfieDoc = document.querySelector("#selfie_document");
+      console.log("idDoc.files[0]");
+      console.log(idDoc.files[0]);
 
-      const response = await auth.updateProfile(
-        data.name,
-        data.contact_number,
-        data.address,
-        idDoc.files[0],
-        selfieDoc.files[0]
-      );
+      const { data } = this.state;
+      let identity_document;
+
+      if (idDoc.files[0] === undefined) {
+        console.log("if");
+        // data.identity_document = "";
+        identity_document = "";
+      } else {
+        console.log("else");
+        // data.identity_document = idDoc.files[0];
+        identity_document = idDoc.files[0];
+      }
+      // data.identity_document = "";
+      console.log("data");
+      console.log(data);
+      const params = { ...data, identity_document };
+
+      const response = await auth.updateProfile(params);
+
+      // const response = await auth.updateProfile(
+      //   data.name,
+      //   data.contact_number,
+      //   data.address,
+      //   idDoc.files[0],
+      //   selfieDoc.files[0]
+      // );
 
       /* const formData = new FormData();
       const imagefile = document.querySelector("#identity_document");
