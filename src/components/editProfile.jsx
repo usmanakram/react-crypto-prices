@@ -17,6 +17,7 @@ class EditProfile extends Form {
       selfie_document: "",
     },
     errors: {},
+    identity_status: "",
     spinnerStatus: false,
   };
 
@@ -45,7 +46,7 @@ class EditProfile extends Form {
       data.name = response.name;
       data.contact_number = response.contact_number;
       data.address = response.address;
-      this.setState({ data });
+      this.setState({ data, identity_status: response.identity_status });
     } catch (ex) {
       if (ex.response) {
         console.log(ex.response.data);
@@ -84,6 +85,10 @@ class EditProfile extends Form {
       }); */
 
       toast.success(response);
+
+      setTimeout(function () {
+        window.location = process.env.REACT_APP_BASENAME + "/profile";
+      }, 3000);
     } catch (ex) {
       if (ex.response) {
         if (ex.response.status === 400) {
@@ -99,6 +104,45 @@ class EditProfile extends Form {
       }
     }
     this.setState({ spinnerStatus: false });
+  };
+
+  handleDocumentFeields = () => {
+    const { identity_status } = this.state;
+    if ([0, 3].indexOf(identity_status) !== -1) {
+      return (
+        <>
+          {identity_status === 3 && (
+            <div className="col-md-12 text-center">
+              <p style={{ fontSize: 20, marginBottom: 15, color: "red" }}>
+                Documents Rejected
+              </p>
+            </div>
+          )}
+          <div className="col-md-6">
+            {this.renderFile("identity_document", "ID")}
+          </div>
+          <div className="col-md-6">
+            {this.renderFile("selfie_document", "Selfie with ID")}
+          </div>
+        </>
+      );
+    } else if (identity_status === 1) {
+      return (
+        <div className="col-md-12 text-center">
+          <p style={{ fontSize: 20, marginBottom: 15, color: "blue" }}>
+            Verification in Progress
+          </p>
+        </div>
+      );
+    } else if (identity_status === 2) {
+      return (
+        <div className="col-md-12 text-center">
+          <p style={{ fontSize: 20, marginBottom: 15, color: "green" }}>
+            Approved
+          </p>
+        </div>
+      );
+    }
   };
 
   render() {
@@ -143,12 +187,13 @@ class EditProfile extends Form {
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-md-6">
+                      {/* <div className="col-md-6">
                         {this.renderFile("identity_document", "ID")}
                       </div>
                       <div className="col-md-6">
                         {this.renderFile("selfie_document", "Selfie with ID")}
-                      </div>
+                      </div> */}
+                      {this.handleDocumentFeields()}
                       <div className="col-md-12 text-right">
                         <Link
                           to="/profile"
