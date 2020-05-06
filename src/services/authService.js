@@ -100,29 +100,10 @@ async function getProfile() {
 }
 
 async function updateProfile(params) {
-  console.log("params");
-  console.log(params);
   const formData = setFormData(params);
   const { data } = await http.post("/auth/update-profile", formData);
   return data;
 }
-// async function updateProfile(
-//   name,
-//   contact_number,
-//   address,
-//   id_doc,
-//   selfie_doc
-// ) {
-//   const formData = new FormData();
-//   formData.append("name", name);
-//   formData.append("contact_number", contact_number);
-//   formData.append("address", address);
-//   // formData.append("identity_document", id_doc);
-//   // formData.append("selfie_document", selfie_doc);
-
-//   const { data } = await http.post("/auth/update-profile", formData);
-//   return data;
-// }
 
 async function getUser() {
   const user = this.getCurrentUser();
