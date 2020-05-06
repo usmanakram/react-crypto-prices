@@ -21,6 +21,12 @@ const tokenKey = "token";
 
 http.setJwt(getJwt());
 
+function setFormData(data) {
+  const formData = new FormData();
+  for (let [key, value] of Object.entries(data)) formData.append(key, value);
+  return formData;
+}
+
 async function login(username, password) {
   // 1st Cases (Content-Type: application/x-www-form-urlencoded)
   // const formData = `bit_uname=${username}&bit_password=${password}`;
@@ -93,23 +99,30 @@ async function getProfile() {
   return data;
 }
 
-async function updateProfile(
-  name,
-  contact_number,
-  address,
-  id_doc,
-  selfie_doc
-) {
-  const formData = new FormData();
-  formData.append("name", name);
-  formData.append("contact_number", contact_number);
-  formData.append("address", address);
-  formData.append("identity_document", id_doc);
-  formData.append("selfie_document", selfie_doc);
-
+async function updateProfile(params) {
+  console.log("params");
+  console.log(params);
+  const formData = setFormData(params);
   const { data } = await http.post("/auth/update-profile", formData);
   return data;
 }
+// async function updateProfile(
+//   name,
+//   contact_number,
+//   address,
+//   id_doc,
+//   selfie_doc
+// ) {
+//   const formData = new FormData();
+//   formData.append("name", name);
+//   formData.append("contact_number", contact_number);
+//   formData.append("address", address);
+//   // formData.append("identity_document", id_doc);
+//   // formData.append("selfie_document", selfie_doc);
+
+//   const { data } = await http.post("/auth/update-profile", formData);
+//   return data;
+// }
 
 async function getUser() {
   const user = this.getCurrentUser();
