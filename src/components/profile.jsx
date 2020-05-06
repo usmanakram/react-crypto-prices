@@ -13,6 +13,7 @@ class UserProfile extends Component {
     address: "",
     identity_document: "",
     selfie_document: "",
+    identity_status: "",
   };
 
   async componentDidMount() {
@@ -25,6 +26,7 @@ class UserProfile extends Component {
         address,
         identity_document,
         selfie_document,
+        identity_status,
       } = await auth.getProfile();
 
       this.setState({
@@ -35,6 +37,7 @@ class UserProfile extends Component {
         address,
         identity_document,
         selfie_document,
+        identity_status,
       });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -53,6 +56,7 @@ class UserProfile extends Component {
       address,
       identity_document,
       selfie_document,
+      identity_status,
     } = this.state;
 
     return (
@@ -63,7 +67,7 @@ class UserProfile extends Component {
 
         <div className="container my-3">
           <div className="row">
-            <div className="col-md-8">
+            <div className="col-md-12">
               <div className="card">
                 <div className="card-header">
                   <h5 className="card-title">
@@ -120,11 +124,72 @@ class UserProfile extends Component {
                         {address}
                       </p>
                     </div>
+                    <hr />
+                  </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      {identity_status === 0 && (
+                        <div className="col-md-12 text-center">
+                          <p
+                            style={{
+                              fontSize: 20,
+                              marginBottom: 15,
+                              color: "blue",
+                            }}
+                          >
+                            <Link to="/edit-profile">
+                              Please, upload required documents.
+                            </Link>
+                          </p>
+                        </div>
+                      )}
+
+                      {identity_status === 3 && (
+                        <div className="col-md-12 text-center">
+                          <p
+                            style={{
+                              fontSize: 20,
+                              marginBottom: 15,
+                              color: "red",
+                            }}
+                          >
+                            Documents Rejected
+                          </p>
+                        </div>
+                      )}
+
+                      {identity_status === 1 && (
+                        <div className="col-md-12 text-center">
+                          <p
+                            style={{
+                              fontSize: 20,
+                              marginBottom: 15,
+                              color: "blue",
+                            }}
+                          >
+                            Verification in Progress
+                          </p>
+                        </div>
+                      )}
+                      {identity_status === 2 && (
+                        <div className="col-md-12 text-center">
+                          <p
+                            style={{
+                              fontSize: 20,
+                              marginBottom: 15,
+                              color: "green",
+                            }}
+                          >
+                            Approved
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-md-4">
+            {/* <div className="col-md-4">
               <div className="card">
                 <div className="card-body">
                   <div className="row justify-content-center">
@@ -172,7 +237,7 @@ class UserProfile extends Component {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </React.Fragment>
