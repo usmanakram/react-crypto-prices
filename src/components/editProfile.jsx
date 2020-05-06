@@ -63,9 +63,9 @@ class EditProfile extends Form {
       const selfieDoc = document.querySelector("#selfie_document");
 
       const identity_document =
-        idDoc.files[0] !== undefined ? idDoc.files[0] : "";
+        idDoc && idDoc.files[0] !== undefined ? idDoc.files[0] : "";
       const selfie_document =
-        selfieDoc.files[0] !== undefined ? selfieDoc.files[0] : "";
+        selfieDoc && selfieDoc.files[0] !== undefined ? selfieDoc.files[0] : "";
 
       const response = await auth.updateProfile({
         ...this.state.data,
