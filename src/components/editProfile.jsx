@@ -1,5 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Form from "./common/form";
 import Header from "./header";
 import Joi from "joi-browser";
@@ -122,17 +123,20 @@ class EditProfile extends Form {
                       <div className="col-md-12">
                         <h5 className="card-text my-2">User Information</h5>
                       </div>
-                      <div className="col-md-12">
+                    </div>
+                    <div className="row">
+                      <div className="col-md-6">
                         {this.renderInput("name", "Full Name", "text")}
                       </div>
-                      <div className="col-md-12">
+                      <div className="col-md-6">
                         {this.renderInput(
                           "contact_number",
                           "Contact Number",
                           "text"
                         )}
                       </div>
-
+                    </div>
+                    <div className="row">
                       <div className="col-md-12">
                         {this.renderInput("address", "Address", "text")}
                       </div>
@@ -145,6 +149,12 @@ class EditProfile extends Form {
                         {this.renderFile("selfie_document", "Selfie with ID")}
                       </div>
                       <div className="col-md-12 text-right">
+                        <Link
+                          to="/profile"
+                          className="btn btn-danger btn-default mr-2"
+                        >
+                          Cancel
+                        </Link>
                         {this.renderButton("Submit", "btn-default")}
                       </div>
                     </div>
