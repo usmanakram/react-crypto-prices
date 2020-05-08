@@ -3,6 +3,8 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 // import logo from "./logo.svg";
 import "./App.css";
+import SignUp from "./components/signUp";
+import VerifyEmail from "./components/verifyEmail";
 import Login from "./components/login";
 import ForgotPassword from "./components/forgotPassword";
 import ResetPassword from "./components/resetPassword";
@@ -22,7 +24,6 @@ import TradeHistory from "./components/tradeHistory";
 import TransactionHistory from "./components/transactionHistory";
 import Profile from "./components/profile";
 import OpenOrder from "./components/openOrder";
-import SignUp from "./components/signUp";
 
 const App = () => {
   return (
@@ -31,13 +32,17 @@ const App = () => {
       <div id="content">
         <Switch>
           <Route path="/coin-info/:pairId" component={CoinInfo} />
+          <Route path="/signup" component={SignUp} />
+          <Route
+            path="/verify-email/:email/:code"
+            component={VerifyEmail}
+          ></Route>
           <Route path="/login" component={Login} />
           <Route path="/forgot-password" component={ForgotPassword} />
           <Route
             path="/reset-password/:email/:code"
             component={ResetPassword}
           />
-          <Route path="/signup" component={SignUp} />
           <Route path="/home" component={Home} />
           <Route path="/logout" component={Logout} />
           <Route path="/profile" component={Profile} />

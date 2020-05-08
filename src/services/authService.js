@@ -15,6 +15,7 @@ const apiEndpoint = {
   resetPassword: "/auth/reset-password",
   logout: "/auth/logout",
   signup: "/auth/signup",
+  verifyEmail: "/auth/verify-email",
   getUser: "/auth/user",
 };
 const tokenKey = "token";
@@ -94,6 +95,14 @@ async function signup(
   return data;
 }
 
+async function verifyEmail(email, code) {
+  const formData = new FormData();
+  formData.append("email", email);
+  formData.append("code", code);
+  const { data } = await http.post(apiEndpoint.verifyEmail, formData);
+  return data;
+}
+
 async function getProfile() {
   const { data } = await http.get("auth/profile");
   return data;
@@ -137,6 +146,7 @@ function getJwt() {
 
 export default {
   signup,
+  verifyEmail,
   login,
   forgotPassword,
   resetPassword,
