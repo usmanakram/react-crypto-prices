@@ -91,7 +91,7 @@ class Header extends Component {
                         </li>
                         <li className="nav-item">
                           <Link className="nav-link" to="/withdrawal">
-                            Withdrawal
+                            Withdrawals
                           </Link>
                         </li>
                         <li className="nav-item">

@@ -43,7 +43,7 @@ class SignUp extends Form {
         errors.forEach((error) => {
           if (error.type === "string.regex.base") {
             error.message =
-              "Password must have atleast one capital, one small letter and one number.";
+              "Password must have atleast one capital, one small letter, one number and no special character.";
           }
         });
         return errors;

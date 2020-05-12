@@ -9,16 +9,16 @@ import debug from "../utils/debuger";
 class TransactionHistory extends Component {
   state = {
     deposits: [],
-    withdrawals: []
+    withdrawals: [],
   };
 
   columns = [
     { path: "status_text", label: "Status" },
     { path: "currency.symbol", label: "Coin" },
     { path: "amount", label: "Amount" },
-    { path: "fee", label: "Fee", content: t => t.fee.toFixed(8) },
+    { path: "fee", label: "Fee", content: (t) => t.fee.toFixed(8) },
     { path: "created_at", label: "Date" },
-    { path: "address", label: "Information" }
+    { path: "address", label: "Information" },
   ];
 
   async componentDidMount() {
@@ -72,7 +72,7 @@ class TransactionHistory extends Component {
                   role="tab"
                   data-toggle="tab"
                 >
-                  Withdrawal History
+                  Withdrawals History
                   <i className="fa fa-stroopwafel"></i>
                 </a>
               </li>

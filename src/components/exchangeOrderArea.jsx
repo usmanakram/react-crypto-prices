@@ -9,11 +9,11 @@ const ExchangeOrderArea = ({
   selectedPairStats,
   quoteCurrencyBalance,
   baseCurrencyBalance,
-  spinnerStatus
+  spinnerStatus,
 }) => {
-  window.$(function() {
+  window.$(function () {
     window.$('[data-toggle="popover"]').popover({
-      trigger: "hover"
+      trigger: "hover",
     });
   });
 
@@ -27,7 +27,7 @@ const ExchangeOrderArea = ({
             role="tab"
             data-toggle="tab"
           >
-            <h5>Limit order</h5>
+            <h5>Limit Order</h5>
           </a>
         </li>
         <li className="nav-item">
@@ -37,7 +37,7 @@ const ExchangeOrderArea = ({
             role="tab"
             data-toggle="tab"
           >
-            <h5>Market order</h5>
+            <h5>Market Order</h5>
           </a>
         </li>
         <li className="nav-item">
