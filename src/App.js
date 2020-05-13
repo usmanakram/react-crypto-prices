@@ -16,6 +16,7 @@ import Withdrawal from "./components/withdrawal";
 import OrderHistory from "./components/orderHistory";
 import Balances from "./components/balances";
 import Exchange from "./components/exchange";
+import ConfirmWithdrawal from "./components/confirmWithdrawal";
 import NotFound from "./components/notFound";
 import "react-toastify/dist/ReactToastify.min.css";
 import Footer from "./components/footer";
@@ -55,6 +56,10 @@ const App = () => {
           <Route path="/balances" component={Balances} />
           <Route path="/transactionHistory" component={TransactionHistory} />
           <Route path="/exchange/:symbol" component={Exchange} />
+          <Route
+            path="/confirm-withdrawal-request/:id/:transaction_id/:verification_token"
+            component={ConfirmWithdrawal}
+          />
           <Route path="/not-found" component={NotFound} />
           <Route path="/" exact component={Home} />
           <Redirect to="/" />

@@ -81,7 +81,7 @@ class Withdrawal extends Form {
         formData.append("quantity", data.quantity);
       }
 
-      var { data: response } = await http.post(url, formData);
+      const { data: response } = await http.post(url, formData);
 
       toast.success(response);
 

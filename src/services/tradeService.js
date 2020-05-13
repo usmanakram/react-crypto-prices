@@ -2,7 +2,7 @@ import http from "./httpService";
 
 const apiEndpoint = {
   buy: "/auth/buy",
-  sell: "/auth/sell"
+  sell: "/auth/sell",
 };
 
 function setFormData(data) {
@@ -75,7 +75,7 @@ async function getBalances() {
 
 async function getBalance(currency_id) {
   const balances = await getBalances();
-  return balances.find(b => b.id === currency_id);
+  return balances.find((b) => b.id === currency_id);
 }
 
 async function getOrderBook(pair_id) {
@@ -112,6 +112,19 @@ async function getUserOpenOrders() {
   return data;
 }
 
+async function getWithdrawalRequest(params) {
+  const { data } = await http.get(
+    "/auth/get-withdrawal-request/" + params.join("/")
+  );
+  return data;
+}
+
+async function updateWithdrawalRequest(params) {
+  const formData = setFormData(params);
+  const { data } = await http.post("/auth/update-withdrawal-request", formData);
+  return data;
+}
+
 export default {
   buy,
   sell,
@@ -123,5 +136,7 @@ export default {
   getChartTradeHistory,
   getUserTradeHistory,
   getUserOrderHistory,
-  getUserOpenOrders
+  getUserOpenOrders,
+  getWithdrawalRequest,
+  updateWithdrawalRequest,
 };

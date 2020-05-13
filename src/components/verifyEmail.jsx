@@ -22,8 +22,6 @@ class VerifyEmail extends Form {
   }
 
   doSubmit = async (email, code) => {
-    console.log("this.state");
-    console.log(this.state);
     try {
       this.setState({ isSpinner: true });
 
