@@ -13,9 +13,9 @@ class ExchangeBody extends Component {
   state = {
     orderBookData: {
       buyOrders: [],
-      sellOrders: []
+      sellOrders: [],
     },
-    spinnerStatus: false
+    spinnerStatus: false,
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -70,7 +70,7 @@ class ExchangeBody extends Component {
       quoteCurrencyBalance,
       baseCurrencyBalance,
       isFullWidth,
-      isDarkBg
+      isDarkBg,
     } = this.props;
 
     const { orderBookData, spinnerStatus } = this.state;
@@ -102,7 +102,7 @@ class ExchangeBody extends Component {
                         role="tab"
                         data-toggle="tab"
                       >
-                        <h5>TraradingView</h5>
+                        <h5>Trarading View</h5>
                       </a>
                     </li>
                     <li className="nav-item">
@@ -112,7 +112,7 @@ class ExchangeBody extends Component {
                         role="tab"
                         data-toggle="tab"
                       >
-                        <h5>DepthChart</h5>
+                        <h5>Depth Chart</h5>
                       </a>
                     </li>
                   </ul>
