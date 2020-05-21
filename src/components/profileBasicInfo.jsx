@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { toast } from "react-toastify";
 import Joi from "joi-browser";
 import auth from "../services/authService";
 import Form from "./common/form";
+import Spinner from "./spinner";
 
 class ProfileBasicInfo extends Form {
   state = {
@@ -24,8 +25,6 @@ class ProfileBasicInfo extends Form {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { name, address, contactNumber } = this.props;
-    console.log(prevProps);
-    console.log(name, address, contactNumber);
     if (
       this.props.name !== prevProps.name ||
       this.props.address !== prevProps.address ||
@@ -53,6 +52,7 @@ class ProfileBasicInfo extends Form {
         ...this.state.data,
       });
       toast.success(response);
+      this.handleDisplayInputs();
       onBasicInfoVerify();
     } catch (ex) {
       if (ex.response) {
@@ -126,6 +126,7 @@ class ProfileBasicInfo extends Form {
                   </p>
                 </div>
                 <div className="col-md-12 text-right">
+                  <Spinner status={this.state.spinnerStatus} />
                   {this.hadldeVerifyButton()}
                 </div>
                 {isInputs && (

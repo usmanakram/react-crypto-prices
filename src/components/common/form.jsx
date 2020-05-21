@@ -96,9 +96,9 @@ class Form extends Component {
       <File
         type={type}
         name={name}
-        value={data[name]}
+        // value={data[name]}
         label={label}
-        onChange={this.handleChange}
+        // onChange={this.handleChange}
         error={errors[name]}
       />
     );
