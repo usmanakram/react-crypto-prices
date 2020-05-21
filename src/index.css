@@ -924,3 +924,60 @@ html {
 .dark-blue-bg #depthChartStyle > .highcharts-container > svg > rect {
   fill: #131722;
 }
+
+/* ===============================profile card======================== */
+
+.card-container {
+  padding-top: 24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  /* box-sizing: border-box;
+  min-width: 0px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px, rgba(0, 0, 0, 0.08) 0px 0px 2px;
+  background-color: rgb(255, 255, 255);
+  margin: 0px 0px 16px;
+  border-radius: 4px;
+  padding: 24px 16px 16px; */
+}
+
+.card-container > .card-main {
+  box-sizing: border-box;
+  min-width: 0px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px, rgba(0, 0, 0, 0.08) 0px 0px 2px;
+  background-color: rgb(255, 255, 255);
+  margin: 0px 0px 16px;
+  border-radius: 4px;
+  padding: 24px 16px 16px;
+}
+
+.pro-headder {
+  box-sizing: border-box;
+  min-width: 0px;
+  background-color: rgb(255, 255, 255);
+  margin: 0px;
+  flex: 1 1 0%;
+}
+.pro-headder > .text-css {
+  box-sizing: border-box;
+  min-width: 0px;
+  margin: 0px 0px 12px;
+}
+.pro-sts-pen {
+  font-size: 15px;
+  margin-bottom: 0px;
+}
+.pro-sts-ip {
+  font-size: 15px;
+  margin-bottom: 0px;
+}
+.pro-sts-app {
+  font-size: 15px;
+  margin-bottom: 0px;
+  color: green;
+}
+.pro-sts-rej {
+  font-size: 15px;
+  margin-bottom: 0px;
+  color: red;
+}
+/* ===============================profile card======================== */
