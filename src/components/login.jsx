@@ -1,19 +1,21 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import Form from "./common/form";
-import Joi from "joi-browser";
-import auth from "../services/authService";
 import { toast } from "react-toastify";
-import Header from "./header";
+import Joi from "joi-browser";
 import Spinner from "./spinner";
+import auth from "../services/authService";
+import Header from "./header";
 import { Link } from "react-router-dom";
 import debug from "../utils/debuger";
+import ResendVerificationEmail from "./resendVerificationEmail";
 
 class Login extends Form {
   state = {
     data: { username: "", password: "" },
     errors: {},
     loginSpinner: false,
+    isInput: false,
   };
 
   schema = {
@@ -32,6 +34,7 @@ class Login extends Form {
 
       const { state } = this.props.location;
       // window.location = state ? state.from.pathname : "/";
+
       window.location = state
         ? state.from.pathname
         : process.env.REACT_APP_BASENAME + "/";
@@ -45,13 +48,21 @@ class Login extends Form {
         this.setState({ errors, loginSpinner: false });
 
         toast.error(ex.response.data);
+        if (ex.response.data === "verify your email first") {
+          this.handleDisplayInputs();
+        }
       }
     }
   };
 
+  handleDisplayInputs = () => {
+    const { isInput } = this.state;
+    this.setState({ isInput: !isInput });
+  };
+
   render() {
     if (auth.getCurrentUser()) return <Redirect to="/" />;
-
+    const { isInput } = this.state;
     return (
       <div className="user-login-signup-section modal-container">
         <Header />
@@ -94,6 +105,9 @@ class Login extends Form {
                   <p>
                     Don't have an account? <Link to="/signup">Register</Link>
                   </p>
+                  {isInput && (
+                    <ResendVerificationEmail />
+                  )}
                 </div>
               </div>
             </div>
