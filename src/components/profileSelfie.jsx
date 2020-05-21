@@ -60,29 +60,35 @@ class ProfileSelfie extends Form {
 
   hadldeVerifyButton = () => {
     const { name, address, contactNumber, selfieStatus } = this.props;
-
+    const { isInputs } = this.state;
     if (selfieStatus === 2) {
       return <h5>Varified</h5>;
+    } else if (selfieStatus === 1) {
+      return <h5>Varification in progress</h5>;
     } else {
       if (!name && !address && !contactNumber) {
-        return (
-          <button
-            className="btn btn-danger btn-default"
-            onClick={this.handleDisplayInputs}
-            disabled
-          >
-            Verify
-          </button>
-        );
+        if (!isInputs) {
+          return (
+            <button
+              className="btn btn-danger btn-default"
+              onClick={this.handleDisplayInputs}
+              disabled
+            >
+              Verify
+            </button>
+          );
+        }
       } else if (name && address && contactNumber) {
-        return (
-          <button
-            className="btn btn-danger btn-default"
-            onClick={this.handleDisplayInputs}
-          >
-            Verify
-          </button>
-        );
+        if (!isInputs) {
+          return (
+            <button
+              className="btn btn-danger btn-default"
+              onClick={this.handleDisplayInputs}
+            >
+              Verify
+            </button>
+          );
+        }
       }
     }
   };
@@ -102,13 +108,13 @@ class ProfileSelfie extends Form {
                 </div>
                 <div className="col-md-12">
                   <p className="card-text my-2">
-                    • Increase withdrawal limit to 100BTC <br />• To increase
+                    • Increase withdrawal limit to 10BTC <br />• To increase
                     deposit limits for selected local currencies
                   </p>
 
                   {selfieStatus === 0 && (
                     <p className="pro-sts-pen">
-                      <strong>• Peanding Upload</strong>
+                      <strong>• Pending Upload</strong>
                     </p>
                   )}
                   {selfieStatus === 1 && (
@@ -141,6 +147,12 @@ class ProfileSelfie extends Form {
                       </div>
                       <div className="row">
                         <div className="col-md-12 text-right">
+                          <button
+                            className="btn btn-danger btn-default mr-2"
+                            onClick={this.handleDisplayInputs}
+                          >
+                            Cancel
+                          </button>
                           {this.renderButton("Submit", "btn-default")}
                         </div>
                       </div>
