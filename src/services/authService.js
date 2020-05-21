@@ -17,6 +17,7 @@ const apiEndpoint = {
   signup: "/auth/signup",
   verifyEmail: "/auth/verify-email",
   getUser: "/auth/user",
+  resendVerificatoinEmail: "/auth/resend-verificatoin-email",
 };
 const tokenKey = "token";
 
@@ -102,6 +103,15 @@ async function verifyEmail(email, code) {
   const { data } = await http.post(apiEndpoint.verifyEmail, formData);
   return data;
 }
+async function resendVerificatoinEmail(email) {
+  const formData = new FormData();
+  formData.append("email", email);
+  const { data } = await http.post(
+    apiEndpoint.resendVerificatoinEmail,
+    formData
+  );
+  return data;
+}
 
 async function getProfile() {
   const { data } = await http.get("auth/profile");
@@ -161,6 +171,7 @@ export default {
   login,
   forgotPassword,
   resetPassword,
+  resendVerificatoinEmail,
   getProfile,
   updateProfile,
   updateBasicInfo,
