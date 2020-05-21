@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { toast } from "react-toastify";
 import Joi from "joi-browser";
 import auth from "../services/authService";
 import Form from "./common/form";
+import Spinner from "./spinner";
 
 class ProfileIdentity extends Form {
   state = {
@@ -37,6 +38,7 @@ class ProfileIdentity extends Form {
         document: identity_document,
       });
       toast.success(response);
+      this.handleDisplayInputs();
       onBasicInfoVerify();
     } catch (ex) {
       if (ex.response) {
@@ -129,6 +131,7 @@ class ProfileIdentity extends Form {
                   )}
                 </div>
                 <div className="col-md-12 text-right">
+                  <Spinner status={this.state.spinnerStatus} />
                   {this.hadldeVerifyButton()}
                 </div>
                 {isInputs && (
