@@ -63,30 +63,37 @@ class ProfileIdentity extends Form {
   };
 
   hadldeVerifyButton = () => {
+    const { isInputs } = this.state;
     const { name, address, contactNumber, identityStatus } = this.props;
 
     if (identityStatus === 2) {
       return <h5>Varified</h5>;
+    } else if (identityStatus === 1) {
+      return <h5>Varification in progress</h5>;
     } else {
       if (!name && !address && !contactNumber) {
-        return (
-          <button
-            className="btn btn-danger btn-default"
-            onClick={this.handleDisplayInputs}
-            disabled
-          >
-            Verify
-          </button>
-        );
+        if (!isInputs) {
+          return (
+            <button
+              className="btn btn-danger btn-default"
+              onClick={this.handleDisplayInputs}
+              disabled
+            >
+              Verify
+            </button>
+          );
+        }
       } else if (name && address && contactNumber) {
-        return (
-          <button
-            className="btn btn-danger btn-default"
-            onClick={this.handleDisplayInputs}
-          >
-            Verify
-          </button>
-        );
+        if (!isInputs) {
+          return (
+            <button
+              className="btn btn-danger btn-default"
+              onClick={this.handleDisplayInputs}
+            >
+              Verify
+            </button>
+          );
+        }
       }
     }
   };
@@ -106,12 +113,12 @@ class ProfileIdentity extends Form {
                 </div>
                 <div className="col-md-12">
                   <p className="card-text my-2">
-                    • Increase withdrawal limit to 100BTC <br />• To increase
+                    • Increase withdrawal limit to 10BTC <br />• To increase
                     deposit limits for selected local currencies
                   </p>
                   {identityStatus === 0 && (
                     <p className="pro-sts-pen">
-                      <strong>• Peanding Upload</strong>
+                      <strong>• Pending Upload</strong>
                     </p>
                   )}
                   {identityStatus === 1 && (
@@ -147,6 +154,12 @@ class ProfileIdentity extends Form {
                       </div>
                       <div className="row">
                         <div className="col-md-12 text-right">
+                          <button
+                            className="btn btn-danger btn-default mr-2"
+                            onClick={this.handleDisplayInputs}
+                          >
+                            Cancel
+                          </button>
                           {this.renderButton("Submit", "btn-default")}
                         </div>
                       </div>

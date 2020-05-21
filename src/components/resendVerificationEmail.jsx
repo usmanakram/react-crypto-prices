@@ -5,6 +5,7 @@ import auth from "../services/authService";
 import Form from "./common/form";
 import { toast } from "react-toastify";
 import { Modal, Button } from "react-bootstrap";
+import "../components/css/login.css";
 
 class ResendVerificationEmail extends Form {
   state = {
@@ -53,45 +54,47 @@ class ResendVerificationEmail extends Form {
         >
           Resend verificatoin email
         </p>
-        <Modal
-          show={show}
-          size="sm"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-        >
-          <Modal.Header>
-            <h5>Enter email for verification code</h5>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="text-center">
-              <form
-                onSubmit={this.handleSubmit}
-                className="user-connected-from user-login-form"
-              >
-                <div className="row">
-                  <div className="col-md-12 pt-2">
-                    <Spinner status={this.state.loginSpinner} />
-                    {this.renderLoginFormInput("email", "Email")}
+        <div className="rsn-vri-em">
+          <Modal
+            show={show}
+            size="sm"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header>
+              <h5>Enter email for verification link</h5>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="text-center">
+                <form
+                  onSubmit={this.handleSubmit}
+                  className="user-connected-from user-login-form"
+                >
+                  <div className="row">
+                    <div className="col-md-12 pt-2">
+                      <Spinner status={this.state.loginSpinner} />
+                      {this.renderLoginFormInput("email", "Email")}
+                    </div>
                   </div>
-                </div>
-              </form>
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              variant="success con-btn"
-              onClick={this.resendVerificatoinEmail}
-            >
-              Send Code
-            </Button>
-            <Button
-              variant="danger con-btn"
-              onClick={() => this.setState({ modalShow: false })}
-            >
-              Cancel
-            </Button>
-          </Modal.Footer>
-        </Modal>
+                </form>
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="success con-btn"
+                onClick={this.resendVerificatoinEmail}
+              >
+                Send
+              </Button>
+              <Button
+                variant="danger con-btn"
+                onClick={() => this.setState({ modalShow: false })}
+              >
+                Cancel
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
       </React.Fragment>
     );
   }

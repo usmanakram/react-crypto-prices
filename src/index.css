@@ -969,6 +969,7 @@ html {
 .pro-sts-ip {
   font-size: 15px;
   margin-bottom: 0px;
+  color: blue;
 }
 .pro-sts-app {
   font-size: 15px;
@@ -980,4 +981,5 @@ html {
   margin-bottom: 0px;
   color: red;
 }
+
 /* ===============================profile card======================== */
