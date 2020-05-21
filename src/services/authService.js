@@ -114,6 +114,17 @@ async function updateProfile(params) {
   return data;
 }
 
+async function updateBasicInfo(params) {
+  const formData = setFormData(params);
+  const { data } = await http.post("/auth/update-basic-info", formData);
+  return data;
+}
+async function updateDocument(params) {
+  const formData = setFormData(params);
+  const { data } = await http.post("/auth/update-document", formData);
+  return data;
+}
+
 async function getUser() {
   const user = this.getCurrentUser();
   if (user === null) return null;
@@ -152,6 +163,8 @@ export default {
   resetPassword,
   getProfile,
   updateProfile,
+  updateBasicInfo,
+  updateDocument,
   getUser,
   logout,
   getCurrentUser,
