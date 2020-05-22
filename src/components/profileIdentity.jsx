@@ -12,6 +12,7 @@ class ProfileIdentity extends Form {
     },
     errors: {},
     spinnerStatus: false,
+    isInputs: false,
   };
 
   schema = {
@@ -31,10 +32,9 @@ class ProfileIdentity extends Form {
       // const identity_document = idDoc.files[0];
       const identity_document =
         idDoc && idDoc.files[0] !== undefined ? idDoc.files[0] : "";
-      const document_type = "identity_document";
 
       const response = await auth.updateDocument({
-        document_type,
+        document_type: "identity_document",
         document: identity_document,
       });
       toast.success(response);
@@ -58,8 +58,7 @@ class ProfileIdentity extends Form {
   };
 
   handleDisplayInputs = () => {
-    const { isInputs } = this.state;
-    this.setState({ isInputs: !isInputs });
+    this.setState({ isInputs: !this.state.isInputs });
   };
 
   hadldeVerifyButton = () => {
@@ -70,30 +69,28 @@ class ProfileIdentity extends Form {
       return <h5>Varified</h5>;
     } else if (identityStatus === 1) {
       return <h5>Varification in progress</h5>;
+    } else if (name && address && contactNumber) {
+      if (!isInputs) {
+        return (
+          <button
+            className="btn btn-danger btn-default"
+            onClick={this.handleDisplayInputs}
+          >
+            Verify
+          </button>
+        );
+      }
     } else {
-      if (!name && !address && !contactNumber) {
-        if (!isInputs) {
-          return (
-            <button
-              className="btn btn-danger btn-default"
-              onClick={this.handleDisplayInputs}
-              disabled
-            >
-              Verify
-            </button>
-          );
-        }
-      } else if (name && address && contactNumber) {
-        if (!isInputs) {
-          return (
-            <button
-              className="btn btn-danger btn-default"
-              onClick={this.handleDisplayInputs}
-            >
-              Verify
-            </button>
-          );
-        }
+      if (!isInputs) {
+        return (
+          <button
+            className="btn btn-danger btn-default"
+            onClick={this.handleDisplayInputs}
+            disabled
+          >
+            Verify
+          </button>
+        );
       }
     }
   };
@@ -108,8 +105,9 @@ class ProfileIdentity extends Form {
 
         const img = document.createElement("img");
         img.src = e.target.result;
-        img.width = 250;
-        img.height = 200;
+        img.className = "img-thumbnail";
+        // img.width = 250;
+        // img.height = 200;
         document.querySelector("#identity-preview").appendChild(img);
       };
 

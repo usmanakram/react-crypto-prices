@@ -12,6 +12,7 @@ class ProfileSelfie extends Form {
     },
     errors: {},
     spinnerStatus: false,
+    isInputs: false,
   };
 
   schema = {
@@ -25,12 +26,12 @@ class ProfileSelfie extends Form {
     try {
       this.setState({ spinnerStatus: true });
       const { onBasicInfoVerify } = this.props;
-      const slfDoc = document.querySelector("#selfie_document");
-      const selfie_document = slfDoc.files[0];
-      const document_type = "selfie_document";
+
+      const selfieDoc = document.querySelector("#selfie_document");
+      const selfie_document = selfieDoc.files[0];
 
       const response = await auth.updateDocument({
-        document_type,
+        document_type: "selfie_document",
         document: selfie_document,
       });
       toast.success(response);
@@ -54,41 +55,39 @@ class ProfileSelfie extends Form {
   };
 
   handleDisplayInputs = () => {
-    const { isInputs } = this.state;
-    this.setState({ isInputs: !isInputs });
+    this.setState({ isInputs: !this.state.isInputs });
   };
 
   hadldeVerifyButton = () => {
-    const { name, address, contactNumber, selfieStatus } = this.props;
     const { isInputs } = this.state;
+    const { name, address, contactNumber, selfieStatus } = this.props;
+
     if (selfieStatus === 2) {
       return <h5>Varified</h5>;
     } else if (selfieStatus === 1) {
       return <h5>Varification in progress</h5>;
+    } else if (name && address && contactNumber) {
+      if (!isInputs) {
+        return (
+          <button
+            className="btn btn-danger btn-default"
+            onClick={this.handleDisplayInputs}
+          >
+            Verify
+          </button>
+        );
+      }
     } else {
-      if (!name && !address && !contactNumber) {
-        if (!isInputs) {
-          return (
-            <button
-              className="btn btn-danger btn-default"
-              onClick={this.handleDisplayInputs}
-              disabled
-            >
-              Verify
-            </button>
-          );
-        }
-      } else if (name && address && contactNumber) {
-        if (!isInputs) {
-          return (
-            <button
-              className="btn btn-danger btn-default"
-              onClick={this.handleDisplayInputs}
-            >
-              Verify
-            </button>
-          );
-        }
+      if (!isInputs) {
+        return (
+          <button
+            className="btn btn-danger btn-default"
+            onClick={this.handleDisplayInputs}
+            disabled
+          >
+            Verify
+          </button>
+        );
       }
     }
   };
@@ -103,8 +102,9 @@ class ProfileSelfie extends Form {
 
         const img = document.createElement("img");
         img.src = e.target.result;
-        img.width = 250;
-        img.height = 200;
+        img.className = "img-thumbnail";
+        // img.width = 250;
+        // img.height = 200;
         document.querySelector("#selfie-preview").appendChild(img);
       };
 

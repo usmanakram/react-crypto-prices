@@ -72,8 +72,7 @@ class ProfileBasicInfo extends Form {
   };
 
   handleDisplayInputs = () => {
-    const { isInputs } = this.state;
-    this.setState({ isInputs: !isInputs });
+    this.setState({ isInputs: !this.state.isInputs });
   };
 
   hadldeVerifyButton = () => {
@@ -84,25 +83,21 @@ class ProfileBasicInfo extends Form {
       identityStatus,
       selfieStatus,
     } = this.props;
-    if (identityStatus === 2 || selfieStatus === 2) {
+    if (
+      identityStatus === 2 ||
+      selfieStatus === 2 ||
+      (p_name && p_address && contactNumber)
+    ) {
       return <h5>Varified</h5>;
-    } else {
-      if (!p_name && !p_address && !contactNumber) {
-        return (
-          <button
-            className="btn btn-danger btn-default"
-            onClick={this.handleDisplayInputs}
-          >
-            Verify
-          </button>
-        );
-      } else if (p_name && p_address && contactNumber) {
-        return (
-          <h5 onClick={this.handleDisplayInputs} className="pointer">
-            Varified
-          </h5>
-        );
-      }
+    } else if (!this.state.isInputs) {
+      return (
+        <button
+          className="btn btn-danger btn-default"
+          onClick={this.handleDisplayInputs}
+        >
+          Verify
+        </button>
+      );
     }
   };
 
@@ -151,6 +146,12 @@ class ProfileBasicInfo extends Form {
                       </div>
                       <div className="row">
                         <div className="col-md-12 text-right">
+                          <button
+                            className="btn btn-danger btn-default mr-2"
+                            onClick={this.handleDisplayInputs}
+                          >
+                            Cancel
+                          </button>
                           {this.renderButton("Submit", "btn-default")}
                         </div>
                       </div>
