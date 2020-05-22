@@ -98,6 +98,25 @@ class ProfileIdentity extends Form {
     }
   };
 
+  handleChange = ({ currentTarget: input }) => {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        if (document.querySelector("#identity-preview img"))
+          document.querySelector("#identity-preview img").remove();
+
+        const img = document.createElement("img");
+        img.src = e.target.result;
+        img.width = 250;
+        img.height = 200;
+        document.querySelector("#identity-preview").appendChild(img);
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  };
+
   render() {
     const { isInputs } = this.state;
     const { identityStatus } = this.props;
@@ -151,6 +170,7 @@ class ProfileIdentity extends Form {
                             "Upload Identity"
                           )}
                         </div>
+                        <div className="col-md-6" id="identity-preview"></div>
                       </div>
                       <div className="row">
                         <div className="col-md-12 text-right">

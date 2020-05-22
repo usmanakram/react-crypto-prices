@@ -93,6 +93,25 @@ class ProfileSelfie extends Form {
     }
   };
 
+  handleChange = ({ currentTarget: input }) => {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        if (document.querySelector("#selfie-preview img"))
+          document.querySelector("#selfie-preview img").remove();
+
+        const img = document.createElement("img");
+        img.src = e.target.result;
+        img.width = 250;
+        img.height = 200;
+        document.querySelector("#selfie-preview").appendChild(img);
+      };
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  };
+
   render() {
     const { isInputs } = this.state;
     const { selfieStatus } = this.props;
@@ -144,6 +163,7 @@ class ProfileSelfie extends Form {
                         <div className="col-md-6">
                           {this.renderFile("selfie_document", "Upload Selfie")}
                         </div>
+                        <div className="col-md-6" id="selfie-preview"></div>
                       </div>
                       <div className="row">
                         <div className="col-md-12 text-right">

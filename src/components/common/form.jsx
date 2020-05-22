@@ -89,6 +89,7 @@ class Form extends Component {
       />
     );
   }
+
   renderFile(name, label, type = "file") {
     const { data, errors } = this.state;
 
@@ -98,7 +99,7 @@ class Form extends Component {
         name={name}
         // value={data[name]}
         label={label}
-        // onChange={this.handleChange}
+        onChange={this.handleChange}
         error={errors[name]}
       />
     );
