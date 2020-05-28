@@ -88,7 +88,7 @@ class ProfileBasicInfo extends Form {
       selfieStatus === 2 ||
       (p_name && p_address && contactNumber)
     ) {
-      return <h5>Varified</h5>;
+      return <h5>Verified</h5>;
     } else if (!this.state.isInputs) {
       return (
         <button

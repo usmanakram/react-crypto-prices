@@ -33,6 +33,15 @@ class ProfileIdentity extends Form {
       const identity_document =
         idDoc && idDoc.files[0] !== undefined ? idDoc.files[0] : "";
 
+      if (
+        identity_document === "" ||
+        identity_document.size > 1024 * 1024 * 1
+      ) {
+        toast.error("Image must be 1MB or less.");
+        this.setState({ spinnerStatus: false });
+        return;
+      }
+
       const response = await auth.updateDocument({
         document_type: "identity_document",
         document: identity_document,
@@ -66,9 +75,9 @@ class ProfileIdentity extends Form {
     const { name, address, contactNumber, identityStatus } = this.props;
 
     if (identityStatus === 2) {
-      return <h5>Varified</h5>;
+      return <h5>Verified</h5>;
     } else if (identityStatus === 1) {
-      return <h5>Varification in progress</h5>;
+      return <h5>Verification in progress</h5>;
     } else if (name && address && contactNumber) {
       if (!isInputs) {
         return (

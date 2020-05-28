@@ -30,6 +30,12 @@ class ProfileSelfie extends Form {
       const selfieDoc = document.querySelector("#selfie_document");
       const selfie_document = selfieDoc.files[0];
 
+      if (selfie_document === "" || selfie_document.size > 1024 * 1024 * 1) {
+        toast.error("Image must be 1MB or less.");
+        this.setState({ spinnerStatus: false });
+        return;
+      }
+
       const response = await auth.updateDocument({
         document_type: "selfie_document",
         document: selfie_document,
@@ -63,9 +69,9 @@ class ProfileSelfie extends Form {
     const { name, address, contactNumber, selfieStatus } = this.props;
 
     if (selfieStatus === 2) {
-      return <h5>Varified</h5>;
+      return <h5>Verified</h5>;
     } else if (selfieStatus === 1) {
-      return <h5>Varification in progress</h5>;
+      return <h5>Verification in progress</h5>;
     } else if (name && address && contactNumber) {
       if (!isInputs) {
         return (
