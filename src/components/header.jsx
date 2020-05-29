@@ -205,11 +205,11 @@ class Header extends Component {
                       <i className="fa fa-chevron-down" aria-hidden="true"></i>
                     </Link>
                     <ul className="dropdown-menu">
-                      <li className="nav-item">
+                      {/* <li className="nav-item">
                         <Link className="nav-link" to="/profile">
                           Profile
                         </Link>
-                      </li>
+                      </li> */}
                       <li className="nav-item">
                         <Link className="nav-link" to="/logout">
                           Logout
