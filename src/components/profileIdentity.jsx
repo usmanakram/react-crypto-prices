@@ -35,9 +35,9 @@ class ProfileIdentity extends Form {
 
       if (
         identity_document === "" ||
-        identity_document.size > 1024 * 1024 * 1
+        identity_document.size > 1024 * 1024 * 10
       ) {
-        toast.error("Image must be 1MB or less.");
+        toast.error("Image must be 10MB or less.");
         this.setState({ spinnerStatus: false });
         return;
       }

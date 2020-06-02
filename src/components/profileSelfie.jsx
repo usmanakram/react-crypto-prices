@@ -30,8 +30,8 @@ class ProfileSelfie extends Form {
       const selfieDoc = document.querySelector("#selfie_document");
       const selfie_document = selfieDoc.files[0];
 
-      if (selfie_document === "" || selfie_document.size > 1024 * 1024 * 1) {
-        toast.error("Image must be 1MB or less.");
+      if (selfie_document === "" || selfie_document.size > 1024 * 1024 * 10) {
+        toast.error("Image must be 10MB or less.");
         this.setState({ spinnerStatus: false });
         return;
       }
