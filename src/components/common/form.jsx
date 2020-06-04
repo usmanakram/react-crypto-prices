@@ -120,19 +120,39 @@ class Form extends Component {
     );
   }
 
-  renderRadioButton(name, placeholder) {
+  // renderRadioButton(name, placeholder) {
+  //   return (
+  //     <div className="form-check-inline checkbox_inline" key={placeholder}>
+  //       <label className="form-check-label">
+  //         <input
+  //           type="radio"
+  //           className="form-check-input"
+  //           id={placeholder}
+  //           name={name}
+  //           value={placeholder}
+  //           onChange={this.handleChange}
+  //         />
+  //         {placeholder}
+  //       </label>
+  //     </div>
+  //   );
+  // }
+  renderRadioButton(name, option) {
+    const { data } = this.state;
+
     return (
-      <div className="form-check-inline checkbox_inline" key={placeholder}>
+      <div className="form-check-inline checkbox_inline" key={option.label}>
         <label className="form-check-label">
           <input
             type="radio"
             className="form-check-input"
-            id={placeholder}
+            id={option.label}
             name={name}
-            value={placeholder}
+            value={option.value}
+            checked={data[name] === option.value}
             onChange={this.handleChange}
           />
-          {placeholder}
+          {option.label}
         </label>
       </div>
     );

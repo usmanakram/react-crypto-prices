@@ -48,7 +48,7 @@ class Login extends Form {
         this.setState({ errors, loginSpinner: false });
 
         toast.error(ex.response.data);
-        if (ex.response.data === "verify your email first") {
+        if (ex.response.data === "Verifiy your email first before login.") {
           this.handleDisplayInputs();
         }
       }
@@ -105,9 +105,7 @@ class Login extends Form {
                   <p>
                     Don't have an account? <Link to="/signup">Register</Link>
                   </p>
-                  {isInput && (
-                    <ResendVerificationEmail />
-                  )}
+                  {isInput && <ResendVerificationEmail />}
                 </div>
               </div>
             </div>

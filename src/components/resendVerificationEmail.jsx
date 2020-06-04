@@ -20,12 +20,14 @@ class ResendVerificationEmail extends Form {
     email: Joi.string().email().required().label("Email"),
   };
 
-  //   doSubmit = async () => {
   resendVerificatoinEmail = async () => {
     this.setState({ loginSpinner: true });
     try {
-      await auth.resendVerificatoinEmail(this.state.data.email);
+      const response = await auth.resendVerificatoinEmail(
+        this.state.data.email
+      );
       this.setState({ modalShow: false });
+      toast.success(response);
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         const errors = { ...this.state.errors };

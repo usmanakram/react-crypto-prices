@@ -56,6 +56,10 @@ class ResetPassword extends Form {
       );
 
       toast.success(response);
+
+      setTimeout(function () {
+        window.location = process.env.REACT_APP_BASENAME + "/login";
+      }, 3000);
     } catch (ex) {
       if (ex.response) {
         if (ex.response.status === 400) {

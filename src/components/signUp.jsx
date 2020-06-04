@@ -19,7 +19,7 @@ class SignUp extends Form {
       email: "",
       password: "",
       confirmpassword: "",
-      gender: "",
+      gender: "1",
     },
     errors: {},
     loginSpinner: false,
@@ -173,7 +173,11 @@ class SignUp extends Form {
                     <h4 style={{ marginLeft: 20 }}> Gender</h4>
                     {/* {this.renderRadioButton("gender", "Male")} */}
                     {/* {this.renderRadioButton("gender", "Female")} */}
-                    {this.renderRadioButtons("gender", ["Male", "Female"])}
+                    {/* {this.renderRadioButtons("gender", ["Male", "Female"])} */}
+                    {this.renderRadioButtons("gender", [
+                      { label: "Male", value: "1" },
+                      { label: "Female", value: "0" },
+                    ])}
 
                     {this.renderButton("SignUp", "btn-default")}
                   </form>
