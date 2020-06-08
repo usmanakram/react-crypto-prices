@@ -1,4 +1,5 @@
 import axios from "axios";
+import authenticationService from "./authenticationService";
 import debug from "../utils/debuger";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
@@ -7,7 +8,7 @@ axios.defaults.baseURL = process.env.REACT_APP_API_URL;
  */
 // axios.defaults.headers.common["Accept"] = "application/json";
 
-axios.interceptors.response.use(null, error => {
+axios.interceptors.response.use(null, (error) => {
   debug.log("INTERCEPTOR CALLED");
 
   const expectedError =
@@ -34,8 +35,9 @@ axios.interceptors.response.use(null, error => {
   return Promise.reject(error);
 });
 
-axios.interceptors.request.use(config => {
+axios.interceptors.request.use((config) => {
   // debug.log("Logging the request config of axios", config);
+  config.headers["AUTHENTICATION"] = authenticationService.getRequestHeader();
   return config;
 });
 
@@ -49,5 +51,5 @@ export default {
   post: axios.post,
   put: axios.put,
   delete: axios.delete,
-  setJwt
+  setJwt,
 };
