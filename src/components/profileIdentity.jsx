@@ -126,7 +126,7 @@ class ProfileIdentity extends Form {
 
   render() {
     const { isInputs } = this.state;
-    const { identityStatus } = this.props;
+    const { identityStatus, identityStatusText } = this.props;
     return (
       <div className="row">
         <div className="col-md-12">
@@ -159,7 +159,8 @@ class ProfileIdentity extends Form {
                   )}
                   {identityStatus === 3 && (
                     <p className="pro-sts-rej">
-                      <strong>• Document Rejected</strong>
+                      <strong>• Document Rejected</strong> (Remarks:{" "}
+                      {identityStatusText})
                     </p>
                   )}
                 </div>

@@ -24,11 +24,16 @@ class MarketsTable extends Component {
         <Link to={`/coin-info/${p.id}`}>
           <img
             alt={p.base_currency_name}
-            src={`${this.imgDirUrl}${
-              this.images.indexOf(p.base_currency_symbol) !== -1
-                ? p.base_currency_symbol
-                : "crypto"
-            }.png`}
+            // src={`${this.imgDirUrl}${
+            //   this.images.indexOf(p.base_currency_symbol) !== -1
+            //     ? p.base_currency_symbol
+            //     : "crypto"
+            // }.png`}
+            src={
+              p.base_currency_image
+                ? p.base_currency_image
+                : `${this.imgDirUrl}crypto.png`
+            }
             width="30"
           />
           <strong style={{ margin: "0 10px" }}>{p.base_currency_symbol}</strong>

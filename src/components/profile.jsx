@@ -16,6 +16,9 @@ class UserProfile extends Component {
     identity_document: "",
     selfie_document: "",
     identity_status: "",
+    selfie_status: "",
+    identity_status_text: "",
+    selfie_status_text: "",
   };
 
   async componentDidMount() {
@@ -30,6 +33,8 @@ class UserProfile extends Component {
         selfie_document,
         identity_status,
         selfie_status,
+        identity_status_text,
+        selfie_status_text,
       } = await auth.getProfile();
 
       this.setState({
@@ -42,6 +47,8 @@ class UserProfile extends Component {
         selfie_document,
         identity_status,
         selfie_status,
+        identity_status_text,
+        selfie_status_text,
       });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -60,6 +67,8 @@ class UserProfile extends Component {
         selfie_document,
         identity_status,
         selfie_status,
+        identity_status_text,
+        selfie_status_text,
       } = await auth.getProfile();
 
       this.setState({
@@ -70,6 +79,8 @@ class UserProfile extends Component {
         selfie_document,
         identity_status,
         selfie_status,
+        identity_status_text,
+        selfie_status_text,
       });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -86,6 +97,8 @@ class UserProfile extends Component {
       address,
       identity_status,
       selfie_status,
+      identity_status_text,
+      selfie_status_text,
     } = this.state;
 
     return (
@@ -114,6 +127,7 @@ class UserProfile extends Component {
               address={address}
               contactNumber={contact_number}
               identityStatus={identity_status}
+              identityStatusText={identity_status_text}
               onBasicInfoVerify={this.handleBasicInfoVerify}
             />
             <ProfileSelfie
@@ -121,6 +135,7 @@ class UserProfile extends Component {
               address={address}
               contactNumber={contact_number}
               selfieStatus={selfie_status}
+              selfieStatusText={selfie_status_text}
               onBasicInfoVerify={this.handleBasicInfoVerify}
             />
           </div>

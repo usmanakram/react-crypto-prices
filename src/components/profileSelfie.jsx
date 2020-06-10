@@ -120,7 +120,7 @@ class ProfileSelfie extends Form {
 
   render() {
     const { isInputs } = this.state;
-    const { selfieStatus } = this.props;
+    const { selfieStatus, selfieStatusText } = this.props;
     return (
       <div className="row">
         <div className="col-md-12">
@@ -154,7 +154,8 @@ class ProfileSelfie extends Form {
                   )}
                   {selfieStatus === 3 && (
                     <p className="pro-sts-rej">
-                      <strong>• Document Rejected</strong>
+                      <strong>• Document Rejected</strong> (Remarks:{" "}
+                      {selfieStatusText})
                     </p>
                   )}
                 </div>
