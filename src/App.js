@@ -8,6 +8,7 @@ import VerifyEmail from "./components/verifyEmail";
 import Login from "./components/login";
 import ForgotPassword from "./components/forgotPassword";
 import ResetPassword from "./components/resetPassword";
+import LoginWithToken from "./components/loginWithToken";
 import Logout from "./components/logout";
 import EditProfile from "./components/editProfile";
 import CoinInfo from "./components/coinInfo";
@@ -44,6 +45,7 @@ const App = () => {
             path="/reset-password/:email/:code"
             component={ResetPassword}
           />
+          <Route path="/login-with-token/:token" component={LoginWithToken} />
           <Route path="/home" component={Home} />
           <Route path="/logout" component={Logout} />
           <Route path="/profile" component={Profile} />

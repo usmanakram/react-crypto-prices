@@ -58,6 +58,9 @@ async function login(username, password) {
   const { data } = await http.post(apiEndpoint.login, formData);
   localStorage.setItem(tokenKey, data.access_token);
 }
+function loginWithToken(token) {
+  localStorage.setItem(tokenKey, token);
+}
 async function forgotPassword(email) {
   const formData = new FormData();
   formData.append("email", email);
@@ -169,6 +172,7 @@ export default {
   signup,
   verifyEmail,
   login,
+  loginWithToken,
   forgotPassword,
   resetPassword,
   resendVerificatoinEmail,
