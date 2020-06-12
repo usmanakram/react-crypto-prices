@@ -37,7 +37,7 @@ axios.interceptors.response.use(null, (error) => {
 
 axios.interceptors.request.use((config) => {
   // debug.log("Logging the request config of axios", config);
-  config.headers["AUTHENTICATION"] = authenticationService.getRequestHeader();
+  config.headers["Authentication"] = authenticationService.getRequestHeader();
   return config;
 });
 
