@@ -21,4 +21,16 @@ function clean() {
 	docker rmi crypto-exchange
 }
 
+function setup_combined() {
+	# docker run -it -p 49160:8080 -d -v //d/localhost/htdocs/test/tmp/react-crypto-prices:/usr/src/app --name exchange-tmp node:13.8.0
+	docker run -it -p 49160:8080 -d -v "$PWD":/usr/src/app --name exchange-tmp node:13.8.0
+	docker exec -w /usr/src/app exchange-tmp npm install
+	docker exec -w /usr/src/app exchange-tmp npm run build
+	rm -rf ../exchange
+	mkdir ../exchange
+	cp -r build/* ../exchange
+	rm -rf node_modules build
+	docker rm -f exchange-tmp
+}
+
 $1 $2 $3
