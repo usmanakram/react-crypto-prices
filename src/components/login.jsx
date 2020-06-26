@@ -51,6 +51,13 @@ class Login extends Form {
         if (ex.response.data === "Verifiy your email first before login.") {
           this.handleDisplayInputs();
         }
+      } else if (ex.response.status === 422) {
+        // Laravel returns 422 against form validation errors
+        const { errors } = ex.response.data;
+
+        for (let item in errors) {
+          toast.error(errors[item][0]);
+        }
       }
     }
   };
