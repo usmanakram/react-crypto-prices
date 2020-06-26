@@ -42,21 +42,24 @@ class Login extends Form {
         loginSpinner: false,
       });
     } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
-        const errors = { ...this.state.errors };
-        errors.username = ex.response.data;
-        this.setState({ errors, loginSpinner: false });
+      this.setState({ loginSpinner: false });
+      if (ex.response) {
+        if (ex.response.status === 400) {
+          const errors = { ...this.state.errors };
+          errors.username = ex.response.data;
+          this.setState({ errors });
 
-        toast.error(ex.response.data);
-        if (ex.response.data === "Verifiy your email first before login.") {
-          this.handleDisplayInputs();
-        }
-      } else if (ex.response.status === 422) {
-        // Laravel returns 422 against form validation errors
-        const { errors } = ex.response.data;
+          toast.error(ex.response.data);
+          if (ex.response.data === "Verifiy your email first before login.") {
+            this.handleDisplayInputs();
+          }
+        } else if (ex.response.status === 422) {
+          // Laravel returns 422 against form validation errors
+          const { errors } = ex.response.data;
 
-        for (let item in errors) {
-          toast.error(errors[item][0]);
+          for (let item in errors) {
+            toast.error(errors[item][0]);
+          }
         }
       }
     }
