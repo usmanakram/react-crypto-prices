@@ -28,7 +28,8 @@ class Withdrawal extends Form {
 
       const currencies = data.filter(
         (c) =>
-          ["BTC", "BC"].includes(c.symbol) && c.is_withdraw_allowed === true
+          ["BTC", "BC", "NTN"].includes(c.symbol) &&
+          c.is_withdraw_allowed === true
       );
       // const currencies = [
       //   { name: "Bitcoin", symbol: "BTC" },
@@ -37,8 +38,8 @@ class Withdrawal extends Form {
 
       /**
        * for BC withdrawal:
-       * if request already placed then show hidden feild for enter code.
-       * and hide quantity feild
+       * if request already placed then show hidden field for enter code.
+       * and hide quantity field
        */
       // Populate BTC address and relevant data
       const { data: selectedCurrency } = await http.get(
@@ -75,6 +76,11 @@ class Withdrawal extends Form {
         if (selectedCurrency.withdrawal_requested)
           formData.append("verification_code", data.verification_code);
         else formData.append("quantity", data.quantity);
+      } else if (selectedCurrency.currency_symbol === "NTN") {
+        url = "/auth/withdraw-novus";
+        if (selectedCurrency.withdrawal_requested)
+          formData.append("verification_code", data.verification_code);
+        else formData.append("quantity", data.quantity);
       } else {
         url = "/auth/withdraw";
         formData.append("address", data.address);
@@ -85,7 +91,8 @@ class Withdrawal extends Form {
 
       toast.success(response);
 
-      if (selectedCurrency.currency_symbol === "BC") {
+      // if (selectedCurrency.currency_symbol === "BC") {
+      if (["BC", "NTN"].includes(selectedCurrency.currency_symbol)) {
         selectedCurrency.withdrawal_requested = !selectedCurrency.withdrawal_requested;
         const dataState = this.handleValidation(selectedCurrency);
         this.setState({ selectedCurrency, data: dataState });
@@ -113,7 +120,8 @@ class Withdrawal extends Form {
     const data = { currency: selectedCurrency.currency_symbol };
 
     if (Object.keys(selectedCurrency).length) {
-      if (selectedCurrency.currency_symbol === "BC") {
+      // if (selectedCurrency.currency_symbol === "BC") {
+      if (["BC", "NTN"].includes(selectedCurrency.currency_symbol)) {
         if (selectedCurrency.withdrawal_requested) {
           data.verification_code = "";
           this.schema = {
@@ -238,24 +246,24 @@ class Withdrawal extends Form {
                 <form onSubmit={this.handleSubmit}>
                   {this.renderInputHidden("currency")}
                   <div className="mx-3 mb-3">
-                    {selectedCurrency.currency_symbol === "BC"
+                    {["BC", "NTN"].includes(selectedCurrency.currency_symbol)
                       ? null
                       : this.renderInput("address", "Address")}
 
                     <Spinner status={isLoadSpinner} />
-                    {selectedCurrency.currency_symbol === "BC" &&
+                    {["BC", "NTN"].includes(selectedCurrency.currency_symbol) &&
                     selectedCurrency.withdrawal_requested === true
                       ? null
                       : this.renderInput("quantity", "Quantity")}
 
-                    {selectedCurrency.currency_symbol === "BC" &&
+                    {["BC", "NTN"].includes(selectedCurrency.currency_symbol) &&
                     selectedCurrency.withdrawal_requested === true
                       ? this.renderInput(
                           "verification_code",
                           "Verification Code"
                         )
                       : null}
-                    {selectedCurrency.currency_symbol === "BC" &&
+                    {["BC", "NTN"].includes(selectedCurrency.currency_symbol) &&
                     selectedCurrency.withdrawal_requested === true
                       ? (this.renderButton("Resen Code", "btn-default mr-3"),
                         this.renderButton("Withdraw", "btn-default"))
