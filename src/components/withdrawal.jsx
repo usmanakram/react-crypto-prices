@@ -238,11 +238,17 @@ class Withdrawal extends Form {
                 <h5 className="text-danger mt-3 ml-3">
                   <strong>Important</strong>
                 </h5>
-                <p className="text-danger ml-3">
-                  Provide only <strong>{symbol}</strong> address. Providing any
-                  other coin or token address may result in the loss of your
-                  balance.
-                </p>
+                {selectedCurrency.currency_symbol === "NTN" ? (
+                  <p className="text-danger ml-3">
+                    Minimum 20 NTN can be transferred.
+                  </p>
+                ) : (
+                  <p className="text-danger ml-3">
+                    Provide only <strong>{symbol}</strong> address. Providing
+                    any other coin or token address may result in the loss of
+                    your balance.
+                  </p>
+                )}
                 <form onSubmit={this.handleSubmit}>
                   {this.renderInputHidden("currency")}
                   <div className="mx-3 mb-3">
