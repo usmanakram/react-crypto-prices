@@ -106,12 +106,13 @@ class Withdrawal extends Form {
 
       toast.success(response);
 
+      // Withdraw to Novus without verification implemented
       // if (selectedCurrency.currency_symbol === "BC") {
-      if (["BC", "NTN"].includes(selectedCurrency.currency_symbol)) {
+      /* if (["BC", "NTN"].includes(selectedCurrency.currency_symbol)) {
         selectedCurrency.withdrawal_requested = !selectedCurrency.withdrawal_requested;
         const dataState = this.handleValidation(selectedCurrency);
         this.setState({ selectedCurrency, data: dataState });
-      }
+      } */
     } catch (ex) {
       if (ex.response) {
         if (ex.response.status === 404) {
