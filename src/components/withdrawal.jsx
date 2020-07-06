@@ -24,12 +24,27 @@ class Withdrawal extends Form {
   async componentDidMount() {
     try {
       this.setState({ isLoadSpinner: true });
-      const { data } = await http.get("/get-all-currencies");
 
+      // const { data } = await http.get("/get-all-currencies");
+      // // const user = auth.getCurrentUser();
+      // const { data: user } = await http.get("/auth/profile");
+
+      const dataPromise = http.get("/get-all-currencies");
+      const userPromise = http.get("/auth/profile");
+      const [{ data }, { data: user }] = await Promise.all([
+        dataPromise,
+        userPromise,
+      ]);
+
+      const allowedCurrencies = ["BTC"];
+      if (user.belongsTo === "novus") {
+        allowedCurrencies.push("NTN");
+      }
+
+      // const currencies = data.filter(c => ["BTC", "BC", "NTN"].includes(c.symbol) && c.is_withdraw_allowed === true);
       const currencies = data.filter(
         (c) =>
-          ["BTC", "BC", "NTN"].includes(c.symbol) &&
-          c.is_withdraw_allowed === true
+          allowedCurrencies.includes(c.symbol) && c.is_withdraw_allowed === true
       );
       // const currencies = [
       //   { name: "Bitcoin", symbol: "BTC" },
