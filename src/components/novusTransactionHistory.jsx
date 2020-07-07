@@ -121,13 +121,20 @@ class NovusTransactionHistory extends Form {
 
       data.quantity = "";
 
-      const { data: history } = await http.get(
+      const historyPromise = http.get(
         "/auth/get-transactions-history?currency=NTN"
       );
+      const selectedCurrencyPromise = http.get("/auth/get-deposit-address/NTN");
+      const [
+        { data: history },
+        { data: selectedCurrency },
+      ] = await Promise.all([historyPromise, selectedCurrencyPromise]);
+
       this.setState({
         data,
         deposits: history.deposits,
         withdrawals: history.withdrawals,
+        selectedCurrency,
       });
 
       // Withdraw to Novus without verification implemented
