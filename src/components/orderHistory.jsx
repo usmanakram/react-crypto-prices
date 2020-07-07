@@ -17,13 +17,14 @@ class OrderHistory extends Component {
   state = {
     orderHistory: [],
     orderHistorySpinner: false,
-    startDate: new Date(),
+    // startDate: new Date(),
+    startDate: this.getLastMonthDate(),
     endDate: new Date(),
     pairId: "",
     direction: "",
     currencyPairs: [],
     lastPage: 0,
-    currentPage: 1
+    currentPage: 1,
   };
 
   columns = [
@@ -33,7 +34,7 @@ class OrderHistory extends Component {
       path: "type",
       label: "Type",
       // content: o => (o.type === 0 ? "Market" : "Limit")
-      content: o => {
+      content: (o) => {
         let type = "";
         switch (o.type) {
           case 0:
@@ -55,48 +56,48 @@ class OrderHistory extends Component {
             break;
         }
         return type;
-      }
+      },
     },
     {
       path: "direction",
       label: "Side",
-      content: o =>
+      content: (o) =>
         o.direction === 1 ? (
           <span className="ex-color-buy">Buy</span>
         ) : (
           <span className="ex-color-sell">Sell</span>
-        )
+        ),
     },
     { path: "rate", label: "Price" },
     { path: "quantity", label: "Quantity" },
     {
       path: "tradable_quantity",
       label: "Filled",
-      content: o => o.quantity - o.tradable_quantity
+      content: (o) => o.quantity - o.tradable_quantity,
     },
     {
       path: "trigger_condition",
       label: "Trigger Condition",
-      content: o => {
+      content: (o) => {
         if ([2, 4].includes(o.type)) {
           return o.lower_trigger_rate === null
             ? ">= " + o.upper_trigger_rate
             : "<= " + o.lower_trigger_rate;
         }
-      }
+      },
     },
     {
       path: "status",
       label: "Status",
-      content: o =>
+      content: (o) =>
         o.status === 0
           ? "Inactive"
           : o.status === 1
           ? "Active"
           : o.status === 2
           ? "Filled"
-          : "Canceled"
-    }
+          : "Canceled",
+    },
     /* {
       path: "Cancel",
       content: o => {
@@ -113,10 +114,16 @@ class OrderHistory extends Component {
     } */
   ];
 
-  onCancel = async id => {
+  getLastMonthDate() {
+    const d = new Date();
+    d.setMonth(d.getMonth() - 1);
+    return d;
+  }
+
+  onCancel = async (id) => {
     try {
       const response = await trade.cancelOrder(id);
-      const orderHistory = this.state.orderHistory.map(o => {
+      const orderHistory = this.state.orderHistory.map((o) => {
         if (o.id === id) o.status = 3;
         return o;
       });
@@ -158,14 +165,14 @@ class OrderHistory extends Component {
         end,
         pair_id: pairId,
         direction,
-        page: currentPage
+        page: currentPage,
       });
 
       this.setState({
         orderHistory: orderHistory.data,
         lastPage: orderHistory.last_page,
         currentPage: orderHistory.current_page,
-        orderHistorySpinner: false
+        orderHistorySpinner: false,
       });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -174,18 +181,18 @@ class OrderHistory extends Component {
     }
   };
 
-  handlePageChange = currentPage => {
+  handlePageChange = (currentPage) => {
     this.setState({ currentPage });
   };
 
-  handleStartDate = date => {
+  handleStartDate = (date) => {
     this.setState({ startDate: date });
   };
 
-  handleEndDate = date => {
+  handleEndDate = (date) => {
     this.setState({ endDate: date });
   };
-  handeValueChange = c => {
+  handeValueChange = (c) => {
     this.setState({ direction: c.currentTarget.value });
   };
 
@@ -200,11 +207,11 @@ class OrderHistory extends Component {
       endDate: date,
       startDate: date,
       direction: "",
-      pairId: ""
+      pairId: "",
     });
   };
 
-  doSubmit = async e => {
+  doSubmit = async (e) => {
     e.preventDefault();
     this.state.currentPage = 1;
     this.setOrderHistory();
@@ -218,7 +225,7 @@ class OrderHistory extends Component {
       orderHistory,
       currencyPairs,
       lastPage,
-      currentPage
+      currentPage,
     } = this.state;
     return (
       <React.Fragment>
@@ -260,7 +267,7 @@ class OrderHistory extends Component {
                     value={pairId}
                   >
                     <option value="">All</option>
-                    {currencyPairs.map(c => (
+                    {currencyPairs.map((c) => (
                       <option key={c.id} value={c.id}>
                         {c.symbol}
                       </option>

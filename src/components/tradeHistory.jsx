@@ -16,13 +16,14 @@ class TradeHistory extends Component {
   state = {
     tradeHistory: [],
     tradeHistorySpinner: false,
-    startDate: new Date(),
+    // startDate: new Date(),
+    startDate: this.getLastMonthDate(),
     endDate: new Date(),
     pairId: "",
     direction: "",
     currencyPairs: [],
     lastPage: 0,
-    currentPage: 1
+    currentPage: 1,
   };
   columns = [
     { path: "created_at", label: "Date" },
@@ -30,15 +31,15 @@ class TradeHistory extends Component {
     {
       path: "direction",
       label: "Side",
-      content: o =>
+      content: (o) =>
         o.direction === 1 ? (
           <span className="ex-color-buy">Buy</span>
         ) : (
           <span className="ex-color-sell">Sell</span>
-        )
+        ),
     },
     { path: "rate", label: "Price" },
-    { path: "quantity", label: "Quantity" }
+    { path: "quantity", label: "Quantity" },
 
     /* {
       path: "fee",
@@ -46,6 +47,12 @@ class TradeHistory extends Component {
       content: o => o.fee + " " + o.base_currency_symbol
     } */
   ];
+
+  getLastMonthDate() {
+    const d = new Date();
+    d.setMonth(d.getMonth() - 1);
+    return d;
+  }
 
   async componentDidMount() {
     try {
@@ -77,14 +84,14 @@ class TradeHistory extends Component {
         end,
         pair_id: pairId,
         direction,
-        page: currentPage
+        page: currentPage,
       });
 
       this.setState({
         tradeHistory: tradeHistory.data,
         lastPage: tradeHistory.last_page,
         currentPage: tradeHistory.current_page,
-        tradeHistorySpinner: false
+        tradeHistorySpinner: false,
       });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -92,18 +99,18 @@ class TradeHistory extends Component {
       }
     }
   };
-  handlePageChange = currentPage => {
+  handlePageChange = (currentPage) => {
     this.setState({ currentPage });
   };
 
-  handleStartDate = date => {
+  handleStartDate = (date) => {
     this.setState({ startDate: date });
   };
 
-  handleEndDate = date => {
+  handleEndDate = (date) => {
     this.setState({ endDate: date });
   };
-  handeValueChange = c => {
+  handeValueChange = (c) => {
     this.setState({ direction: c.currentTarget.value });
   };
 
@@ -118,11 +125,11 @@ class TradeHistory extends Component {
       endDate: date,
       startDate: date,
       direction: "",
-      pairId: ""
+      pairId: "",
     });
   };
 
-  doSubmit = async e => {
+  doSubmit = async (e) => {
     e.preventDefault();
     this.state.currentPage = 1;
     this.setTradeHistory();
@@ -136,7 +143,7 @@ class TradeHistory extends Component {
       direction,
       currencyPairs,
       lastPage,
-      currentPage
+      currentPage,
     } = this.state;
 
     return (
@@ -178,7 +185,7 @@ class TradeHistory extends Component {
                     value={pairId}
                   >
                     <option value="">All</option>
-                    {currencyPairs.map(c => (
+                    {currencyPairs.map((c) => (
                       <option key={c.id} value={c.id}>
                         {c.symbol}
                       </option>
