@@ -228,11 +228,7 @@ class Withdrawal extends Form {
           </div>
 
           <div className="row">
-            <div
-              className="
-              col-12
-              my-2"
-            >
+            <div className="col-12 my-2">
               <strong>Total balance:</strong>
               {"   "}
               {selectedCurrency.total_balance} {symbol}

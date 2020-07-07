@@ -24,6 +24,7 @@ import Footer from "./components/footer";
 import Home from "./components/home";
 import TradeHistory from "./components/tradeHistory";
 import TransactionHistory from "./components/transactionHistory";
+import NovusTransactionHistory from "./components/novusTransactionHistory";
 import Profile from "./components/profile";
 import OpenOrder from "./components/openOrder";
 
@@ -57,6 +58,10 @@ const App = () => {
           <Route path="/openOrder" component={OpenOrder} />
           <Route path="/balances" component={Balances} />
           <Route path="/transactionHistory" component={TransactionHistory} />
+          <Route
+            path="/novusTransactionHistory"
+            component={NovusTransactionHistory}
+          />
           <Route path="/exchange/:symbol" component={Exchange} />
           <Route
             path="/confirm-withdrawal-request/:id/:transaction_id/:verification_token"
