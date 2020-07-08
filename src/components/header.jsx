@@ -19,7 +19,8 @@ class Header extends Component {
 
   getUser = async () => {
     try {
-      const user = await auth.getUser();
+      // const user = await auth.getUser();
+      const user = await auth.getProfile();
       this.setState({ user });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {

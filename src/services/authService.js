@@ -118,7 +118,7 @@ async function resendVerificatoinEmail(email) {
 }
 
 async function getProfile() {
-  const { data } = await http.get("auth/profile");
+  const { data } = await http.get(apiEndpoint.getUserProfile);
   return data;
 }
 
@@ -143,7 +143,7 @@ async function getUser() {
   const user = this.getCurrentUser();
   if (user === null) return null;
 
-  const { data } = await http.get(apiEndpoint.getUserProfile);
+  const { data } = await http.get(apiEndpoint.getUser);
   return data;
 }
 
