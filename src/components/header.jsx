@@ -20,7 +20,6 @@ class Header extends Component {
   getUser = async () => {
     try {
       const user = await auth.getUser();
-      debug.log(user);
       this.setState({ user });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
@@ -99,6 +98,16 @@ class Header extends Component {
                             Transaction History
                           </Link>
                         </li>
+                        {user.belongsTo === "novus" && (
+                          <li className="nav-item">
+                            <Link
+                              className="nav-link"
+                              to="/novusTransactionHistory"
+                            >
+                              NToken Wallet
+                            </Link>
+                          </li>
+                        )}
                       </ul>
                     </li>
                     <li className="nav-item dropdown">

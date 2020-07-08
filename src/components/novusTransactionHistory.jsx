@@ -261,7 +261,7 @@ class NovusTransactionHistory extends Form {
           <div className="row">
             <div className="col-12">
               <div className="latest-tranjections-block-inner panel-heading-block mb-2">
-                <h5>Novus Transaction History</h5>
+                <h5>NToken Transaction History</h5>
               </div>
             </div>
           </div>

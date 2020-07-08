@@ -17,6 +17,7 @@ const apiEndpoint = {
   signup: "/auth/signup",
   verifyEmail: "/auth/verify-email",
   getUser: "/auth/user",
+  getUserProfile: "/auth/profile",
   resendVerificatoinEmail: "/auth/resend-verificatoin-email",
 };
 const tokenKey = "token";
@@ -142,7 +143,7 @@ async function getUser() {
   const user = this.getCurrentUser();
   if (user === null) return null;
 
-  const { data } = await http.get(apiEndpoint.getUser);
+  const { data } = await http.get(apiEndpoint.getUserProfile);
   return data;
 }
 
