@@ -66,13 +66,28 @@ class ProfileSelfie extends Form {
 
   hadldeVerifyButton = () => {
     const { isInputs } = this.state;
-    const { name, address, contactNumber, selfieStatus } = this.props;
+    const {
+      name,
+      contact_number,
+      address,
+      city,
+      country,
+      postal_code,
+      selfie_status,
+    } = this.props.userProfile;
 
-    if (selfieStatus === 2) {
+    if (selfie_status === 2) {
       return <h5>Verified</h5>;
-    } else if (selfieStatus === 1) {
+    } else if (selfie_status === 1) {
       return <h5>Verification in progress</h5>;
-    } else if (name && address && contactNumber) {
+    } else if (
+      name &&
+      contact_number &&
+      address &&
+      city &&
+      country &&
+      postal_code
+    ) {
       if (!isInputs) {
         return (
           <button
@@ -120,7 +135,12 @@ class ProfileSelfie extends Form {
 
   render() {
     const { isInputs } = this.state;
-    const { selfieStatus, selfieStatusText } = this.props;
+
+    if (!this.props.userProfile) {
+      return null;
+    }
+
+    const { selfie_status, selfie_status_text } = this.props.userProfile;
     return (
       <div className="row">
         <div className="col-md-12">
@@ -137,25 +157,25 @@ class ProfileSelfie extends Form {
                     deposit limits for selected local currencies
                   </p>
 
-                  {selfieStatus === 0 && (
+                  {selfie_status === 0 && (
                     <p className="pro-sts-pen">
                       <strong>• Pending Upload</strong>
                     </p>
                   )}
-                  {selfieStatus === 1 && (
+                  {selfie_status === 1 && (
                     <p className="pro-sts-ip">
                       <strong>• Verification In Progress</strong>
                     </p>
                   )}
-                  {selfieStatus === 2 && (
+                  {selfie_status === 2 && (
                     <p className="pro-sts-app">
                       <strong>• Document Approved</strong>
                     </p>
                   )}
-                  {selfieStatus === 3 && (
+                  {selfie_status === 3 && (
                     <p className="pro-sts-rej">
                       <strong>• Document Rejected</strong> (Remarks:{" "}
-                      {selfieStatusText})
+                      {selfie_status_text})
                     </p>
                   )}
                 </div>

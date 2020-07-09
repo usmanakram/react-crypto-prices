@@ -16,8 +16,6 @@ const apiEndpoint = {
   logout: "/auth/logout",
   signup: "/auth/signup",
   verifyEmail: "/auth/verify-email",
-  getUser: "/auth/user",
-  getUserProfile: "/auth/profile",
   resendVerificatoinEmail: "/auth/resend-verificatoin-email",
 };
 const tokenKey = "token";
@@ -117,11 +115,6 @@ async function resendVerificatoinEmail(email) {
   return data;
 }
 
-async function getProfile() {
-  const { data } = await http.get(apiEndpoint.getUserProfile);
-  return data;
-}
-
 async function updateProfile(params) {
   const formData = setFormData(params);
   const { data } = await http.post("/auth/update-profile", formData);
@@ -139,11 +132,25 @@ async function updateDocument(params) {
   return data;
 }
 
+async function updatePassword(params) {
+  const formData = setFormData(params);
+  const { data } = await http.post("/auth/change-password", formData);
+  return data;
+}
+
+async function getProfile() {
+  const user = this.getCurrentUser();
+  if (user === null) return null;
+
+  const { data } = await http.get("/auth/profile");
+  return data;
+}
+
 async function getUser() {
   const user = this.getCurrentUser();
   if (user === null) return null;
 
-  const { data } = await http.get(apiEndpoint.getUser);
+  const { data } = await http.get("/auth/user");
   return data;
 }
 
@@ -156,7 +163,6 @@ async function logout() {
 }
 
 function getCurrentUser() {
-  // debug.log("getCurrentUser called");
   try {
     const jwt = localStorage.getItem(tokenKey);
     return jwtDecode(jwt);
@@ -177,10 +183,11 @@ export default {
   forgotPassword,
   resetPassword,
   resendVerificatoinEmail,
-  getProfile,
   updateProfile,
   updateBasicInfo,
   updateDocument,
+  updatePassword,
+  getProfile,
   getUser,
   logout,
   getCurrentUser,

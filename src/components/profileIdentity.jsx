@@ -72,13 +72,28 @@ class ProfileIdentity extends Form {
 
   hadldeVerifyButton = () => {
     const { isInputs } = this.state;
-    const { name, address, contactNumber, identityStatus } = this.props;
+    const {
+      name,
+      contact_number,
+      address,
+      city,
+      country,
+      postal_code,
+      identity_status,
+    } = this.props.userProfile;
 
-    if (identityStatus === 2) {
+    if (identity_status === 2) {
       return <h5>Verified</h5>;
-    } else if (identityStatus === 1) {
+    } else if (identity_status === 1) {
       return <h5>Verification in progress</h5>;
-    } else if (name && address && contactNumber) {
+    } else if (
+      name &&
+      contact_number &&
+      address &&
+      city &&
+      country &&
+      postal_code
+    ) {
       if (!isInputs) {
         return (
           <button
@@ -126,7 +141,12 @@ class ProfileIdentity extends Form {
 
   render() {
     const { isInputs } = this.state;
-    const { identityStatus, identityStatusText } = this.props;
+
+    if (!this.props.userProfile) {
+      return null;
+    }
+
+    const { identity_status, identity_status_text } = this.props.userProfile;
     return (
       <div className="row">
         <div className="col-md-12">
@@ -142,25 +162,25 @@ class ProfileIdentity extends Form {
                     • Increase withdrawal limit to 10BTC <br />• To increase
                     deposit limits for selected local currencies
                   </p>
-                  {identityStatus === 0 && (
+                  {identity_status === 0 && (
                     <p className="pro-sts-pen">
                       <strong>• Pending Upload</strong>
                     </p>
                   )}
-                  {identityStatus === 1 && (
+                  {identity_status === 1 && (
                     <p className="pro-sts-ip">
                       <strong>• Verification In Progress</strong>
                     </p>
                   )}
-                  {identityStatus === 2 && (
+                  {identity_status === 2 && (
                     <p className="pro-sts-app">
                       <strong>• Document Approved</strong>
                     </p>
                   )}
-                  {identityStatus === 3 && (
+                  {identity_status === 3 && (
                     <p className="pro-sts-rej">
                       <strong>• Document Rejected</strong> (Remarks:{" "}
-                      {identityStatusText})
+                      {identity_status_text})
                     </p>
                   )}
                 </div>

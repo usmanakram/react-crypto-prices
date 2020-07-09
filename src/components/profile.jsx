@@ -5,83 +5,21 @@ import Header from "./header";
 import ProfileBasicInfo from "./profileBasicInfo";
 import ProfileIdentity from "./profileIdentity";
 import ProfileSelfie from "./profileSelfie";
+import ProfileChangePassword from "./profileChangePassword";
 
 class UserProfile extends Component {
   state = {
-    username: "",
-    name: "",
-    email: "",
-    contact_number: "",
-    address: "",
-    identity_document: "",
-    selfie_document: "",
-    identity_status: "",
-    selfie_status: "",
-    identity_status_text: "",
-    selfie_status_text: "",
+    userProfile: {},
   };
 
   async componentDidMount() {
-    try {
-      const {
-        username,
-        name,
-        email,
-        contact_number,
-        address,
-        identity_document,
-        selfie_document,
-        identity_status,
-        selfie_status,
-        identity_status_text,
-        selfie_status_text,
-      } = await auth.getProfile();
-
-      this.setState({
-        username,
-        name,
-        email,
-        contact_number: contact_number || "",
-        address: address || "",
-        identity_document,
-        selfie_document,
-        identity_status,
-        selfie_status,
-        identity_status_text,
-        selfie_status_text,
-      });
-    } catch (ex) {
-      if (ex.response && ex.response.status === 400) {
-        console.log(ex.response.data);
-      }
-    }
+    this.handleBasicInfoVerify();
   }
 
   handleBasicInfoVerify = async () => {
     try {
-      const {
-        name,
-        contact_number,
-        address,
-        identity_document,
-        selfie_document,
-        identity_status,
-        selfie_status,
-        identity_status_text,
-        selfie_status_text,
-      } = await auth.getProfile();
-
-      this.setState({
-        name,
-        contact_number,
-        address,
-        identity_document,
-        selfie_document,
-        identity_status,
-        selfie_status,
-        identity_status_text,
-        selfie_status_text,
-      });
+      const userProfile = await auth.getProfile();
+      this.setState({ userProfile });
     } catch (ex) {
       if (ex.response && ex.response.status === 400) {
         console.log(ex.response.data);
@@ -91,15 +29,7 @@ class UserProfile extends Component {
 
   render() {
     if (!auth.getCurrentUser()) return <Redirect to="/login" />;
-    const {
-      name,
-      contact_number,
-      address,
-      identity_status,
-      selfie_status,
-      identity_status_text,
-      selfie_status_text,
-    } = this.state;
+    const { userProfile } = this.state;
 
     return (
       <React.Fragment>
@@ -108,36 +38,90 @@ class UserProfile extends Component {
         </div>
 
         <div className="container my-3">
-          <div className="pro-header mx-3 my-3">
-            <div className="text-css">
-              <h4>Profile</h4>
-            </div>
+          <div className="ticker-head">
+            <ul className="nav nav-tabs ticker-nav" role="tablist">
+              <li className="nav-item">
+                <a
+                  className="nav-link active"
+                  href="#profile-tab"
+                  role="tab"
+                  data-toggle="tab"
+                >
+                  Profile
+                  <i className="fa fa-stroopwafel"></i>
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="nav-link"
+                  href="#changepassword-tab"
+                  role="tab"
+                  data-toggle="tab"
+                >
+                  Change Password
+                  <i className="fa fa-stroopwafel"></i>
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="nav-link"
+                  href="#documents-tab"
+                  role="tab"
+                  data-toggle="tab"
+                >
+                  Documents
+                  <i className="fa fa-stroopwafel"></i>
+                </a>
+              </li>
+            </ul>
           </div>
-          <div className="card mx-3 my-3">
-            <ProfileBasicInfo
-              name={name}
-              address={address}
-              contactNumber={contact_number}
-              identityStatus={identity_status}
-              selfieStatus={selfie_status}
-              onBasicInfoVerify={this.handleBasicInfoVerify}
-            />
-            <ProfileIdentity
-              name={name}
-              address={address}
-              contactNumber={contact_number}
-              identityStatus={identity_status}
-              identityStatusText={identity_status_text}
-              onBasicInfoVerify={this.handleBasicInfoVerify}
-            />
-            <ProfileSelfie
-              name={name}
-              address={address}
-              contactNumber={contact_number}
-              selfieStatus={selfie_status}
-              selfieStatusText={selfie_status_text}
-              onBasicInfoVerify={this.handleBasicInfoVerify}
-            />
+
+          <div className="row">
+            <div className="col-12">
+              <div className="tab-content latest-tranjections-block-inner">
+                <div className="tab-content">
+                  <div
+                    role="tabpanel"
+                    className="tab-pane fade in active show"
+                    id="profile-tab"
+                  >
+                    <ProfileBasicInfo
+                      onBasicInfoVerify={this.handleBasicInfoVerify}
+                      userProfile={userProfile}
+                    />
+                  </div>
+                  <div
+                    role="tabpanel"
+                    className="tab-pane fade"
+                    id="changepassword-tab"
+                  >
+                    <ProfileChangePassword />
+                  </div>
+                  <div
+                    role="tabpanel"
+                    className="tab-pane fade"
+                    id="documents-tab"
+                  >
+                    <div
+                      className="col-12 text-danger"
+                      style={{ marginTop: 20 }}
+                    >
+                      <h5>
+                        Profile must be completed before documents verification.
+                      </h5>
+                    </div>
+                    <ProfileIdentity
+                      onBasicInfoVerify={this.handleBasicInfoVerify}
+                      userProfile={userProfile}
+                    />
+                    <ProfileSelfie
+                      onBasicInfoVerify={this.handleBasicInfoVerify}
+                      userProfile={userProfile}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </React.Fragment>
