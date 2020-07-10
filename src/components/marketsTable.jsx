@@ -46,7 +46,7 @@ class MarketsTable extends Component {
       label: "Price",
       content: (p) => `$ ${p.latest_rate.last_rate}`,
     },
-    { path: "latest_rate.volume", label: "Volume" },
+    // { path: "latest_rate.volume", label: "Volume" },
     {
       path: "latest_rate.rate_change_percent",
       label: "Price Change (%)",
