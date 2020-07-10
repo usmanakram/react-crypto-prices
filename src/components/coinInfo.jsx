@@ -12,21 +12,21 @@ class CoinInfo extends Component {
     {
       path: "open_time",
       label: "Date",
-      content: history =>
-        moment.unix(history.open_time / 1000).format("MMM D, YYYY")
+      content: (history) =>
+        moment.unix(history.open_time / 1000).format("MMM D, YYYY"),
     },
     { path: "open", label: "Open" },
     { path: "high", label: "High" },
     { path: "low", label: "Low" },
     { path: "close", label: "Close" },
-    { path: "volume", label: "Volume" }
+    { path: "volume", label: "Volume" },
   ];
 
   state = {
     coinHistory: [],
     currentPage: 1,
     pageSize: 100,
-    sortColumn: { path: "open_time", order: "desc" }
+    sortColumn: { path: "open_time", order: "desc" },
   };
 
   async componentDidMount() {
@@ -36,11 +36,11 @@ class CoinInfo extends Component {
     this.setState({ coinHistory: data.historical_prices });
   }
 
-  handlePageChange = page => {
+  handlePageChange = (page) => {
     this.setState({ currentPage: page });
   };
 
-  handleSort = sortColumn => {
+  handleSort = (sortColumn) => {
     this.setState({ sortColumn });
   };
 
@@ -49,7 +49,7 @@ class CoinInfo extends Component {
       pageSize,
       currentPage,
       sortColumn,
-      coinHistory: allHistory
+      coinHistory: allHistory,
     } = this.state;
 
     const sorted = _.orderBy(allHistory, [sortColumn.path], [sortColumn.order]);
@@ -73,7 +73,7 @@ class CoinInfo extends Component {
           <div className="row">
             <div className="col-12">
               <div className="latest-tranjections-block-inner panel-heading-block mb-2">
-                <h5>Hitorical Data</h5>
+                <h5>Historical Data</h5>
               </div>
             </div>
           </div>
@@ -83,7 +83,7 @@ class CoinInfo extends Component {
               <div className="latest-tranjections-block-inner pagination-margin">
                 {count === 0 ? (
                   <p className="my-3">
-                    There are not any historical data against{" "}
+                    There is not any historical data against{" "}
                     {this.props.match.params.coin} in the database.
                   </p>
                 ) : (
