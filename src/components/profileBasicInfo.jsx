@@ -9,6 +9,7 @@ class ProfileBasicInfo extends Form {
   state = {
     data: {
       name: "",
+      email: "",
       contact_number: "",
       address: "",
       city: "",
@@ -24,6 +25,7 @@ class ProfileBasicInfo extends Form {
 
   schema = {
     name: Joi.string().required().label("Full Name"),
+    email: Joi.string().email().required().label("Email"),
     contact_number: Joi.string().required().label("Contact Number"),
     address: Joi.string().required().label("Address"),
     city: Joi.string().required().label("City"),
@@ -36,6 +38,7 @@ class ProfileBasicInfo extends Form {
     const { userProfile } = this.props;
     if (
       userProfile.name !== prevProps.userProfile.name ||
+      userProfile.email !== prevProps.userProfile.email ||
       userProfile.contact_number !== prevProps.userProfile.contact_number ||
       userProfile.address !== prevProps.userProfile.address ||
       userProfile.city !== prevProps.userProfile.city ||
@@ -51,6 +54,7 @@ class ProfileBasicInfo extends Form {
     const { userProfile } = this.props;
 
     data.name = userProfile.name || "";
+    data.email = userProfile.email || "";
     data.contact_number = userProfile.contact_number || "";
     data.address = userProfile.address || "";
     data.city = userProfile.city || "";
@@ -149,6 +153,9 @@ class ProfileBasicInfo extends Form {
                       <div className="row">
                         <div className="col-md-6">
                           {this.renderInput("name", "Full Name", "text")}
+                        </div>
+                        <div className="col-md-6">
+                          {this.renderInput("email", "Email Address", "text")}
                         </div>
                         <div className="col-md-6">
                           {this.renderInput(
