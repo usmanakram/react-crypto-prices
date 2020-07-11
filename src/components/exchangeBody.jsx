@@ -102,7 +102,7 @@ class ExchangeBody extends Component {
                         role="tab"
                         data-toggle="tab"
                       >
-                        <h5>Trarading View</h5>
+                        <h5>Trading View</h5>
                       </a>
                     </li>
                     <li className="nav-item">
