@@ -13,7 +13,7 @@ const apiEndpoint = "/currency-pairs";
 class MarketsTable extends Component {
   _isMounted = false;
 
-  imgDirUrl = "https://zuedex.com:8990/images/currencies/";
+  imgDirUrl = "https://api.zuedex.com/images/currencies/";
   images = ["BTC", "ETH", "XRP", "BCH", "LTC", "BNB", "NT"];
 
   columns = [

@@ -35,15 +35,20 @@ class SignUp extends Form {
     username: Joi.string().min(6).max(20).required().label("Username"),
     email: Joi.string().email().required().label("Email"),
     password: Joi.string()
-      .min(6)
+      .min(8)
+      .max(30)
       .required()
-      .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/)
+      // .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/)
+      .regex(
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@()$%^&*=_{}[\]:;"\'\\<>,.\/~`±§+-]).{8,30}$/
+      )
       .label("Password")
       .error((errors) => {
         errors.forEach((error) => {
           if (error.type === "string.regex.base") {
+            // error.message = "Password must have atleast one capital, one small letter, one number and no special character.";
             error.message =
-              "Password must have atleast one capital, one small letter, one number and no special character.";
+              "Password should contain at-least one capital, one small letter, one number and one special character.";
           }
         });
         return errors;
