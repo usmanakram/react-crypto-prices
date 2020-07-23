@@ -17,8 +17,8 @@ FROM nginx:1.12-alpine
 COPY --from=build-deps /usr/src/app/build /usr/share/nginx/html
 COPY vhost.conf /etc/nginx/conf.d/default.conf
 
-COPY ssl/server.crt /etc/nginx/ssl/server.crt
-COPY ssl/server.key /etc/nginx/ssl/server.key
+COPY ssl/fullchain.pem /etc/nginx/ssl/fullchain.pem
+COPY ssl/privkey.pem /etc/nginx/ssl/privkey.pem
 
 # EXPOSE 80
 EXPOSE 443
