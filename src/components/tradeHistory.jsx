@@ -11,13 +11,14 @@ import Spinner from "./spinner";
 import moment from "moment";
 import PaginationBig from "./common/paginationBig";
 import debug from "../utils/debuger";
+import dateCalculator from "../utils/dateCalculator";
 
 class TradeHistory extends Component {
   state = {
     tradeHistory: [],
     tradeHistorySpinner: false,
     // startDate: new Date(),
-    startDate: this.getLastMonthDate(),
+    startDate: dateCalculator.getLastMonthDate(),
     endDate: new Date(),
     pairId: "",
     direction: "",
@@ -47,12 +48,6 @@ class TradeHistory extends Component {
       content: o => o.fee + " " + o.base_currency_symbol
     } */
   ];
-
-  getLastMonthDate() {
-    const d = new Date();
-    d.setMonth(d.getMonth() - 1);
-    return d;
-  }
 
   async componentDidMount() {
     try {

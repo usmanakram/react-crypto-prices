@@ -12,13 +12,14 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import PaginationBig from "./common/paginationBig";
 import debug from "../utils/debuger";
+import dateCalculator from "../utils/dateCalculator";
 
 class OrderHistory extends Component {
   state = {
     orderHistory: [],
     orderHistorySpinner: false,
     // startDate: new Date(),
-    startDate: this.getLastMonthDate(),
+    startDate: dateCalculator.getLastMonthDate(),
     endDate: new Date(),
     pairId: "",
     direction: "",
@@ -113,12 +114,6 @@ class OrderHistory extends Component {
       }
     } */
   ];
-
-  getLastMonthDate() {
-    const d = new Date();
-    d.setMonth(d.getMonth() - 1);
-    return d;
-  }
 
   onCancel = async (id) => {
     try {
