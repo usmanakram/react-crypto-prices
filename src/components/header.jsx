@@ -99,7 +99,7 @@ class Header extends Component {
                             Transaction History
                           </Link>
                         </li>
-                        {user.belongsTo === "novus" && (
+                        {/* {user.belongsTo === "novus" && (
                           <li className="nav-item">
                             <Link
                               className="nav-link"
@@ -108,7 +108,7 @@ class Header extends Component {
                               NToken Wallet
                             </Link>
                           </li>
-                        )}
+                        )} */}
                       </ul>
                     </li>
                     <li className="nav-item dropdown">
