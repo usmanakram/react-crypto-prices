@@ -180,83 +180,92 @@ class NovusTransactionHistory extends Form {
         </div>
 
         <div className="container my-3">
-          <div className="row">
-            <div className="col-12">
-              <div className="text-right mb-2">
-                {this.state.isTransferAreaVisible || (
-                  <button
-                    className="btn btn-primary"
-                    onClick={this.handleTransferAreaVisibility}
-                  >
-                    Transfer to Novus
-                  </button>
+          {selectedCurrency.currency &&
+            selectedCurrency.currency.is_withdraw_allowed && (
+              <div>
+                <div className="row">
+                  <div className="col-12">
+                    <div className="text-right mb-2">
+                      {this.state.isTransferAreaVisible || (
+                        <button
+                          className="btn btn-primary"
+                          onClick={this.handleTransferAreaVisibility}
+                        >
+                          Transfer to Novus
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                {this.state.isTransferAreaVisible && (
+                  <div className="row">
+                    <div className="col-12">
+                      <div className="latest-tranjections-block-inner panel-heading-block mb-2">
+                        <h5>Transfer to Novus</h5>
+                      </div>
+                    </div>
+
+                    <div className="col-12">
+                      <div className="col-12">
+                        <strong>Total balance:</strong>
+                        {"   "}
+                        {selectedCurrency.total_balance}{" "}
+                        {selectedCurrency.currency_symbol}
+                        <br />
+                        <strong>In Order:</strong>{" "}
+                        {selectedCurrency.in_order_balance}
+                        {"   "}
+                        {selectedCurrency.currency_symbol}
+                        <br />
+                        <strong>Available balance:</strong>
+                        {"   "}
+                        {selectedCurrency.total_balance -
+                          selectedCurrency.in_order_balance}
+                        {selectedCurrency.currency_symbol}
+                      </div>
+                    </div>
+
+                    <div className="col-12 mb-3">
+                      <div className="border adbox">
+                        <h5 className="text-danger mt-3 ml-3">
+                          <strong>Important</strong>
+                        </h5>
+                        <p className="text-danger ml-3">
+                          Minimum 20 NTN can be transferred.
+                        </p>
+                        <form onSubmit={this.handleSubmit}>
+                          {this.renderInputHidden("currency")}
+                          <div className="mx-3 mb-3">
+                            <Spinner status={isLoadSpinner} />
+                            {selectedCurrency.withdrawal_requested === true
+                              ? this.renderInput(
+                                  "verification_code",
+                                  "Verification Code"
+                                )
+                              : this.renderInput("quantity", "Quantity")}
+                            {selectedCurrency.withdrawal_requested === true
+                              ? (this.renderButton(
+                                  "Resen Code",
+                                  "btn-default mr-3"
+                                ),
+                                this.renderButton("Withdraw", "btn-default"))
+                              : this.renderButton("Withdraw", "btn-default")}
+
+                            <button
+                              className="btn btn-primary float-right"
+                              onClick={this.handleTransferAreaVisibility}
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </form>
+                        {isLoadSpinner ? <Spinner /> : null}
+                      </div>
+                    </div>
+                  </div>
                 )}
               </div>
-            </div>
-          </div>
-          {this.state.isTransferAreaVisible && (
-            <div className="row">
-              <div className="col-12">
-                <div className="latest-tranjections-block-inner panel-heading-block mb-2">
-                  <h5>Transfer to Novus</h5>
-                </div>
-              </div>
-
-              <div className="col-12">
-                <div className="col-12">
-                  <strong>Total balance:</strong>
-                  {"   "}
-                  {selectedCurrency.total_balance}{" "}
-                  {selectedCurrency.currency_symbol}
-                  <br />
-                  <strong>In Order:</strong> {selectedCurrency.in_order_balance}
-                  {"   "}
-                  {selectedCurrency.currency_symbol}
-                  <br />
-                  <strong>Available balance:</strong>
-                  {"   "}
-                  {selectedCurrency.total_balance -
-                    selectedCurrency.in_order_balance}
-                  {selectedCurrency.currency_symbol}
-                </div>
-              </div>
-
-              <div className="col-12 mb-3">
-                <div className="border adbox">
-                  <h5 className="text-danger mt-3 ml-3">
-                    <strong>Important</strong>
-                  </h5>
-                  <p className="text-danger ml-3">
-                    Minimum 20 NTN can be transferred.
-                  </p>
-                  <form onSubmit={this.handleSubmit}>
-                    {this.renderInputHidden("currency")}
-                    <div className="mx-3 mb-3">
-                      <Spinner status={isLoadSpinner} />
-                      {selectedCurrency.withdrawal_requested === true
-                        ? this.renderInput(
-                            "verification_code",
-                            "Verification Code"
-                          )
-                        : this.renderInput("quantity", "Quantity")}
-                      {selectedCurrency.withdrawal_requested === true
-                        ? (this.renderButton("Resen Code", "btn-default mr-3"),
-                          this.renderButton("Withdraw", "btn-default"))
-                        : this.renderButton("Withdraw", "btn-default")}
-
-                      <button
-                        className="btn btn-primary float-right"
-                        onClick={this.handleTransferAreaVisibility}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </form>
-                  {isLoadSpinner ? <Spinner /> : null}
-                </div>
-              </div>
-            </div>
-          )}
+            )}
 
           <div className="row">
             <div className="col-12">
