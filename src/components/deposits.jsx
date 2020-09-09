@@ -32,7 +32,8 @@ class Deposits extends Component {
 
       // Populate first currency address and relevant data
       const { data: firstCurrency } = await http.get(
-        "/auth/get-deposit-address/" + data[0].symbol
+        "/auth/get-deposit-address/" +
+          data.find((c) => c.is_deposit_allowed).symbol
       );
 
       this.setState({
