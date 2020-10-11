@@ -125,7 +125,7 @@ function getFormatedTime(obj) {
   const minutes = obj.getUTCMinutes();
   const seconds = obj.getUTCSeconds();
   return (
-    obj.getUTCFullYear() +
+    `${obj.getUTCFullYear()}` +
     prependZero(month) +
     prependZero(date) +
     prependZero(hours) +
