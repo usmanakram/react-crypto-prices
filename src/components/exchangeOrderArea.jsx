@@ -3,6 +3,10 @@ import LimitOrder from "./limitOrder";
 import InstantOrder from "./instantOrder";
 import StopLimit from "./stopLimit";
 import Oco from "./oco";
+import auth from "../services/authService";
+
+const user = auth.getCurrentUser();
+const authorizedUsers = [24, 40];
 
 const ExchangeOrderArea = ({
   selectedPair,
@@ -20,9 +24,10 @@ const ExchangeOrderArea = ({
   return (
     <div className="order-form-area-block">
       <ul className="nav nav-tabs ticker-nav parent-order-tab" role="tablist">
+        {user && authorizedUsers.includes(parseInt(user.sub)) && (<>
         <li className="nav-item">
           <a
-            className="nav-link active"
+            className="nav-link"
             href="#limit_order"
             role="tab"
             data-toggle="tab"
@@ -30,9 +35,10 @@ const ExchangeOrderArea = ({
             <h5>Limit Order</h5>
           </a>
         </li>
+        </>)}
         <li className="nav-item">
           <a
-            className="nav-link"
+            className="nav-link active"
             href="#instant_order"
             role="tab"
             data-toggle="tab"
@@ -40,6 +46,7 @@ const ExchangeOrderArea = ({
             <h5>Market Order</h5>
           </a>
         </li>
+        {user && authorizedUsers.includes(parseInt(user.sub)) && (<>
         <li className="nav-item">
           <a
             className="nav-link"
@@ -77,6 +84,7 @@ const ExchangeOrderArea = ({
             </span>
           </a>
         </li>
+        </>)}
       </ul>
       <div className="market-ticker-block">
         {/* <!-- Tab panes --> */}

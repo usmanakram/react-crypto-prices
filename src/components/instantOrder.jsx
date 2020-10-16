@@ -11,7 +11,7 @@ const InstantOrder = ({
   return (
     // <div role="tabpanel" className="tab-pane fade" id="">
     //   <div className="tab-content">
-    <div role="tabpanel" className="tab-pane fade in show" id="instant_order">
+    <div role="tabpanel" className="tab-pane fade in active show" id="instant_order">
       <table className="table tv_orde_table">
         <thead>
           <tr>

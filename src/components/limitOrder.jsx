@@ -10,7 +10,7 @@ const LimitOrder = ({
   return (
     <div
       role="tabpanel"
-      className="tab-pane fade in active show"
+      className="tab-pane fade in show"
       id="limit_order"
     >
       <table className="table tv_orde_table">
