@@ -11,7 +11,7 @@
     "jquery": "^3.4.1",
     "jwt-decode": "^2.2.0",
     "laravel-echo": "^1.5.4",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "pusher-js": "^5.0.0",
