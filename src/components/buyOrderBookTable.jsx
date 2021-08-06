@@ -8,6 +8,10 @@ const BuyOrderBookTable = ({ selectedPairStats, buyOrders }) => {
   const rateDecimals =
     decimalLength === undefined ? 8 : decimalLength.rateDecimals;
 
+    // toFixed use krnay ka lia ham nau ya new variable create ki. yaha type string sa number ma chage ki ha. 
+
+    let last_rate1 = parseFloat(selectedPairStats.last_rate);
+
   return (
     <React.Fragment>
       <table className="table table-fixed das-oreder-table das-buy-table exchange-orderBook">
@@ -16,7 +20,7 @@ const BuyOrderBookTable = ({ selectedPairStats, buyOrders }) => {
             <th scope="col" className="col-4 th">
               <span className="color-buy">
                 {Object.keys(selectedPairStats).length > 0 &&
-                  selectedPairStats.last_rate}
+                  last_rate1.toFixed(rateDecimals)}
               </span>
             </th>
             <th scope="col" className="col-4"></th>

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import storage from "../utils/storage";
 import Spinner from "./spinner";
+import { setDecimalsLength } from "../utils/setDecimalsLength";
 
 class CurrencyPairsTables extends Component {
   state = {
@@ -79,7 +80,7 @@ class CurrencyPairsTables extends Component {
                       </td>
                       <td className="col-4">
                         <span className={value.color1}>
-                          {value.latest_rate.last_rate}
+                          {value.latest_rate.last_rate.toFixed(setDecimalsLength(value.latest_rate.last_rate) === undefined ? 8 : setDecimalsLength(value.latest_rate.last_rate).rateDecimals)}
                         </span>
                       </td>
                       <td className="col-4">
@@ -158,7 +159,7 @@ class CurrencyPairsTables extends Component {
                         </td>
                         <td className="col-4">
                           <span className={value.color1}>
-                            {value.latest_rate.last_rate}
+                          {value.latest_rate.last_rate.toFixed(setDecimalsLength(value.latest_rate.last_rate) === undefined ? 8 : setDecimalsLength(value.latest_rate.last_rate).rateDecimals)}
                           </span>
                         </td>
                         <td className="col-4">
