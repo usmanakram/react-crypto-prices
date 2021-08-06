@@ -1,5 +1,7 @@
+import { number } from "prop-types";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { setDecimalsLength } from "../utils/setDecimalsLength";
 
 class CurrencyRate extends Component {
   render() {
@@ -12,6 +14,20 @@ class CurrencyRate extends Component {
       currencyPairs,
       selectedPairStats: { volume, last_rate, low, high, rate_change }
     } = this.props;
+
+
+    const decimalLength = setDecimalsLength(last_rate);
+    const rateDecimals =
+      decimalLength === undefined ? 8 : decimalLength.rateDecimals;
+
+    // toFixed use krnay ka lia ham nau ya new variable create ki. yaha type string sa number ma chage ki ha. 
+    //<span className="color-sell">{last_rate}</span> phlay code ya tha  ab ya 3 variable jahahn use hay ha asa ho gya ha.
+
+      let last_rate1 = parseFloat(last_rate);
+      let low1 = parseFloat(low);
+      let high1 = parseFloat(high);   
+
+
     return (
       <div className="currancy-rate-tb">
         <div className={isFullWidth ? "container-fluid" : "container"}>
@@ -65,7 +81,8 @@ class CurrencyRate extends Component {
                   <div className="currency-info last-price">
                     <span>Last Price</span>
                     <h6>
-                      <span className="color-sell">{last_rate}</span>
+                        <span className="color-sell">{last_rate1.toFixed(rateDecimals)}</span>
+                        {/* <span className="color-sell">{last_rate && last_rate.toFixed(rateDecimals)}</span> */}
                       {/* <span className="currency-info-base">$390.68</span> */}
                     </h6>
                   </div>
@@ -84,11 +101,11 @@ class CurrencyRate extends Component {
                   </div>
                   <div className="currency-info high">
                     <span>24h High</span>
-                    <h6 className="currency-info-base">{high}</h6>
+                    <h6 className="currency-info-base">{high1.toFixed(rateDecimals)}</h6>
                   </div>
                   <div className="currency-info low">
                     <span>24h Low</span>
-                    <h6 className="currency-info-base">{low}</h6>
+                    <h6 className="currency-info-base">{low1.toFixed(rateDecimals)}</h6>
                   </div>
                   <div className="currency-info volume-value">
                     <span>24h Volume</span>
